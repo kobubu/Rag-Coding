@@ -4,7 +4,7 @@
 
 Подготовить фундамент на TypeScript + Node.js, на котором можно честно сравнивать дробление: фиксированный TS source, диапазоны, TypeScript capabilities и размеченные вопросы. Платный enrichment и богатый viewer не нужны для этой итерации. Установка и документационные проверки: `npm ci`, затем `npm run verify`.
 
-Документационные RC-001 и RC-002 уже подготовлены. Продуктовая работа начинается с RC-003. Источник статусов — [backlog.json](backlog.json), удобное представление — [BACKLOG](BACKLOG.md).
+RC-001/RC-002 и prototype RC-043/RC-044 уже выполнены. `npm run cm:index` создаёт local CM, `npm run plugin:smoke` делает настоящий Harness dispatch. Первое развитие измеряемого backend начинается с RC-003. Источник статусов — [backlog.json](backlog.json), представление — [BACKLOG](BACKLOG.md).
 
 ## Порядок работы
 

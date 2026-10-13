@@ -1,11 +1,11 @@
 {
-  "name": "rag-coding",
+  "name": "dsh-plugin-code-memory",
   "version": "0.1.0",
   "private": true,
-  "description": "RAG Coding specifications and TypeScript structural diagnostics",
+  "description": "CM (Code Memory): read-only repository knowledge plugin for DeepSeek Harness",
   "type": "module",
   "engines": {
-    "node": "^22.17.0 || ^24.0.0"
+    "node": "^22.19.0 || ^24.0.0"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -13,11 +13,47 @@
     "test": "node --test dist/tests/*.test.js",
     "probe": "node dist/scripts/probe_chunking.js",
     "backlog": "node dist/scripts/render_backlog.js",
+    "cm:index": "node dist/src/code-memory/cli.js",
+    "plugin:smoke": "node dist/scripts/smoke_plugin.js",
     "verify": "npm run build && npm run check && npm test && npm run probe"
   },
-  "devDependencies": {
-    "@types/node": "24.19.2",
+  "main": "./dist/src/harness/plugin.js",
+  "types": "./dist/src/harness/plugin.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/harness/plugin.d.ts",
+      "import": "./dist/src/harness/plugin.js"
+    }
+  },
+  "bin": {
+    "cm-index": "dist/src/code-memory/cli.js"
+  },
+  "files": [
+    "dist/src/",
+    "harness/",
+    "contracts/cm-local.schema.json",
+    "README.md",
+    "docs/DEEPSEEK-PLUGIN.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "harness/bundle.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "~4.0.4",
+    "@deepseek-ai/dsh-tools": "0.2.0-rc.2"
+  },
+  "dependencies": {
     "ajv": "8.20.0",
     "typescript": "6.0.3"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "4.0.4",
+    "@deepseek-ai/cordis-plugin-include": "1.0.9",
+    "@deepseek-ai/dsh-app-boot": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-tools": "0.2.0-rc.2",
+    "@types/js-yaml": "4.0.9",
+    "@types/node": "24.19.2"
   }
 }

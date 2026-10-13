@@ -6,6 +6,8 @@
 
 **Дробление записи ТМ уже имеет родительский уровень**
 
+В этой исторической части ТМ означает Translation Memory самого FlashMT. Для нового продукта используется название **CM — Code Memory**; исходные имена FlashMT и доказательства исследования сохраняются.
+
 В `Portal Services/src/Catalog/PortalServices.Catalog.Application/ProjectTranslationMemorySentenceEnrichment.cs:105` (ProjectTranslationMemorySentenceEnrichment.cs) исходная строка добавляется в индекс рядом с производными строками предложений. Метод `BuildSentenceRows()` создаёт дочерние фрагменты и переносит контекст и provenance родителя. Метаданные включают уровень сегментации, номер родительской строки, индекс предложения, способ alignment и хеши фрагментов; см. `Portal Services/src/Catalog/PortalServices.Catalog.Application/ProjectTranslationMemorySentenceEnrichment.cs:366` (BuildSentenceMetadata).
 
 В `Portal Services/src/Catalog/PortalServices.Catalog.Application/ProjectTranslationMemorySentenceEnrichmentService.cs:113` (ProjectTranslationMemorySentenceEnrichmentService.cs) родитель сохраняется и при отказе публиковать предложенное дробление. В зависимости от настроек доступны детерминированный режим и LLM alignment с проверками. `TryCreateValidatedAlignment()` проверяет фрагменты и защищённые токены; это текстовая проверка alignment, её нельзя выдавать за байтовую разбивку исходного кода или доказательство эквивалентности программ.

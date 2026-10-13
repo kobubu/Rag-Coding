@@ -8,7 +8,7 @@ import { runFixtureChecks } from "./probe_chunking.js";
 import { render } from "./render_backlog.js";
 import type { Plan } from "./render_backlog.js";
 
-const IGNORED = new Set([".git", ".artifacts", ".venv", "__pycache__", "node_modules", "dist"]);
+const IGNORED = new Set([".git", ".artifacts", ".code-memory", ".venv", "__pycache__", "node_modules", "dist"]);
 
 function publicFiles(suffix: string, directory = ROOT): string[] {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {

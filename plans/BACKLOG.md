@@ -30,6 +30,34 @@
 
 Ожидаемые материалы: `scripts/probe_chunking.ts`, `fixtures/batching.ts`, `tests/tooling.test.ts`.
 
+## M00P: Локальная Code Memory и DeepSeek Harness plugin
+
+Критерий этапа: Рабочий JSON snapshot, четыре инструмента, runtime dispatch/unload, packaging и ограничения проверены.
+
+### RC-043: Сделать локальный индекс и bounded retrieval CM
+
+Статус: **done**. Приоритет: P0. Размер: M. Зависимости: RC-002.
+
+Приёмка:
+
+- TS Compiler API строит symbols, function/block units и structural edges без исполнения источника.
+- Exact UTF-8 spans, snapshot fingerprints, stale sources, byte budget и graph limits проверены на fixtures и реальном репозитории.
+- Local JSON backend явно отделён от будущего PostgreSQL, pgvector и полноценного ContextPackage API.
+
+Ожидаемые материалы: `src/code-memory/`, `contracts/cm-local.schema.json`, `tests/code_memory.test.ts`.
+
+### RC-044: Подключить CM как внешний DeepSeek Harness plugin
+
+Статус: **done**. Приоритет: P0. Размер: M. Зависимости: RC-043.
+
+Приёмка:
+
+- cm_symbol_search, cm_code_search, cm_context_get и cm_graph_expand зарегистрированы через реальный Harness ToolRuntime.
+- Dispatch, schema rejection, snapshot mismatch, cancellation и unload проходят на закреплённом API.
+- Plugin имеет installable package/bundle, инструкции и отдельный статус без живой модели или заявлений о качестве RAG.
+
+Ожидаемые материалы: `src/harness/plugin.ts`, `harness/bundle.yml`, `scripts/smoke_plugin.ts`, `docs/DEEPSEEK-PLUGIN.md`.
+
 ## M01: Зафиксированный корпус и контракты
 
 Критерий этапа: Есть размеченные задачи, способности первого языка и корректные публичные форматы.
@@ -115,7 +143,7 @@
 
 Ожидаемые материалы: `tests/storage_restore/`, `docs/runbooks/restore.md`.
 
-## M03: Глоссарий и иерархия ТМ
+## M03: Глоссарий и иерархия CM
 
 Критерий этапа: Символы и scopes различаются, разбивка exact, окружение вложенного блока установлено.
 
@@ -393,16 +421,18 @@
 
 Ожидаемые материалы: `src/interfaces/editor/`, `tests/editor_overlay/`.
 
-### RC-033: Создать read-only adapter для помощников
+### RC-033: Подключить CM plugin к основному ContextService и assistant adapters
 
-Статус: **planned**. Приоритет: P1. Размер: M. Зависимости: RC-017, RC-031, RC-032.
+Статус: **planned**. Приоритет: P1. Размер: M. Зависимости: RC-017, RC-031, RC-032, RC-044.
 
 Приёмка:
 
 - Поиск и чтение используют тот же ContextPackage API.
 - Нет расширения прав на изменения проекта из retrieved content.
+- Локальный JSON backend сменяется общим ContextService без изменения прав и snapshot гарантий.
+- Живой model/tool loop и автоматический context hook измерены отдельно от registry smoke.
 
-Ожидаемые материалы: `src/interfaces/assistant/`.
+Ожидаемые материалы: `src/interfaces/assistant/`, `src/harness/`.
 
 ## M09: Python, C# и contracts
 

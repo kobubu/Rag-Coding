@@ -11,6 +11,12 @@
       "status": "completed"
     },
     {
+      "id": "M00P",
+      "title": "Локальная Code Memory и DeepSeek Harness plugin",
+      "gate": "Рабочий JSON snapshot, четыре инструмента, runtime dispatch/unload, packaging и ограничения проверены.",
+      "status": "completed"
+    },
+    {
       "id": "M01",
       "title": "Зафиксированный корпус и контракты",
       "gate": "Есть размеченные задачи, способности первого языка и корректные публичные форматы.",
@@ -24,7 +30,7 @@
     },
     {
       "id": "M03",
-      "title": "Глоссарий и иерархия ТМ",
+      "title": "Глоссарий и иерархия CM",
       "gate": "Символы и scopes различаются, разбивка exact, окружение вложенного блока установлено.",
       "status": "planned"
     },
@@ -698,21 +704,25 @@
     {
       "id": "RC-033",
       "milestone": "M08",
-      "title": "Создать read-only adapter для помощников",
+      "title": "Подключить CM plugin к основному ContextService и assistant adapters",
       "status": "planned",
       "priority": "P1",
       "size": "M",
       "depends_on": [
         "RC-017",
         "RC-031",
-        "RC-032"
+        "RC-032",
+        "RC-044"
       ],
       "acceptance": [
         "Поиск и чтение используют тот же ContextPackage API.",
-        "Нет расширения прав на изменения проекта из retrieved content."
+        "Нет расширения прав на изменения проекта из retrieved content.",
+        "Локальный JSON backend сменяется общим ContextService без изменения прав и snapshot гарантий.",
+        "Живой model/tool loop и автоматический context hook измерены отдельно от registry smoke."
       ],
       "artifacts": [
-        "src/interfaces/assistant/"
+        "src/interfaces/assistant/",
+        "src/harness/"
       ]
     },
     {
@@ -890,6 +900,49 @@
       "artifacts": [
         "evaluation/release-proof.json",
         "docs/release-notes.md"
+      ]
+    },
+    {
+      "id": "RC-043",
+      "milestone": "M00P",
+      "title": "Сделать локальный индекс и bounded retrieval CM",
+      "status": "done",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-002"
+      ],
+      "acceptance": [
+        "TS Compiler API строит symbols, function/block units и structural edges без исполнения источника.",
+        "Exact UTF-8 spans, snapshot fingerprints, stale sources, byte budget и graph limits проверены на fixtures и реальном репозитории.",
+        "Local JSON backend явно отделён от будущего PostgreSQL, pgvector и полноценного ContextPackage API."
+      ],
+      "artifacts": [
+        "src/code-memory/",
+        "contracts/cm-local.schema.json",
+        "tests/code_memory.test.ts"
+      ]
+    },
+    {
+      "id": "RC-044",
+      "milestone": "M00P",
+      "title": "Подключить CM как внешний DeepSeek Harness plugin",
+      "status": "done",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-043"
+      ],
+      "acceptance": [
+        "cm_symbol_search, cm_code_search, cm_context_get и cm_graph_expand зарегистрированы через реальный Harness ToolRuntime.",
+        "Dispatch, schema rejection, snapshot mismatch, cancellation и unload проходят на закреплённом API.",
+        "Plugin имеет installable package/bundle, инструкции и отдельный статус без живой модели или заявлений о качестве RAG."
+      ],
+      "artifacts": [
+        "src/harness/plugin.ts",
+        "harness/bundle.yml",
+        "scripts/smoke_plugin.ts",
+        "docs/DEEPSEEK-PLUGIN.md"
       ]
     }
   ]

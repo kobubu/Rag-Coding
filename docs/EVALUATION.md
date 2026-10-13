@@ -67,4 +67,8 @@ MVP можно принять при полезной измеренной вы�
 
 `scripts/check_docs.ts` проверяет локальные ссылки, JSON Schema через Ajv2020, согласованность backlog и его dependency graph, сгенерированный Markdown и собственную TS-fixture. `npm run verify` дополнительно выполняет strict TS build, регрессии Unicode mapping / bindings / отклонения повреждённых входов и diagnostic CLI. GitHub Actions повторяет эти checks на Linux и Windows с Node.js 22 и 24. Python для этой проверки не нужен.
 
-Сохранённая проверка FlashMT подтверждает структуру одного примера. Retrieval corpus, модельные A/B-запуски и работающий сервис являются задачами плана и пока отсутствуют.
+Local CM и plugin покрыты `tests/code_memory.test.ts`; `npm run plugin:smoke` строит индекс реального checkout и вызывает четыре tools через настоящие Cordis/SystemPrompt/ToolRuntime 0.2.0-rc.2. Это проверка registry/schema/dispatch/versions/unload, без живого model provider. Она не заменяет 40-задачный retrieval benchmark, проверки Web UI и качества правок.
+
+Distribution entry проверяется реальными Harness bundle/patch consumer functions. Локально tarball также установлен в полный Web-профиль CLI, включая независимый Harness home: профиль boot и четыре registry calls прошли. Это дополнение к автоматизированным checks, с отдельным статусом без живого model loop и browser interaction QA.
+
+Сохранённая проверка FlashMT подтверждает структуру одного примера. Retrieval corpus, модельные A/B-запуски и полноценный PostgreSQL service являются задачами плана.
