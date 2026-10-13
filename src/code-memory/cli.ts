@@ -3,7 +3,7 @@ import { randomUUID } from "node:crypto";
 import { mkdirSync, renameSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { buildIndex } from "./indexer.js";
-import { CMError } from "./source.js";
+import { CMError, MAX_INDEX_BYTES } from "./source.js";
 import { validateIndex } from "./store.js";
 
 const args = process.argv.slice(2);
@@ -20,8 +20,8 @@ for (let index = 0; index < args.length; index++) {
 output ??= resolve(root, ".code-memory/index.json");
 const memory = validateIndex(buildIndex(root));
 const serialized = JSON.stringify(memory);
-if (Buffer.byteLength(serialized, "utf8") > 16 * 1024 * 1024) {
-  throw new CMError("index_limit", "Derived index exceeds 16 MiB; select a smaller corpus");
+if (Buffer.byteLength(serialized, "utf8") > MAX_INDEX_BYTES) {
+  throw new CMError("index_limit", "Derived index exceeds 128 MiB; select a smaller corpus");
 }
 mkdirSync(dirname(output), { recursive: true });
 const temporary = output + "." + randomUUID() + ".tmp";

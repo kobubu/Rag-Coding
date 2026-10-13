@@ -85,6 +85,25 @@ test("malformed source is reported and inspected code is never executed", () => 
   assert.throws(() => buildIndex(directory), /unsupported_encoding/);
 });
 
+test("JavaScript ES modules and CommonJS preserve bindings, context and source bytes", () => {
+  const directory = mkdtempSync(join(tmpdir(), "cm-javascript-"));
+  writeFileSync(join(directory, "package.json"), '{"type":"module"}');
+  writeFileSync(join(directory, "helper.js"), "export function normalize(value) { return Math.max(0, Number(value) || 0); }\n");
+  writeFileSync(join(directory, "wallet.mjs"), 'import { normalize } from "./helper.js";\nexport function wallet(value) { const coins = normalize(value); return () => coins; }\n');
+  writeFileSync(join(directory, "legacy.cjs"), 'function legacy(value) { return value + 1; }\nmodule.exports = legacy;\n');
+  const memory = validateIndex(buildIndex(directory));
+  assert.equal(memory.files.length, 3);
+  assert(memory.capabilities.includes("javascript_syntax"));
+  const normalize = memory.symbols.find((symbol) => symbol.path === "helper.js" && symbol.name === "normalize")!;
+  assert(memory.relations.some((edge) => edge.to_id === normalize.id && edge.predicate === "calls"));
+  assert(symbolSearch(memory, "legacy").matches.some((symbol) => symbol.path === "legacy.cjs"));
+  const wallet = codeSearch(memory, "wallet").matches.find((unit) => unit.path === "wallet.mjs")!;
+  const context = contextGet(memory, wallet.id);
+  assert(context.items.some((item) => item.path === "helper.js" && item.text.includes("function normalize")));
+  assert.equal(memory.files.find((file) => file.path === "wallet.mjs")!.source,
+    readFileSync(join(directory, "wallet.mjs"), "utf8"));
+});
+
 test("CM validation rejects corrupted hashes, dangling edges and path traversal", () => {
   const damaged = structuredClone(index);
   damaged.files[0]!.source += " ";
@@ -98,6 +117,25 @@ test("CM validation rejects corrupted hashes, dangling edges and path traversal"
   const outside = mkdtempSync(join(tmpdir(), "cm-outside-"));
   writeFileSync(join(outside, "outside.ts"), "export const outside = 1;");
   assert.throws(() => buildIndex(project, [join(outside, "outside.ts")]), /source_outside_project/);
+});
+
+test("cached indexes remain immutable and UTF-8 boundaries reject partial characters", async () => {
+  const directory = mkdtempSync(join(tmpdir(), "cm-cache-"));
+  writeFileSync(join(directory, "source.js"), '\ufeffexport const label = "Ж😀";\n');
+  const memory = validateIndex(buildIndex(directory));
+  const corrupt = structuredClone(memory);
+  corrupt.units.find((unit) => unit.kind === "file")!.span.start_byte = 1;
+  assert.throws(() => validateIndex(corrupt), /UTF-8 character/);
+  const path = join(directory, "index.json");
+  writeFileSync(path, JSON.stringify(memory));
+  const store = new CMStore(directory, path);
+  const first = await store.load(new AbortController().signal);
+  const second = await store.load(new AbortController().signal);
+  assert.equal(first, second);
+  assert(Object.isFrozen(first.units[0]!.span));
+  assert.throws(() => { first.units[0]!.span.start_byte = 1; }, TypeError);
+  writeFileSync(path, JSON.stringify(corrupt));
+  await assert.rejects(store.load(new AbortController().signal), /UTF-8 character/);
 });
 
 test("store rejects changed source and a replaced snapshot", async () => {

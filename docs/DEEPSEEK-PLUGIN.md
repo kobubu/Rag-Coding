@@ -1,6 +1,6 @@
 # CM — Code Memory: плагин DeepSeek Harness
 
-Рабочий локальный prototype v0.1. Он добавляет глоссарий, записи CM, структурные связи и сборку исходного контекста в DeepSeek Harness. Индекс создаётся отдельной CLI-командой на TypeScript Compiler API; код индексируемого проекта не исполняется. Никаких модельных вызовов для индексации не требуется.
+Рабочий локальный prototype v0.2. Он добавляет глоссарий, записи CM, структурные связи и сборку исходного контекста в DeepSeek Harness. Индекс создаётся отдельной CLI-командой на TypeScript Compiler API для TypeScript и JavaScript; код индексируемого проекта не исполняется. Никаких модельных вызовов для индексации не требуется.
 
 ## Проверенная совместимость
 
@@ -26,9 +26,9 @@ npm run plugin:smoke
 npm run cm:index -- --project /absolute/project --out /absolute/project/.code-memory/index.json
 ```
 
-В PowerShell команда с передачей флагов: `npm.cmd run cm:index -- --project 'D:/project' --out 'D:/project/.code-memory/index.json'`. Требуется пересборка CM после изменения, удаления или добавления исходников. Индекс содержит только выбранный TS corpus; полнота относительно всех возможных файлов проекта не заявляется.
+В PowerShell команда с передачей флагов: `npm.cmd run cm:index -- --project 'D:/project' --out 'D:/project/.code-memory/index.json'`. Требуется пересборка CM после изменения, удаления или добавления исходников. Индекс содержит выбранный TS/JS corpus; полнота относительно всех возможных файлов проекта не заявляется.
 
-В corpus входят `.ts`, `.tsx`, `.mts`, `.cts`, исключены dependency/build/artifact directories, декларационные `.d.ts` и symlinks. Максимум 500 файлов и 8 MiB исходных bytes; reader принимает JSON index до 16 MiB. Некорректный UTF-8 отклоняется; syntax/semantic diagnostics доступны как признак частичного анализа. Один экземпляр plugin привязан к одному настроенному projectRoot; командная access model остаётся этапом плана.
+В corpus входят `.ts`, `.tsx`, `.mts`, `.cts`, `.js`, `.jsx`, `.mjs`, `.cjs`; исключены dependency/build/artifact directories, declaration files и symlinks. Максимум 500 файлов и 8 MiB исходных bytes; writer и reader принимают JSON index до 128 MiB. На Geo Dash 3,56 MB source дали 69,99 MB derived JSON, поэтому прежний лимит 16 MiB не позволял прочитать полный индекс. Некорректный UTF-8 отклоняется; syntax/semantic diagnostics доступны как признак частичного анализа. Один экземпляр plugin привязан к одному настроенному projectRoot; командная access model остаётся этапом плана.
 
 ## Подключение в Harness
 
@@ -38,13 +38,13 @@ npm run cm:index -- --project /absolute/project --out /absolute/project/.code-me
 npm pack --pack-destination .artifacts
 ```
 
-В Harness Plugin Manager установить полученный локальный `dsh-plugin-code-memory-0.1.0.tgz` как bundle и включить его в нужном профиле. Использовать Harness 0.2.0-rc.2. Bundle добавляет entry `code-memory`; существующие model/file tools остаются в профиле.
+В Harness Plugin Manager установить полученный локальный `dsh-plugin-code-memory-0.2.0.tgz` как bundle и включить его в нужном профиле. Использовать Harness 0.2.0-rc.2. Bundle добавляет entry `code-memory`; существующие model/file tools остаются в профиле.
 
 CLI-вариант после установки Harness:
 
 ```bash
 dsh --profile code-memory --from-default-profile web --dump-config
-dsh plugin --profile code-memory add /absolute/dsh-plugin-code-memory-0.1.0.tgz
+dsh plugin --profile code-memory add /absolute/dsh-plugin-code-memory-0.2.0.tgz
 dsh --profile code-memory --no-open
 ```
 
@@ -87,10 +87,10 @@ Patch используется стандартным `dsh --profile web --patch
 
 Плагин проверяет schema, manifest fingerprint, hashes, диапазоны, identities, родителей и концы graph edges. Перед выдачей проверяются hashes известных исходных файлов и root tsconfig/package/lock inputs относительно projectRoot. Если source или известный analysis input изменился/удалён — `index_outdated`; другой snapshot — `snapshot_mismatch`; отсутствующий index — `index_not_ready`. После добавления новых файлов/inputs тоже нужно перестроить CM: corpus остаётся явно выбранным manifest. Нужно повторить поиск и использовать новый snapshot.
 
-Отмена проходит через `exec.signal` в файловое чтение. Cordis disposal удаляет регистрации инструментов. Данные CM остаются в отдельном локальном файле; unload не уничтожает индекс. Плагин не регистрирует операций правки проекта, запуска shell или сетевых модельных вызовов.
+Reader повторно проверяет digest JSON и реальные source hashes при запросе. Неизменённый JSON использует уже валидированный frozen object, без повторного parse/validation; cache не отменяет проверку исходников. Отмена проходит через `exec.signal` в файловое чтение. Cordis disposal удаляет регистрации инструментов. Данные CM остаются в отдельном локальном файле; unload не уничтожает индекс. Плагин не регистрирует операций правки проекта, запуска shell или сетевых модельных вызовов.
 
 ## Проверка и следующие этапы
 
-`npm test` проверяет реальные bindings/captures, cross-file calls, shadowed locals, UTF-8/BOM/CRLF, бюджеты, повреждённые данные, outdated snapshots/config и runtime lifecycle. Harness `bundlePatchFiles/composeEntries` проверяют distribution entry через production consumer API. `npm run plugin:smoke` индексирует этот реальный checkout и делает четыре dispatch calls через Harness ToolRuntime, затем проверяет unload. Отдельно выполнены CLI install/composition/boot и четыре calls установленного bundle внутри полного Web-профиля, включая независимый Harness home. Живой model provider не вызывался.
+`npm test` проверяет реальные bindings/captures, cross-file calls, shadowed locals, UTF-8/BOM/CRLF, JS modules, frozen cache, бюджеты, повреждённые данные, outdated snapshots/config и runtime lifecycle. Harness `bundlePatchFiles/composeEntries` проверяют distribution entry через production consumer API. `npm run plugin:smoke` индексирует этот checkout и делает четыре dispatch calls через Harness ToolRuntime, затем проверяет unload. Проверены также CLI install/composition/boot и установленный bundle в полном Web-профиле. Для живого provider/tool loop добавлен [A/B protocol](HARNESS-AB.md): GPT-6 Luna управляет настоящим Harness headless на отдельных копиях Geo Dash.
 
 Продолжение: 40-задачный corpus и оценка retrieval, полноценный recursive segmenter/dataflow, PostgreSQL ledger и pgvector, подключение к ContextService, live model loop, автоматический context hook и специализированные UI cards. [Backlog](../plans/BACKLOG.md) различает завершённый prototype и эти запланированные этапы.

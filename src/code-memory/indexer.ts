@@ -1,7 +1,7 @@
 import { existsSync, readFileSync, readdirSync, realpathSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 import ts from "typescript";
-import { ANALYSIS_FILES, byteOffset, CMError, hash, inside, snapshotId, utf8 } from "./source.js";
+import { ANALYSIS_FILES, byteOffsets, CMError, hash, inside, isSourcePath, snapshotId, utf8 } from "./source.js";
 import type { CMFile, CMIndex, CMRelation, CMSymbol, CMUnit, Predicate, SourceSpan } from "./types.js";
 
 const IGNORED = new Set([".git", "node_modules", "dist", ".artifacts", ".code-memory", ".venv"]);
@@ -13,7 +13,7 @@ function scan(root: string, directory = root): string[] {
     if (IGNORED.has(entry.name) || entry.isSymbolicLink()) return [];
     const path = join(directory, entry.name);
     if (entry.isDirectory()) return scan(root, path);
-    return entry.isFile() && /\.(?:ts|tsx|mts|cts)$/.test(entry.name) && !/\.d\.(?:ts|mts|cts)$/.test(entry.name) ? [path] : [];
+    return entry.isFile() && isSourcePath(entry.name) ? [path] : [];
   }).sort();
 }
 
@@ -70,7 +70,7 @@ export function buildIndex(projectRoot: string, paths?: string[]): CMIndex {
     files.push({ path: relative(root, filename).split(sep).join("/"), sha256: hash(raw), source: utf8(raw) });
   }
   const defaults: ts.CompilerOptions = { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.NodeNext,
-    moduleResolution: ts.ModuleResolutionKind.NodeNext, noEmit: true, skipLibCheck: true, types: [] };
+    moduleResolution: ts.ModuleResolutionKind.NodeNext, noEmit: true, skipLibCheck: true, types: [], allowJs: true, checkJs: false };
   const configPath = ts.findConfigFile(root, ts.sys.fileExists);
   let options = defaults;
   if (configPath && inside(root, configPath)) {
@@ -78,7 +78,7 @@ export function buildIndex(projectRoot: string, paths?: string[]): CMIndex {
     if (config.error) throw new CMError("invalid_tsconfig", ts.flattenDiagnosticMessageText(config.error.messageText, " "));
     const parsed = ts.parseJsonConfigFileContent(config.config, ts.sys, root);
     if (parsed.errors.length) throw new CMError("invalid_tsconfig", parsed.errors.map((item) => ts.flattenDiagnosticMessageText(item.messageText, " ")).join("; "));
-    options = { ...parsed.options, noEmit: true, skipLibCheck: true };
+    options = { ...parsed.options, noEmit: true, skipLibCheck: true, allowJs: true };
   }
   const host = ts.createCompilerHost(options);
   const original = host.getSourceFile.bind(host);
@@ -96,10 +96,15 @@ export function buildIndex(projectRoot: string, paths?: string[]): CMIndex {
   const symbolByCompiler = new Map<ts.Symbol, CMSymbol>();
   const declarationNames = new Set<ts.Node>();
   const fileRecords = new Map(files.map((file) => [resolve(root, file.path), file]));
+  const coordinates = new Map(files.map((file) => [file.path, byteOffsets(file.source)]));
   const span = (file: ts.SourceFile, start: number, end: number): SourceSpan => {
     const record = fileRecords.get(resolve(file.fileName))!;
-    return { file_version_id: "blob:" + record.sha256, start_byte: byteOffset(record.source, start),
-      end_byte: byteOffset(record.source, end), line_start: file.getLineAndCharacterOfPosition(start).line + 1,
+    const offsets = coordinates.get(record.path)!;
+    if (offsets[start] === undefined || offsets[end] === undefined || offsets[start] === -1 || offsets[end] === -1) {
+      throw new CMError("invalid_source_range", "Range splits a surrogate pair");
+    }
+    return { file_version_id: "blob:" + record.sha256, start_byte: offsets[start],
+      end_byte: offsets[end], line_start: file.getLineAndCharacterOfPosition(start).line + 1,
       line_end: file.getLineAndCharacterOfPosition(Math.max(start, end - 1)).line + 1 };
   };
   const unitFor = (node: ts.Node | undefined): CMUnit | undefined => {
@@ -172,6 +177,15 @@ export function buildIndex(projectRoot: string, paths?: string[]): CMIndex {
     visit(file);
   }
   const symbolById = new Map(symbols.map((symbol) => [symbol.id, symbol]));
+  const unitById = new Map(units.map((unit) => [unit.id, unit]));
+  const groupsByParent = new Map<string, CMUnit[]>();
+  for (const unit of units) {
+    if (unit.kind !== "block" || unit.parent_id === null) continue;
+    const siblings = groupsByParent.get(unit.parent_id) ?? [];
+    siblings.push(unit);
+    groupsByParent.set(unit.parent_id, siblings);
+  }
+  const firstOccurrence = new Map<string, SourceSpan>();
   for (const filename of names) {
     const file = program.getSourceFile(filename)!;
     if (program.getSyntacticDiagnostics(file).length) continue;
@@ -190,8 +204,17 @@ export function buildIndex(projectRoot: string, paths?: string[]): CMIndex {
             ts.isPropertyAccessExpression(node.parent) && node.parent.name === node && ts.isCallExpression(node.parent.parent) &&
             node.parent.parent.expression === node.parent;
           addRelation(owner.id, target.id, called ? "calls" : "references", occurrence);
-          const containing = units.filter((unit) => unit.path === owner.path && unit.kind !== "file" &&
-            unit.span.start_byte <= occurrence.start_byte && unit.span.end_byte >= occurrence.end_byte);
+          const occurrenceKey = owner.id + ":" + target.id;
+          if (!firstOccurrence.has(occurrenceKey)) firstOccurrence.set(occurrenceKey, occurrence);
+          const containing: CMUnit[] = [];
+          let ancestor: CMUnit | undefined = owner;
+          while (ancestor && ancestor.kind !== "file") {
+            containing.push(ancestor);
+            for (const block of groupsByParent.get(ancestor.id) ?? []) {
+              if (block.span.start_byte <= occurrence.start_byte && block.span.end_byte >= occurrence.end_byte) containing.push(block);
+            }
+            ancestor = unitById.get(ancestor.parent_id ?? "");
+          }
           for (const unit of containing) {
             if (target.path !== unit.path || target.span.start_byte < unit.span.start_byte || target.span.end_byte > unit.span.end_byte) {
               if (!unit.required_symbol_ids.includes(target.id)) unit.required_symbol_ids.push(target.id);
@@ -208,10 +231,10 @@ export function buildIndex(projectRoot: string, paths?: string[]): CMIndex {
     if (unit.kind === "function" || unit.kind === "method") {
       for (const id of unit.required_symbol_ids) {
         const symbol = symbolById.get(id)!;
-        const symbolOwner = units.find((candidate) => candidate.id === symbol.owner_unit_id)!;
+        const symbolOwner = unitById.get(symbol.owner_unit_id)!;
         if (symbol.path === unit.path && symbolOwner.kind !== "file" && symbolOwner.span.start_byte <= unit.span.start_byte &&
           symbolOwner.span.end_byte >= unit.span.end_byte) {
-          const occurrence = relations.find((relation) => relation.from_id === unit.id && relation.to_id === id)?.evidence;
+          const occurrence = firstOccurrence.get(unit.id + ":" + id);
           addRelation(unit.id, id, "captures", occurrence ?? symbol.span);
         }
       }
@@ -226,8 +249,8 @@ export function buildIndex(projectRoot: string, paths?: string[]): CMIndex {
   const configHash = hash(JSON.stringify({ options, analysisInputs }));
   return { format: "code-memory-0.1", snapshot_id: snapshotId(files, ts.version, configHash), analysis_config_hash: configHash, analysis_inputs: analysisInputs,
     analyzer: { name: "typescript-compiler", version: ts.version },
-    capabilities: ["typescript_syntax", "compiler_symbol_bindings", "function_units", "direct_statement_groups", "references", "calls", "lexical_captures"],
+    capabilities: ["typescript_syntax", "javascript_syntax", "compiler_symbol_bindings", "function_units", "direct_statement_groups", "references", "calls", "lexical_captures"],
     files, units, symbols, relations, diagnostics,
     limits: ["Local immutable JSON index; PostgreSQL and vectors are not implemented", "No full dataflow, dynamic-call resolution or LLM enrichment",
-      "Only selected TypeScript files are indexed; compiler diagnostics report incomplete semantics"] };
+      "Only selected TypeScript/JavaScript files are indexed; compiler diagnostics report incomplete semantics"] };
 }

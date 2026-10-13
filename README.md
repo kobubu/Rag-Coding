@@ -2,9 +2,9 @@
 
 База знаний для разработки: **сущности — в глоссарии, код — в CM (Code Memory), зависимости — в графе**. CM хранит точные версии исходников и записи функций/блоков. Поиск собирает контекст нужной детализации и привязывает его к snapshot проекта.
 
-Состояние на 13 октября 2026 года: работает локальный CM prototype и внешний **DeepSeek Harness plugin**. Доступны TS-индексация, поиск символов/кода, сборка lexical context и обход evidence edges. Реальный Harness ToolRuntime проверяется dispatch/unload smoke. Полноценный PostgreSQL/vector backend, HTTP API, enrichment и качество RAG остаются этапами плана.
+Состояние на 13 октября 2026 года: работают локальный TS/JS CM prototype и внешний **DeepSeek Harness plugin**; выполнен живой A/B на Geo Dash. CM прошёл 14/14 правок против 13/14 без CM, но потратил на 6,2% больше токенов и на 2,4% больше по расчётной цене. [Результаты и ограничения](docs/AB-RESULTS.md). Vector retrieval, MCP, карта концептов и подписка пока запланированы.
 
-Основной язык — **TypeScript**, среда выполнения — **Node.js 24 LTS**. Первый индексируемый язык — TypeScript. Агентская оболочка — DeepSeek Harness с нашим plugin; CM core остаётся независимым. Prototype использует локальный JSON snapshot, будущие ledger/graph — PostgreSQL, векторный поиск — pgvector. Подробнее — [архитектура](docs/ARCHITECTURE.md).
+Основной язык — **TypeScript**, среда выполнения — **Node.js 24 LTS**. Индексируются TypeScript и JavaScript. Агентская оболочка — DeepSeek Harness с нашим plugin; CM core остаётся независимым. Prototype использует локальный JSON snapshot. Для desktop предлагаются SQLite ledger/graph и LanceDB vectors; PostgreSQL/pgvector остаются вариантом командного сервера. Подробнее — [архитектура](docs/ARCHITECTURE.md) и [локальный продукт](docs/LOCAL-PRODUCT.md).
 
 ## С чего читать
 
@@ -14,6 +14,8 @@
 4. [Первая итерация](plans/FIRST-ITERATION.md) — развитие prototype и проверка качества.
 5. [Полный backlog](plans/BACKLOG.md) — задачи и ожидаемые результаты; [JSON](plans/backlog.json) является источником этого представления.
 6. [Навигация по документации](docs/README.md) — архитектура, контракты, алгоритмы и эксплуатация.
+7. [Живое A/B сравнение](docs/HARNESS-AB.md) — настоящие модели, одинаковые задачи, provider tokens и независимые проверки.
+8. [Локальный CM-продукт](docs/LOCAL-PRODUCT.md) — MCP, карта концептов и модель подписки.
 
 ## Основная схема
 

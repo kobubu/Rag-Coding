@@ -32,7 +32,7 @@
 
 ## M00P: Локальная Code Memory и DeepSeek Harness plugin
 
-Критерий этапа: Рабочий JSON snapshot, четыре инструмента, runtime dispatch/unload, packaging и ограничения проверены.
+Критерий этапа: TS/JS snapshot, четыре инструмента, runtime/packaging и живой A/B pilot проверены; границы prototype опубликованы.
 
 ### RC-043: Сделать локальный индекс и bounded retrieval CM
 
@@ -54,9 +54,33 @@
 
 - cm_symbol_search, cm_code_search, cm_context_get и cm_graph_expand зарегистрированы через реальный Harness ToolRuntime.
 - Dispatch, schema rejection, snapshot mismatch, cancellation и unload проходят на закреплённом API.
-- Plugin имеет installable package/bundle, инструкции и отдельный статус без живой модели или заявлений о качестве RAG.
+- Plugin имеет installable package/bundle, инструкции; runtime proof отделён от последующих live model evals.
 
 Ожидаемые материалы: `src/harness/plugin.ts`, `harness/bundle.yml`, `scripts/smoke_plugin.ts`, `docs/DEEPSEEK-PLUGIN.md`.
+
+### RC-045: Добавить JavaScript и убрать узкие места реального корпуса
+
+Статус: **done**. Приоритет: P0. Размер: M. Зависимости: RC-043.
+
+Приёмка:
+
+- TS/JS interfile scopes и точные UTF-8 spans проверены без исполнения исходников.
+- 224-файловый Geo Dash corpus индексируется; результаты до/после оптимизации семантически совпадают.
+- Общий writer/reader size limit, immutable cache и проверка текущих source hashes сохраняют границы snapshot.
+
+Ожидаемые материалы: `src/code-memory/`, `tests/code_memory.test.ts`, `docs/AB-RESULTS.md`.
+
+### RC-046: Запустить настоящий Harness A/B и опубликовать полный итог pilot
+
+Статус: **done**. Приоритет: P0. Размер: M. Зависимости: RC-044, RC-045.
+
+Приёмка:
+
+- Одна модель выполняет 28 независимых sessions на семи seeded regressions, по два повтора A/B с фиксированным oracle.
+- Provider usage, cache, цена, calls и все failures сохранены; успешность проверяется вне модели.
+- Публичный итог не содержит private source и явно указывает отсутствие vector retrieval и неподтверждённую экономию.
+
+Ожидаемые материалы: `scripts/harness_ab.ts`, `scripts/harness_meter.ts`, `docs/HARNESS-AB.md`, `evaluation/geo-dash-pilot/results.json`.
 
 ## M01: Зафиксированный корпус и контракты
 
@@ -540,3 +564,78 @@
 - Локальные, CI, provider, deployment и acceptance статусы разделены.
 
 Ожидаемые материалы: `evaluation/release-proof.json`, `docs/release-notes.md`.
+
+## M11: Локальный продукт: векторы, MCP и карта концептов
+
+Критерий этапа: Local hybrid retrieval измерен, MCP проверен реальным клиентом, карта ведёт к версиям исходников; installer и entitlement проверены отдельно.
+
+### RC-047: Проверить local SQLite/LanceDB и локальные embeddings
+
+Статус: **planned**. Приоритет: P0. Размер: L. Зависимости: RC-045.
+
+Приёмка:
+
+- Кандидат native storage/embedding stack работает локально на Windows; веса, indexes и source остаются в user data directory.
+- Versioned vector projection и add/change/delete/branch refresh проверены; измерены CPU, RAM, disk и cold/warm время.
+- Exact/FTS канал и ledger сохраняются; full rebuild не скрывает stale или missing sources.
+
+Ожидаемые материалы: `src/local-storage/`, `src/embeddings/`, `evaluation/local-vector-spike.json`.
+
+### RC-048: Сделать один компактный hybrid retrieve_context и повторить A/B
+
+Статус: **planned**. Приоритет: P0. Размер: L. Зависимости: RC-046, RC-047.
+
+Приёмка:
+
+- Один вызов внутри выполняет exact/FTS/vector merge, rerank, bounded dependencies и dedupe с source references и omissions.
+- Новые holdout tasks проверяют итог всей задачи при одинаковых budgets, включая retrieval/enrichment расходы и cache.
+- Снижение tokens/cost не заявляется без измерения; качество и cold/warm indexing сообщаются отдельно.
+
+Ожидаемые материалы: `src/retrieval/`, `src/harness/`, `evaluation/hybrid-pilot/`, `docs/AB-RESULTS.md`.
+
+### RC-049: Дать локальному CM настоящий MCP stdio adapter
+
+Статус: **planned**. Приоритет: P0. Размер: M. Зависимости: RC-048.
+
+Приёмка:
+
+- Реальный desktop MCP client запускает local process и получает тот же retrieve_context, что Harness.
+- Output budget, cancellation, snapshot mismatch и разрешённые project roots проверены.
+- Remote/localhost bridge требует отдельной конфигурации; cloud login сам по себе не предоставляет доступ к файлам.
+
+Ожидаемые материалы: `src/mcp/`, `docs/mcp-setup.md`, `evaluation/mcp-client-proof.json`.
+
+### RC-050: Сделать локальную world map концептов и source navigation
+
+Статус: **planned**. Приоритет: P1. Размер: L. Зависимости: RC-047.
+
+Приёмка:
+
+- React/TypeScript viewer раскрывает concepts → functions/classes → exact source spans и glossary.
+- Structural facts, similarity и inferred concepts имеют разные types/evidence/status; stale и unresolved состояния видимы.
+- Zoom, фильтр связей и поиск проходят реальную интерфейсную проверку на indexed project.
+
+Ожидаемые материалы: `apps/local-viewer/`, `docs/LOCAL-PRODUCT.md`, `evaluation/map-ui-proof.json`.
+
+### RC-051: Упаковать локальный агент и проверить update/restore
+
+Статус: **planned**. Приоритет: P1. Размер: L. Зависимости: RC-049, RC-050.
+
+Приёмка:
+
+- Чистая установка Windows, native dependencies и запуск MCP/map проходят на поддерживаемом runtime.
+- Update, rollback и export сохраняют source, user indexes и настройки; macOS/Linux проверены перед заявлением поддержки.
+
+Ожидаемые материалы: `packaging/local-agent/`, `docs/runbooks/`, `evaluation/installer-proof.json`.
+
+### RC-052: Проверить cloud account, entitlement и гипотезу подписки $10
+
+Статус: **planned**. Приоритет: P1. Размер: L. Зависимости: RC-051.
+
+Приёмка:
+
+- Login выдаёт signed entitlement; offline grace и отмена подписки не удаляют пользовательские данные и export.
+- BYOK или явно ограниченные credits отделены от цены продукта; финансовая модель включает поддержку и выбранные services.
+- Hosted deployment и подключение платежей выполняются только в отдельно разрешённой поставке.
+
+Ожидаемые материалы: `apps/account-service/`, `docs/LOCAL-PRODUCT.md`, `evaluation/subscription-pilot.json`.

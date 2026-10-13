@@ -16,6 +16,24 @@ export function snapshotId(files: { path: string; sha256: string }[], compiler: 
 }
 
 export const ANALYSIS_FILES = ["tsconfig.json", "package.json", "package-lock.json", "pnpm-lock.yaml", "yarn.lock", "bun.lock", "bun.lockb"];
+export const MAX_INDEX_BYTES = 128 * 1024 * 1024;
+
+export function isSourcePath(path: string): boolean {
+  return /\.(?:[cm]?[jt]s|[jt]sx)$/.test(path) && !/\.d\.(?:ts|mts|cts)$/.test(path);
+}
+
+export function byteOffsets(source: string): Int32Array {
+  const offsets = new Int32Array(source.length + 1);
+  let bytes = 0;
+  for (let position = 0; position < source.length; position++) {
+    offsets[position] = bytes;
+    const point = source.codePointAt(position)!;
+    bytes += point < 0x80 ? 1 : point < 0x800 ? 2 : point < 0x10000 ? 3 : 4;
+    if (point > 0xffff) offsets[++position] = -1;
+  }
+  offsets[source.length] = bytes;
+  return offsets;
+}
 
 export class CMError extends Error {
   constructor(readonly code: string, message: string) {

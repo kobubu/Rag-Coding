@@ -17,6 +17,7 @@
 | ADR-11 | Fastify API, React + TS viewer, JSON Schema + Ajv2020 | Одни внешние контракты с обязательной runtime-проверкой; TS-типы проверяют разработку, а не произвольный JSON | После API/viewer spike с конкретными границами и стоимостью поддержки |
 | ADR-12 | CM означает Code Memory; внешний DeepSeek Harness plugin | Пользователь выбрал термин и оболочку; independent core и четыре read-only tools подключаются без fork | Если реальная интеграция требует недоступной extension point |
 | ADR-13 | Первый рабочий plugin использует bounded local JSON snapshot | Полный ContextService ещё отсутствует; ранний прототип позволяет проверять symbols/context/graph на живых исходниках | При реализации PostgreSQL ledger и общего ContextPackage API; local format имеет собственную версию |
+| ADR-14 | Desktop CM хранит индекс локально; cloud account управляет подпиской | Предложен SQLite ledger/graph и LanceDB vector spike, MCP stdio и local map viewer; PostgreSQL остаётся вариантом team server | После реальной проверки vector packaging, retrieval, MCP-клиента и модели тарифа; эти компоненты пока не реализованы |
 
 13 октября 2026 года ADR-07 заменил исходный выбор Python: перенесены документационные инструменты, CI и structural probe. Исторические материалы FlashMT сохранены с прежними source revision и Python-фактами. На следующем шаге реализован CM plugin по ADR-12/13; после подключения Harness API общий минимум Node.js 22.19.0, рекомендован Node.js 24 LTS.
 

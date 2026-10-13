@@ -1,0 +1,236 @@
+{
+  "schema_version": "geo-dash-pilot-1",
+  "experiment_date": "2026-10-13",
+  "status": "complete",
+  "runtime": {
+    "node": "24.21.0",
+    "harness_cli": "0.2.0-rc.2",
+    "cloned_source_revision": "d743267388641bc76f17c45ce8b4c231aed1d32c",
+    "executed": "installed RC CLI"
+  },
+  "corpus": {
+    "project": "Geo Dash",
+    "revision": "47ed7fef0d3961333ab61ccf131e28249742d68e",
+    "files": 224,
+    "source_bytes": 3559518,
+    "manifest_sha256": "cd7589e453d65dc044adf0d4bdcab31d7bc2282ec03e7e0d3ac680bc3f9b0310",
+    "units": 16465,
+    "symbols": 29186,
+    "relations": 130775,
+    "derived_index_bytes": 69989756
+  },
+  "protocol": {
+    "cases_hash": "0ff055ee606964a439de8b04ad17db25ac577fdf0df8b74db4ee9788954bb1ac",
+    "oracle_sha256": "cb8edfb6dff9e218d0e0c2a049f6475b1191cdc5540f7b520c4f4c1763c5d995",
+    "primary_metric": "All independent behavioral checks pass after patch",
+    "secondary_metrics": [
+      "Provider billed input+output tokens",
+      "Cache-aware USD estimate",
+      "Latency",
+      "CM tool use"
+    ],
+    "repetitions": 2,
+    "order": "AB/BA counterbalanced by case and repetition",
+    "model": "gpt-6-luna",
+    "reasoning_effort": "low",
+    "max_model_calls": 12,
+    "max_output_tokens": 8192,
+    "max_run_seconds": 180,
+    "corpus_manifest": "430d2380f6bb073436b52df5be264c8ceefe4ebb2ec81b857b55980f3c072261",
+    "seed_regressions": true,
+    "development_cases": [
+      "wallet-idempotence"
+    ],
+    "holdout_cases": [
+      "calendar-validation",
+      "quota-clock-rollback",
+      "timing-end-boundary",
+      "hazard-depth-filter",
+      "stale-save-grants",
+      "economy-queue-serialization",
+      "map-pointer-cancel"
+    ],
+    "common_navigation_instruction": "Identical in both arms; prefer CM only when available"
+  },
+  "protocol_sha256": "ed264de2223048aca39ca53abcd0f0eb4d5e1b5ddb5edb2a3a0f1ff49a0d760c",
+  "implementation": [
+    {
+      "path": "src/code-memory/indexer.ts",
+      "sha256": "8ed9a303d853ae7690886cb1c6345255591648cc1c3c83f0bacc02609edf0634"
+    },
+    {
+      "path": "src/code-memory/source.ts",
+      "sha256": "6f52abcda6a1dc564841b8cdae73485fe220dd3f84749fb8a6b18878047d4a99"
+    },
+    {
+      "path": "src/code-memory/store.ts",
+      "sha256": "4177898b99dbeba76626cca5bc24e3fd7ba3ef9bf3b94d9086e238cee3453b18"
+    },
+    {
+      "path": "src/code-memory/query.ts",
+      "sha256": "380478b4914fc633ee58193d428a91509d566da52e9889640d91b07662d01bc3"
+    },
+    {
+      "path": "src/harness/plugin.ts",
+      "sha256": "2240d68c5eb54fcfb525d191cd80697d3128e52de4af00807545967e4d12c419"
+    },
+    {
+      "path": "scripts/harness_ab.ts",
+      "sha256": "faae4f470a79ea8d3afc29388ccbb08d819f55fa75d0a9ed2a1b844b97722a88"
+    },
+    {
+      "path": "scripts/harness_meter.ts",
+      "sha256": "dfad3db06752130835b72679161ff51cd403a02b38a2a88edaab25909c7747f9"
+    }
+  ],
+  "retrieval": {
+    "implemented": "lexical/structural CM",
+    "vector_search": false,
+    "graph_expand_calls": 0,
+    "common_navigation_prompt": true
+  },
+  "pricing": {
+    "unit": "USD per million tokens",
+    "uncached_input": 0.1,
+    "cache_read": 0.01,
+    "cache_write": 0.125,
+    "output": 0.5,
+    "source": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+    "estimate_only": true
+  },
+  "summary": {
+    "groups": [
+      {
+        "arm": "A",
+        "runs": 14,
+        "successful": 13,
+        "runtime_errors": 0,
+        "missing_usage": 0,
+        "model_calls": 84,
+        "cm_tool_calls": 0,
+        "total_tokens": 492968,
+        "total_input": 487439,
+        "output": 5529,
+        "uncached_input": 252,
+        "cache_read": 377295,
+        "cache_write": 109892,
+        "usd_estimate": 0.020299150000000002,
+        "mean_seconds": 17.41314489285711,
+        "tokens_per_success": 37920.61538461538
+      },
+      {
+        "arm": "B",
+        "runs": 14,
+        "successful": 14,
+        "runtime_errors": 0,
+        "missing_usage": 0,
+        "model_calls": 90,
+        "cm_tool_calls": 42,
+        "total_tokens": 523299,
+        "total_input": 517015,
+        "output": 6284,
+        "uncached_input": 270,
+        "cache_read": 408465,
+        "cache_write": 108280,
+        "usd_estimate": 0.020788649999999995,
+        "mean_seconds": 26.320212292857118,
+        "tokens_per_success": 37378.5
+      }
+    ],
+    "paired_cases": [
+      {
+        "case_id": "calendar-validation",
+        "repetitions": 2,
+        "A_tokens": 68681,
+        "B_tokens": 60429,
+        "saving_pct": 12.014967749450356,
+        "A_success": 2,
+        "B_success": 2
+      },
+      {
+        "case_id": "quota-clock-rollback",
+        "repetitions": 2,
+        "A_tokens": 56223,
+        "B_tokens": 95053,
+        "saving_pct": -69.0642619568504,
+        "A_success": 2,
+        "B_success": 2
+      },
+      {
+        "case_id": "timing-end-boundary",
+        "repetitions": 2,
+        "A_tokens": 84018,
+        "B_tokens": 45329,
+        "saving_pct": 46.04846580494656,
+        "A_success": 2,
+        "B_success": 2
+      },
+      {
+        "case_id": "hazard-depth-filter",
+        "repetitions": 2,
+        "A_tokens": 54871,
+        "B_tokens": 60940,
+        "saving_pct": -11.060487324816393,
+        "A_success": 2,
+        "B_success": 2
+      },
+      {
+        "case_id": "stale-save-grants",
+        "repetitions": 2,
+        "A_tokens": 140674,
+        "B_tokens": 143575,
+        "saving_pct": -2.0622147660548595,
+        "A_success": 2,
+        "B_success": 2
+      },
+      {
+        "case_id": "economy-queue-serialization",
+        "repetitions": 2,
+        "A_tokens": 40088,
+        "B_tokens": 51947,
+        "saving_pct": -29.582418678906407,
+        "A_success": 1,
+        "B_success": 2
+      },
+      {
+        "case_id": "map-pointer-cancel",
+        "repetitions": 2,
+        "A_tokens": 48413,
+        "B_tokens": 66026,
+        "saving_pct": -36.38072418565261,
+        "A_success": 2,
+        "B_success": 2
+      }
+    ],
+    "accounting_complete": true,
+    "token_saving_pct": -6.1527320231739235,
+    "cost_saving_pct": -2.411431020510668,
+    "quality_delta_pp": 7.14285714285714,
+    "exploratory_task_bootstrap_95_pct": [
+      -34.222855438852264,
+      16.720190576639816
+    ],
+    "limitations": [
+      "Seven task types from one project; repeated tasks are not independent",
+      "Seeded regressions; no historical production bug claim",
+      "Same conditional navigation instruction in both arms; availability alone is not tested",
+      "USD is calculated from provider usage, not a billing export"
+    ]
+  },
+  "indexing": {
+    "semantic_equivalence": "PASS",
+    "before_ms": 249898.6554,
+    "after_ms": 10226.8305,
+    "files": 224,
+    "units": 16465,
+    "symbols": 29186,
+    "relations": 130775
+  },
+  "source_and_cleanup": {
+    "source_files_checked": 224,
+    "source_changes": [],
+    "harness_processes_running": 0,
+    "node_repl_reset": true
+  },
+  "publication_scope": "Aggregates and hashes only; private prompts, oracle, source, patches and raw traces remain local"
+}

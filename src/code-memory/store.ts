@@ -2,12 +2,11 @@ import { readFileSync } from "node:fs";
 import { readFile, realpath, stat } from "node:fs/promises";
 import { resolve } from "node:path";
 import { Ajv2020 } from "ajv/dist/2020.js";
-import { ANALYSIS_FILES, CMError, hash, inside, snapshotId, utf8 } from "./source.js";
+import { ANALYSIS_FILES, CMError, hash, inside, isSourcePath, MAX_INDEX_BYTES, snapshotId, utf8 } from "./source.js";
 import type { CMIndex, SourceSpan } from "./types.js";
 
 const schema = JSON.parse(readFileSync(new URL("../../../contracts/cm-local.schema.json", import.meta.url), "utf8"));
 const validate = new Ajv2020({ strict: true, allErrors: true }).compile<CMIndex>(schema);
-const MAX_INDEX_BYTES = 16 * 1024 * 1024;
 
 export function validateIndex(value: unknown): CMIndex {
   if (!validate(value)) throw new CMError("invalid_index", JSON.stringify(validate.errors));
@@ -24,19 +23,21 @@ export function validateIndex(value: unknown): CMIndex {
   if (files.size !== index.files.length || units.size !== index.units.length || symbols.size !== index.symbols.length ||
     relations.size !== index.relations.length) throw new CMError("invalid_index", "Duplicate identities");
   const byBlob = new Map(index.files.map((file) => ["blob:" + file.sha256, file]));
+  const rawByBlob = new Map(index.files.map((file) => ["blob:" + file.sha256, Buffer.from(file.source, "utf8")]));
   for (const file of index.files) {
     if (file.path.includes("\\") || file.path.includes(":") || file.path.split("/").some((part) => !part || part === ".." || part === ".") ||
-      !/\.(?:ts|tsx|mts|cts)$/.test(file.path) || hash(Buffer.from(file.source, "utf8")) !== file.sha256) {
+      !isSourcePath(file.path) || hash(Buffer.from(file.source, "utf8")) !== file.sha256) {
       throw new CMError("invalid_index", "Invalid source path or blob hash");
     }
   }
   function checkSpan(span: SourceSpan, path?: string): void {
     const file = byBlob.get(span.file_version_id);
     if (!file || path && files.get(path)?.sha256 !== file.sha256) throw new CMError("invalid_index", "Span belongs to another blob");
-    const raw = Buffer.from(file.source, "utf8");
+    const raw = rawByBlob.get(span.file_version_id)!;
     if (span.start_byte > span.end_byte || span.end_byte > raw.length || span.line_start > span.line_end) throw new CMError("invalid_index", "Invalid source range");
-    utf8(raw.subarray(0, span.start_byte));
-    utf8(raw.subarray(span.start_byte, span.end_byte));
+    for (const boundary of [span.start_byte, span.end_byte]) {
+      if (boundary < raw.length && (raw[boundary]! & 0xc0) === 0x80) throw new CMError("invalid_source_range", "Span splits a UTF-8 character");
+    }
   }
   for (const unit of index.units) {
     if (symbols.has(unit.id)) throw new CMError("invalid_index", "Node identity collision");
@@ -72,6 +73,7 @@ export function validateIndex(value: unknown): CMIndex {
 export class CMStore {
   readonly projectRoot: string;
   readonly indexPath: string;
+  private cached: { digest: string; index: CMIndex } | undefined;
 
   constructor(projectRoot: string, indexPath: string) {
     this.projectRoot = resolve(projectRoot);
@@ -83,12 +85,23 @@ export class CMStore {
     let bytes: number;
     try { bytes = (await stat(this.indexPath)).size; }
     catch { throw new CMError("index_not_ready", "Build the local CM index with cm-index before using the plugin"); }
-    if (bytes > MAX_INDEX_BYTES) throw new CMError("index_limit", "Index exceeds 16 MiB");
+    if (bytes > MAX_INDEX_BYTES) throw new CMError("index_limit", "Index exceeds 128 MiB");
     const raw = await readFile(this.indexPath, { signal });
-    if (raw.length > MAX_INDEX_BYTES) throw new CMError("index_limit", "Index exceeds 16 MiB");
-    let parsed: unknown;
-    try { parsed = JSON.parse(utf8(raw)); } catch (error) { throw new CMError("invalid_index", String(error)); }
-    const index = validateIndex(parsed);
+    if (raw.length > MAX_INDEX_BYTES) throw new CMError("index_limit", "Index exceeds 128 MiB");
+    const digest = hash(raw);
+    if (this.cached?.digest !== digest) {
+      let parsed: unknown;
+      try { parsed = JSON.parse(utf8(raw)); } catch (error) { throw new CMError("invalid_index", String(error)); }
+      const validated = validateIndex(parsed);
+      const pending: object[] = [validated];
+      while (pending.length) {
+        const current = pending.pop()!;
+        for (const value of Object.values(current)) if (value !== null && typeof value === "object") pending.push(value);
+        Object.freeze(current);
+      }
+      this.cached = { digest, index: validated };
+    }
+    const index = this.cached.index;
     if (expectedSnapshot && expectedSnapshot !== index.snapshot_id) throw new CMError("snapshot_mismatch", "Re-run search against the current CM snapshot");
     const root = await realpath(this.projectRoot);
     for (const input of index.analysis_inputs) {

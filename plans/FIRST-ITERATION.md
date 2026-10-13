@@ -1,36 +1,40 @@
-# Первая итерация: от документов к воспроизводимому source core
+# Ближайшая итерация: локальные векторы и компактный context
 
-## Цель
+## Отправная точка
 
-Подготовить фундамент на TypeScript + Node.js, на котором можно честно сравнивать дробление: фиксированный TS source, диапазоны, TypeScript capabilities и размеченные вопросы. Платный enrichment и богатый viewer не нужны для этой итерации. Установка и документационные проверки: `npm ci`, затем `npm run verify`.
+RC-001/RC-002 и RC-043…RC-046 выполнены: документы, TS/JS CM core, настоящий Harness plugin, 224-file corpus и live model A/B. CM прошёл 14/14 правок против 13/14, но total tokens выросли на 6,2%, расчётная цена — на 2,4%. [Итог и ограничения](../docs/AB-RESULTS.md). Это lexical/structural prototype; embeddings ещё отсутствуют.
 
-RC-001/RC-002 и prototype RC-043/RC-044 уже выполнены. `npm run cm:index` создаёт local CM, `npm run plugin:smoke` делает настоящий Harness dispatch. Первое развитие измеряемого backend начинается с RC-003. Источник статусов — [backlog.json](backlog.json), представление — [BACKLOG](BACKLOG.md).
+Источник статусов — [backlog.json](backlog.json), представление — [BACKLOG](BACKLOG.md). Расширенный M01 corpus, общий ContextPackage и серверный backend не объявляются готовыми по результатам pilot.
 
 ## Порядок работы
 
 | Шаг | Задачи | Конкретный результат | Проверка |
 |---|---|---|---|
-| 1 | RC-003 | Один repo, commit, file manifest, allowed paths | Повторное чтение даёт тот же manifest hash |
-| 2 | RC-004 | 40 вопросов с spans/dependencies, split 10/30 | Близкие задачи и модули не утекли из holdout в настройку |
-| 3 | RC-005 | Уточнённый v0.1 и capabilities TypeScript | Ajv2020 проверяет примеры, ограничения согласованы |
-| 4 | RC-006 | Git/workspace reader | Dirty/add/delete и изменение во время чтения имеют правильный результат |
-| 5 | RC-007 | Blobs и coordinate mapping | Exact roundtrip Unicode/BOM/CRLF; ошибка неподдерживаемой кодировки явная |
-| 6 | Начало RC-010 | TypeScript Compiler API adapter поверх immutable file | Definitions/scopes/ranges точны, неполный parse виден |
+| 1 | RC-047 | SQLite ledger/FTS/graph и LanceDB vector spike, local embedding model | Чистая Windows установка; cold/warm CPU/RAM/disk; exact version и add/change/delete/branch refresh |
+| 2 | RC-048 | Один retrieve_context: exact/FTS/vector → rerank → bounded dependencies → dedupe | Компактный source context с omissions; новый holdout A/B учитывает всю стоимость и качество |
+| 3 | RC-049 | MCP stdio adapter того же core | Реальный desktop client, budgets, cancellation, roots и stale snapshot |
+| 4 | RC-050 | React/TS concept world map | Concept → symbol → exact source; типы/evidence/status связей и stale/unresolved состояния |
+| 5 | RC-051 | Local installer, update, rollback и export | User data сохраняются; native dependencies проходят поддерживаемые платформы |
+| 6 | RC-052 | Account и signed local entitlement; тарифная гипотеза | Offline grace, отмена без удаления данных; BYOK/credits и отдельная проверка экономики |
 
-Полная SQL-интеграция и recursive grouping остаются следующими задачами. Экспериментальный parser не объявляется готовым search API.
+Шаги 3/4 можно разрабатывать независимо после своих prerequisites; оба читают тот же versioned CM core. Документ не запускает hosted service, платежи или production release.
 
-## Необходимые fixtures
+## Что измерить до решения о векторах
 
-Собственные TS-примеры: nested closure с внешними `let`/`const`; shadowed locals и одноимённые символы в разных scopes; arrow callback и lexical `this`; decorator и JSDoc; if/else; try/finally; acquire/release-пара; generics и type-only imports; TSX; Unicode с surrogate pairs, BOM и CRLF; giant string; файл с syntax error; изменённый или удалённый файл overlay. Поддержка каждого случая публикуется в capabilities; текущая небольшая fixture не доказывает все эти возможности.
+- Exact identifier search сохраняет definitions/scopes; semantic channel добавляет релевантные candidates на описательные queries.
+- Unit embeddings имеют source/model/config fingerprint; similarity edge отличается от доказанного call/reference.
+- Один context call возвращает достаточный минимальный набор; дополнительные parents не прикладываются автоматически.
+- Поисковые/модельные turns, повторная history, output, cache и enrichment входят в общий task budget.
+- Indexing и local retrieval resources измеряются отдельно от LLM usage; cold/warm cache состояния явные.
 
-Каждая fixture имеет ожидаемые source hashes, spans и поддержанные semantic facts. Код fixture не должен выполняться при индексации. Отдельные runtime-тесты для проверки будущих правок запускаются только в своём тестовом сценарии.
+Отобрать новые задачи до просмотра результатов нового retrieval. Текущие семь типов уже изучены и не являются независимым holdout для настройки следующей версии. Oracle проходит на оригинале и падает на seeded regression. Не удалять failures и sessions с неполным usage.
 
-## Первый сквозной результат
+## Fixtures и version boundaries
 
-Из входного commit получить manifest → открыть конкретный file blob → разобрать функцию → получить вложенное определение и его captures → показать exact spans и diagnostics. Пользователь может проверить источники вручную, даже до реализации векторного поиска.
+Сохранить Unicode/BOM/CRLF, surrogate boundary, nested captures, shadowed locals, interfile TS/JS и CommonJS, syntax diagnostics, oversized index и frozen-cache checks. Добавить по необходимости vector-specific cases: stale projection, model migration, rename/delete, branch switch, недоступные model weights и изоляция проектов.
 
-## Evidence пакета итерации
+RC-003…RC-007 остаются путём к более широкому reproducible corpus и общему ledger contract. Private source, prompts, patches и oracle хранятся локально; в Git публикуются reusable runners, безопасные aggregates и собственные fixtures.
 
-Сохранить corpus/config hashes, версии runtime и адаптера, команды, per-case результаты, список неподдержанных cases и source ranges. Доступные частные файлы не копировать в публичный репозиторий; публиковать собственные fixtures и безопасные metadata.
+## Evidence и приёмка
 
-После этих результатов обновить фактические статусы RC-003…RC-007, проверить TypeScript project configuration по плану и уточнить сложность следующей итерации. Python semantic backend исследуется в M09. Не менять holdout после просмотра результатов кандидата.
+Сохранить source/model/config hashes, версии runtime/storage, команды, resources, реальные клиентские проверки и все task results. Vector database не считается готовностью RAG; MCP registration не считается проверкой клиента; карта не считается фактом языка без evidence. Установка: `npm ci`, проверки текущего plugin: `npm run verify`.
