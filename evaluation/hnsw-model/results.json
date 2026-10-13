@@ -1,0 +1,3872 @@
+{
+  "format": "cm-hnsw-model-results-1",
+  "protocol": {
+    "format": "cm-hnsw-model-ab-1",
+    "created_at": "2026-10-13T22:12:58.700Z",
+    "model": "gpt-6-luna",
+    "reasoning_effort": "low",
+    "repetitions": 2,
+    "arms": [
+      "none",
+      "exact",
+      "ann"
+    ],
+    "cases_hash": "d610ead0ad27d72aec569d9559f15053ef199fba7904e790d821ff4c54cd4634",
+    "corpus_hash": "430d2380f6bb073436b52df5be264c8ceefe4ebb2ec81b857b55980f3c072261",
+    "source_revision": "17007329bd381384f494278f2206a70727f0e723",
+    "implementation": [
+      {
+        "path": "scripts/ann_ab.ts",
+        "sha256": "5425efb67cef538450478c02f92a5290b0456d23c8fad23a6e4dacd117b2e2c3"
+      },
+      {
+        "path": "dist/scripts/ann_ab.js",
+        "sha256": "f9fd4a907f0b0257df8758ab2e1ef6e987ed9eb5b3b58588d149ce634a9dc339"
+      },
+      {
+        "path": "scripts/graph_checks.ts",
+        "sha256": "fa709dfcdb03ad9fae82db5e4aac827be8f26fc0d5e45c0c002e9dd83a4663fc"
+      },
+      {
+        "path": "dist/scripts/graph_checks.js",
+        "sha256": "35655d26c2207cffdfbcd0e2ed6ae8b42743ed758dea8fb4bbab5576f878ab5f"
+      },
+      {
+        "path": "scripts/harness_ab.ts",
+        "sha256": "1a77a96d3aa1419f3ee86382c2c33c5fb222ec24fc4f7750fd752634f75f8768"
+      },
+      {
+        "path": "dist/scripts/harness_ab.js",
+        "sha256": "9722550b5479d1963dd9b87dd54861d21d22e47da86f2963a15042531401eacd"
+      },
+      {
+        "path": "scripts/harness_meter.ts",
+        "sha256": "1630b94bee061ffe1324c142a1150db37506824288ee84405d59573a9e771e6d"
+      },
+      {
+        "path": "dist/scripts/harness_meter.js",
+        "sha256": "972dcb6574021e820a60fa788e8d862a3c1f3c545db0486fbf2b09086c182553"
+      },
+      {
+        "path": "scripts/lib.ts",
+        "sha256": "2c08b0809a3a0e1a06b44166429b35b51fb76c135d3af982c6a2785dcf34acd9"
+      },
+      {
+        "path": "dist/scripts/lib.js",
+        "sha256": "a7be953e3b1cf6a812e3b8185813548f92877b8fadb28bdb0a04d7e2231ac4e9"
+      },
+      {
+        "path": "scripts/project_checks_plugin.ts",
+        "sha256": "1728a4a14bc0a96c299b7821b6b6027301be72a3287429a25d085d8cce232e0c"
+      },
+      {
+        "path": "dist/scripts/project_checks_plugin.js",
+        "sha256": "9c6f221058aa1236184201a7f9873299bf5ab45fe29e5e4aa2e8aa06d0a0da22"
+      },
+      {
+        "path": "scripts/run_ann_ab.ts",
+        "sha256": "7fe3b6757948faf3b98c25861489f8772d82d2a67f947db5670f804a9ea1dd8c"
+      },
+      {
+        "path": "dist/scripts/run_ann_ab.js",
+        "sha256": "f2a5b297ca9486fbd159cc1ec699108f22b851be3d50795a1a4675a680ac05ff"
+      },
+      {
+        "path": "src/code-memory/ann_cli.ts",
+        "sha256": "ec832ee3379eec2d3da3fe630574e4c921017e42f53f836e26ed9905ee782b11"
+      },
+      {
+        "path": "dist/src/code-memory/ann_cli.js",
+        "sha256": "8908efa202deee2339092015d4efd2d24d8ff5fabf1dfc80611eebf205fe845a"
+      },
+      {
+        "path": "src/code-memory/chunks.ts",
+        "sha256": "1661142e32222431c32de0d62b38e27df4c4094c5b3db297d543a208d596f1f0"
+      },
+      {
+        "path": "dist/src/code-memory/chunks.js",
+        "sha256": "82ae9666336b41b9f1c3c148eca28fc1b89dd9f3392b985f3fb43cbadc4e159c"
+      },
+      {
+        "path": "src/code-memory/cli.ts",
+        "sha256": "1e21966c1127fe3bdfa47926dbad922bf3dab9d822c44ecd9772a09a040708dd"
+      },
+      {
+        "path": "dist/src/code-memory/cli.js",
+        "sha256": "41ed2c37fb738f2010be9fece7e0d987f607d177ded0fb69d513e7af6bf25ab8"
+      },
+      {
+        "path": "src/code-memory/graph_retrieve.ts",
+        "sha256": "69236277aff7ae0079526f74d7ce41fd2b9395502127ffc5291ac8edadacbc30"
+      },
+      {
+        "path": "dist/src/code-memory/graph_retrieve.js",
+        "sha256": "c8ea1cc58e5d055063cf64429d9dab6402c82012d98428d7a93c8fff72c6aac5"
+      },
+      {
+        "path": "src/code-memory/indexer.ts",
+        "sha256": "5a96ec81e955c03a399ebb6b2862a203cf2c1100d0f0b4ee3d3bbd937aa95382"
+      },
+      {
+        "path": "dist/src/code-memory/indexer.js",
+        "sha256": "952817eb5f00d5cf1c5b9159184d4a8fe433bef68284688ae5ab33ae33192a0a"
+      },
+      {
+        "path": "src/code-memory/knowledge.ts",
+        "sha256": "88ae9543ec08c9e3ca299f09aa4e416fcb5c3f01e0878095ba20c744dbe6903c"
+      },
+      {
+        "path": "dist/src/code-memory/knowledge.js",
+        "sha256": "7fff92a925752025bcfc9e46af851c6cfe0aeadb6e3a55663ed09124bae4aee8"
+      },
+      {
+        "path": "src/code-memory/live.ts",
+        "sha256": "df19b51ede03cc723008ed1bb7767959b08720c714466a3946aaea43ac4df717"
+      },
+      {
+        "path": "dist/src/code-memory/live.js",
+        "sha256": "0a6f5142c26d8908089bca15fb253d6a73ae8e07f9490aeb23da93339daa7372"
+      },
+      {
+        "path": "src/code-memory/query.ts",
+        "sha256": "380478b4914fc633ee58193d428a91509d566da52e9889640d91b07662d01bc3"
+      },
+      {
+        "path": "dist/src/code-memory/query.js",
+        "sha256": "177fd3e99389992e248df7dccf44ef1b8c52538ccf918f2fb4ed0866b27c51cb"
+      },
+      {
+        "path": "src/code-memory/retrieve.ts",
+        "sha256": "da2ed3972a0cc4b4b801a90bc14d3acf0281d5c38df48ad489df29805f9e4d52"
+      },
+      {
+        "path": "dist/src/code-memory/retrieve.js",
+        "sha256": "927b76e94bfd4f36da739ac1bd48b3031f80c91187e3d532d639ca2c7f594322"
+      },
+      {
+        "path": "src/code-memory/search_cli.ts",
+        "sha256": "feb51a21b7eae020f4784d3b3ab92950c619a69ec9070d38101f6aeab95ddedf"
+      },
+      {
+        "path": "dist/src/code-memory/search_cli.js",
+        "sha256": "c37522858ec00cda295127758a2a43bebfab038de7934e60f0df72787fa0981d"
+      },
+      {
+        "path": "src/code-memory/source.ts",
+        "sha256": "b4be9f879f9c5722b1a7ba875e0dbb01f44c6a1bc72fd179453d2ab6f900a524"
+      },
+      {
+        "path": "dist/src/code-memory/source.js",
+        "sha256": "b93367934c21b616e5a4e16a58812f90b9d85652083666a6b4804c197eb9da6c"
+      },
+      {
+        "path": "src/code-memory/store.ts",
+        "sha256": "552c6d3ea209a5cdbbfd41d5a14fcd41866728d838f62ae126e1f8f66015e396"
+      },
+      {
+        "path": "dist/src/code-memory/store.js",
+        "sha256": "a8d307eea60724fb0307471062f86b117be1c40468fb1c8414916e78e8328a58"
+      },
+      {
+        "path": "src/code-memory/types.ts",
+        "sha256": "ad337bc6337850714843fda6ea2044683a48feb3465e4c0bdaad08d39617bc86"
+      },
+      {
+        "path": "dist/src/code-memory/types.js",
+        "sha256": "05c41b0ce4ba21f6ec0f485502ef2cd15de86b3c992e97965ce907b453a1baa6"
+      },
+      {
+        "path": "src/code-memory/vector.ts",
+        "sha256": "104752774cd567527f9fdb09e56e9e61bd4f3f41bc66e0ede2f64bfb20389439"
+      },
+      {
+        "path": "dist/src/code-memory/vector.js",
+        "sha256": "8827383401dadba4bb0600d69fd0406a696a53990bedc60b7a4a9dc8a645c1ad"
+      },
+      {
+        "path": "src/code-memory/vector_cli.ts",
+        "sha256": "a9bc4345eaab4606a90c379829578ccf2ab6dc3e19ca9f346d8e29ec445a97fb"
+      },
+      {
+        "path": "dist/src/code-memory/vector_cli.js",
+        "sha256": "50fe2e32e92f528265c4997fb0692b1948165fdaee071e1483f7e8a193824c33"
+      },
+      {
+        "path": "src/harness/plugin.ts",
+        "sha256": "6599c9b934f45e13cb98c307405832ec905bc79fc18b1b58758e03d1e2ac5733"
+      },
+      {
+        "path": "dist/src/harness/plugin.js",
+        "sha256": "eb56a1072606726065b949a5a018b092f29acb52af919a00c045810cd82b6ea8"
+      },
+      {
+        "path": "src/local-agent/cli.ts",
+        "sha256": "d32e478b42556fdd47551579107a7a965b5419e555912acf9d396084c682267a"
+      },
+      {
+        "path": "dist/src/local-agent/cli.js",
+        "sha256": "cbe628816478a47292ccba5cc0a59cc1817135878bc18dd3fb617842cf53bfc3"
+      },
+      {
+        "path": "src/local-agent/config.ts",
+        "sha256": "fff676815cc53dabc08df23f7c523cfd9b8db6b2489afb2d6ebc140fdd818014"
+      },
+      {
+        "path": "dist/src/local-agent/config.js",
+        "sha256": "66f01bcd7d980e80fa4354c5ede1f8ae1c6700ce1855de25a1571695acffa4f7"
+      },
+      {
+        "path": "src/local-agent/http.ts",
+        "sha256": "7493fa9366c9eef60f2bb71f1181a152ad62c3a51dd5d45b666899e412f5aab5"
+      },
+      {
+        "path": "dist/src/local-agent/http.js",
+        "sha256": "d6ef6cbf2e7d7dd9216c35401e27d8400f2dc899491d7f06a7c53478519571df"
+      },
+      {
+        "path": "src/local-agent/map.ts",
+        "sha256": "82e9b7b6139e93ff3739dd97c62935ee067dfe7c3ab5c5fb510f7b61168a3d86"
+      },
+      {
+        "path": "dist/src/local-agent/map.js",
+        "sha256": "fc10d41dc66d1ea94f15f3fe74a354c3d75e77882e1b487f9aa671492b3fcb2b"
+      },
+      {
+        "path": "src/local-agent/models.ts",
+        "sha256": "01ad788a233ae5cdcf1b72a2ce5b70cbd39d8076818ed58e09c1aedf17a5a33f"
+      },
+      {
+        "path": "dist/src/local-agent/models.js",
+        "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      {
+        "path": "src/local-agent/service.ts",
+        "sha256": "645546fc29bb4de316e0ba19e180f74d8bc6bf26aa778481d4bed4883a115c89"
+      },
+      {
+        "path": "dist/src/local-agent/service.js",
+        "sha256": "61511cfe1ee8a3de43d3687260260fe5e90fc74f8fd7ac4f4fbe3590ed3a0407"
+      },
+      {
+        "path": "src/mcp/cli.ts",
+        "sha256": "fedb7f353ff0b1bba7e8fa3a62f69fb12f761e363de0d6452d99505ef5b9d71a"
+      },
+      {
+        "path": "dist/src/mcp/cli.js",
+        "sha256": "7ec9663e90d36962c57590fd294e45b274ecab1086d45fc54e4943b165d327c6"
+      },
+      {
+        "path": "src/mcp/server.ts",
+        "sha256": "c9c26fef4e80c6720e17b55620dca8b6411bdfec807f578096ea3b79f78e1d3c"
+      },
+      {
+        "path": "dist/src/mcp/server.js",
+        "sha256": "7af6a532f02a1de4a21b4c772842fb6fa800c97a5de609879fa3ef0655fe669e"
+      },
+      {
+        "path": "contracts/cm-local.schema.json",
+        "sha256": "93bbaeac192c9ffe178746bd05a7f34e590b05a42e4443366968f4060f35a7b7"
+      },
+      {
+        "path": "package-lock.json",
+        "sha256": "953c9ceb5447753bc5fe5fe7240c5351e7e966839c1db5d7a516640a6624bde9"
+      }
+    ],
+    "preparation_sha256": "7249413f423ff6363f753e4a7f5386908127abd41eec32e4d1a2a5514fda78cb",
+    "runtime": {
+      "node_sha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32",
+      "harness_entry_sha256": "1a03dee18683483ff6a1b27b2a1e650230da6bcca9a0f55f7d81b3308c3f307f"
+    },
+    "max_model_calls": 12,
+    "max_run_seconds": 240,
+    "context_source_bytes": 6000,
+    "max_estimated_usd": 1,
+    "policy": "none has no CM; exact and ann use the same HNSW-bearing physical table, graph policy, unit chunks, embeddings and live refresh; exact explicitly bypasses the vector index",
+    "quality": "Independent final behavioral checks, protected-source/addition audit, unchanged seeded code must fail; all completed provider usage including failures",
+    "order": "Rotate three arms across tasks/repetitions and reverse alternating rows",
+    "seed_regressions": true,
+    "semantic_holdout": [
+      "Stop counting a rewarded advertisement once the daily local allowance has been exhausted",
+      "When collecting a coin beside a spring or orb, compare the sorted input outcome contacts",
+      "Reuse painted glyph textures while drawing the same label across consecutive frames",
+      "Exclude hazards outside the visible horizontal camera interval from collision candidates",
+      "Preserve purchased cosmetic skins when upgrading the saved progress data schema",
+      "Allow a freely chosen destination city on the planet world map",
+      "Which routine adjusts the player's vertical position when landing on a moving platform",
+      "Flush native mobile progress persistence after leaving the application",
+      "Load a lower resolution image variant for a memory constrained mobile device",
+      "Reject a duplicate payment receipt instead of granting the reward a second time",
+      "Switch the canvas rendering quality when frame duration remains above the target budget",
+      "Keep the first equal length repeated obstacle pattern when computing sequence statistics",
+      "Avoid reinitializing the music track while resuming a paused play session",
+      "Convert a selected geographic city coordinate into the world map projection",
+      "Choose a right to left document direction for an Arabic locale selected by a page query",
+      "Free the backing canvas of the oldest unused raster when the local byte budget is exceeded"
+    ],
+    "public_checks": "Identical project_checks tool in all three arms; distinct public/final fuzz seed",
+    "price": {
+      "input": 0.1,
+      "cached": 0.01,
+      "cache_write": 0.125,
+      "output": 0.5,
+      "per": 1000000,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-luna"
+    },
+    "limitations": [
+      "Six previously measured repair tasks reused for a controlled search-mode ablation; not a fresh model holdout",
+      "Sixteen new semantic queries measure exact-neighbor recall, not semantic correctness",
+      "Two stochastic repeats, one repository and device; no whole-game FPS/CPU optimization or statistical noninferiority claim",
+      "Native search speed excludes embeddings/source checks/context assembly; full session timing includes startup and live index rebuilds",
+      "Same rendered context cannot establish a causal ANN token saving from differing model trajectories",
+      "Local cached embeddings and ANN construction are measured separately; model price is an estimate, not invoice"
+    ]
+  },
+  "summary": {
+    "groups": [
+      {
+        "arm": "none",
+        "runs": 12,
+        "correct": 9,
+        "tokens": 714084,
+        "input_tokens": 706896,
+        "output_tokens": 7188,
+        "uncached_input": 276,
+        "cache_read": 593492,
+        "cache_write": 113128,
+        "estimated_usd": 0.023697520000000003,
+        "model_calls": 92,
+        "total_session_seconds": 265.5074426999999,
+        "median_session_seconds": 23.001136600000084
+      },
+      {
+        "arm": "exact",
+        "runs": 12,
+        "correct": 12,
+        "tokens": 327926,
+        "input_tokens": 323369,
+        "output_tokens": 4557,
+        "uncached_input": 183,
+        "cache_read": 257764,
+        "cache_write": 65422,
+        "estimated_usd": 0.013052189999999998,
+        "model_calls": 61,
+        "total_session_seconds": 436.99505560000017,
+        "median_session_seconds": 34.32848000000001
+      },
+      {
+        "arm": "ann",
+        "runs": 12,
+        "correct": 12,
+        "tokens": 296321,
+        "input_tokens": 291375,
+        "output_tokens": 4946,
+        "uncached_input": 195,
+        "cache_read": 235310,
+        "cache_write": 55870,
+        "estimated_usd": 0.01182935,
+        "model_calls": 65,
+        "total_session_seconds": 448.94030410000016,
+        "median_session_seconds": 35.20113649999999
+      }
+    ],
+    "comparisons": [
+      {
+        "candidate": "exact",
+        "reference": "none",
+        "tokens_percent": -54.07739145534699,
+        "price_percent": -44.92170488726248,
+        "session_time_percent": 64.58862740573575,
+        "quality_delta_pp": 25,
+        "matched_token_wins": 11,
+        "matched_price_wins": 11
+      },
+      {
+        "candidate": "ann",
+        "reference": "none",
+        "tokens_percent": -58.50334134359543,
+        "price_percent": -50.081907305068206,
+        "session_time_percent": 69.08765326298716,
+        "quality_delta_pp": 25,
+        "matched_token_wins": 12,
+        "matched_price_wins": 12
+      },
+      {
+        "candidate": "ann",
+        "reference": "exact",
+        "tokens_percent": -9.637845123594957,
+        "price_percent": -9.368849212277775,
+        "session_time_percent": 2.733497403900609,
+        "quality_delta_pp": 0,
+        "matched_token_wins": 6,
+        "matched_price_wins": 6
+      }
+    ],
+    "paired": [
+      {
+        "task": "named-percentile",
+        "repetition": 1,
+        "correct": {
+          "none": true,
+          "exact": true,
+          "ann": true
+        },
+        "tokens": {
+          "none": 15073,
+          "exact": 9826,
+          "ann": 10313
+        },
+        "estimated_usd": {
+          "none": 0.000732035,
+          "exact": 0.0005650399999999999,
+          "ann": 0.0006701700000000001
+        },
+        "initial_context_equal": true,
+        "ann_vs_exact_tokens_percent": 4.956238550783643,
+        "ann_vs_exact_price_percent": 18.60576242389922
+      },
+      {
+        "task": "named-raster-lru",
+        "repetition": 1,
+        "correct": {
+          "none": true,
+          "exact": true,
+          "ann": true
+        },
+        "tokens": {
+          "none": 16077,
+          "exact": 10993,
+          "ann": 10864
+        },
+        "estimated_usd": {
+          "none": 0.00078507,
+          "exact": 0.0006543050000000001,
+          "ann": 0.000628385
+        },
+        "initial_context_equal": true,
+        "ann_vs_exact_tokens_percent": -1.1734740289275014,
+        "ann_vs_exact_price_percent": -3.9614552846149897
+      },
+      {
+        "task": "discover-input-depth",
+        "repetition": 1,
+        "correct": {
+          "none": false,
+          "exact": true,
+          "ann": true
+        },
+        "tokens": {
+          "none": 110934,
+          "exact": 40849,
+          "ann": 50929
+        },
+        "estimated_usd": {
+          "none": 0.0032804,
+          "exact": 0.0015188250000000001,
+          "ann": 0.00160689
+        },
+        "initial_context_equal": true,
+        "ann_vs_exact_tokens_percent": 24.67624666454502,
+        "ann_vs_exact_price_percent": 5.798232186064878
+      },
+      {
+        "task": "discover-mobile-image",
+        "repetition": 1,
+        "correct": {
+          "none": true,
+          "exact": true,
+          "ann": true
+        },
+        "tokens": {
+          "none": 89612,
+          "exact": 20664,
+          "ann": 20663
+        },
+        "estimated_usd": {
+          "none": 0.002986245,
+          "exact": 0.000854115,
+          "ann": 0.0008448150000000001
+        },
+        "initial_context_equal": true,
+        "ann_vs_exact_tokens_percent": -0.004839334107631377,
+        "ann_vs_exact_price_percent": -1.0888463497304213
+      },
+      {
+        "task": "locale-two-modules",
+        "repetition": 1,
+        "correct": {
+          "none": false,
+          "exact": true,
+          "ann": true
+        },
+        "tokens": {
+          "none": 63831,
+          "exact": 91554,
+          "ann": 28777
+        },
+        "estimated_usd": {
+          "none": 0.002600435,
+          "exact": 0.00289551,
+          "ann": 0.0011981749999999999
+        },
+        "initial_context_equal": true,
+        "ann_vs_exact_tokens_percent": -68.56827664547698,
+        "ann_vs_exact_price_percent": -58.61955234138374
+      },
+      {
+        "task": "discover-statistics-tie",
+        "repetition": 1,
+        "correct": {
+          "none": true,
+          "exact": true,
+          "ann": true
+        },
+        "tokens": {
+          "none": 44042,
+          "exact": 11400,
+          "ann": 11398
+        },
+        "estimated_usd": {
+          "none": 0.00140556,
+          "exact": 0.0006910449999999999,
+          "ann": 0.00068155
+        },
+        "initial_context_equal": true,
+        "ann_vs_exact_tokens_percent": -0.017543859649127302,
+        "ann_vs_exact_price_percent": -1.3740060343392924
+      },
+      {
+        "task": "named-percentile",
+        "repetition": 2,
+        "correct": {
+          "none": true,
+          "exact": true,
+          "ann": true
+        },
+        "tokens": {
+          "none": 15033,
+          "exact": 9835,
+          "ann": 10309
+        },
+        "estimated_usd": {
+          "none": 0.00072328,
+          "exact": 0.00056732,
+          "ann": 0.00066817
+        },
+        "initial_context_equal": true,
+        "ann_vs_exact_tokens_percent": 4.81952211489578,
+        "ann_vs_exact_price_percent": 17.77656349150394
+      },
+      {
+        "task": "named-raster-lru",
+        "repetition": 2,
+        "correct": {
+          "none": true,
+          "exact": true,
+          "ann": true
+        },
+        "tokens": {
+          "none": 16142,
+          "exact": 10877,
+          "ann": 10854
+        },
+        "estimated_usd": {
+          "none": 0.00080027,
+          "exact": 0.000626495,
+          "ann": 0.00062598
+        },
+        "initial_context_equal": true,
+        "ann_vs_exact_tokens_percent": -0.21145536453066605,
+        "ann_vs_exact_price_percent": -0.08220336954005703
+      },
+      {
+        "task": "discover-input-depth",
+        "repetition": 2,
+        "correct": {
+          "none": false,
+          "exact": true,
+          "ann": true
+        },
+        "tokens": {
+          "none": 80436,
+          "exact": 42873,
+          "ann": 47680
+        },
+        "estimated_usd": {
+          "none": 0.00223062,
+          "exact": 0.001411615,
+          "ann": 0.00139406
+        },
+        "initial_context_equal": true,
+        "ann_vs_exact_tokens_percent": 11.212184824948102,
+        "ann_vs_exact_price_percent": -1.2436110412541668
+      },
+      {
+        "task": "discover-mobile-image",
+        "repetition": 2,
+        "correct": {
+          "none": true,
+          "exact": true,
+          "ann": true
+        },
+        "tokens": {
+          "none": 133965,
+          "exact": 20871,
+          "ann": 20956
+        },
+        "estimated_usd": {
+          "none": 0.004081975000000001,
+          "exact": 0.000878785,
+          "ann": 0.00090405
+        },
+        "initial_context_equal": true,
+        "ann_vs_exact_tokens_percent": 0.4072636672895369,
+        "ann_vs_exact_price_percent": 2.87499217669851
+      },
+      {
+        "task": "locale-two-modules",
+        "repetition": 2,
+        "correct": {
+          "none": true,
+          "exact": true,
+          "ann": true
+        },
+        "tokens": {
+          "none": 99031,
+          "exact": 46172,
+          "ann": 61567
+        },
+        "estimated_usd": {
+          "none": 0.0028746500000000003,
+          "exact": 0.0015854349999999998,
+          "ann": 0.0017972449999999998
+        },
+        "initial_context_equal": true,
+        "ann_vs_exact_tokens_percent": 33.342718530711245,
+        "ann_vs_exact_price_percent": 13.359740386707752
+      },
+      {
+        "task": "discover-statistics-tie",
+        "repetition": 2,
+        "correct": {
+          "none": true,
+          "exact": true,
+          "ann": true
+        },
+        "tokens": {
+          "none": 29908,
+          "exact": 12012,
+          "ann": 12011
+        },
+        "estimated_usd": {
+          "none": 0.00119698,
+          "exact": 0.0008037000000000001,
+          "ann": 0.00080986
+        },
+        "initial_context_equal": true,
+        "ann_vs_exact_tokens_percent": -0.008325008325005268,
+        "ann_vs_exact_price_percent": 0.7664551449545698
+      }
+    ],
+    "all_initial_contexts_equal": true,
+    "accounting_complete": true
+  },
+  "native": {
+    "queries": 22,
+    "semantic_holdout_queries": 16,
+    "k": 24,
+    "blocks": 5,
+    "strict_recall_at_24": 0.9962121212121211,
+    "tie_aware_recall_at_24": 0.9962121212121211,
+    "median_exact_ms": 15.306049999999232,
+    "median_ann_ms": 4.548100000003615,
+    "equal_graph_contexts": 22,
+    "measurements": [
+      {
+        "task": "named-percentile",
+        "query": "named-percentile",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 15.15875000000051,
+        "median_ann_ms": 6.6463499999990745,
+        "native": [
+          {
+            "exact_ms": 14.855850000001737,
+            "ann_ms": 6.522000000000844
+          },
+          {
+            "exact_ms": 16.543399999998655,
+            "ann_ms": 6.9616500000011
+          },
+          {
+            "exact_ms": 14.904899999997724,
+            "ann_ms": 6.095699999999852
+          },
+          {
+            "exact_ms": 15.15875000000051,
+            "ann_ms": 6.6463499999990745
+          },
+          {
+            "exact_ms": 17.253249999999753,
+            "ann_ms": 8.584850000001097
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "exact",
+            "milliseconds": 488.3194999999978,
+            "source_bytes": 398,
+            "sha256": "5394915512ed17c379a30486ceee5fadaaa7b9f377864410e89a1b6522d6d7e4"
+          },
+          {
+            "search_mode": "ann",
+            "milliseconds": 135.96800000000076,
+            "source_bytes": 398,
+            "sha256": "5394915512ed17c379a30486ceee5fadaaa7b9f377864410e89a1b6522d6d7e4"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "named-percentile",
+        "query": "semantic-holdout-0",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 17.277799999999843,
+        "median_ann_ms": 5.160849999998391,
+        "native": [
+          {
+            "exact_ms": 17.277799999999843,
+            "ann_ms": 5.302849999998216
+          },
+          {
+            "exact_ms": 16.54674999999952,
+            "ann_ms": 5.356399999998757
+          },
+          {
+            "exact_ms": 17.716349999998783,
+            "ann_ms": 5.160849999998391
+          },
+          {
+            "exact_ms": 16.62015000000065,
+            "ann_ms": 5.048899999999776
+          },
+          {
+            "exact_ms": 18.32835000000341,
+            "ann_ms": 4.684499999995751
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "ann",
+            "milliseconds": 49.07339999999385,
+            "source_bytes": 775,
+            "sha256": "5457fdb9d84034385dcd16519dbfe5d5c26a6c9132a9f9e3e3c533ce07f2e508"
+          },
+          {
+            "search_mode": "exact",
+            "milliseconds": 55.51729999999952,
+            "source_bytes": 775,
+            "sha256": "5457fdb9d84034385dcd16519dbfe5d5c26a6c9132a9f9e3e3c533ce07f2e508"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "named-percentile",
+        "query": "semantic-holdout-1",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 16.026999999998225,
+        "median_ann_ms": 4.381549999998242,
+        "native": [
+          {
+            "exact_ms": 15.295200000000477,
+            "ann_ms": 4.381549999998242
+          },
+          {
+            "exact_ms": 16.026999999998225,
+            "ann_ms": 4.395700000000943
+          },
+          {
+            "exact_ms": 16.887049999997544,
+            "ann_ms": 4.01535000000149
+          },
+          {
+            "exact_ms": 15.149100000002363,
+            "ann_ms": 4.272949999995035
+          },
+          {
+            "exact_ms": 16.220499999999447,
+            "ann_ms": 4.389900000001944
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "exact",
+            "milliseconds": 51.19170000000304,
+            "source_bytes": 1292,
+            "sha256": "828a7984fc9471a1ec8cff1b878ceefc48a5936512eec19a09a50c2ac98df6f6"
+          },
+          {
+            "search_mode": "ann",
+            "milliseconds": 40.968199999995704,
+            "source_bytes": 1292,
+            "sha256": "828a7984fc9471a1ec8cff1b878ceefc48a5936512eec19a09a50c2ac98df6f6"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "named-percentile",
+        "query": "semantic-holdout-2",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 16.983649999998306,
+        "median_ann_ms": 5.232800000001589,
+        "native": [
+          {
+            "exact_ms": 17.563050000000658,
+            "ann_ms": 7.379099999998289
+          },
+          {
+            "exact_ms": 16.983649999998306,
+            "ann_ms": 5.232800000001589
+          },
+          {
+            "exact_ms": 17.94774999999936,
+            "ann_ms": 5.778500000003987
+          },
+          {
+            "exact_ms": 15.35450000000128,
+            "ann_ms": 4.663449999996374
+          },
+          {
+            "exact_ms": 15.39285000000018,
+            "ann_ms": 4.265349999997852
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "ann",
+            "milliseconds": 40.56810000000405,
+            "source_bytes": 2408,
+            "sha256": "94de1446548c9b5ba9b7aa8ab0f2aeb5a2ad58851bd7ef6c3462906f96f7981a"
+          },
+          {
+            "search_mode": "exact",
+            "milliseconds": 49.55840000000171,
+            "source_bytes": 2408,
+            "sha256": "94de1446548c9b5ba9b7aa8ab0f2aeb5a2ad58851bd7ef6c3462906f96f7981a"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "named-percentile",
+        "query": "semantic-holdout-3",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 16.271249999997963,
+        "median_ann_ms": 5.0534500000030675,
+        "native": [
+          {
+            "exact_ms": 17.36040000000139,
+            "ann_ms": 4.86250000000291
+          },
+          {
+            "exact_ms": 15.229100000000471,
+            "ann_ms": 5.068549999996321
+          },
+          {
+            "exact_ms": 17.526899999997113,
+            "ann_ms": 4.223450000001321
+          },
+          {
+            "exact_ms": 16.271249999997963,
+            "ann_ms": 5.103399999996327
+          },
+          {
+            "exact_ms": 15.164100000001781,
+            "ann_ms": 5.0534500000030675
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "exact",
+            "milliseconds": 68.96169999999984,
+            "source_bytes": 2086,
+            "sha256": "3f83250a41a41728dd8ffc15d29ffa3c9354cbbeec781532051e552163d38adb"
+          },
+          {
+            "search_mode": "ann",
+            "milliseconds": 58.69050000000425,
+            "source_bytes": 2086,
+            "sha256": "3f83250a41a41728dd8ffc15d29ffa3c9354cbbeec781532051e552163d38adb"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "named-percentile",
+        "query": "semantic-holdout-4",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 15.165499999999156,
+        "median_ann_ms": 4.419799999999668,
+        "native": [
+          {
+            "exact_ms": 15.491550000002462,
+            "ann_ms": 4.419799999999668
+          },
+          {
+            "exact_ms": 15.165499999999156,
+            "ann_ms": 4.4891999999999825
+          },
+          {
+            "exact_ms": 15.171699999998964,
+            "ann_ms": 4.814549999999144
+          },
+          {
+            "exact_ms": 14.611649999998917,
+            "ann_ms": 4.176049999998213
+          },
+          {
+            "exact_ms": 14.289450000000215,
+            "ann_ms": 3.805399999997462
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "ann",
+            "milliseconds": 36.52219999999943,
+            "source_bytes": 1612,
+            "sha256": "44912783740bb2720f08199f248d61da9748d7dfc2a0eff6138754b7f7c58e04"
+          },
+          {
+            "search_mode": "exact",
+            "milliseconds": 46.37930000000051,
+            "source_bytes": 1612,
+            "sha256": "44912783740bb2720f08199f248d61da9748d7dfc2a0eff6138754b7f7c58e04"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "named-percentile",
+        "query": "semantic-holdout-5",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 14.704349999999977,
+        "median_ann_ms": 3.971049999996467,
+        "native": [
+          {
+            "exact_ms": 15.029300000001967,
+            "ann_ms": 3.844249999998283
+          },
+          {
+            "exact_ms": 14.704349999999977,
+            "ann_ms": 3.971049999996467
+          },
+          {
+            "exact_ms": 15.468550000001414,
+            "ann_ms": 4.406699999999546
+          },
+          {
+            "exact_ms": 14.380199999999604,
+            "ann_ms": 3.817749999998341
+          },
+          {
+            "exact_ms": 13.616250000002765,
+            "ann_ms": 4.162750000003143
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "exact",
+            "milliseconds": 45.91379999999481,
+            "source_bytes": 4894,
+            "sha256": "5ea4c50f42772ceecf5b26d1560e17580375e88926d96c05d5fdb4a3fe5d2479"
+          },
+          {
+            "search_mode": "ann",
+            "milliseconds": 34.307999999997264,
+            "source_bytes": 4894,
+            "sha256": "5ea4c50f42772ceecf5b26d1560e17580375e88926d96c05d5fdb4a3fe5d2479"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "named-percentile",
+        "query": "semantic-holdout-6",
+        "strict_recall_at_24": 0.9583333333333334,
+        "tie_aware_recall_at_24": 0.9583333333333334,
+        "median_exact_ms": 14.821499999998196,
+        "median_ann_ms": 4.529600000001665,
+        "native": [
+          {
+            "exact_ms": 20.161700000004203,
+            "ann_ms": 4.90965000000142
+          },
+          {
+            "exact_ms": 15.480649999997695,
+            "ann_ms": 4.951249999998254
+          },
+          {
+            "exact_ms": 14.821499999998196,
+            "ann_ms": 4.1780499999986205
+          },
+          {
+            "exact_ms": 13.902850000002218,
+            "ann_ms": 4.529600000001665
+          },
+          {
+            "exact_ms": 13.46900000000096,
+            "ann_ms": 4.35595000000103
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "ann",
+            "milliseconds": 31.710800000000745,
+            "source_bytes": 2609,
+            "sha256": "eead47b944abaa8412e2266a297232da97693980dab0928d3c8e8a9610db979e"
+          },
+          {
+            "search_mode": "exact",
+            "milliseconds": 44.187400000002526,
+            "source_bytes": 2609,
+            "sha256": "eead47b944abaa8412e2266a297232da97693980dab0928d3c8e8a9610db979e"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "named-percentile",
+        "query": "semantic-holdout-7",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 15.403650000000198,
+        "median_ann_ms": 4.283949999997276,
+        "native": [
+          {
+            "exact_ms": 14.917550000001938,
+            "ann_ms": 4.013499999997293
+          },
+          {
+            "exact_ms": 15.403650000000198,
+            "ann_ms": 3.8885499999960302
+          },
+          {
+            "exact_ms": 16.594649999999092,
+            "ann_ms": 4.295799999999872
+          },
+          {
+            "exact_ms": 15.43815000000177,
+            "ann_ms": 4.283949999997276
+          },
+          {
+            "exact_ms": 14.84100000000035,
+            "ann_ms": 4.448649999998452
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "exact",
+            "milliseconds": 48.02919999999722,
+            "source_bytes": 2701,
+            "sha256": "2f4337e2bf29aacd3f0c3647f044dea5fdcf74d3599171772245bc571a7a11f9"
+          },
+          {
+            "search_mode": "ann",
+            "milliseconds": 42.8637000000017,
+            "source_bytes": 2701,
+            "sha256": "2f4337e2bf29aacd3f0c3647f044dea5fdcf74d3599171772245bc571a7a11f9"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "named-percentile",
+        "query": "semantic-holdout-8",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 15.85175000000163,
+        "median_ann_ms": 4.548100000003615,
+        "native": [
+          {
+            "exact_ms": 17.105249999996886,
+            "ann_ms": 4.548100000003615
+          },
+          {
+            "exact_ms": 16.392900000002555,
+            "ann_ms": 4.669599999997445
+          },
+          {
+            "exact_ms": 15.85175000000163,
+            "ann_ms": 4.356999999999971
+          },
+          {
+            "exact_ms": 15.54910000000018,
+            "ann_ms": 4.566850000002887
+          },
+          {
+            "exact_ms": 15.769549999997253,
+            "ann_ms": 4.244800000000396
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "ann",
+            "milliseconds": 46.162899999995716,
+            "source_bytes": 662,
+            "sha256": "6f0b6b606ccc841e48d3d4fb1d65272e2535a48c2f95a37d20884ae3851b751c"
+          },
+          {
+            "search_mode": "exact",
+            "milliseconds": 50.51829999999609,
+            "source_bytes": 662,
+            "sha256": "6f0b6b606ccc841e48d3d4fb1d65272e2535a48c2f95a37d20884ae3851b751c"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "named-percentile",
+        "query": "semantic-holdout-9",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 14.914550000001327,
+        "median_ann_ms": 4.085100000000239,
+        "native": [
+          {
+            "exact_ms": 16.35809999999765,
+            "ann_ms": 5.403149999998277
+          },
+          {
+            "exact_ms": 15.791049999999814,
+            "ann_ms": 4.720399999998335
+          },
+          {
+            "exact_ms": 14.914550000001327,
+            "ann_ms": 4.085100000000239
+          },
+          {
+            "exact_ms": 14.561150000001362,
+            "ann_ms": 3.8980499999961467
+          },
+          {
+            "exact_ms": 14.200600000000122,
+            "ann_ms": 3.699449999996432
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "exact",
+            "milliseconds": 49.34449999999924,
+            "source_bytes": 1329,
+            "sha256": "1fcaae5fe1d07721de83447f0c71c4b202ed34b5e8ef239a252f67f52e831aab"
+          },
+          {
+            "search_mode": "ann",
+            "milliseconds": 33.01290000000154,
+            "source_bytes": 1329,
+            "sha256": "1fcaae5fe1d07721de83447f0c71c4b202ed34b5e8ef239a252f67f52e831aab"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "named-percentile",
+        "query": "semantic-holdout-10",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 13.86395000000266,
+        "median_ann_ms": 4.015750000002299,
+        "native": [
+          {
+            "exact_ms": 13.86395000000266,
+            "ann_ms": 3.6648000000022876
+          },
+          {
+            "exact_ms": 13.75800000000163,
+            "ann_ms": 3.963550000000396
+          },
+          {
+            "exact_ms": 13.778300000001764,
+            "ann_ms": 4.223699999998644
+          },
+          {
+            "exact_ms": 15.11649999999645,
+            "ann_ms": 4.270500000002357
+          },
+          {
+            "exact_ms": 15.30789999999979,
+            "ann_ms": 4.015750000002299
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "ann",
+            "milliseconds": 73.74870000000374,
+            "source_bytes": 5198,
+            "sha256": "eb740962b30022f32e6c6031866615a87131dc0f9ef322cdd6d4e29aa7c2792d"
+          },
+          {
+            "search_mode": "exact",
+            "milliseconds": 88.54490000000078,
+            "source_bytes": 5198,
+            "sha256": "eb740962b30022f32e6c6031866615a87131dc0f9ef322cdd6d4e29aa7c2792d"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "named-percentile",
+        "query": "semantic-holdout-11",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 15.168249999995169,
+        "median_ann_ms": 4.391599999995378,
+        "native": [
+          {
+            "exact_ms": 15.406000000002678,
+            "ann_ms": 4.423999999999069
+          },
+          {
+            "exact_ms": 15.092350000002625,
+            "ann_ms": 4.52390000000014
+          },
+          {
+            "exact_ms": 15.168249999995169,
+            "ann_ms": 4.388800000000629
+          },
+          {
+            "exact_ms": 16.456550000002608,
+            "ann_ms": 4.391599999995378
+          },
+          {
+            "exact_ms": 14.495350000001054,
+            "ann_ms": 4.300100000000384
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "exact",
+            "milliseconds": 46.01720000000205,
+            "source_bytes": 2751,
+            "sha256": "8d689d2f2f002a6907755e88323130d8691754f59c9dfe6d327e26324e25183b"
+          },
+          {
+            "search_mode": "ann",
+            "milliseconds": 36.47350000000006,
+            "source_bytes": 2751,
+            "sha256": "8d689d2f2f002a6907755e88323130d8691754f59c9dfe6d327e26324e25183b"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "named-percentile",
+        "query": "semantic-holdout-12",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 17.590100000001257,
+        "median_ann_ms": 4.303400000000693,
+        "native": [
+          {
+            "exact_ms": 16.414499999998952,
+            "ann_ms": 4.090100000004895
+          },
+          {
+            "exact_ms": 17.747749999994994,
+            "ann_ms": 5.105500000001484
+          },
+          {
+            "exact_ms": 18.238149999997404,
+            "ann_ms": 4.303400000000693
+          },
+          {
+            "exact_ms": 17.590100000001257,
+            "ann_ms": 5.275499999999738
+          },
+          {
+            "exact_ms": 16.294000000001688,
+            "ann_ms": 4.291900000003807
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "ann",
+            "milliseconds": 147.01519999999437,
+            "source_bytes": 5990,
+            "sha256": "ac2a022684e8ff7bad13c2e9d13035d5c9e29a0201a0e90f47a1c20b61aff697"
+          },
+          {
+            "search_mode": "exact",
+            "milliseconds": 187.00729999999749,
+            "source_bytes": 5990,
+            "sha256": "ac2a022684e8ff7bad13c2e9d13035d5c9e29a0201a0e90f47a1c20b61aff697"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "named-percentile",
+        "query": "semantic-holdout-13",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 13.908199999998033,
+        "median_ann_ms": 6.046950000003562,
+        "native": [
+          {
+            "exact_ms": 18.582750000001397,
+            "ann_ms": 6.046950000003562
+          },
+          {
+            "exact_ms": 20.60005000000092,
+            "ann_ms": 6.157450000002427
+          },
+          {
+            "exact_ms": 13.908199999998033,
+            "ann_ms": 6.069849999996222
+          },
+          {
+            "exact_ms": 12.599199999996927,
+            "ann_ms": 4.803600000002916
+          },
+          {
+            "exact_ms": 12.016349999998056,
+            "ann_ms": 4.913000000000466
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "exact",
+            "milliseconds": 59.43110000000161,
+            "source_bytes": 5917,
+            "sha256": "06c509cf287d2aba802a308e8698c43232421d1c616bc6d85c12a380d385c4e7"
+          },
+          {
+            "search_mode": "ann",
+            "milliseconds": 46.45150000000285,
+            "source_bytes": 5917,
+            "sha256": "06c509cf287d2aba802a308e8698c43232421d1c616bc6d85c12a380d385c4e7"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "named-percentile",
+        "query": "semantic-holdout-14",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 11.317700000003242,
+        "median_ann_ms": 4.329750000000786,
+        "native": [
+          {
+            "exact_ms": 11.978499999997439,
+            "ann_ms": 4.464300000003277
+          },
+          {
+            "exact_ms": 11.69604999999865,
+            "ann_ms": 4.329750000000786
+          },
+          {
+            "exact_ms": 11.317700000003242,
+            "ann_ms": 4.273700000001554
+          },
+          {
+            "exact_ms": 11.048950000000332,
+            "ann_ms": 4.821600000002945
+          },
+          {
+            "exact_ms": 11.311900000000605,
+            "ann_ms": 4.022750000000087
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "ann",
+            "milliseconds": 39.88390000000072,
+            "source_bytes": 1728,
+            "sha256": "dda6da88da0ba3a67ad69038c71bce98a9e23af316ff3552d11f263ad6260502"
+          },
+          {
+            "search_mode": "exact",
+            "milliseconds": 41.795899999997346,
+            "source_bytes": 1728,
+            "sha256": "dda6da88da0ba3a67ad69038c71bce98a9e23af316ff3552d11f263ad6260502"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "named-percentile",
+        "query": "semantic-holdout-15",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 11.511199999997189,
+        "median_ann_ms": 4.20140000000174,
+        "native": [
+          {
+            "exact_ms": 11.871149999999034,
+            "ann_ms": 3.957249999999476
+          },
+          {
+            "exact_ms": 11.601450000001932,
+            "ann_ms": 4.551950000000943
+          },
+          {
+            "exact_ms": 11.511199999997189,
+            "ann_ms": 4.279950000000099
+          },
+          {
+            "exact_ms": 11.0170999999973,
+            "ann_ms": 4.20140000000174
+          },
+          {
+            "exact_ms": 10.631650000002992,
+            "ann_ms": 4.022499999999127
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "exact",
+            "milliseconds": 39.644399999997404,
+            "source_bytes": 1659,
+            "sha256": "b03e0e7109cb18c80a1ccd05790d058720e601cbe937b547c2992cb5d27acb13"
+          },
+          {
+            "search_mode": "ann",
+            "milliseconds": 33.806299999996554,
+            "source_bytes": 1659,
+            "sha256": "b03e0e7109cb18c80a1ccd05790d058720e601cbe937b547c2992cb5d27acb13"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "named-raster-lru",
+        "query": "named-raster-lru",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 17.838150000003225,
+        "median_ann_ms": 5.54884999999922,
+        "native": [
+          {
+            "exact_ms": 17.838150000003225,
+            "ann_ms": 5.669549999998708
+          },
+          {
+            "exact_ms": 16.73410000000149,
+            "ann_ms": 5.228149999999005
+          },
+          {
+            "exact_ms": 17.7725500000015,
+            "ann_ms": 6.015299999999115
+          },
+          {
+            "exact_ms": 18.229299999999057,
+            "ann_ms": 5.54884999999922
+          },
+          {
+            "exact_ms": 18.469300000000658,
+            "ann_ms": 5.172800000000279
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "exact",
+            "milliseconds": 588.8056999999972,
+            "source_bytes": 1613,
+            "sha256": "59a8c64f55090d5fd453eb0ddbe33c671cf2aac7bf516592c9b10c1563b2bd84"
+          },
+          {
+            "search_mode": "ann",
+            "milliseconds": 194.55659999999625,
+            "source_bytes": 1613,
+            "sha256": "59a8c64f55090d5fd453eb0ddbe33c671cf2aac7bf516592c9b10c1563b2bd84"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "discover-input-depth",
+        "query": "discover-input-depth",
+        "strict_recall_at_24": 0.9583333333333334,
+        "tie_aware_recall_at_24": 0.9583333333333334,
+        "median_exact_ms": 12.815099999999802,
+        "median_ann_ms": 5.414049999999406,
+        "native": [
+          {
+            "exact_ms": 10.80659999999989,
+            "ann_ms": 4.787599999999657
+          },
+          {
+            "exact_ms": 12.815099999999802,
+            "ann_ms": 4.376199999998789
+          },
+          {
+            "exact_ms": 12.087499999997817,
+            "ann_ms": 5.69774999999936
+          },
+          {
+            "exact_ms": 13.10135000000082,
+            "ann_ms": 5.414049999999406
+          },
+          {
+            "exact_ms": 13.346599999997125,
+            "ann_ms": 6.303850000000239
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "exact",
+            "milliseconds": 362.664300000004,
+            "source_bytes": 118,
+            "sha256": "b6e8d404a4ae52c38cf5d00c834e39f0cfda0c9c5852c1e63f54769ee51189d6"
+          },
+          {
+            "search_mode": "ann",
+            "milliseconds": 71.46469999999681,
+            "source_bytes": 118,
+            "sha256": "b6e8d404a4ae52c38cf5d00c834e39f0cfda0c9c5852c1e63f54769ee51189d6"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "discover-mobile-image",
+        "query": "discover-mobile-image",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 15.337200000001758,
+        "median_ann_ms": 5.230949999997392,
+        "native": [
+          {
+            "exact_ms": 15.337200000001758,
+            "ann_ms": 4.836000000002969
+          },
+          {
+            "exact_ms": 17.026350000000093,
+            "ann_ms": 10.821949999990466
+          },
+          {
+            "exact_ms": 15.300300000002608,
+            "ann_ms": 5.230949999997392
+          },
+          {
+            "exact_ms": 16.008300000001327,
+            "ann_ms": 6.213049999998475
+          },
+          {
+            "exact_ms": 12.476949999996577,
+            "ann_ms": 5.220150000001013
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "exact",
+            "milliseconds": 358.3941999999952,
+            "source_bytes": 820,
+            "sha256": "8c4b69027bbc9d25729faef35b88f45ff86a632b530dd066b1afe4ac1a451616"
+          },
+          {
+            "search_mode": "ann",
+            "milliseconds": 93.38360000000102,
+            "source_bytes": 820,
+            "sha256": "8c4b69027bbc9d25729faef35b88f45ff86a632b530dd066b1afe4ac1a451616"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "locale-two-modules",
+        "query": "locale-two-modules",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 15.306049999999232,
+        "median_ann_ms": 4.9425499999997555,
+        "native": [
+          {
+            "exact_ms": 17.24945000000298,
+            "ann_ms": 4.9425499999997555
+          },
+          {
+            "exact_ms": 15.688300000001618,
+            "ann_ms": 5.2413999999989755
+          },
+          {
+            "exact_ms": 13.7555499999944,
+            "ann_ms": 4.7370000000082655
+          },
+          {
+            "exact_ms": 14.9545500000022,
+            "ann_ms": 4.840400000000955
+          },
+          {
+            "exact_ms": 15.306049999999232,
+            "ann_ms": 5.509550000002491
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "exact",
+            "milliseconds": 435.77120000000286,
+            "source_bytes": 2464,
+            "sha256": "43246142ccb2532838041517bb75ce1615bccc9af9810b42f368dc1a84dfe526"
+          },
+          {
+            "search_mode": "ann",
+            "milliseconds": 70.67999999999302,
+            "source_bytes": 2464,
+            "sha256": "43246142ccb2532838041517bb75ce1615bccc9af9810b42f368dc1a84dfe526"
+          }
+        ],
+        "render_equal": true
+      },
+      {
+        "task": "discover-statistics-tie",
+        "query": "discover-statistics-tie",
+        "strict_recall_at_24": 1,
+        "tie_aware_recall_at_24": 1,
+        "median_exact_ms": 17.4007500000007,
+        "median_ann_ms": 5.805749999999534,
+        "native": [
+          {
+            "exact_ms": 23.46534999999858,
+            "ann_ms": 6.157300000006217
+          },
+          {
+            "exact_ms": 21.915149999993446,
+            "ann_ms": 6.68525000000227
+          },
+          {
+            "exact_ms": 17.130000000004657,
+            "ann_ms": 5.805749999999534
+          },
+          {
+            "exact_ms": 16.039000000004307,
+            "ann_ms": 4.962099999997008
+          },
+          {
+            "exact_ms": 17.4007500000007,
+            "ann_ms": 4.916700000001583
+          }
+        ],
+        "contexts": [
+          {
+            "search_mode": "exact",
+            "milliseconds": 410.07240000000456,
+            "source_bytes": 1889,
+            "sha256": "3e00e5284c04aa6307c573618da0a2059467517038c7a53e12d402b35f1a5cd4"
+          },
+          {
+            "search_mode": "ann",
+            "milliseconds": 86.63430000000517,
+            "source_bytes": 1889,
+            "sha256": "3e00e5284c04aa6307c573618da0a2059467517038c7a53e12d402b35f1a5cd4"
+          }
+        ],
+        "render_equal": true
+      }
+    ],
+    "preparation": [
+      {
+        "task": "named-percentile",
+        "baseline_pass": true,
+        "seeded_pass": false,
+        "preparation_ms": 23735.802299999996,
+        "vectors": {
+          "rows": 7503,
+          "embedded": 0,
+          "reused": 7503,
+          "milliseconds": 1428.086199999998,
+          "embedding": {
+            "model": "Xenova/all-MiniLM-L6-v2",
+            "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+            "dtype": "q8",
+            "dimensions": 384,
+            "projection": "cm-hybrid-1"
+          }
+        },
+        "ann_build": {
+          "rows": 7503,
+          "ann": {
+            "type": "IVF_HNSW_SQ",
+            "partitions": 1,
+            "m": 16,
+            "ef_construction": 200,
+            "ef_search": 128,
+            "refine_factor": 4
+          },
+          "milliseconds": 530.8073000000004
+        },
+        "initial_context_equal": true
+      },
+      {
+        "task": "named-raster-lru",
+        "baseline_pass": true,
+        "seeded_pass": false,
+        "preparation_ms": 13052.467799999999,
+        "vectors": {
+          "rows": 7503,
+          "embedded": 0,
+          "reused": 7503,
+          "milliseconds": 1252.7761000000028,
+          "embedding": {
+            "model": "Xenova/all-MiniLM-L6-v2",
+            "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+            "dtype": "q8",
+            "dimensions": 384,
+            "projection": "cm-hybrid-1"
+          }
+        },
+        "ann_build": {
+          "rows": 7503,
+          "ann": {
+            "type": "IVF_HNSW_SQ",
+            "partitions": 1,
+            "m": 16,
+            "ef_construction": 200,
+            "ef_search": 128,
+            "refine_factor": 4
+          },
+          "milliseconds": 331.30829999999696
+        },
+        "initial_context_equal": true
+      },
+      {
+        "task": "discover-input-depth",
+        "baseline_pass": true,
+        "seeded_pass": false,
+        "preparation_ms": 13111.8658,
+        "vectors": {
+          "rows": 7503,
+          "embedded": 0,
+          "reused": 7503,
+          "milliseconds": 1452.7783999999956,
+          "embedding": {
+            "model": "Xenova/all-MiniLM-L6-v2",
+            "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+            "dtype": "q8",
+            "dimensions": 384,
+            "projection": "cm-hybrid-1"
+          }
+        },
+        "ann_build": {
+          "rows": 7503,
+          "ann": {
+            "type": "IVF_HNSW_SQ",
+            "partitions": 1,
+            "m": 16,
+            "ef_construction": 200,
+            "ef_search": 128,
+            "refine_factor": 4
+          },
+          "milliseconds": 391.1558999999979
+        },
+        "initial_context_equal": true
+      },
+      {
+        "task": "discover-mobile-image",
+        "baseline_pass": true,
+        "seeded_pass": false,
+        "preparation_ms": 15635.308600000004,
+        "vectors": {
+          "rows": 7503,
+          "embedded": 0,
+          "reused": 7503,
+          "milliseconds": 1233.412400000001,
+          "embedding": {
+            "model": "Xenova/all-MiniLM-L6-v2",
+            "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+            "dtype": "q8",
+            "dimensions": 384,
+            "projection": "cm-hybrid-1"
+          }
+        },
+        "ann_build": {
+          "rows": 7503,
+          "ann": {
+            "type": "IVF_HNSW_SQ",
+            "partitions": 1,
+            "m": 16,
+            "ef_construction": 200,
+            "ef_search": 128,
+            "refine_factor": 4
+          },
+          "milliseconds": 299.47090000000026
+        },
+        "initial_context_equal": true
+      },
+      {
+        "task": "locale-two-modules",
+        "baseline_pass": true,
+        "seeded_pass": false,
+        "preparation_ms": 15712.070700000011,
+        "vectors": {
+          "rows": 7503,
+          "embedded": 0,
+          "reused": 7503,
+          "milliseconds": 1265.3051000000123,
+          "embedding": {
+            "model": "Xenova/all-MiniLM-L6-v2",
+            "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+            "dtype": "q8",
+            "dimensions": 384,
+            "projection": "cm-hybrid-1"
+          }
+        },
+        "ann_build": {
+          "rows": 7503,
+          "ann": {
+            "type": "IVF_HNSW_SQ",
+            "partitions": 1,
+            "m": 16,
+            "ef_construction": 200,
+            "ef_search": 128,
+            "refine_factor": 4
+          },
+          "milliseconds": 678.8533000000025
+        },
+        "initial_context_equal": true
+      },
+      {
+        "task": "discover-statistics-tie",
+        "baseline_pass": true,
+        "seeded_pass": false,
+        "preparation_ms": 15466.484500000006,
+        "vectors": {
+          "rows": 7503,
+          "embedded": 0,
+          "reused": 7503,
+          "milliseconds": 1605.8908000000083,
+          "embedding": {
+            "model": "Xenova/all-MiniLM-L6-v2",
+            "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+            "dtype": "q8",
+            "dimensions": 384,
+            "projection": "cm-hybrid-1"
+          }
+        },
+        "ann_build": {
+          "rows": 7503,
+          "ann": {
+            "type": "IVF_HNSW_SQ",
+            "partitions": 1,
+            "m": 16,
+            "ef_construction": 200,
+            "ef_search": 128,
+            "refine_factor": 4
+          },
+          "milliseconds": 427.78660000000673
+        },
+        "initial_context_equal": true
+      }
+    ]
+  },
+  "source_proof": {
+    "original_files_checked": 224,
+    "original_source_changes": [],
+    "measured_implementation_unchanged": true
+  },
+  "estimated_total_usd": 0.04857906000000001,
+  "runs": [
+    {
+      "run_id": "named-percentile-r1-none",
+      "task": "named-percentile",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 38023.7047,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 390,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 4,
+      "attempts": 4,
+      "usage": {
+        "uncached_input": 12,
+        "cache_read": 10746,
+        "cache_write": 4091,
+        "output": 224,
+        "total_input": 14849,
+        "total_tokens": 15073,
+        "missing_usage": 0,
+        "usd_estimate": 0.000732035
+      },
+      "accounting_complete": true,
+      "cm_active": false,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "read": 1,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 70745,
+      "schema_bytes_total": 24416,
+      "context_occurrences_total": 0,
+      "initial_retrieval": null
+    },
+    {
+      "run_id": "named-percentile-r1-ann",
+      "task": "named-percentile",
+      "repetition": 1,
+      "arm": "ann",
+      "duration_ms": 24178.1284,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 390,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 3,
+      "attempts": 3,
+      "usage": {
+        "uncached_input": 9,
+        "cache_read": 6502,
+        "cache_write": 3458,
+        "output": 344,
+        "total_input": 9969,
+        "total_tokens": 10313,
+        "missing_usage": 0,
+        "usd_estimate": 0.0006701700000000001
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 45994,
+      "schema_bytes_total": 19470,
+      "context_occurrences_total": 6,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-8dfe5ab7-ec14-433e-b1aa-8774efa35264",
+        "bytes": 398,
+        "chunking": "unit",
+        "search_mode": "ann",
+        "context_sha256": "5394915512ed17c379a30486ceee5fadaaa7b9f377864410e89a1b6522d6d7e4",
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "graph",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 1,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "named-percentile-r1-exact",
+      "task": "named-percentile",
+      "repetition": 1,
+      "arm": "exact",
+      "duration_ms": 23652.897599999997,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 390,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 3,
+      "attempts": 3,
+      "usage": {
+        "uncached_input": 9,
+        "cache_read": 6339,
+        "cache_write": 3302,
+        "output": 176,
+        "total_input": 9650,
+        "total_tokens": 9826,
+        "missing_usage": 0,
+        "usd_estimate": 0.0005650399999999999
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 52009,
+      "schema_bytes_total": 19470,
+      "context_occurrences_total": 6,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-57878357-932e-42ea-ba72-930a229660be",
+        "bytes": 398,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "5394915512ed17c379a30486ceee5fadaaa7b9f377864410e89a1b6522d6d7e4",
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "graph",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 1,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "named-raster-lru-r1-ann",
+      "task": "named-raster-lru",
+      "repetition": 1,
+      "arm": "ann",
+      "duration_ms": 29407.872000000003,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 9,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 3,
+      "attempts": 3,
+      "usage": {
+        "uncached_input": 9,
+        "cache_read": 7011,
+        "cache_write": 3639,
+        "output": 205,
+        "total_input": 10659,
+        "total_tokens": 10864,
+        "missing_usage": 0,
+        "usd_estimate": 0.000628385
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 52345,
+      "schema_bytes_total": 19470,
+      "context_occurrences_total": 6,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-5c22540e-b4bd-4b56-a781-29d2fd06140d",
+        "bytes": 1613,
+        "chunking": "unit",
+        "search_mode": "ann",
+        "context_sha256": "59a8c64f55090d5fd453eb0ddbe33c671cf2aac7bf516592c9b10c1563b2bd84",
+        "paths": [
+          "game/fil/geo-static-cache.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "graph",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 1,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "named-raster-lru-r1-none",
+      "task": "named-raster-lru",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 11040.169899999994,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 9,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 4,
+      "attempts": 4,
+      "usage": {
+        "uncached_input": 12,
+        "cache_read": 11412,
+        "cache_write": 4418,
+        "output": 235,
+        "total_input": 15842,
+        "total_tokens": 16077,
+        "missing_usage": 0,
+        "usd_estimate": 0.00078507
+      },
+      "accounting_complete": true,
+      "cm_active": false,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "read": 1,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 71845,
+      "schema_bytes_total": 24416,
+      "context_occurrences_total": 0,
+      "initial_retrieval": null
+    },
+    {
+      "run_id": "named-raster-lru-r1-exact",
+      "task": "named-raster-lru",
+      "repetition": 1,
+      "arm": "exact",
+      "duration_ms": 24456.999500000005,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 9,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 3,
+      "attempts": 3,
+      "usage": {
+        "uncached_input": 9,
+        "cache_read": 7053,
+        "cache_write": 3687,
+        "output": 244,
+        "total_input": 10749,
+        "total_tokens": 10993,
+        "missing_usage": 0,
+        "usd_estimate": 0.0006543050000000001
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 60630,
+      "schema_bytes_total": 19470,
+      "context_occurrences_total": 6,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-ef7f2c3e-e973-43dd-82bf-08850f334600",
+        "bytes": 1613,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "59a8c64f55090d5fd453eb0ddbe33c671cf2aac7bf516592c9b10c1563b2bd84",
+        "paths": [
+          "game/fil/geo-static-cache.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "graph",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 1,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "discover-input-depth-r1-ann",
+      "task": "discover-input-depth",
+      "repetition": 1,
+      "arm": "ann",
+      "duration_ms": 35201.13649999999,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 14,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 10,
+      "attempts": 10,
+      "usage": {
+        "uncached_input": 30,
+        "cache_read": 43514,
+        "cache_write": 6730,
+        "output": 655,
+        "total_input": 50274,
+        "total_tokens": 50929,
+        "missing_usage": 0,
+        "usd_estimate": 0.00160689
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "todo_write": 3,
+        "grep": 2,
+        "read": 2,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 266078,
+      "schema_bytes_total": 64900,
+      "context_occurrences_total": 20,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-51bab402-f451-46cb-b471-6a54c339a52e",
+        "bytes": 118,
+        "chunking": "unit",
+        "search_mode": "ann",
+        "context_sha256": "b6e8d404a4ae52c38cf5d00c834e39f0cfda0c9c5852c1e63f54769ee51189d6",
+        "paths": [
+          "game/fil/vendor/three.module.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "graph",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 1,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "discover-input-depth-r1-exact",
+      "task": "discover-input-depth",
+      "repetition": 1,
+      "arm": "exact",
+      "duration_ms": 34328.48000000001,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 14,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 8,
+      "attempts": 8,
+      "usage": {
+        "uncached_input": 24,
+        "cache_read": 33080,
+        "cache_write": 7165,
+        "output": 580,
+        "total_input": 40269,
+        "total_tokens": 40849,
+        "missing_usage": 0,
+        "usd_estimate": 0.0015188250000000001
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "cm_retrieve_context": 2,
+        "read": 2,
+        "grep": 2,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 211753,
+      "schema_bytes_total": 51920,
+      "context_occurrences_total": 29,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-92fa314a-a963-4226-8710-2b17e5698366",
+        "bytes": 118,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "b6e8d404a4ae52c38cf5d00c834e39f0cfda0c9c5852c1e63f54769ee51189d6",
+        "paths": [
+          "game/fil/vendor/three.module.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "graph",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 1,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "discover-input-depth-r1-none",
+      "task": "discover-input-depth",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 27452.3358,
+      "exit_code": 1,
+      "task_success": false,
+      "quality": {
+        "pass": false,
+        "error": "AssertionError [ERR_ASSERTION]: Changed destination is consequential"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 12,
+      "attempts": 12,
+      "usage": {
+        "uncached_input": 36,
+        "cache_read": 93955,
+        "cache_write": 16358,
+        "output": 585,
+        "total_input": 110349,
+        "total_tokens": 110934,
+        "missing_usage": 0,
+        "usd_estimate": 0.0032804
+      },
+      "accounting_complete": true,
+      "cm_active": false,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "todo_write": 1,
+        "glob": 2,
+        "grep": 7,
+        "read": 2
+      },
+      "request_bytes_total": 478903,
+      "schema_bytes_total": 73248,
+      "context_occurrences_total": 0,
+      "initial_retrieval": null
+    },
+    {
+      "run_id": "discover-mobile-image-r1-exact",
+      "task": "discover-mobile-image",
+      "repetition": 1,
+      "arm": "exact",
+      "duration_ms": 26961.849400000006,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 44,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 5,
+      "attempts": 5,
+      "usage": {
+        "uncached_input": 15,
+        "cache_read": 15924,
+        "cache_write": 4451,
+        "output": 274,
+        "total_input": 20390,
+        "total_tokens": 20664,
+        "missing_usage": 0,
+        "usd_estimate": 0.000854115
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "read": 2,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 114012,
+      "schema_bytes_total": 32450,
+      "context_occurrences_total": 10,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-43344989-e677-4642-a970-33d52defd5ee",
+        "bytes": 820,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "8c4b69027bbc9d25729faef35b88f45ff86a632b530dd066b1afe4ac1a451616",
+        "paths": [
+          "game/src/render/image-source.js",
+          "game/src/render/planet.js",
+          "game/src/content/mobile-images.js"
+        ],
+        "omissions": 1,
+        "retrieval": {
+          "policy": "graph",
+          "route": "discovery",
+          "detail": "focused",
+          "roots": 2,
+          "graph_nodes": 2,
+          "bindings_shown": 2,
+          "bindings_omitted": 1,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "discover-mobile-image-r1-ann",
+      "task": "discover-mobile-image",
+      "repetition": 1,
+      "arm": "ann",
+      "duration_ms": 27794.066599999962,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 44,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 5,
+      "attempts": 5,
+      "usage": {
+        "uncached_input": 15,
+        "cache_read": 15769,
+        "cache_write": 4677,
+        "output": 202,
+        "total_input": 20461,
+        "total_tokens": 20663,
+        "missing_usage": 0,
+        "usd_estimate": 0.0008448150000000001
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "read": 2,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 98395,
+      "schema_bytes_total": 32450,
+      "context_occurrences_total": 10,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-6d8dbf1d-df69-4437-8a93-473c79c361e0",
+        "bytes": 820,
+        "chunking": "unit",
+        "search_mode": "ann",
+        "context_sha256": "8c4b69027bbc9d25729faef35b88f45ff86a632b530dd066b1afe4ac1a451616",
+        "paths": [
+          "game/src/render/image-source.js",
+          "game/src/render/planet.js",
+          "game/src/content/mobile-images.js"
+        ],
+        "omissions": 1,
+        "retrieval": {
+          "policy": "graph",
+          "route": "discovery",
+          "detail": "focused",
+          "roots": 2,
+          "graph_nodes": 2,
+          "bindings_shown": 2,
+          "bindings_omitted": 1,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "discover-mobile-image-r1-none",
+      "task": "discover-mobile-image",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 14870.90029999998,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 44,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 7,
+      "attempts": 7,
+      "usage": {
+        "uncached_input": 21,
+        "cache_read": 72277,
+        "cache_write": 17055,
+        "output": 259,
+        "total_input": 89353,
+        "total_tokens": 89612,
+        "missing_usage": 0,
+        "usd_estimate": 0.002986245
+      },
+      "accounting_complete": true,
+      "cm_active": false,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "glob": 1,
+        "grep": 1,
+        "read": 2,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 334525,
+      "schema_bytes_total": 42728,
+      "context_occurrences_total": 0,
+      "initial_retrieval": null
+    },
+    {
+      "run_id": "locale-two-modules-r1-exact",
+      "task": "locale-two-modules",
+      "repetition": 1,
+      "arm": "exact",
+      "duration_ms": 47990.89719999995,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 12,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 8,
+      "attempts": 8,
+      "usage": {
+        "uncached_input": 24,
+        "cache_read": 76686,
+        "cache_write": 14122,
+        "output": 722,
+        "total_input": 90832,
+        "total_tokens": 91554,
+        "missing_usage": 0,
+        "usd_estimate": 0.00289551
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "todo_write": 3,
+        "read": 2,
+        "grep": 1,
+        "edit": 2,
+        "project_checks": 1
+      },
+      "request_bytes_total": 418282,
+      "schema_bytes_total": 51920,
+      "context_occurrences_total": 16,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-3f20716f-b0f2-45ac-8a5b-0fee3eaa9e2b",
+        "bytes": 2464,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "43246142ccb2532838041517bb75ce1615bccc9af9810b42f368dc1a84dfe526",
+        "paths": [
+          "game/fil/geo-localization.js",
+          "game/fil/src/locale.js",
+          "game/src/core/progression.js",
+          "game/src/localization/strings.js"
+        ],
+        "omissions": 1,
+        "retrieval": {
+          "policy": "graph",
+          "route": "discovery",
+          "detail": "focused",
+          "roots": 2,
+          "graph_nodes": 4,
+          "bindings_shown": 6,
+          "bindings_omitted": 1,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "locale-two-modules-r1-none",
+      "task": "locale-two-modules",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 38124.87030000001,
+      "exit_code": 0,
+      "task_success": false,
+      "quality": {
+        "pass": false,
+        "error": "AssertionError [ERR_ASSERTION]: Traditional Chinese aliases"
+      },
+      "scope_changes": [
+        "game/fil/src/locale.js"
+      ],
+      "added_files": [],
+      "model_calls": 11,
+      "attempts": 11,
+      "usage": {
+        "uncached_input": 33,
+        "cache_read": 53776,
+        "cache_write": 7871,
+        "output": 2151,
+        "total_input": 61680,
+        "total_tokens": 63831,
+        "missing_usage": 0,
+        "usd_estimate": 0.002600435
+      },
+      "accounting_complete": true,
+      "cm_active": false,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "glob": 1,
+        "grep": 3,
+        "read": 3,
+        "edit": 1,
+        "project_checks": 2
+      },
+      "request_bytes_total": 373356,
+      "schema_bytes_total": 67144,
+      "context_occurrences_total": 0,
+      "initial_retrieval": null
+    },
+    {
+      "run_id": "locale-two-modules-r1-ann",
+      "task": "locale-two-modules",
+      "repetition": 1,
+      "arm": "ann",
+      "duration_ms": 39755.64500000002,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 12,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 6,
+      "attempts": 6,
+      "usage": {
+        "uncached_input": 18,
+        "cache_read": 22875,
+        "cache_write": 5265,
+        "output": 619,
+        "total_input": 28158,
+        "total_tokens": 28777,
+        "missing_usage": 0,
+        "usd_estimate": 0.0011981749999999999
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "read": 2,
+        "edit": 2,
+        "project_checks": 1
+      },
+      "request_bytes_total": 173821,
+      "schema_bytes_total": 38940,
+      "context_occurrences_total": 12,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-b788d7f6-b50b-46ce-92d0-0472c00c21ef",
+        "bytes": 2464,
+        "chunking": "unit",
+        "search_mode": "ann",
+        "context_sha256": "43246142ccb2532838041517bb75ce1615bccc9af9810b42f368dc1a84dfe526",
+        "paths": [
+          "game/fil/geo-localization.js",
+          "game/fil/src/locale.js",
+          "game/src/core/progression.js",
+          "game/src/localization/strings.js"
+        ],
+        "omissions": 1,
+        "retrieval": {
+          "policy": "graph",
+          "route": "discovery",
+          "detail": "focused",
+          "roots": 2,
+          "graph_nodes": 4,
+          "bindings_shown": 6,
+          "bindings_omitted": 1,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "discover-statistics-tie-r1-none",
+      "task": "discover-statistics-tie",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 19686.614699999976,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 390,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 9,
+      "attempts": 9,
+      "usage": {
+        "uncached_input": 27,
+        "cache_read": 37486,
+        "cache_write": 5964,
+        "output": 565,
+        "total_input": 43477,
+        "total_tokens": 44042,
+        "missing_usage": 0,
+        "usd_estimate": 0.00140556
+      },
+      "accounting_complete": true,
+      "cm_active": false,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "todo_write": 3,
+        "glob": 1,
+        "grep": 1,
+        "read": 1,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 212543,
+      "schema_bytes_total": 54936,
+      "context_occurrences_total": 0,
+      "initial_retrieval": null
+    },
+    {
+      "run_id": "discover-statistics-tie-r1-exact",
+      "task": "discover-statistics-tie",
+      "repetition": 1,
+      "arm": "exact",
+      "duration_ms": 30642.77250000002,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 390,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 3,
+      "attempts": 3,
+      "usage": {
+        "uncached_input": 9,
+        "cache_read": 7277,
+        "cache_write": 3839,
+        "output": 275,
+        "total_input": 11125,
+        "total_tokens": 11400,
+        "missing_usage": 0,
+        "usd_estimate": 0.0006910449999999999
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 59094,
+      "schema_bytes_total": 19470,
+      "context_occurrences_total": 6,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-77609fc4-42a8-46f0-9592-1c2f45b25698",
+        "bytes": 1889,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "3e00e5284c04aa6307c573618da0a2059467517038c7a53e12d402b35f1a5cd4",
+        "paths": [
+          "game/src/metrics/statistics.js",
+          "game/fil/src/customLevelModel.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "graph",
+          "route": "discovery",
+          "detail": "focused",
+          "roots": 2,
+          "graph_nodes": 4,
+          "bindings_shown": 2,
+          "bindings_omitted": 0,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "discover-statistics-tie-r1-ann",
+      "task": "discover-statistics-tie",
+      "repetition": 1,
+      "arm": "ann",
+      "duration_ms": 27931.309600000037,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 390,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 3,
+      "attempts": 3,
+      "usage": {
+        "uncached_input": 9,
+        "cache_read": 7315,
+        "cache_write": 3812,
+        "output": 262,
+        "total_input": 11136,
+        "total_tokens": 11398,
+        "missing_usage": 0,
+        "usd_estimate": 0.00068155
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 61064,
+      "schema_bytes_total": 19470,
+      "context_occurrences_total": 6,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-71154381-a34c-4dcc-b31e-fde4be18313c",
+        "bytes": 1889,
+        "chunking": "unit",
+        "search_mode": "ann",
+        "context_sha256": "3e00e5284c04aa6307c573618da0a2059467517038c7a53e12d402b35f1a5cd4",
+        "paths": [
+          "game/src/metrics/statistics.js",
+          "game/fil/src/customLevelModel.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "graph",
+          "route": "discovery",
+          "detail": "focused",
+          "roots": 2,
+          "graph_nodes": 4,
+          "bindings_shown": 2,
+          "bindings_omitted": 0,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "named-percentile-r2-ann",
+      "task": "named-percentile",
+      "repetition": 2,
+      "arm": "ann",
+      "duration_ms": 30649.927599999937,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 390,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 3,
+      "attempts": 3,
+      "usage": {
+        "uncached_input": 9,
+        "cache_read": 6502,
+        "cache_write": 3458,
+        "output": 340,
+        "total_input": 9969,
+        "total_tokens": 10309,
+        "missing_usage": 0,
+        "usd_estimate": 0.00066817
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 45968,
+      "schema_bytes_total": 19470,
+      "context_occurrences_total": 6,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-7e50a84a-1843-40ff-a088-fe497ab3b0f8",
+        "bytes": 398,
+        "chunking": "unit",
+        "search_mode": "ann",
+        "context_sha256": "5394915512ed17c379a30486ceee5fadaaa7b9f377864410e89a1b6522d6d7e4",
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "graph",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 1,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "named-percentile-r2-none",
+      "task": "named-percentile",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 9491.653499999898,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 390,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 4,
+      "attempts": 4,
+      "usage": {
+        "uncached_input": 12,
+        "cache_read": 10733,
+        "cache_write": 4078,
+        "output": 210,
+        "total_input": 14823,
+        "total_tokens": 15033,
+        "missing_usage": 0,
+        "usd_estimate": 0.00072328
+      },
+      "accounting_complete": true,
+      "cm_active": false,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "read": 1,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 70281,
+      "schema_bytes_total": 24416,
+      "context_occurrences_total": 0,
+      "initial_retrieval": null
+    },
+    {
+      "run_id": "named-percentile-r2-exact",
+      "task": "named-percentile",
+      "repetition": 2,
+      "arm": "exact",
+      "duration_ms": 28818.931900000083,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 390,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 3,
+      "attempts": 3,
+      "usage": {
+        "uncached_input": 9,
+        "cache_read": 6342,
+        "cache_write": 3304,
+        "output": 180,
+        "total_input": 9655,
+        "total_tokens": 9835,
+        "missing_usage": 0,
+        "usd_estimate": 0.00056732
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 51931,
+      "schema_bytes_total": 19470,
+      "context_occurrences_total": 6,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-450584ee-9097-40bf-8af7-1f7c3cf8b917",
+        "bytes": 398,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "5394915512ed17c379a30486ceee5fadaaa7b9f377864410e89a1b6522d6d7e4",
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "graph",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 1,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "named-raster-lru-r2-ann",
+      "task": "named-raster-lru",
+      "repetition": 2,
+      "arm": "ann",
+      "duration_ms": 38979.571200000006,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 9,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 3,
+      "attempts": 3,
+      "usage": {
+        "uncached_input": 9,
+        "cache_read": 7008,
+        "cache_write": 3636,
+        "output": 201,
+        "total_input": 10653,
+        "total_tokens": 10854,
+        "missing_usage": 0,
+        "usd_estimate": 0.00062598
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 52351,
+      "schema_bytes_total": 19470,
+      "context_occurrences_total": 6,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-4054dcbf-df80-42a0-8a19-9d99769e0a4b",
+        "bytes": 1613,
+        "chunking": "unit",
+        "search_mode": "ann",
+        "context_sha256": "59a8c64f55090d5fd453eb0ddbe33c671cf2aac7bf516592c9b10c1563b2bd84",
+        "paths": [
+          "game/fil/geo-static-cache.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "graph",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 1,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "named-raster-lru-r2-exact",
+      "task": "named-raster-lru",
+      "repetition": 2,
+      "arm": "exact",
+      "duration_ms": 46680.76210000005,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 9,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 3,
+      "attempts": 3,
+      "usage": {
+        "uncached_input": 9,
+        "cache_read": 7022,
+        "cache_write": 3647,
+        "output": 199,
+        "total_input": 10678,
+        "total_tokens": 10877,
+        "missing_usage": 0,
+        "usd_estimate": 0.000626495
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 52405,
+      "schema_bytes_total": 19470,
+      "context_occurrences_total": 6,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-450f099e-f0fb-47ae-b6fc-1b85eafff61f",
+        "bytes": 1613,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "59a8c64f55090d5fd453eb0ddbe33c671cf2aac7bf516592c9b10c1563b2bd84",
+        "paths": [
+          "game/fil/geo-static-cache.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "graph",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 1,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "named-raster-lru-r2-none",
+      "task": "named-raster-lru",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 12448.04059999995,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 9,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 4,
+      "attempts": 4,
+      "usage": {
+        "uncached_input": 12,
+        "cache_read": 11432,
+        "cache_write": 4438,
+        "output": 260,
+        "total_input": 15882,
+        "total_tokens": 16142,
+        "missing_usage": 0,
+        "usd_estimate": 0.00080027
+      },
+      "accounting_complete": true,
+      "cm_active": false,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "read": 1,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 73943,
+      "schema_bytes_total": 24416,
+      "context_occurrences_total": 0,
+      "initial_retrieval": null
+    },
+    {
+      "run_id": "discover-input-depth-r2-exact",
+      "task": "discover-input-depth",
+      "repetition": 2,
+      "arm": "exact",
+      "duration_ms": 47268.11200000008,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 14,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 9,
+      "attempts": 9,
+      "usage": {
+        "uncached_input": 27,
+        "cache_read": 35804,
+        "cache_write": 6587,
+        "output": 455,
+        "total_input": 42418,
+        "total_tokens": 42873,
+        "missing_usage": 0,
+        "usd_estimate": 0.001411615
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "cm_retrieve_context": 2,
+        "glob": 1,
+        "read": 2,
+        "grep": 1,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 223446,
+      "schema_bytes_total": 58410,
+      "context_occurrences_total": 33,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-64c7c50e-7711-4621-b550-8a1a65a26266",
+        "bytes": 118,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "b6e8d404a4ae52c38cf5d00c834e39f0cfda0c9c5852c1e63f54769ee51189d6",
+        "paths": [
+          "game/fil/vendor/three.module.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "graph",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 1,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "discover-input-depth-r2-ann",
+      "task": "discover-input-depth",
+      "repetition": 2,
+      "arm": "ann",
+      "duration_ms": 50374.550400000066,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 14,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 11,
+      "attempts": 11,
+      "usage": {
+        "uncached_input": 33,
+        "cache_read": 41751,
+        "cache_write": 5266,
+        "output": 630,
+        "total_input": 47050,
+        "total_tokens": 47680,
+        "missing_usage": 0,
+        "usd_estimate": 0.00139406
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "todo_write": 3,
+        "cm_retrieve_context": 2,
+        "glob": 1,
+        "grep": 1,
+        "read": 1,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 252637,
+      "schema_bytes_total": 71390,
+      "context_occurrences_total": 39,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-35868a11-43e9-4d6d-9234-9890df0f5375",
+        "bytes": 118,
+        "chunking": "unit",
+        "search_mode": "ann",
+        "context_sha256": "b6e8d404a4ae52c38cf5d00c834e39f0cfda0c9c5852c1e63f54769ee51189d6",
+        "paths": [
+          "game/fil/vendor/three.module.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "graph",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 1,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "discover-input-depth-r2-none",
+      "task": "discover-input-depth",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 31175.262199999997,
+      "exit_code": 1,
+      "task_success": false,
+      "quality": {
+        "pass": false,
+        "error": "AssertionError [ERR_ASSERTION]: Changed destination is consequential"
+      },
+      "scope_changes": [
+        "game/fil/src/inputConsequenceModel.js"
+      ],
+      "added_files": [],
+      "model_calls": 12,
+      "attempts": 12,
+      "usage": {
+        "uncached_input": 36,
+        "cache_read": 70227,
+        "cache_write": 9498,
+        "output": 675,
+        "total_input": 79761,
+        "total_tokens": 80436,
+        "missing_usage": 0,
+        "usd_estimate": 0.00223062
+      },
+      "accounting_complete": true,
+      "cm_active": false,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "glob": 1,
+        "grep": 5,
+        "read": 4,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 389770,
+      "schema_bytes_total": 73248,
+      "context_occurrences_total": 0,
+      "initial_retrieval": null
+    },
+    {
+      "run_id": "discover-mobile-image-r2-exact",
+      "task": "discover-mobile-image",
+      "repetition": 2,
+      "arm": "exact",
+      "duration_ms": 47791.70510000002,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 44,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 5,
+      "attempts": 5,
+      "usage": {
+        "uncached_input": 15,
+        "cache_read": 15866,
+        "cache_write": 4737,
+        "output": 253,
+        "total_input": 20618,
+        "total_tokens": 20871,
+        "missing_usage": 0,
+        "usd_estimate": 0.000878785
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "read": 2,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 112402,
+      "schema_bytes_total": 32450,
+      "context_occurrences_total": 10,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-71f40fa2-fd4c-4c9a-a408-e3e8dca4d666",
+        "bytes": 820,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "8c4b69027bbc9d25729faef35b88f45ff86a632b530dd066b1afe4ac1a451616",
+        "paths": [
+          "game/src/render/image-source.js",
+          "game/src/render/planet.js",
+          "game/src/content/mobile-images.js"
+        ],
+        "omissions": 1,
+        "retrieval": {
+          "policy": "graph",
+          "route": "discovery",
+          "detail": "focused",
+          "roots": 2,
+          "graph_nodes": 2,
+          "bindings_shown": 2,
+          "bindings_omitted": 1,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "discover-mobile-image-r2-none",
+      "task": "discover-mobile-image",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 23001.136600000085,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 44,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 9,
+      "attempts": 9,
+      "usage": {
+        "uncached_input": 27,
+        "cache_read": 112265,
+        "cache_write": 21013,
+        "output": 660,
+        "total_input": 133305,
+        "total_tokens": 133965,
+        "missing_usage": 0,
+        "usd_estimate": 0.004081975000000001
+      },
+      "accounting_complete": true,
+      "cm_active": false,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "todo_write": 3,
+        "glob": 3,
+        "grep": 2,
+        "read": 3,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 529463,
+      "schema_bytes_total": 54936,
+      "context_occurrences_total": 0,
+      "initial_retrieval": null
+    },
+    {
+      "run_id": "discover-mobile-image-r2-ann",
+      "task": "discover-mobile-image",
+      "repetition": 2,
+      "arm": "ann",
+      "duration_ms": 32628.42200000002,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 44,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 5,
+      "attempts": 5,
+      "usage": {
+        "uncached_input": 15,
+        "cache_read": 15905,
+        "cache_write": 4732,
+        "output": 304,
+        "total_input": 20652,
+        "total_tokens": 20956,
+        "missing_usage": 0,
+        "usd_estimate": 0.00090405
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "read": 2,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 120569,
+      "schema_bytes_total": 32450,
+      "context_occurrences_total": 10,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-4e08702a-9f99-48cc-b54f-89f7c53bac49",
+        "bytes": 820,
+        "chunking": "unit",
+        "search_mode": "ann",
+        "context_sha256": "8c4b69027bbc9d25729faef35b88f45ff86a632b530dd066b1afe4ac1a451616",
+        "paths": [
+          "game/src/render/image-source.js",
+          "game/src/render/planet.js",
+          "game/src/content/mobile-images.js"
+        ],
+        "omissions": 1,
+        "retrieval": {
+          "policy": "graph",
+          "route": "discovery",
+          "detail": "focused",
+          "roots": 2,
+          "graph_nodes": 2,
+          "bindings_shown": 2,
+          "bindings_omitted": 1,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "locale-two-modules-r2-none",
+      "task": "locale-two-modules",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 24514.673100000015,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 12,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 10,
+      "attempts": 10,
+      "usage": {
+        "uncached_input": 30,
+        "cache_read": 85740,
+        "cache_write": 12310,
+        "output": 951,
+        "total_input": 98080,
+        "total_tokens": 99031,
+        "missing_usage": 0,
+        "usd_estimate": 0.0028746500000000003
+      },
+      "accounting_complete": true,
+      "cm_active": false,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "todo_write": 3,
+        "glob": 1,
+        "grep": 2,
+        "read": 4,
+        "edit": 2,
+        "project_checks": 1
+      },
+      "request_bytes_total": 457283,
+      "schema_bytes_total": 61040,
+      "context_occurrences_total": 0,
+      "initial_retrieval": null
+    },
+    {
+      "run_id": "locale-two-modules-r2-exact",
+      "task": "locale-two-modules",
+      "repetition": 2,
+      "arm": "exact",
+      "duration_ms": 44893.442299999995,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 12,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 8,
+      "attempts": 8,
+      "usage": {
+        "uncached_input": 24,
+        "cache_read": 38841,
+        "cache_write": 6557,
+        "output": 750,
+        "total_input": 45422,
+        "total_tokens": 46172,
+        "missing_usage": 0,
+        "usd_estimate": 0.0015854349999999998
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "todo_write": 3,
+        "read": 3,
+        "grep": 1,
+        "edit": 2,
+        "project_checks": 1
+      },
+      "request_bytes_total": 252990,
+      "schema_bytes_total": 51920,
+      "context_occurrences_total": 16,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-822ac9a3-8f0e-4b5e-a8ae-c0e3f238a1b1",
+        "bytes": 2464,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "43246142ccb2532838041517bb75ce1615bccc9af9810b42f368dc1a84dfe526",
+        "paths": [
+          "game/fil/geo-localization.js",
+          "game/fil/src/locale.js",
+          "game/src/core/progression.js",
+          "game/src/localization/strings.js"
+        ],
+        "omissions": 1,
+        "retrieval": {
+          "policy": "graph",
+          "route": "discovery",
+          "detail": "focused",
+          "roots": 2,
+          "graph_nodes": 4,
+          "bindings_shown": 6,
+          "bindings_omitted": 1,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "locale-two-modules-r2-ann",
+      "task": "locale-two-modules",
+      "repetition": 2,
+      "arm": "ann",
+      "duration_ms": 50687.73230000003,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 12,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 10,
+      "attempts": 10,
+      "usage": {
+        "uncached_input": 30,
+        "cache_read": 53637,
+        "cache_write": 7179,
+        "output": 721,
+        "total_input": 60846,
+        "total_tokens": 61567,
+        "missing_usage": 0,
+        "usd_estimate": 0.0017972449999999998
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "todo_write": 3,
+        "cm_retrieve_context": 1,
+        "grep": 1,
+        "glob": 1,
+        "read": 2,
+        "edit": 2,
+        "project_checks": 1
+      },
+      "request_bytes_total": 314084,
+      "schema_bytes_total": 64900,
+      "context_occurrences_total": 28,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-216eb41b-d179-4273-bbd1-a43391ba8324",
+        "bytes": 2464,
+        "chunking": "unit",
+        "search_mode": "ann",
+        "context_sha256": "43246142ccb2532838041517bb75ce1615bccc9af9810b42f368dc1a84dfe526",
+        "paths": [
+          "game/fil/geo-localization.js",
+          "game/fil/src/locale.js",
+          "game/src/core/progression.js",
+          "game/src/localization/strings.js"
+        ],
+        "omissions": 1,
+        "retrieval": {
+          "policy": "graph",
+          "route": "discovery",
+          "detail": "focused",
+          "roots": 2,
+          "graph_nodes": 4,
+          "bindings_shown": 6,
+          "bindings_omitted": 1,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "discover-statistics-tie-r2-none",
+      "task": "discover-statistics-tie",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 15678.081000000006,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 390,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 6,
+      "attempts": 6,
+      "usage": {
+        "uncached_input": 18,
+        "cache_read": 23443,
+        "cache_write": 6034,
+        "output": 413,
+        "total_input": 29495,
+        "total_tokens": 29908,
+        "missing_usage": 0,
+        "usd_estimate": 0.00119698
+      },
+      "accounting_complete": true,
+      "cm_active": false,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "glob": 1,
+        "grep": 1,
+        "read": 1,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 133705,
+      "schema_bytes_total": 36624,
+      "context_occurrences_total": 0,
+      "initial_retrieval": null
+    },
+    {
+      "run_id": "discover-statistics-tie-r2-ann",
+      "task": "discover-statistics-tie",
+      "repetition": 2,
+      "arm": "ann",
+      "duration_ms": 61351.94250000012,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 390,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 3,
+      "attempts": 3,
+      "usage": {
+        "uncached_input": 9,
+        "cache_read": 7521,
+        "cache_write": 4018,
+        "output": 463,
+        "total_input": 11548,
+        "total_tokens": 12011,
+        "missing_usage": 0,
+        "usd_estimate": 0.00080986
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 57410,
+      "schema_bytes_total": 19470,
+      "context_occurrences_total": 6,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-8c8b96d9-6f8c-40b9-9b0e-efa79b87230d",
+        "bytes": 1889,
+        "chunking": "unit",
+        "search_mode": "ann",
+        "context_sha256": "3e00e5284c04aa6307c573618da0a2059467517038c7a53e12d402b35f1a5cd4",
+        "paths": [
+          "game/src/metrics/statistics.js",
+          "game/fil/src/customLevelModel.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "graph",
+          "route": "discovery",
+          "detail": "focused",
+          "roots": 2,
+          "graph_nodes": 4,
+          "bindings_shown": 2,
+          "bindings_omitted": 0,
+          "dense_search": true
+        }
+      }
+    },
+    {
+      "run_id": "discover-statistics-tie-r2-exact",
+      "task": "discover-statistics-tie",
+      "repetition": 2,
+      "arm": "exact",
+      "duration_ms": 33508.206000000006,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "checks": 390,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 3,
+      "attempts": 3,
+      "usage": {
+        "uncached_input": 9,
+        "cache_read": 7530,
+        "cache_write": 4024,
+        "output": 449,
+        "total_input": 11563,
+        "total_tokens": 12012,
+        "missing_usage": 0,
+        "usd_estimate": 0.0008037000000000001
+      },
+      "accounting_complete": true,
+      "cm_active": true,
+      "search_mode_verified": true,
+      "tool_calls": {
+        "edit": 1,
+        "project_checks": 1
+      },
+      "request_bytes_total": 57482,
+      "schema_bytes_total": 19470,
+      "context_occurrences_total": 6,
+      "initial_retrieval": {
+        "event": "retrieved",
+        "agent": "session-2873a2c1-113e-47f7-9680-cdb2674799cd",
+        "bytes": 1889,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "3e00e5284c04aa6307c573618da0a2059467517038c7a53e12d402b35f1a5cd4",
+        "paths": [
+          "game/src/metrics/statistics.js",
+          "game/fil/src/customLevelModel.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "graph",
+          "route": "discovery",
+          "detail": "focused",
+          "roots": 2,
+          "graph_nodes": 4,
+          "bindings_shown": 2,
+          "bindings_omitted": 0,
+          "dense_search": true
+        }
+      }
+    }
+  ]
+}

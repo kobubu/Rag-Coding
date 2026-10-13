@@ -10,6 +10,8 @@
 
 С 0.4.2 [локальный векторный поиск](docs/VECTOR-SEARCH.md) включён по умолчанию в Harness bundle; `cm-search --mode vector` позволяет отдельно проверить dense ranking без lexical. Новая [0.6.0 series](docs/GRAPH-BUDGET.md), 48 sessions: graph12/12 против baseline10/12, −51,6% tokens и −42,5% расчётной цены; к существующему hybrid −20,2% и −15,3%. Все failures сохранены; graph latency выросла. Это шесть repair типов одного проекта, не whole-game performance benchmark. Default hybrid сохранён, graph/adaptive включаются явно.
 
+В0.6.1 [HNSW model A/B](docs/HNSW-MODEL-AB.md),36 sessions на прежних repair tasks: graph+exact12/12 и graph+ann12/12, none9/12. К none exact−54,1% tokens/−44,9% estimate price, ann−58,5%/−50,1%. Все12 initial contexts exact/ann совпали; их расход различался из-за разных model trajectories, причинная ANN token экономия не доказана. Новые22 neighbor queries: native3,37×/recall99,62%, два misses; ann sessions на2,73% дольше exact. Exact остаётся vector default; compatibility default retrieval policy — hybrid.
+
 ## С чего читать
 
 1. [Запуск CM plugin](docs/DEEPSEEK-PLUGIN.md) — индекс, пакет, подключение и четыре инструмента.
@@ -29,6 +31,7 @@
 15. [HNSW](docs/HNSW.md) — параметры, exact/ANN comparison и ограничения измерения.
 16. [Как CM пополняется и обновляется](docs/LIVE-CM.md) — source manifests, compiler facts, embedding reuse, публикация и свежий поиск.
 17. [Граф и бюджет контекста](docs/GRAPH-BUDGET.md) — routing, дозированное раскрытие и полный модельный эксперимент.
+18. [HNSW на полной модельной задаче](docs/HNSW-MODEL-AB.md) — exact/ANN/none, независимый patch grader, полный расход и время sessions.
 
 ## Основная схема
 

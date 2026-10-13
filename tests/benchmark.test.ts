@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { sumUsage } from "../scripts/harness_ab.js";
+import { bootProfile, sumUsage } from "../scripts/harness_ab.js";
+import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { tmpdir } from "node:os";
 import { summarizeAB } from "../scripts/summarize_ab.js";
 
 test("AB accounting includes disjoint cached tokens and preserves missing usage", () => {
@@ -28,4 +31,19 @@ test("failed budget-limited coding sessions stay in token/cost totals without in
   assert.equal(summary.groups[0]!.total_tokens, 30);
   assert.equal(summary.accounting_complete, true);
   assert.equal(summary.quality_delta_pp, 100);
+});
+
+test("Harness benchmark passes distinct exact/ANN modes and keeps the baseline free of CM", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cm-ab-mode-"));
+  const harness = join(root, "offline-harness.mjs");
+  writeFileSync(harness, "process.stdin.resume();process.stdin.on('end',()=>process.exit(0));");
+  for (const arm of ["exact", "ann", "none"] as const) {
+    const result = await bootProfile({ project: root, output: root, node: process.execPath, harness,
+      apiKey: "offline-test-credential", model: "offline-test-model", cmMode: "compact", ...(arm !== "none" ? { searchMode: arm } : {}) }, root, arm, "offline test", arm !== "none");
+    assert.equal(result.exit_code, 0);
+    const patch = JSON.parse(readFileSync(join(result.directory, "profile.patch.yml"), "utf8"));
+    const plugin = patch.flatMap((entry: { insert?: { id: string; config: { searchMode?: string } }[] }) => entry.insert ?? []).find((entry: { id: string }) => entry.id === "code-memory");
+    if (arm === "none") assert.equal(plugin, undefined);
+    else assert.equal(plugin.config.searchMode, arm);
+  }
 });

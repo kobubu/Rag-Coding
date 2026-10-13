@@ -30,11 +30,11 @@ npm.cmd run cm:mcp -- --project 'D:/Geo Dash' --search-mode ann
 
 `cm:ann` читает существующие vectors, строит index и атомарно дописывает ANN parameters в manifest. Повторного embedding, ключа API или платной модели не требуется. Внешние index/vector paths задаются `--index` и `--vectors`; chunking должен совпадать с projection. Для native Harness plugin задайте `searchMode: ann` в CM config с существующей ANN projection. CLI `cm-search` поддерживает `--search-mode exact|ann` отдельно от `--mode vector|hybrid`.
 
-Exact режим явно вызывает `bypassVectorIndex`; ANN требует declaration в manifest и физический HNSW index. Ошибка не превращается в пустую успешную выдачу. Пересоздание vectors сбрасывает declaration ANN: после rebuild повторите `cm:ann` и перезапустите клиент.
+Exact режим явно вызывает `bypassVectorIndex`; ANN требует declaration в manifest и физический HNSW index. Ошибка не превращается в пустую успешную выдачу. Ручное `cm:vectors` сбрасывает declaration ANN: после него повторите `cm:ann` и перезапустите клиент. При [live update](LIVE-CM.md) в режиме `ann` новое поколение само строит HNSW до атомарной публикации.
 
 ## Измерение на Geo Dash
 
-Отдельная копия projection сохранила оригинальные exact данные. Corpus: 224 first-party JS файла, 7503 embeddings размерности 384, pinned `Xenova/all-MiniLM-L6-v2`, q8 CPU. Использованы 16 natural-language queries и 32 сохранённых vectors, k=24; пять ABBA/BAAB blocks с чередованием exact/ANN. Никаких model API calls.
+Отдельная копия projection сохранила оригинальные exact данные. Corpus: 224 tracked JS файла под `game/**/*.js`, включая bundled `game/fil/vendor/three.module.js`, 7503 embeddings размерности 384, pinned `Xenova/all-MiniLM-L6-v2`, q8 CPU. Это не только first-party source. Использованы 16 natural-language queries и 32 сохранённых vectors, k=24; пять ABBA/BAAB blocks с чередованием exact/ANN. В исходном native-only probe никаких model API calls.
 
 | Метрика | Результат |
 |---|---|
@@ -51,7 +51,7 @@ Exact режим явно вызывает `bypassVectorIndex`; ANN требуе
 
 Это measured recall на выбранных queries, **не гарантия 100% recall** и не оценка смысловой правильности. HNSW rebuild может изменить набор кандидатов. Query vectors готовились до native timing. Значения не включают embedding, чтение/проверку source hashes, merge и построение context. На полном retrieval отдельные single-pass probes показывали меньший выигрыш, а exact шёл раньше ANN: caches/order не изолированы, поэтому их нельзя считать строгим end-to-end benchmark.
 
-HNSW обычно уменьшает CPU latency. Число prompt/output tokens, число model turns и качество patch определяет весь retrieval/model workflow. HNSW с тем же context не уменьшает автоматически токены или цену. В этом проходе новая LLM A/B серия не выполнялась; отрицательный [optimization pilot](OPTIMIZATION-RESULTS.md) сохраняется без изменений.
+HNSW обычно уменьшает CPU latency. Число prompt/output tokens, число model turns и качество patch определяет весь retrieval/model workflow. HNSW с тем же context не уменьшает автоматически токены или цену. В первоначальном 0.5.0 проходе LLM A/B не было. [Новая model series36 sessions](HNSW-MODEL-AB.md) отдельно проверила exact/ann/none: CM12/12 в обоих modes, none9/12; initial contexts совпали, native3,37× не перенёсся на session speedup. Отрицательный [optimization pilot](OPTIMIZATION-RESULTS.md) сохраняется без изменений.
 
 [Результаты и параметры](../evaluation/hnsw/results.json) публикуются без private source и raw embeddings. Повторное решение о default требует независимых semantic queries, add/delete/branch refresh, разных размеров corpus и полного quality/cost A/B. Для очень малого corpus exact проще; IVF/PQ/DiskANN стоит сравнивать при других объёмах и ограничениях RAM, без замены библиотеки только ради названия алгоритма.
 

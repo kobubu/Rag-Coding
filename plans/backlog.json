@@ -1431,6 +1431,31 @@
         "docs/LIVE-CM.md",
         "research/evidence/live-cm-2026-10-14.json"
       ]
+    },
+    {
+      "id": "RC-066",
+      "milestone": "M11",
+      "title": "Проверить HNSW по качеству и полной стоимости реальных модельных задач",
+      "status": "done",
+      "priority": "P1",
+      "size": "M",
+      "depends_on": [
+        "RC-063",
+        "RC-064"
+      ],
+      "acceptance": [
+        "36 sessions none/exact/ann, shared native table/graph/learned unit vectors и frozen source/compiled/runtime/preparation; actual mode/context hash проверены.",
+        "Independent final behavior/scope audit, все provider cache categories/failures и matched comparisons опубликованы без private source/credential.",
+        "Новые22 neighbor queries фиксируют recall/misses/native latency; identical contexts и отсутствие session speedup не выдаются за причинную ANN token экономию; exact default сохранён."
+      ],
+      "artifacts": [
+        "scripts/ann_ab.ts",
+        "scripts/run_ann_ab.ts",
+        "scripts/summarize_ann_ab.ts",
+        "tests/benchmark.test.ts",
+        "docs/HNSW-MODEL-AB.md",
+        "evaluation/hnsw-model/"
+      ]
     }
   ]
 }

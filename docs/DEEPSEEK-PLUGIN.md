@@ -1,6 +1,6 @@
 # CM — Code Memory: плагин DeepSeek Harness
 
-Рабочий локальный prototype v0.6.0: компактный vector/context режим по умолчанию, optional legacy tools, graph/adaptive retrieval и live update. Он добавляет глоссарий, записи CM, структурные связи и сборку исходного контекста в DeepSeek Harness. Primary index создаётся на TypeScript Compiler API для TypeScript и JavaScript, vector projection — локальной embedding-моделью. Код индексируемого проекта не исполняется, внешний LLM API для индексирования не требуется. [Живая CM](LIVE-CM.md), [граф и экономия](GRAPH-BUDGET.md).
+Рабочий локальный prototype v0.6.1: компактный vector/context режим по умолчанию, optional legacy tools, graph/adaptive retrieval и live update. Он добавляет глоссарий, записи CM, структурные связи и сборку исходного контекста в DeepSeek Harness. Primary index создаётся на TypeScript Compiler API для TypeScript и JavaScript, vector projection — локальной embedding-моделью. Код индексируемого проекта не исполняется, внешний LLM API для индексирования не требуется. [Живая CM](LIVE-CM.md), [граф и экономия](GRAPH-BUDGET.md), [полный HNSW A/B](HNSW-MODEL-AB.md).
 
 ## Проверенная совместимость
 
@@ -38,13 +38,13 @@ npm run cm:index -- --project /absolute/project --out /absolute/project/.code-me
 npm pack --pack-destination .artifacts
 ```
 
-В Harness Plugin Manager установить полученный локальный `dsh-plugin-code-memory-0.6.0.tgz` как bundle и включить его в нужном профиле. Использовать Harness 0.2.0-rc.2. Bundle добавляет entry `code-memory` с compact vector mode и auto context; существующие model/file tools остаются в профиле. Для этого режима нужны подготовленные primary index, vectors и локальная модель; live builds могут подготовить новый source/vector snapshot при наличии локальной модели.
+В Harness Plugin Manager установить полученный локальный `dsh-plugin-code-memory-0.6.1.tgz` как bundle и включить его в нужном профиле. Использовать Harness 0.2.0-rc.2. Bundle добавляет entry `code-memory` с compact vector mode и auto context; существующие model/file tools остаются в профиле. Для этого режима нужны подготовленные primary index, vectors и локальная модель; live builds могут подготовить новый source/vector snapshot при наличии локальной модели.
 
 CLI-вариант после установки Harness:
 
 ```bash
 dsh --profile code-memory --from-default-profile web --dump-config
-dsh plugin --profile code-memory add /absolute/dsh-plugin-code-memory-0.6.0.tgz
+dsh plugin --profile code-memory add /absolute/dsh-plugin-code-memory-0.6.1.tgz
 dsh --profile code-memory --no-open
 ```
 

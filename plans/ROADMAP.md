@@ -1,6 +1,6 @@
 # Подробный план разработки
 
-Дата плана: 13 октября 2026 года. Завершены документы, TS/JS CM/Harness prototype и настоящий 28-session A/B pilot. Экономия tokens/cost не подтвердилась; [итог](../docs/AB-RESULTS.md) сохраняет и failure, и ограничения. Local vector/compact prototype проверен новым A/B: −69,4% tokens, −56,9% расчётной цены, 12/16 против 9/16. В 0.5.0 MCP stdio, read-only CM Atlas и optional HNSW уже проверены; full backend, installer и подписка остаются планом. Этап закрывается результатом на указанной границе.
+Дата плана: 14 октября 2026 года. Завершены документы, TS/JS CM/Harness prototype и настоящий 28-session A/B pilot. Экономия tokens/cost не подтвердилась; [итог](../docs/AB-RESULTS.md) сохраняет и failure, и ограничения. Local vector/compact prototype проверен новым A/B: −69,4% tokens, −56,9% расчётной цены, 12/16 против 9/16. В0.6.1 local MCP/Atlas, live generations, graph routing и controlled HNSW model A/B уже проверены; full backend, installer и подписка остаются планом. Этап закрывается результатом на указанной границе.
 
 ## Последовательность и критерии перехода
 
@@ -83,5 +83,7 @@ Green test не доказывает улучшения retrieval. Для так
 ## После второго A/B
 
 В 0.6.0 RC-065 завершает opt-in live CM: saved-file manifests, полный compiler rebind, reuse embeddings и атомарные поколения. Реальные MCP/Chrome и learned full-project checks описаны в [LIVE-CM](../docs/LIVE-CM.md). RC-064 завершил48 sessions четырёх arms: graph12/12 против none10/12, −51,6% tokens / −42,5% estimate price; [полный результат](../docs/GRAPH-BUDGET.md) отделяет токены всей задачи от native lookup speed и раскрывает повышенную latency. Следующая lifecycle работа — worker/incremental compiler, IDE overlay и ограничение disk retention; это не заявлено реализованным.
+
+RC-066 /0.6.1 завершил36 sessions controlled exact/ANN/none на прежних шести repair типах: оба CM12/12, none9/12; полный расход и все failures/mode/context gates опубликованы в [HNSW model A/B](../docs/HNSW-MODEL-AB.md). Initial contexts одинаковы; меньший observed aggregate ANN расход не считается его причинным token эффектом, session latency+2,73% к exact. Новый neighbor probe обнаружил2 misses/528. Для более широкого решения нужны fresh repair/refactor/optimization holdouts, multilingual relevance labels, разные corpus sizes и повторные builds; exact default сохранён.
 
 M00V / RC-053…RC-055 завершили local learned vectors, compact auto context и новый полный pilot. [Результат](../docs/HYBRID-RESULTS.md) сохраняет четыре CM failures, две baseline budget stops и более высокую latency. Ближайшее развитие — RC-056 provenance/scope/latency и RC-047 SQLite/FTS/native delivery; RC-048 расширяет retrieval/evaluation до общего API. Read-only MCP/Atlas prototype и optional HNSW уже доступны. Полный server/concept enrichment/installer/subscription продукт остаётся планом.

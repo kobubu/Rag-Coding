@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-code-memory",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "private": true,
   "description": "CM (Code Memory): read-only repository knowledge plugin for DeepSeek Harness",
   "type": "module",
@@ -19,6 +19,7 @@
     "harness:ab": "node dist/scripts/run_harness_ab.js",
     "harness:optimization": "node dist/scripts/run_optimization_ab.js",
     "harness:graph": "node dist/scripts/run_graph_ab.js",
+    "harness:ann": "node dist/scripts/run_ann_ab.js",
     "verify": "npm run build && npm run check && npm test && npm run probe",
     "cm:vectors": "node dist/src/code-memory/vector_cli.js",
     "cm:search": "node dist/src/code-memory/search_cli.js",
@@ -57,7 +58,9 @@
     "docs/HNSW.md",
     "docs/LIVE-CM.md",
     "docs/GRAPH-BUDGET.md",
+    "docs/HNSW-MODEL-AB.md",
     "evaluation/graph-budget/",
+    "evaluation/hnsw-model/",
     "research/evidence/live-cm-2026-10-14.json"
   ],
   "dsh": {

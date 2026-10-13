@@ -803,3 +803,15 @@
 - На Geo Dash copy learned CPU embeddings, реальный MCP и Chrome подтверждают новые исходники и очистку старого source; local CPU/full rebind/retention limits раскрыты.
 
 Ожидаемые материалы: `src/code-memory/live.ts`, `tests/live_memory.test.ts`, `docs/LIVE-CM.md`, `research/evidence/live-cm-2026-10-14.json`.
+
+### RC-066: Проверить HNSW по качеству и полной стоимости реальных модельных задач
+
+Статус: **done**. Приоритет: P1. Размер: M. Зависимости: RC-063, RC-064.
+
+Приёмка:
+
+- 36 sessions none/exact/ann, shared native table/graph/learned unit vectors и frozen source/compiled/runtime/preparation; actual mode/context hash проверены.
+- Independent final behavior/scope audit, все provider cache categories/failures и matched comparisons опубликованы без private source/credential.
+- Новые22 neighbor queries фиксируют recall/misses/native latency; identical contexts и отсутствие session speedup не выдаются за причинную ANN token экономию; exact default сохранён.
+
+Ожидаемые материалы: `scripts/ann_ab.ts`, `scripts/run_ann_ab.ts`, `scripts/summarize_ann_ab.ts`, `tests/benchmark.test.ts`, `docs/HNSW-MODEL-AB.md`, `evaluation/hnsw-model/`.

@@ -54,7 +54,7 @@ export function apply(ctx: Context, config: Config = {}): void {
     ctx.inject(["tools", "systemPrompt", "fs"], (ctx) => {
     const diagnostics: object[] = [];
     const record = (value: object) => { if (config.diagnosticsPath) { diagnostics.push(value); writeFileSync(config.diagnosticsPath, JSON.stringify(diagnostics)); } };
-    record({ event: "compact_registered", mode, autoContext });
+    record({ event: "compact_registered", mode, autoContext, search_mode: config.searchMode ?? "exact" });
     const vectors = new LocalVectors({ directory: resolve(root, config.vectorsPath ?? ".code-memory/vectors"),
       modelCache: resolve(root, config.modelCache ?? ".code-memory/models"), chunking: config.chunking ?? "unit", searchMode: config.searchMode ?? "exact" });
     ctx.effect(() => () => vectors.close(), "CM local vector cleanup");
@@ -102,7 +102,7 @@ export function apply(ctx: Context, config: Config = {}): void {
         if (query.trim()) {
           const context = await retrieve(query.slice(0, 16000), undefined, payload.signal, payload);
           const text = renderContext(context);
-          record({ event: "retrieved", agent: payload.agent.id, bytes: context.bytes_used, chunking: config.chunking ?? "unit", paths: [...new Set(context.parts.map((part) => part.path))], omissions: context.omissions, retrieval: context.retrieval });
+          record({ event: "retrieved", agent: payload.agent.id, bytes: context.bytes_used, chunking: config.chunking ?? "unit", search_mode: config.searchMode ?? "exact", context_sha256: hash(Buffer.from(text, "utf8")), paths: [...new Set(context.parts.map((part) => part.path))], omissions: context.omissions, retrieval: context.retrieval });
           return { ...decision, messages: [...decision.messages, createUserMessage({ content: [{ type: "text", text }],
             source: { kind: "code-memory", snapshot_id: context.snapshot_id, form: "snapshot", sections: [{ name: "cm-source-context", text }] } })] };
         }

@@ -10,7 +10,7 @@ import { ROOT } from "./lib.js";
 import type { ChunkingStrategy } from "../src/code-memory/chunks.js";
 import type { RetrievalPolicy } from "../src/code-memory/graph_retrieve.js";
 
-export type ABOptions = { project: string; output: string; node: string; harness: string; apiKey: string; model: string; environment?: Record<string, string>; cmMode?: "legacy" | "compact"; retrievalPolicy?: RetrievalPolicy; contextBytes?: number; autoUpdate?: boolean; embeddingCache?: string; modelCache?: string; repetitions?: number; chunking?: ChunkingStrategy; maxCalls?: number; maxSeconds?: number; cmIndexPath?: string; cmVectorsPath?: string; projectCheck?: { plugin: string; script: string; task: string; baseline: string } };
+export type ABOptions = { project: string; output: string; node: string; harness: string; apiKey: string; model: string; environment?: Record<string, string>; cmMode?: "legacy" | "compact"; retrievalPolicy?: RetrievalPolicy; searchMode?: "exact" | "ann"; contextBytes?: number; autoUpdate?: boolean; embeddingCache?: string; modelCache?: string; repetitions?: number; chunking?: ChunkingStrategy; maxCalls?: number; maxSeconds?: number; cmIndexPath?: string; cmVectorsPath?: string; projectCheck?: { plugin: string; script: string; task: string; baseline: string } };
 export type ABCase = { id: string; prompt: string; mutations: { path: string; before: string; after: string }[] };
 type ABManifest = ReturnType<typeof createCorpus>;
 
@@ -213,7 +213,7 @@ export async function bootProfile(options: ABOptions, workspace: string, runId: 
     config: { node: options.node, script: options.projectCheck.script, task: options.projectCheck.task, baseline: options.projectCheck.baseline, workspace } });
   if (cm) inserted.push({ id: "code-memory", name: pathToFileURL(join(ROOT, "dist/src/harness/plugin.js")).href,
     config: { projectRoot: workspace, mode: options.cmMode ?? "legacy", ...(options.cmMode === "compact" ? { autoContext: true,
-      modelCache: options.modelCache, chunking: options.chunking ?? "unit", ...(options.retrievalPolicy ? { retrievalPolicy: options.retrievalPolicy } : {}), ...(options.autoUpdate ? { autoUpdate: true, memoryDirectory: join(ROOT, ".artifacts/cm-live-runs", hash(options.output + runId).slice(0, 16)), ...(options.embeddingCache ? { embeddingCache: options.embeddingCache } : {}) } : {}), ...(options.cmIndexPath ? { indexPath: options.cmIndexPath } : {}), ...(options.cmVectorsPath ? { vectorsPath: options.cmVectorsPath } : {}), maxContextBytes: options.contextBytes ?? 6000, diagnosticsPath: join(directory, "retrieval.json") } : {}) } });
+      modelCache: options.modelCache, chunking: options.chunking ?? "unit", ...(options.searchMode ? { searchMode: options.searchMode } : {}), ...(options.retrievalPolicy ? { retrievalPolicy: options.retrievalPolicy } : {}), ...(options.autoUpdate ? { autoUpdate: true, memoryDirectory: join(ROOT, ".artifacts/cm-live-runs", hash(options.output + runId).slice(0, 16)), ...(options.embeddingCache ? { embeddingCache: options.embeddingCache } : {}) } : {}), ...(options.cmIndexPath ? { indexPath: options.cmIndexPath } : {}), ...(options.cmVectorsPath ? { vectorsPath: options.cmVectorsPath } : {}), maxContextBytes: options.contextBytes ?? 6000, diagnosticsPath: join(directory, "retrieval.json") } : {}) } });
   entries.push({ insert: inserted });
   writeFileSync(patch, JSON.stringify(entries));
   const args = [options.harness, "--profile", profile, "--from-default-profile", "headless", "--patch", patch, "--json"];

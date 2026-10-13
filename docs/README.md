@@ -4,6 +4,8 @@
 
 [Граф и бюджет контекста](GRAPH-BUDGET.md): named/discovery routing, compiler dependency closure, focused/expanded и четырёхвариантный модельный эксперимент.
 
+[HNSW model A/B](HNSW-MODEL-AB.md):36 sessions, exact/ann12/12 и none9/12; весь provider расход, одинаковые initial contexts, native recall и отсутствие session speedup.
+
 [Harness A/B pilot](HARNESS-AB.md) описывает запуск живой модели, token accounting, независимые проверки и ограничения сравнения.
 
 [Первый pilot](AB-RESULTS.md): CM 14/14 против 13/14; экономия не подтвердилась.
@@ -16,7 +18,7 @@
 
 [Локальный продукт](LOCAL-PRODUCT.md): index на компьютере пользователя, MCP, подписка и карта концептов.
 
-В 0.5.0 уже доступны [MCP stdio](MCP-SETUP.md), [CM Atlas](LOCAL-ATLAS.md) и optional [HNSW](HNSW.md). Account, billing, installer и automatic refresh остаются планом; native ANN timing не заменяет model-quality/cost A/B.
+С0.5.0 доступны [MCP stdio](MCP-SETUP.md), [CM Atlas](LOCAL-ATLAS.md) и optional [HNSW](HNSW.md); с0.6.0 opt-in saved-source refresh работает. Account, billing и installer остаются планом. Native ANN timing и model-quality/cost A/B измеряются отдельно.
 
 Главная точка входа — [README](../README.md). Полный CM/RAG backend описан как план; уже работающий local prototype и Harness plugin выделены в отдельную инструкцию.
 
