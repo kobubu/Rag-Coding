@@ -12,7 +12,7 @@ export function validateIndex(value: unknown): CMIndex {
   if (!validate(value)) throw new CMError("invalid_index", JSON.stringify(validate.errors));
   const index = value;
   if (new Set(index.analysis_inputs.map((input) => input.path)).size !== index.analysis_inputs.length ||
-    index.analysis_inputs.some((input) => !ANALYSIS_FILES.includes(input.path))) throw new CMError("invalid_index", "Invalid analysis input");
+    index.analysis_inputs.some((input) => !ANALYSIS_FILES.includes(input.path) && (!input.path.endsWith(".json") || input.path.includes("\\") || input.path.includes(":") || input.path.split("/").some(part => !part || part === "." || part === "..")))) throw new CMError("invalid_index", "Invalid analysis input");
   if (index.snapshot_id !== snapshotId(index.files, index.analyzer.version, index.analysis_config_hash)) {
     throw new CMError("invalid_index", "Snapshot fingerprint does not match manifest");
   }

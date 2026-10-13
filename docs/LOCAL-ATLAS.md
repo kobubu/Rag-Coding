@@ -1,6 +1,6 @@
 # CM Atlas: локальная карта кода
 
-В 0.5.0 работает React/TypeScript viewer с локальным Node.js сервером. Это read-only prototype без облачного аккаунта. Он читает те же source snapshot, symbols, relations и learned embeddings, что MCP и native Harness plugin.
+В 0.6.0 работает React/TypeScript viewer с локальным Node.js сервером. Это read-only prototype без облачного аккаунта. Он читает те же source snapshot, symbols, relations и learned embeddings, что MCP и native Harness plugin. При включённом `--auto-update true` карта отслеживает опубликованные поколения и очищает старые selections; [пополнение и обновление](LIVE-CM.md).
 
 После `npm ci`, `npm run build` и [индексации](VECTOR-SEARCH.md):
 
@@ -28,6 +28,6 @@ Source view ограничен 300 строками и 32000 bytes за стра
 
 HTTP слушает только `127.0.0.1`, проверяет Host, Origin и `Sec-Fetch-Site`, принимает только GET. Нет endpoints записи, native code проекта не выполняется. CSP запрещает внешние scripts/connects и embedding во фрейм. API и interface доступны локальным процессам пользователя; это не multi-user authentication или защита от вредоносного приложения на машине.
 
-Watcher, автоматический add/delete/branch refresh, ручная редактура concepts, graph path overlay, полный unresolved UI, SQLite migration, installer/update и подписка остаются планом. Если исходники поменялись, пересоздайте source/vector projections и перезапустите агент. Не выдавайте эту ручную процедуру за автоматический sync.
+Watcher и saved edit/add/delete/rename/branch refresh доступны через `--auto-update true`. Карта проверяет snapshot раз в две секунды и очищает старый source; незавершённые navigation requests отменяются. При выключенном live update пересоздайте source/vector projections и перезапустите агент. Ручная редактура concepts, graph path overlay, полный unresolved UI, SQLite migration, installer/update и подписка остаются планом.
 
 На настоящем corpus Geo Dash: 224 модуля, 29186 symbols, 130775 relations, 7503 vectors. В Chrome проверены semantic search → code, glossary, compiler evidence, similarity navigation и zoom; layouts 1440×1000, 844×390, 390×844 без horizontal overflow и console errors. [Безопасные результаты](../research/evidence/local-cm-mcp-atlas-2026-10-13.json); screenshots с private source остаются локальными.

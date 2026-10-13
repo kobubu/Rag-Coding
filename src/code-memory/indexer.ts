@@ -16,6 +16,25 @@ function scan(root: string, directory = root): string[] {
     return entry.isFile() && isSourcePath(entry.name) ? [path] : [];
   }).sort();
 }
+export function sourcePaths(projectRoot: string): string[] {
+  const root = realpathSync(projectRoot);return scan(root).map(path => relative(root, path).split(sep).join("/"));
+}
+export function analysisInputs(projectRoot: string) {
+  const root = realpathSync(projectRoot), files = new Set(ANALYSIS_FILES.filter(path => existsSync(join(root, path))).map(path => resolve(root, path)));
+  const visit = (path: string) => {
+    const config = ts.readConfigFile(path, ts.sys.readFile);if (config.error) return;
+    const parents = typeof config.config.extends === "string" ? [config.config.extends] : Array.isArray(config.config.extends) ? config.config.extends : [];
+    for (const specifier of parents) {
+      if (typeof specifier !== "string" || !specifier.startsWith(".")) continue;
+      const resolved = resolve(path, "..", specifier.endsWith(".json") ? specifier : specifier + ".json");
+      if (!inside(root, resolved)) throw new CMError("source_outside_project", "Inherited compiler config is outside the configured project");
+      if (!existsSync(resolved) || files.has(resolved)) continue;
+      files.add(resolved);visit(resolved);
+    }
+  };
+  for (const name of ["tsconfig.json", "jsconfig.json"]) if (existsSync(join(root, name))) visit(join(root, name));
+  return [...files].sort().map(path => ({ path: relative(root, path).split(sep).join("/"), sha256: hash(readFileSync(path)) }));
+}
 
 function callable(node: ts.Node): node is ts.FunctionLikeDeclaration {
   return ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node) || ts.isFunctionExpression(node) ||
@@ -53,7 +72,7 @@ function declarationName(node: ts.Node): ts.Identifier | undefined {
 
 export function buildIndex(projectRoot: string, paths?: string[]): CMIndex {
   const root = realpathSync(projectRoot);
-  const analysisInputs = ANALYSIS_FILES.filter((path) => existsSync(join(root, path))).map((path) => ({ path, sha256: hash(readFileSync(join(root, path))) }));
+  const inputs = analysisInputs(root);
   const names = paths ? paths.map((path) => resolve(root, path)).sort() : scan(root);
   if (names.length === 0 || names.length > MAX_FILES || new Set(names).size !== names.length) {
     throw new CMError("corpus_limit", `Expected 1..${MAX_FILES} distinct source files`);
@@ -71,7 +90,7 @@ export function buildIndex(projectRoot: string, paths?: string[]): CMIndex {
   }
   const defaults: ts.CompilerOptions = { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.NodeNext,
     moduleResolution: ts.ModuleResolutionKind.NodeNext, noEmit: true, skipLibCheck: true, types: [], allowJs: true, checkJs: false };
-  const configPath = ts.findConfigFile(root, ts.sys.fileExists);
+  const configPath = ts.findConfigFile(root, ts.sys.fileExists) ?? ts.findConfigFile(root, ts.sys.fileExists, "jsconfig.json");
   let options = defaults;
   if (configPath && inside(root, configPath)) {
     const config = ts.readConfigFile(configPath, ts.sys.readFile);
@@ -92,6 +111,7 @@ export function buildIndex(projectRoot: string, paths?: string[]): CMIndex {
   const symbols: CMSymbol[] = [];
   const relations: CMRelation[] = [];
   const diagnostics: CMIndex["diagnostics"] = [];
+  let incompleteSyntax = false;
   const unitNodes = new Map<ts.Node, CMUnit>();
   const symbolByCompiler = new Map<ts.Symbol, CMSymbol>();
   const declarationNames = new Set<ts.Node>();
@@ -126,7 +146,7 @@ export function buildIndex(projectRoot: string, paths?: string[]): CMIndex {
       name: record.path, kind: "file", parent_id: null, span: span(file, 0, record.source.length), required_symbol_ids: [] };
     units.push(rootUnit);
     unitNodes.set(file, rootUnit);
-    if (syntax.length) continue;
+    if (syntax.length) { incompleteSyntax = true;continue; }
     function visit(node: ts.Node): void {
       const isType = ts.isClassDeclaration(node) || ts.isInterfaceDeclaration(node) || ts.isEnumDeclaration(node);
       if (callable(node) || isType) {
@@ -243,14 +263,14 @@ export function buildIndex(projectRoot: string, paths?: string[]): CMIndex {
   for (const filename of names) {
     if (!readFileSync(filename).equals(rawByName.get(filename)!)) throw new CMError("source_changed_during_index", filename);
   }
-  for (const input of analysisInputs) {
+  for (const input of inputs) {
     if (hash(readFileSync(join(root, input.path))) !== input.sha256) throw new CMError("source_changed_during_index", input.path);
   }
-  const configHash = hash(JSON.stringify({ options, analysisInputs }));
-  return { format: "code-memory-0.1", snapshot_id: snapshotId(files, ts.version, configHash), analysis_config_hash: configHash, analysis_inputs: analysisInputs,
+  const configHash = hash(JSON.stringify({ options, analysisInputs: inputs }));
+  return { format: "code-memory-0.1", snapshot_id: snapshotId(files, ts.version, configHash), analysis_config_hash: configHash, analysis_inputs: inputs,
     analyzer: { name: "typescript-compiler", version: ts.version },
     capabilities: ["typescript_syntax", "javascript_syntax", "compiler_symbol_bindings", "function_units", "direct_statement_groups", "references", "calls", "lexical_captures"],
     files, units, symbols, relations, diagnostics,
-    limits: ["Local immutable JSON index; PostgreSQL and vectors are not implemented", "No full dataflow, dynamic-call resolution or LLM enrichment",
+    limits: [...(incompleteSyntax ? ["syntax_analysis_incomplete"] : []), "Local immutable JSON source index; vectors are a separate projection; PostgreSQL backend is not implemented", "No full dataflow, dynamic-call resolution or LLM enrichment",
       "Only selected TypeScript/JavaScript files are indexed; compiler diagnostics report incomplete semantics"] };
 }

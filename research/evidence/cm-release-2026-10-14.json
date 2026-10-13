@@ -1,0 +1,81 @@
+{
+  "format": "cm-release-evidence-1",
+  "version": "0.6.0",
+  "local_status": "PASS",
+  "tests": 40,
+  "pass": 40,
+  "package": {
+    "tarball_sha256": "c119858bb33795fa1db9f30594e916b890bc919b0b7e05f37482fe353c51a3be",
+    "entries": 68,
+    "installed_tarball_entries_equal": true,
+    "compiled_source_equal": true,
+    "one_command_install_tested": false
+  },
+  "installed_mcp": {
+    "status": "PASS",
+    "boundary": "Official MCP client -> spawned real Node stdio server -> learned CPU embeddings/LanceDB HNSW, no model API",
+    "server_pid": 47960,
+    "tools": [
+      "cm_retrieve_context",
+      "cm_project_status"
+    ],
+    "source_files": 224,
+    "vector_rows": 7503,
+    "search_mode": "ann",
+    "source_bytes": 775,
+    "response_bytes": 2265,
+    "snapshot_mismatch_rejected": true,
+    "provider_api_calls": 0
+  },
+  "original_project_atlas": {
+    "files": 226,
+    "source_scope": "game",
+    "extra_from_saved_source_scope": [
+      "game/capacitor-core.js",
+      "game/platform-config.js"
+    ],
+    "watching": true,
+    "retrieval_policy": "graph",
+    "search_mode": "ann",
+    "source_edits": 0,
+    "browser": {
+      "status": "PASS",
+      "records": [
+        {
+          "viewport": "1440x1000",
+          "nodes": 226,
+          "semantic_search": true,
+          "glossary": true,
+          "source": true,
+          "compiler_evidence": true,
+          "semantic_candidate": true,
+          "zoom": true,
+          "horizontal_overflow": false,
+          "errors": []
+        },
+        {
+          "viewport": "844x390",
+          "nodes": 226,
+          "horizontal_overflow": false,
+          "errors": []
+        },
+        {
+          "viewport": "390x844",
+          "nodes": 226,
+          "horizontal_overflow": false,
+          "errors": []
+        }
+      ],
+      "provider_api_calls": 0,
+      "scope": "Real local Chrome navigation and responsive layouts; no paid generation or commercial account/billing"
+    }
+  },
+  "audit_vulnerabilities": 0,
+  "paid_model_sessions": 48,
+  "provider_estimate_usd": 0.062557835,
+  "limitations": [
+    "Manual offline tarball extraction; no npm registry publication or one-command installer proof",
+    "Loopback application, no hosted deployment/account/subscription",
+    "Paid repair pilot uses224sampled files, original saved-source game scope226; scope sizes are distinct"
+  ]
+}

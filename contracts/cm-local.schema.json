@@ -8,7 +8,7 @@
     "format": {"const": "code-memory-0.1"},
     "snapshot_id": {"type": "string", "pattern": "^snapshot:[0-9a-f]{64}$"},
     "analysis_config_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-    "analysis_inputs": {"type": "array", "maxItems": 7, "items": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {"path": {"type": "string"}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}}},
+    "analysis_inputs": {"type": "array", "maxItems": 64, "items": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {"path": {"type": "string"}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}}},
     "analyzer": {"type": "object", "additionalProperties": false, "required": ["name", "version"], "properties": {"name": {"const": "typescript-compiler"}, "version": {"type": "string"}}},
     "capabilities": {"type": "array", "items": {"type": "string"}},
     "limits": {"type": "array", "items": {"type": "string"}},

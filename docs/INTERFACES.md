@@ -50,4 +50,6 @@ Read-only [MCP adapter](MCP-SETUP.md) уже предоставляет `cm_retr
 
 ## Приёмка интерфейса
 
+В 0.6.0 native Harness adapter, MCP и Atlas могут использовать `autoUpdate` поколения. Сохранённый source обновляет compiler facts и local vectors; stale snapshot отклоняется. `retrievalPolicy: graph | adaptive` и optional `detail: focused | expanded` используют тот же core. [Жизненный цикл](LIVE-CM.md), [графовый поиск](GRAPH-BUDGET.md).
+
 Сквозные проверки: выбрать одноимённый символ → открыть правильное определение → перейти к nested block → раскрыть внешнюю привязку → открыть доказательство ребра → переключить snapshot → увидеть новую версию или явное ограничение. Для package viewer проверяется отображение omissions и сохранность источников при копировании контекста.

@@ -1,5 +1,9 @@
 # Документация RAG Coding
 
+[Живая CM](LIVE-CM.md): пополнение из сохранённых файлов, атомарные поколения, переиспользование эмбеддингов, поиск и практические ограничения.
+
+[Граф и бюджет контекста](GRAPH-BUDGET.md): named/discovery routing, compiler dependency closure, focused/expanded и четырёхвариантный модельный эксперимент.
+
 [Harness A/B pilot](HARNESS-AB.md) описывает запуск живой модели, token accounting, независимые проверки и ограничения сравнения.
 
 [Первый pilot](AB-RESULTS.md): CM 14/14 против 13/14; экономия не подтвердилась.

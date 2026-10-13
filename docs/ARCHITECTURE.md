@@ -43,7 +43,7 @@ TypeScript в strict mode и Node.js 24 LTS — основа управляющ�
 
 Optional native LanceDB `IVF_HNSW_SQ` хранит технический graph nearest neighbors отдельно от compiler relation graph. Exact search явно обходит ANN index; opt-in ANN проверяет manifest и physical index. [Параметры и измерение](HNSW.md). Topic regions viewer пока inferred from names/paths; semantic similarity — candidates, structural relations — compiler facts.
 
-CPU-intensive parsing, segmentation и анализ связей выполняются в отдельных CLI/worker процессах, отдельно от runtime обработчиков tools/API. Jobs будущего сервиса имеют lease/fingerprint правила независимо от процесса. Node.js не является основанием обещать ускорение retrieval без измерений. Поддерживаются Node.js 22 от 22.19.0 и Node.js 24; целевая версия продукта — 24 LTS.
+Первичная ручная индексация выполняется отдельным CLI. В 0.6.0 opt-in live update выполняет полный compiler rebind в процессе локального агента и может задерживать ответы; worker/incremental compiler program остаются следующими оптимизациями. Source/graph/vectors публикуются одним проверенным поколением, embedding fingerprints переиспользуются. Jobs будущего сервиса имеют lease/fingerprint правила независимо от процесса. Node.js не является основанием обещать ускорение retrieval без измерений. Поддерживаются Node.js 22 от 22.19.0 и Node.js 24; целевая версия продукта — 24 LTS. [Жизненный цикл](LIVE-CM.md).
 
 ## Адаптеры языков
 
@@ -84,4 +84,4 @@ viewer/           # будущий React + TypeScript интерфейс
 Эта структура описывает развитие core; большинство перечисленных подсистем ещё не реализовано. Уже созданы `src/code-memory/` (local index/store/query/CLI), `src/harness/` (plugin), `harness/bundle.yml` (distribution entry). TS-средства находятся в `scripts/`, регрессии — в `tests/`; `tsconfig.json` собирает их в `dist/`. Локальный JSON backend отдельно версионирован и не объявляется PostgreSQL ledger или полноценным API v0.1.
 
 
-Local vector/compact prototype уже проверен настоящим [вторым Harness A/B](HYBRID-RESULTS.md). Primary source/graph остаётся JSON, learned embeddings и vector projection — локальные. Full ledger/FTS, MCP, map UI и broad benchmark остаются планом.
+Local vector/compact prototype уже проверен настоящим [вторым Harness A/B](HYBRID-RESULTS.md). Primary source/graph остаётся JSON, learned embeddings и vector projection — локальные. MCP и map UI реализованы; в 0.6.0 добавлены live update и experimental [graph/adaptive retrieval](GRAPH-BUDGET.md). Full ledger/FTS и broad benchmark остаются планом.

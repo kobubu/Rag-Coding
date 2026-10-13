@@ -3,9 +3,12 @@ import { CMError } from "./source.js";
 import { LocalVectors, sourceSlice, words } from "./vector.js";
 import type { CMIndex, SourceSpan } from "./types.js";
 import type { CMChunk } from "./chunks.js";
+import { retrieveGraph } from "./graph_retrieve.js";
+import type { RetrievalDetail, RetrievalPolicy } from "./graph_retrieve.js";
 
 type ContextPart = { path: string; span: SourceSpan; text: string; reason: "match" | "dependency" | "signature" };
-export type RetrievedContext = { snapshot_id: string; channels: string[]; bytes_used: number; parts: ContextPart[]; omissions: number; complete: false };
+export type RetrievedContext = { snapshot_id: string; channels: string[]; bytes_used: number; parts: ContextPart[]; omissions: number; complete: false;
+  retrieval?: { policy: RetrievalPolicy; route: "named" | "discovery"; detail: RetrievalDetail; roots: number; graph_nodes: number; bindings_shown: number; bindings_omitted: number; dense_search: boolean }; notes?: string[] };
 const STOP = new Set(words("a an the of to in for from with and or is are be should must when then this that fix bug regression ensure preserve behavior existing code apply use please task change project"));
 function terms(text: string): string[] {
   return words(text).map((word) => word.length > 8 && /ence$/.test(word) ? word.slice(0, -4) :
@@ -13,7 +16,10 @@ function terms(text: string): string[] {
     word.length > 4 && /s$/.test(word) && !/ss$/.test(word) ? word.slice(0, -1) : word);
 }
 
-export async function retrieveContext(index: CMIndex, vectors: LocalVectors, query: string, maxBytes = 6000, signal?: AbortSignal): Promise<RetrievedContext> {
+export async function retrieveContext(index: CMIndex, vectors: LocalVectors, query: string, maxBytes = 6000, signal?: AbortSignal,
+  strategy?: { policy: RetrievalPolicy; detail?: RetrievalDetail }): Promise<RetrievedContext> {
+  if (strategy && !["hybrid", "graph", "adaptive"].includes(strategy.policy)) throw new CMError("invalid_argument", "Unknown retrieval policy");
+  if (strategy && strategy.policy !== "hybrid") return retrieveGraph(index, vectors, query, maxBytes, signal, strategy.policy, strategy.detail ?? "focused");
   if (!query.trim() || query.length > 16000) throw new CMError("invalid_argument", "query must contain 1..16000 characters");
   const budget = bounded(maxBytes, 6000, 32000, "max_bytes");
   const queryWords = [...new Set(terms(query).filter((word) => word.length > 1 && !STOP.has(word)))];
@@ -71,6 +77,7 @@ export async function retrieveContext(index: CMIndex, vectors: LocalVectors, que
 }
 
 export function renderContext(context: RetrievedContext): string {
-  return "CM context (partial; source version checked):\n" + context.parts.map((part) => `${part.path}:${part.span.line_start}-${part.span.line_end}\n${part.text}`).join("\n\n") +
+  return "CM context (partial; source version checked):\n" + (context.retrieval ? `Route: ${context.retrieval.policy}/${context.retrieval.route}; bindings shown ${context.retrieval.bindings_shown}, omitted ${context.retrieval.bindings_omitted}.\n` : "") + context.parts.map((part) => `${part.path}:${part.span.line_start}-${part.span.line_end}\n${part.text}`).join("\n\n") +
+    (context.notes?.length ? "\n" + context.notes.join("\n") : "") +
     `\n${context.omissions} additional spans omitted. Request more context or read if necessary.`;
 }

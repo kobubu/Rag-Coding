@@ -15,7 +15,7 @@ export function snapshotId(files: { path: string; sha256: string }[], compiler: 
     compiler, configHash, policy: "cm-local-0.1" }));
 }
 
-export const ANALYSIS_FILES = ["tsconfig.json", "package.json", "package-lock.json", "pnpm-lock.yaml", "yarn.lock", "bun.lock", "bun.lockb"];
+export const ANALYSIS_FILES = ["tsconfig.json", "jsconfig.json", "package.json", "package-lock.json", "pnpm-lock.yaml", "yarn.lock", "bun.lock", "bun.lockb"];
 export const MAX_INDEX_BYTES = 128 * 1024 * 1024;
 
 export function isSourcePath(path: string): boolean {

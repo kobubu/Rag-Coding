@@ -67,4 +67,10 @@ MCP-сервер читает код и не делает patch. Правами 
 
 На Geo Dash проверены официальный stdio client, installed Harness SDK v2 и полный Web profile: статус, learned CPU retrieval, native HNSW и dispatch ToolRuntime. Отмена, scope, UTF-8 bounds, resource и отсутствие повторного тела проверены официальным in-memory client в [boundary tests](../tests/local_agent.test.ts). Без платной модели; интерфейс конкретного стороннего desktop-клиента не проверялся. Безопасные результаты — [evidence](../research/evidence/local-cm-mcp-atlas-2026-10-13.json).
 
+## Живая CM в 0.6.0
+
+Добавьте `--auto-update true --memory-dir /absolute/cm-cache/project` для saved source refresh и `--retrieval-policy adaptive` для named/discovery routing. `--embedding-cache` задаёт reusable cache; `--source-scope game` ограничивает дерево. `cm_retrieve_context` принимает optional `detail: focused | expanded`, source snapshot проверяется до выдачи.
+
+Read-only означает отсутствие правки исходников через MCP. Производные local indexes при включённом live update записывает сам локальный процесс. На копии Geo Dash официальный stdio client проверил: добавленный файл доступен по новому query, старый snapshot отклоняется, удаление публикуется. Модельный API в этой проверке не вызывался. [Алгоритм и пределы](LIVE-CM.md).
+
 Первичные инструкции: [MCP server development](https://modelcontextprotocol.io/docs/2026-07-28/develop/build-server), [официальный SDK](https://github.com/modelcontextprotocol/typescript-sdk).

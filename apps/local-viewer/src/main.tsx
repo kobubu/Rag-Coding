@@ -25,6 +25,22 @@ function App() {
     api<MapData>("map", {}, controller.signal).then(setMap).catch(reason => { if (!controller.signal.aborted) setError(String(reason)); });
     return () => { controller.abort(); searchController.current?.abort(); selectionController.current?.abort(); };
   }, []);
+  useEffect(() => {
+    if (!map) return;
+    const controller = new AbortController();let pending = false;
+    const timer = window.setInterval(() => {
+      if (pending) return;pending = true;
+      api<{ snapshot_id: string }>("status", {}, controller.signal).then(async status => {
+        if (status.snapshot_id === map.snapshot_id) return;
+        const fresh = await api<MapData>("map", {}, controller.signal);
+        if (controller.signal.aborted) return;
+        searchController.current?.abort();selectionController.current?.abort();
+        setMap(fresh);setSelected(undefined);setResults(undefined);setSource(undefined);setSymbols(undefined);setGraph(undefined);setSimilar(undefined);setBusy(false);setSearching(false);
+        setError("Код изменился. Карта обновлена; выберите источник в новом снимке.");
+      }).catch(reason => { if (!controller.signal.aborted) setError(String(reason)); }).finally(() => { pending = false; });
+    }, 2000);
+    return () => { controller.abort();window.clearInterval(timer); };
+  }, [map?.snapshot_id]);
   async function select(node: MapNode | NodeInfo, line?: number) {
     if (!map) return;
     const file = map.nodes.find(file => file.path === node.path)!;
@@ -51,21 +67,24 @@ function App() {
   }
   async function filterSymbols(offset = 0) {
     if (!map || !selected) return;
+    selectionController.current?.abort();const controller = new AbortController();selectionController.current = controller;
     setBusy(true);
-    try { setSymbols(await api<SymbolPage>("symbols", { path: selected.path, q: symbolQuery, offset, snapshot: map.snapshot_id })); }
-    catch (reason) { setError(String(reason)); } finally { setBusy(false); }
+    try { const value = await api<SymbolPage>("symbols", { path: selected.path, q: symbolQuery, offset, snapshot: map.snapshot_id }, controller.signal);if (!controller.signal.aborted) setSymbols(value); }
+    catch (reason) { if (!controller.signal.aborted) setError(String(reason)); } finally { if (!controller.signal.aborted) setBusy(false); }
   }
   async function related() {
     if (!map || !source) return;
+    selectionController.current?.abort();const controller = new AbortController();selectionController.current = controller;
     setBusy(true); setTab("similar");
-    try { setSimilar(await api<Similarity>("similar", { id: source.node.id, snapshot: map.snapshot_id })); }
-    catch (reason) { setError(String(reason)); } finally { setBusy(false); }
+    try { const value = await api<Similarity>("similar", { id: source.node.id, snapshot: map.snapshot_id }, controller.signal);if (!controller.signal.aborted) setSimilar(value); }
+    catch (reason) { if (!controller.signal.aborted) setError(String(reason)); } finally { if (!controller.signal.aborted) setBusy(false); }
   }
   async function nextSource() {
     if (!map || !source || source.next_byte === null) return;
+    selectionController.current?.abort();const controller = new AbortController();selectionController.current = controller;
     setBusy(true);
-    try { setSource(await api<SourceView>("source", { id: source.node.id, byte_offset: source.next_byte, snapshot: map.snapshot_id })); }
-    catch (reason) { setError(String(reason)); } finally { setBusy(false); }
+    try { const value = await api<SourceView>("source", { id: source.node.id, byte_offset: source.next_byte, snapshot: map.snapshot_id }, controller.signal);if (!controller.signal.aborted) setSource(value); }
+    catch (reason) { if (!controller.signal.aborted) setError(String(reason)); } finally { if (!controller.signal.aborted) setBusy(false); }
   }
   const visible = new Set(map?.nodes.filter(node => !topic || node.topic === topic).map(node => node.id));
   const nodes = new Map(map?.nodes.map(node => [node.id, node]));

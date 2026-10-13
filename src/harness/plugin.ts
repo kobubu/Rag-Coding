@@ -11,9 +11,11 @@ import { retrieveContext, renderContext } from "../code-memory/retrieve.js";
 import type { RetrievedContext } from "../code-memory/retrieve.js";
 import type { CMIndex } from "../code-memory/types.js";
 import type { ChunkingStrategy } from "../code-memory/chunks.js";
+import type { RetrievalPolicy, RetrievalDetail } from "../code-memory/graph_retrieve.js";
 import { CMError, hash } from "../code-memory/source.js";
 import { codeSearch, contextGet, graphExpand, symbolSearch } from "../code-memory/query.js";
 import { CMStore } from "../code-memory/store.js";
+import { LiveMemory } from "../code-memory/live.js";
 
 export const name = "code-memory";
 export const inject = ["tools"];
@@ -35,6 +37,11 @@ export interface Config {
   diagnosticsPath?: string;
   chunking?: ChunkingStrategy;
   searchMode?: "exact" | "ann";
+  retrievalPolicy?: RetrievalPolicy;
+  autoUpdate?: boolean;
+  memoryDirectory?: string;
+  embeddingCache?: string;
+  sourceScope?: string;
 }
 
 export function apply(ctx: Context, config: Config = {}): void {
@@ -51,6 +58,10 @@ export function apply(ctx: Context, config: Config = {}): void {
     const vectors = new LocalVectors({ directory: resolve(root, config.vectorsPath ?? ".code-memory/vectors"),
       modelCache: resolve(root, config.modelCache ?? ".code-memory/models"), chunking: config.chunking ?? "unit", searchMode: config.searchMode ?? "exact" });
     ctx.effect(() => () => vectors.close(), "CM local vector cleanup");
+    const live = config.autoUpdate ? new LiveMemory({ projectRoot: root, directory: resolve(root, config.memoryDirectory ?? ".code-memory/live"),
+      modelCache: vectors.config.modelCache, baseIndex: store.indexPath, baseVectors: vectors.config.directory, chunking: config.chunking ?? "unit", searchMode: config.searchMode ?? "exact",
+      ...(config.embeddingCache ? { embeddingCache: config.embeddingCache } : {}), ...(config.sourceScope ? { sourceScope: config.sourceScope } : {}) }) : undefined;
+    if (live) { live.startWatching();ctx.effect(() => () => live.close(), "CM live generation cleanup"); }
     const observe = async (index: CMIndex, context: RetrievedContext, signal: AbortSignal, actor: object) => {
       for (const path of new Set(context.parts.map((part) => part.path))) {
         const hostPath = resolve(root, path);
@@ -67,16 +78,18 @@ export function apply(ctx: Context, config: Config = {}): void {
         ctx.emit("fs/observed", target, { kind: "present", version: after.version }, actor);
       }
     };
-    const retrieve = async (query: string, budget: number | undefined, signal: AbortSignal, actor: object) => {
-      const index = await store.load(signal);
-      const context = await retrieveContext(index, vectors, query, budget ?? config.maxContextBytes ?? 6000, signal);
-      await observe(index, context, signal, actor);
-      return context;
+    const retrieve = async (query: string, budget: number | undefined, signal: AbortSignal, actor: object, detail: RetrievalDetail = "focused") => {
+      const action = async (index: CMIndex, currentVectors: LocalVectors) => {
+        const context = await retrieveContext(index, currentVectors, query, budget ?? config.maxContextBytes ?? 6000, signal, { policy: config.retrievalPolicy ?? "hybrid", detail });
+        await observe(index, context, signal, actor);return context;
+      };
+      if (live) return live.use(signal, undefined, action);
+      return action(await store.load(signal), vectors);
     };
     ctx.tools.register(defineTool({ name: "cm_retrieve_context", description: "Get compact exact code and dependencies via local hybrid vector search. Files are version-checked and observed for edit. Partial; read more only when needed.",
-      parameters: { query: { type: "string", required: true }, max_bytes: { type: "integer" } },
+      parameters: { query: { type: "string", required: true }, max_bytes: { type: "integer" }, ...(config.retrievalPolicy && config.retrievalPolicy !== "hybrid" ? { detail: { type: "string" as const, enum: ["focused", "expanded"] } } : {}) },
       output: { schema: { type: "object", additionalProperties: true }, render: (_args: unknown, value: RetrievedContext) => [{ type: "text" as const, text: renderContext(value) }] },
-      async execute(args, exec) { return retrieve(args.query, args.max_bytes, exec.signal, exec); },
+      async execute(args, exec) { return retrieve(args.query, args.max_bytes, exec.signal, exec, args.detail ?? "focused"); },
     }));
     ctx.systemPrompt.section({ name: "cm-context-guidance", order: 1350,
       text: "CM source context is already read through this filesystem and version-observed for guarded edit. Apply targeted edits directly when the supplied context suffices; use cm_retrieve_context or read for missing context." });
@@ -89,7 +102,7 @@ export function apply(ctx: Context, config: Config = {}): void {
         if (query.trim()) {
           const context = await retrieve(query.slice(0, 16000), undefined, payload.signal, payload);
           const text = renderContext(context);
-          record({ event: "retrieved", agent: payload.agent.id, bytes: context.bytes_used, chunking: config.chunking ?? "unit", paths: [...new Set(context.parts.map((part) => part.path))], omissions: context.omissions });
+          record({ event: "retrieved", agent: payload.agent.id, bytes: context.bytes_used, chunking: config.chunking ?? "unit", paths: [...new Set(context.parts.map((part) => part.path))], omissions: context.omissions, retrieval: context.retrieval });
           return { ...decision, messages: [...decision.messages, createUserMessage({ content: [{ type: "text", text }],
             source: { kind: "code-memory", snapshot_id: context.snapshot_id, form: "snapshot", sections: [{ name: "cm-source-context", text }] } })] };
         }

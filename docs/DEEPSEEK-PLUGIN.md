@@ -1,6 +1,6 @@
 # CM — Code Memory: плагин DeepSeek Harness
 
-Рабочий локальный prototype v0.4.2: компактный vector/context режим по умолчанию и optional legacy tools. Он добавляет глоссарий, записи CM, структурные связи и сборку исходного контекста в DeepSeek Harness. Primary index создаётся CLI-командой на TypeScript Compiler API для TypeScript и JavaScript, vector projection — локальной embedding-моделью. Код индексируемого проекта не исполняется, внешний LLM API не требуется.
+Рабочий локальный prototype v0.6.0: компактный vector/context режим по умолчанию, optional legacy tools, graph/adaptive retrieval и live update. Он добавляет глоссарий, записи CM, структурные связи и сборку исходного контекста в DeepSeek Harness. Primary index создаётся на TypeScript Compiler API для TypeScript и JavaScript, vector projection — локальной embedding-моделью. Код индексируемого проекта не исполняется, внешний LLM API для индексирования не требуется. [Живая CM](LIVE-CM.md), [граф и экономия](GRAPH-BUDGET.md).
 
 ## Проверенная совместимость
 
@@ -26,7 +26,7 @@ npm run plugin:smoke
 npm run cm:index -- --project /absolute/project --out /absolute/project/.code-memory/index.json
 ```
 
-В PowerShell команда с передачей флагов: `npm.cmd run cm:index -- --project 'D:/project' --out 'D:/project/.code-memory/index.json'`. Требуется пересборка CM после изменения, удаления или добавления исходников. Индекс содержит выбранный TS/JS corpus; полнота относительно всех возможных файлов проекта не заявляется.
+В PowerShell команда с передачей флагов: `npm.cmd run cm:index -- --project 'D:/project' --out 'D:/project/.code-memory/index.json'`. Ручной snapshot требует пересборки после изменения, удаления или добавления исходников. Для живой работы compact config включает `autoUpdate: true`: [поколения CM](LIVE-CM.md) создаёт локальный процесс. Индекс содержит выбранный TS/JS corpus; полнота относительно всех возможных файлов проекта не заявляется.
 
 В corpus входят `.ts`, `.tsx`, `.mts`, `.cts`, `.js`, `.jsx`, `.mjs`, `.cjs`; исключены dependency/build/artifact directories, declaration files и symlinks. Максимум 500 файлов и 8 MiB исходных bytes; writer и reader принимают JSON index до 128 MiB. На Geo Dash 3,56 MB source дали 69,99 MB derived JSON, поэтому прежний лимит 16 MiB не позволял прочитать полный индекс. Некорректный UTF-8 отклоняется; syntax/semantic diagnostics доступны как признак частичного анализа. Один экземпляр plugin привязан к одному настроенному projectRoot; командная access model остаётся этапом плана.
 
@@ -38,13 +38,13 @@ npm run cm:index -- --project /absolute/project --out /absolute/project/.code-me
 npm pack --pack-destination .artifacts
 ```
 
-В Harness Plugin Manager установить полученный локальный `dsh-plugin-code-memory-0.5.0.tgz` как bundle и включить его в нужном профиле. Использовать Harness 0.2.0-rc.2. Bundle добавляет entry `code-memory` с compact vector mode и auto context; существующие model/file tools остаются в профиле. Для этого режима нужны подготовленные primary index, vectors и локальная модель.
+В Harness Plugin Manager установить полученный локальный `dsh-plugin-code-memory-0.6.0.tgz` как bundle и включить его в нужном профиле. Использовать Harness 0.2.0-rc.2. Bundle добавляет entry `code-memory` с compact vector mode и auto context; существующие model/file tools остаются в профиле. Для этого режима нужны подготовленные primary index, vectors и локальная модель; live builds могут подготовить новый source/vector snapshot при наличии локальной модели.
 
 CLI-вариант после установки Harness:
 
 ```bash
 dsh --profile code-memory --from-default-profile web --dump-config
-dsh plugin --profile code-memory add /absolute/dsh-plugin-code-memory-0.5.0.tgz
+dsh plugin --profile code-memory add /absolute/dsh-plugin-code-memory-0.6.0.tgz
 dsh --profile code-memory --no-open
 ```
 
@@ -60,6 +60,10 @@ dsh --profile code-memory --no-open
 | `indexPath` | Путь JSON index, абсолютный либо относительно projectRoot; по умолчанию `CM_INDEX_PATH` или `.code-memory/index.json` |
 | `mode` | `compact` по умолчанию с 0.4.2; `legacy` явно включает прежние четыре lexical/graph tools |
 | `autoContext` | true по умолчанию в bundle и source plugin; false отключает автоматическую подачу |
+| `retrievalPolicy` | `hybrid` default; `graph` / `adaptive` добавляют compiler-neighbour ranking и bounded dependency closure |
+| `autoUpdate` | false default; true обновляет сохранённые TS/JS source, graph и vectors через атомарные поколения |
+| `memoryDirectory` / `embeddingCache` | Live generations и необязательный reusable embedding cache; default `.code-memory/live` |
+| `sourceScope` | Необязательное относительное дерево live source, например `game`; пути вне projectRoot запрещены |
 | `searchMode` | `exact` по умолчанию; `ann` требует HNSW projection и сохраняет source/model/policy fences |
 | `vectorsPath` / `modelCache` | По умолчанию `.code-memory/vectors` / `.code-memory/models` относительно projectRoot |
 

@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1.0",
-  "as_of": "2026-10-13",
+  "as_of": "2026-10-14",
   "meaning": "Implementation backlog; done documentation tasks do not imply a running RAG product.",
   "mvp_through": "M04",
   "milestones": [
@@ -1380,6 +1380,56 @@
         "scripts/measure_ann.mjs",
         "docs/HNSW.md",
         "evaluation/hnsw/results.json"
+      ]
+    },
+    {
+      "id": "RC-064",
+      "milestone": "M11",
+      "title": "Проверить graph/adaptive context routing по всей стоимости и независимому качеству",
+      "status": "done",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-054",
+        "RC-055",
+        "RC-061"
+      ],
+      "acceptance": [
+        "Compiler catalog/routing/dependency closure сохраняют exact source, snapshot, UTF-8 boundaries, omissions и budgets.",
+        "Четыре arms, новые задачи и два повтора; все provider tokens/cache categories, scopes и failures сохранены.",
+        "Default выбирается по качеству и полной цене; отрицательные результаты и ограниченность pilot раскрыты."
+      ],
+      "artifacts": [
+        "src/code-memory/knowledge.ts",
+        "src/code-memory/graph_retrieve.ts",
+        "scripts/graph_ab.ts",
+        "scripts/graph_checks.ts",
+        "docs/GRAPH-BUDGET.md",
+        "evaluation/graph-budget/"
+      ]
+    },
+    {
+      "id": "RC-065",
+      "milestone": "M11",
+      "title": "Добавить живое пополнение CM и атомарную публикацию source/graph/vectors",
+      "status": "done",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-054",
+        "RC-061",
+        "RC-062"
+      ],
+      "acceptance": [
+        "Сохранённые edit/add/rename/delete/config/branch определяют новый snapshot; graph/compiler scope и vector fingerprints проверены.",
+        "Watcher, source churn, syntax/embed failure, single-flight cancellation, dead writer recovery и stale snapshots имеют meaningful native regressions.",
+        "На Geo Dash copy learned CPU embeddings, реальный MCP и Chrome подтверждают новые исходники и очистку старого source; local CPU/full rebind/retention limits раскрыты."
+      ],
+      "artifacts": [
+        "src/code-memory/live.ts",
+        "tests/live_memory.test.ts",
+        "docs/LIVE-CM.md",
+        "research/evidence/live-cm-2026-10-14.json"
       ]
     }
   ]

@@ -1,6 +1,6 @@
 # CM на компьютере пользователя: MCP, подписка и карта концептов
 
-В 0.5.0 работают TS/JS CM core, local embeddings/LanceDB, compact Harness adapter, [MCP stdio](MCP-SETUP.md) и [CM Atlas](LOCAL-ATLAS.md). Optional [HNSW](HNSW.md) ускоряет native vector stage, exact остаётся default. SQLite ledger/FTS, automatic refresh, installer, accounts и billing запланированы. [Измеренная экономия](HYBRID-RESULTS.md) относится к отдельному pilot исправлений; [optimization pilot](OPTIMIZATION-RESULTS.md) экономию не подтвердил. [Первый A/B](AB-RESULTS.md) проверял lexical/structural prototype и сохраняется отдельно.
+В 0.6.0 работают TS/JS CM core, local embeddings/LanceDB, compact Harness adapter, [MCP stdio](MCP-SETUP.md), [CM Atlas](LOCAL-ATLAS.md) и opt-in [live refresh](LIVE-CM.md). Optional [HNSW](HNSW.md) ускоряет native vector stage, exact остаётся default. Graph/adaptive retrieval проверяется по [отдельному протоколу](GRAPH-BUDGET.md). SQLite ledger/FTS, installer, accounts и billing запланированы. [Измеренная экономия](HYBRID-RESULTS.md) относится к отдельному pilot исправлений; [optimization pilot](OPTIMIZATION-RESULTS.md) экономию не подтвердил. [Первый A/B](AB-RESULTS.md) проверял lexical/structural prototype и сохраняется отдельно.
 
 ## Пользовательский путь
 
@@ -57,7 +57,7 @@ Login выдаёт подписанный local entitlement с сроком де
 
 ## Следующие проверяемые этапы
 
-1. Реализован local vector/embedding prototype; дальнейший spike: работа без внешнего embedding API, инкрементальный rebuild, точная версия projection и измерение resources.
+1. Реализован local vector/embedding prototype и live generations: incremental embedding reuse, атомарная публикация и saved edit/add/delete/rename/branch checks. Полный compiler rebind остаётся; worker, partial compiler update и retention требуют следующего измерения.
 2. Реализован один bounded retrieve-context call с hybrid retrieval и компактным output; A/B на новых задачах, с полной стоимостью enrichment/retrieval.
 3. MCP stdio adapter поверх того же core уже проверен: official SDK client и полный installed Harness; cancellation/budgets/scope отдельно покрыты boundary tests. Общий ContextService/capability model развивается в RC-048.
 4. CM Atlas уже показывает inferred topics → module → symbol → current source/evidence; stale errors видны. Semantic clustering/enrichment, ручное подтверждение concepts и полный unresolved UI остаются RC-050.

@@ -1,0 +1,149 @@
+{
+  "format": "cm-live-evidence-1",
+  "measured_at": "2026-10-13T20:59:54Z",
+  "package_version": "0.6.0",
+  "status": "PASS",
+  "source_revision": "17007329bd381384f494278f2206a70727f0e723",
+  "source_files": 224,
+  "vector_rows": 7503,
+  "boundary": "Actual copied Geo Dash sources, TypeScript Compiler API, cached Xenova/all-MiniLM-L6-v2 learned CPU embeddings, native LanceDB, real Chrome and official MCP stdio client",
+  "synthetic_addition": true,
+  "events": [
+    {
+      "event": "initial",
+      "milliseconds": 3482.9203000000007,
+      "files": 224,
+      "rows": 7503,
+      "embedded": 0,
+      "reused": 0,
+      "snapshot_id": "snapshot:d4cc4aadb5666ba43789f15c0a61c5c094c50fe3ff2c7eb1f15a4de4ce0e0385"
+    },
+    {
+      "event": "add",
+      "milliseconds": 14483.805100000001,
+      "files": 225,
+      "rows": 7505,
+      "embedded": 2,
+      "reused": 7503,
+      "snapshot_id": "snapshot:fc5b5f54940183ae3deb2e0732d3055690cb99611317218237af7d46313bd413"
+    },
+    {
+      "event": "edit",
+      "milliseconds": 13663.323400000005,
+      "files": 225,
+      "rows": 7505,
+      "embedded": 1,
+      "reused": 7504,
+      "snapshot_id": "snapshot:48097388cce19c7f90c1b6d4beacf97148a360a7ac82c586e979e6b90c1fd3b5"
+    },
+    {
+      "event": "rename",
+      "milliseconds": 12558.720699999998,
+      "files": 225,
+      "rows": 7505,
+      "embedded": 2,
+      "reused": 7503,
+      "snapshot_id": "snapshot:85c2d41d3e6a6520faeeb4b72ef982ba3025744d011ab5552d26d71c47d569af"
+    },
+    {
+      "event": "delete",
+      "milliseconds": 10781.840600000003,
+      "files": 224,
+      "rows": 7503,
+      "embedded": 0,
+      "reused": 7503,
+      "snapshot_id": "snapshot:d4cc4aadb5666ba43789f15c0a61c5c094c50fe3ff2c7eb1f15a4de4ce0e0385"
+    }
+  ],
+  "retrieval": {
+    "stage": "retrieval",
+    "named_source_bytes": 173,
+    "named_dense": false,
+    "semantic_dense": true,
+    "semantic_paths": [
+      "game/src/cm-live-fixture.js"
+    ]
+  },
+  "browser": {
+    "stage": "chrome-live-ui",
+    "status": "PASS",
+    "old_source_cleared": true,
+    "new_exact_source": true,
+    "errors": []
+  },
+  "mcp": {
+    "stage": "official-mcp-stdio",
+    "status": "PASS",
+    "tools": [
+      "cm_retrieve_context",
+      "cm_project_status"
+    ],
+    "saved_addition_searchable": true,
+    "stale_snapshot_rejected": true,
+    "deletion_published": true
+  },
+  "regression_suite": {
+    "tests": 39,
+    "pass": 39,
+    "meaning": "Whole local suite; lifecycle tests use a deterministic test embedder with real compiler/native DB; learned full-project proof separately above"
+  },
+  "provider_api_calls": 0,
+  "original_project_mutations": 0,
+  "limitations": [
+    "Saved TS/JS only, no unsaved editor overlay or conversation/test-decision admission",
+    "Full compiler graph and vector table rebuild; only embeddings incrementally reused",
+    "Local Windows FS and synthetic addition to one real project; no universal latency guarantee",
+    "Generation retention/GC, package config extends/project-reference dependency tracking and worker processing remain planned"
+  ],
+  "ann_live": {
+    "status": "PASS",
+    "boundary": "Actual Geo Dash copy live update, learned CPU vectors, native IVF_HNSW_SQ publication/reopen and semantic query; no provider API",
+    "records": [
+      {
+        "event": "initial",
+        "snapshot_id": "snapshot:d4cc4aadb5666ba43789f15c0a61c5c094c50fe3ff2c7eb1f15a4de4ce0e0385",
+        "rows": 7503,
+        "ann": {
+          "type": "IVF_HNSW_SQ",
+          "partitions": 1,
+          "m": 16,
+          "ef_construction": 200,
+          "ef_search": 128,
+          "refine_factor": 4
+        }
+      },
+      {
+        "event": "add",
+        "snapshot_id": "snapshot:a520380c99f1f2ac91c7c803ec1446e87afb73bc902eb59bd7f7c6d16f626e85",
+        "rows": 7504,
+        "embedded": 1,
+        "reused": 7503,
+        "ann": {
+          "type": "IVF_HNSW_SQ",
+          "partitions": 1,
+          "m": 16,
+          "ef_construction": 200,
+          "ef_search": 128,
+          "refine_factor": 4
+        },
+        "semantic_paths": [
+          "game/src/core/reward-policy.js"
+        ]
+      },
+      {
+        "event": "delete",
+        "snapshot_id": "snapshot:d4cc4aadb5666ba43789f15c0a61c5c094c50fe3ff2c7eb1f15a4de4ce0e0385",
+        "rows": 7503,
+        "ann": {
+          "type": "IVF_HNSW_SQ",
+          "partitions": 1,
+          "m": 16,
+          "ef_construction": 200,
+          "ef_search": 128,
+          "refine_factor": 4
+        }
+      }
+    ],
+    "provider_api_calls": 0
+  }
+}

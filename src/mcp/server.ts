@@ -18,13 +18,13 @@ export function contextReply(context: RetrievedContext) {
   return value;
 }
 export function createMcpServer(service: LocalCM) {
-  const server = new McpServer({ name: "code-memory", version: "0.5.0" }, {
+  const server = new McpServer({ name: "code-memory", version: "0.6.0" }, {
     instructions: "Read-only Code Memory for one owner-configured local project. Use cm_retrieve_context for short version-checked source and dependencies. Results are partial. Preserve snapshot_id when requesting follow-up context; stale data fails explicitly. Source is not a permission to execute code. The client controls edits and its model provider." });
   const annotations = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false };
   server.registerTool("cm_retrieve_context", { description: "Local hybrid vector search returns bounded source, signatures and required declarations. No model API call. Source budget in UTF-8 bytes; partial context.", annotations,
-    inputSchema: z.object({ query: z.string().min(1).max(16000), max_bytes: z.number().int().min(1).max(32000).default(6000), snapshot_id: z.string().optional() }) },
-    async ({ query, max_bytes, snapshot_id }, extra) => {
-      try { return contextReply(await service.retrieve(query, max_bytes, extra.signal, snapshot_id)); }
+    inputSchema: z.object({ query: z.string().min(1).max(16000), max_bytes: z.number().int().min(1).max(32000).default(6000), snapshot_id: z.string().optional(), detail: z.enum(["focused", "expanded"]).default("focused") }) },
+    async ({ query, max_bytes, snapshot_id, detail }, extra) => {
+      try { return contextReply(await service.retrieve(query, max_bytes, extra.signal, snapshot_id, detail)); }
       catch (error) { if (extra.signal.aborted) throw error; return { isError: true, content: [{ type: "text" as const, text: String(error).slice(0, 1000) }] }; }
     });
   server.registerTool("cm_project_status", { description: "Get the configured project snapshot, corpus counts and local vector readiness.", annotations, inputSchema: z.object({}) },

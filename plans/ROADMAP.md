@@ -82,4 +82,6 @@ Green test не доказывает улучшения retrieval. Для так
 
 ## После второго A/B
 
+В 0.6.0 RC-065 завершает opt-in live CM: saved-file manifests, полный compiler rebind, reuse embeddings и атомарные поколения. Реальные MCP/Chrome и learned full-project checks описаны в [LIVE-CM](../docs/LIVE-CM.md). RC-064 завершил48 sessions четырёх arms: graph12/12 против none10/12, −51,6% tokens / −42,5% estimate price; [полный результат](../docs/GRAPH-BUDGET.md) отделяет токены всей задачи от native lookup speed и раскрывает повышенную latency. Следующая lifecycle работа — worker/incremental compiler, IDE overlay и ограничение disk retention; это не заявлено реализованным.
+
 M00V / RC-053…RC-055 завершили local learned vectors, compact auto context и новый полный pilot. [Результат](../docs/HYBRID-RESULTS.md) сохраняет четыре CM failures, две baseline budget stops и более высокую latency. Ближайшее развитие — RC-056 provenance/scope/latency и RC-047 SQLite/FTS/native delivery; RC-048 расширяет retrieval/evaluation до общего API. Read-only MCP/Atlas prototype и optional HNSW уже доступны. Полный server/concept enrichment/installer/subscription продукт остаётся планом.

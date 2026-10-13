@@ -17,6 +17,9 @@
 | [cAST](https://aclanthology.org/2025.findings-emnlp.430/) | Рекурсивное структурное дробление и объединение соседних узлов |
 | [GraphCoder](https://arxiv.org/abs/2406.07003) | Поиск контекста с учётом потока и зависимостей statements |
 | [GraphRAG: query overview](https://microsoft.github.io/graphrag/query/overview/) | Разделение локального запроса и обзора всего корпуса |
+| [RepoGraph](https://arxiv.org/abs/2410.14684) | Навигация по repository graph для поиска контекста при исправлении кода |
+| [A2RAG v2](https://arxiv.org/abs/2601.21162) | Адаптивная достаточность evidence и адресное расширение; не собственное доказательство экономии CM |
+| [GraphRAG DRIFT](https://microsoft.github.io/graphrag/query/drift_search/) | Альтернатива с дополнительными шагами; стоимость требует отдельного измерения |
 | [Ajv JSON Schema](https://ajv.js.org/json-schema.html) | Ajv2020 для runtime-проверки draft 2020-12 контрактов |
 | [Fastify](https://fastify.dev/docs/latest/) | Выбранная основа будущего Node.js API |
 | [React with TypeScript](https://react.dev/learn/typescript) | Выбранная основа будущего viewer |
