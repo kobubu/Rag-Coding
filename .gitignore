@@ -1,0 +1,9 @@
+.artifacts/
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+research/chunking-probe.json
+.DS_Store

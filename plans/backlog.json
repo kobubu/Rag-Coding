@@ -1,0 +1,893 @@
+{
+  "schema_version": "0.1.0",
+  "as_of": "2026-10-13",
+  "meaning": "Implementation backlog; done documentation tasks do not imply a running RAG product.",
+  "mvp_through": "M04",
+  "milestones": [
+    {
+      "id": "M00",
+      "title": "Документы и диагностический пример",
+      "gate": "Документы связаны, contracts и backlog проверяются, fixture воспроизводится.",
+      "status": "completed"
+    },
+    {
+      "id": "M01",
+      "title": "Зафиксированный корпус и контракты",
+      "gate": "Есть размеченные задачи, способности первого языка и корректные публичные форматы.",
+      "status": "planned"
+    },
+    {
+      "id": "M02",
+      "title": "Снимок, исходники и ledger",
+      "gate": "Снимок стабилен, bytes и версии воспроизводятся, storage восстанавливается.",
+      "status": "planned"
+    },
+    {
+      "id": "M03",
+      "title": "Глоссарий и иерархия ТМ",
+      "gate": "Символы и scopes различаются, разбивка exact, окружение вложенного блока установлено.",
+      "status": "planned"
+    },
+    {
+      "id": "M04",
+      "title": "Первый полезный поиск и контекст",
+      "gate": "CLI/API проходит путь snapshot → symbol → unit → required context на реальном корпусе.",
+      "status": "planned"
+    },
+    {
+      "id": "M05",
+      "title": "Проектная семантика и обновление",
+      "gate": "Разрешённые cross-file ссылки и обновления имеют capabilities и защиту версий.",
+      "status": "planned"
+    },
+    {
+      "id": "M06",
+      "title": "Гибридный retrieval",
+      "gate": "Измерен вклад embeddings и графа при одинаковом корпусе и бюджете.",
+      "status": "planned"
+    },
+    {
+      "id": "M07",
+      "title": "Enrichment с проверкой",
+      "gate": "Предложения имеют evidence, проходят admission и не перезаписывают другую версию.",
+      "status": "planned"
+    },
+    {
+      "id": "M08",
+      "title": "Просмотрщик и интеграция",
+      "gate": "Пользователь проходит навигацию и пакет контекста; editor overlay проверен.",
+      "status": "planned"
+    },
+    {
+      "id": "M09",
+      "title": "TypeScript, C# и contracts",
+      "gate": "Адаптеры публикуют реальные capabilities; связи слоёв доказуемы.",
+      "status": "planned"
+    },
+    {
+      "id": "M10",
+      "title": "Память решений и поставка",
+      "gate": "История решений, ограничения доступа, backup и сквозная приёмка документированы.",
+      "status": "planned"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "RC-001",
+      "milestone": "M00",
+      "title": "Собрать документацию и проверяемый план",
+      "status": "done",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [],
+      "acceptance": [
+        "Навигация, алгоритмы, контракты и backlog согласованы.",
+        "Локальные документационные checks проходят."
+      ],
+      "artifacts": [
+        "README.md",
+        "docs/",
+        "plans/",
+        "contracts/"
+      ]
+    },
+    {
+      "id": "RC-002",
+      "milestone": "M00",
+      "title": "Сделать структурный probe переносимым",
+      "status": "done",
+      "priority": "P0",
+      "size": "S",
+      "depends_on": [
+        "RC-001"
+      ],
+      "acceptance": [
+        "Собственная fixture выполняется без FlashMT checkout.",
+        "Проверяются exact bytes, closure и пределы сценария."
+      ],
+      "artifacts": [
+        "scripts/probe_flashmt_chunking.py",
+        "fixtures/batching.py"
+      ]
+    },
+    {
+      "id": "RC-003",
+      "milestone": "M01",
+      "title": "Зафиксировать целевой Python-корпус",
+      "status": "planned",
+      "priority": "P0",
+      "size": "S",
+      "depends_on": [
+        "RC-001"
+      ],
+      "acceptance": [
+        "Зафиксированы repo/revision и manifest hashes.",
+        "Список разрешённых источников и coverage воспроизводим."
+      ],
+      "artifacts": [
+        "evaluation/corpus-manifest.json"
+      ]
+    },
+    {
+      "id": "RC-004",
+      "milestone": "M01",
+      "title": "Разметить 40 задач и разделить настройки/holdout",
+      "status": "planned",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-003"
+      ],
+      "acceptance": [
+        "10 задач настройки и 30 отложенных сгруппированы без близких дублей.",
+        "Для задач определены нужные spans, dependencies и rubric."
+      ],
+      "artifacts": [
+        "evaluation/tasks.jsonl",
+        "evaluation/README.md"
+      ]
+    },
+    {
+      "id": "RC-005",
+      "milestone": "M01",
+      "title": "Заморозить v0.1 контракты и capabilities",
+      "status": "planned",
+      "priority": "P0",
+      "size": "S",
+      "depends_on": [
+        "RC-003"
+      ],
+      "acceptance": [
+        "Snapshot, spans, units, relations и package имеют версии.",
+        "Матрица Python явно перечисляет unsupported и unresolved случаи."
+      ],
+      "artifacts": [
+        "contracts/",
+        "docs/capabilities-python.md"
+      ]
+    },
+    {
+      "id": "RC-006",
+      "milestone": "M02",
+      "title": "Реализовать Git и workspace reader",
+      "status": "planned",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-005"
+      ],
+      "acceptance": [
+        "Чтение commit и dirty overlay формирует стабильный manifest.",
+        "Concurrent change, delete и выход symlink за корень имеют явный результат."
+      ],
+      "artifacts": [
+        "src/rag_coding/repositories/"
+      ]
+    },
+    {
+      "id": "RC-007",
+      "milestone": "M02",
+      "title": "Сохранить blobs и точную карту координат",
+      "status": "planned",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-006"
+      ],
+      "acceptance": [
+        "Roundtrip raw bytes сохраняет Unicode, BOM и CRLF.",
+        "Неподдерживаемая кодировка не получает приблизительных offsets."
+      ],
+      "artifacts": [
+        "src/rag_coding/repositories/blobs.py",
+        "tests/source_ranges/"
+      ]
+    },
+    {
+      "id": "RC-008",
+      "milestone": "M02",
+      "title": "Создать SQL ledger и ограничения",
+      "status": "planned",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-005",
+        "RC-007"
+      ],
+      "acceptance": [
+        "Миграция создаёт принадлежность snapshot и FK/range ограничения.",
+        "Дубли identities и неверные ссылки отклоняются на реальной БД."
+      ],
+      "artifacts": [
+        "src/rag_coding/storage/",
+        "migrations/"
+      ]
+    },
+    {
+      "id": "RC-009",
+      "milestone": "M02",
+      "title": "Проверить restore и воспроизведение manifest",
+      "status": "planned",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-008"
+      ],
+      "acceptance": [
+        "Исходники и обязательные records восстанавливаются из backup.",
+        "Сравниваются manifest/hashes и точное чтение source."
+      ],
+      "artifacts": [
+        "tests/storage_restore/",
+        "docs/runbooks/restore.md"
+      ]
+    },
+    {
+      "id": "RC-010",
+      "milestone": "M03",
+      "title": "Реализовать Python syntax adapter",
+      "status": "planned",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-005",
+        "RC-007"
+      ],
+      "acceptance": [
+        "Функции, классы, decorators и nested scopes имеют exact ranges.",
+        "Syntax error и unsupported grammar показывают partial diagnostics."
+      ],
+      "artifacts": [
+        "src/rag_coding/adapters/python/"
+      ]
+    },
+    {
+      "id": "RC-011",
+      "milestone": "M03",
+      "title": "Создать сущности и употребления глоссария",
+      "status": "planned",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-008",
+        "RC-010"
+      ],
+      "acceptance": [
+        "Одноимённые locals различаются по scope.",
+        "Free/nonlocal/global bindings проверены; неизвестный target остаётся null."
+      ],
+      "artifacts": [
+        "src/rag_coding/analysis/symbols.py",
+        "tests/symbol_navigation/"
+      ]
+    },
+    {
+      "id": "RC-012",
+      "milestone": "M03",
+      "title": "Построить иерархию CodeUnit",
+      "status": "planned",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-010",
+        "RC-011"
+      ],
+      "acceptance": [
+        "Контейнеры и callable units имеют родителей и identities.",
+        "Комментарии, headers и decorators не теряются."
+      ],
+      "artifacts": [
+        "src/rag_coding/segmentation/hierarchy.py"
+      ]
+    },
+    {
+      "id": "RC-013",
+      "milestone": "M03",
+      "title": "Добавить recursive statement grouping и budgets",
+      "status": "planned",
+      "priority": "P0",
+      "size": "L",
+      "depends_on": [
+        "RC-012"
+      ],
+      "acceptance": [
+        "Первичная разбивка восстанавливает bytes без gaps/overlaps.",
+        "Большие конструкции, literals и исключения бюджета имеют явные роли."
+      ],
+      "artifacts": [
+        "src/rag_coding/segmentation/partition.py",
+        "tests/chunking/"
+      ]
+    },
+    {
+      "id": "RC-014",
+      "milestone": "M03",
+      "title": "Построить обязательное окружение блоков",
+      "status": "planned",
+      "priority": "P0",
+      "size": "L",
+      "depends_on": [
+        "RC-011",
+        "RC-013"
+      ],
+      "acceptance": [
+        "Captures, type references, guards и lifecycle-owner связаны с конкретными ID.",
+        "Object mutation не объявляется отсутствующей из-за отсутствия Name assignment."
+      ],
+      "artifacts": [
+        "src/rag_coding/analysis/context_requirements.py"
+      ]
+    },
+    {
+      "id": "RC-015",
+      "milestone": "M04",
+      "title": "Создать точный и текстовый поиск",
+      "status": "planned",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-008",
+        "RC-013"
+      ],
+      "acceptance": [
+        "Символы/пути адресуются в выбранном snapshot.",
+        "Camel/snake tokens дополняют exact identity; parent/child дубли контролируются."
+      ],
+      "artifacts": [
+        "src/rag_coding/storage/text_index.py",
+        "tests/search/"
+      ]
+    },
+    {
+      "id": "RC-016",
+      "milestone": "M04",
+      "title": "Собрать ContextPackage с бюджетом",
+      "status": "planned",
+      "priority": "P0",
+      "size": "L",
+      "depends_on": [
+        "RC-014",
+        "RC-015"
+      ],
+      "acceptance": [
+        "Обязательные dependencies включены или явно перечислены в omissions.",
+        "Source spans проверяются, lifecycle не обрезается молча."
+      ],
+      "artifacts": [
+        "src/rag_coding/retrieval/context.py"
+      ]
+    },
+    {
+      "id": "RC-017",
+      "milestone": "M04",
+      "title": "Ввести минимальные CLI и read API",
+      "status": "planned",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-016"
+      ],
+      "acceptance": [
+        "Сценарий snapshot → symbol → unit → context проходит через внешний интерфейс.",
+        "Errors, pagination и snapshot mismatch имеют контрактные ответы."
+      ],
+      "artifacts": [
+        "src/rag_coding/interfaces/",
+        "tests/api_smoke/"
+      ]
+    },
+    {
+      "id": "RC-018",
+      "milestone": "M04",
+      "title": "Сравнить первые варианты дробления на корпусе",
+      "status": "planned",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-004",
+        "RC-013",
+        "RC-017"
+      ],
+      "acceptance": [
+        "A/B/C запускаются на одинаковых задачах и budget.",
+        "Есть per-case результаты, hashes и вывод о выбранном baseline."
+      ],
+      "artifacts": [
+        "evaluation/runs/",
+        "docs/evaluation-baseline.md"
+      ]
+    },
+    {
+      "id": "RC-019",
+      "milestone": "M05",
+      "title": "Выбрать Python cross-file semantic backend",
+      "status": "planned",
+      "priority": "P1",
+      "size": "M",
+      "depends_on": [
+        "RC-018"
+      ],
+      "acceptance": [
+        "Spike проверяет imports, re-exports, missing dependencies и dynamic attributes.",
+        "Выбор сопровождается capability matrix и ограничениями."
+      ],
+      "artifacts": [
+        "docs/semantic-spike.md",
+        "evaluation/semantic-fixtures/"
+      ]
+    },
+    {
+      "id": "RC-020",
+      "milestone": "M05",
+      "title": "Добавить межфайловые типизированные связи",
+      "status": "planned",
+      "priority": "P1",
+      "size": "L",
+      "depends_on": [
+        "RC-019"
+      ],
+      "acceptance": [
+        "References, calls и type links различаются по доказательству.",
+        "Unresolved targets и неоднозначность видны в API."
+      ],
+      "artifacts": [
+        "src/rag_coding/analysis/project_links.py"
+      ]
+    },
+    {
+      "id": "RC-021",
+      "milestone": "M05",
+      "title": "Реализовать частичное обновление и инвалидацию",
+      "status": "planned",
+      "priority": "P1",
+      "size": "L",
+      "depends_on": [
+        "RC-020"
+      ],
+      "acceptance": [
+        "Rename/delete, внешние types и lock/config change инвалидируют нужные результаты.",
+        "Выдача не смешивает предыдущий graph и новые source blobs."
+      ],
+      "artifacts": [
+        "src/rag_coding/analysis/invalidation.py",
+        "tests/snapshot_updates/"
+      ]
+    },
+    {
+      "id": "RC-022",
+      "milestone": "M05",
+      "title": "Добавить jobs, outbox, leases и recovery",
+      "status": "planned",
+      "priority": "P1",
+      "size": "L",
+      "depends_on": [
+        "RC-008",
+        "RC-021"
+      ],
+      "acceptance": [
+        "Duplicate jobs, expiry и retries проверены на границе worker/БД.",
+        "Late result старого fingerprint не перезаписывает актуальный результат."
+      ],
+      "artifacts": [
+        "src/rag_coding/enrichment/jobs.py",
+        "tests/job_recovery/"
+      ]
+    },
+    {
+      "id": "RC-023",
+      "milestone": "M06",
+      "title": "Зафиксировать tokenizer и embedding provider",
+      "status": "planned",
+      "priority": "P1",
+      "size": "M",
+      "depends_on": [
+        "RC-018"
+      ],
+      "acceptance": [
+        "Выбранные варианты и бюджет согласованы с целевыми задачами.",
+        "Отдельно проверены model change, no-provider и privacy profile."
+      ],
+      "artifacts": [
+        "docs/embedding-spike.md",
+        "evaluation/embedding-config.json"
+      ]
+    },
+    {
+      "id": "RC-024",
+      "milestone": "M06",
+      "title": "Создать векторную projection и hybrid ranking",
+      "status": "planned",
+      "priority": "P1",
+      "size": "L",
+      "depends_on": [
+        "RC-015",
+        "RC-022",
+        "RC-023"
+      ],
+      "acceptance": [
+        "Проекция привязана к generation и source hash.",
+        "Точный snapshot/access filtering и approximate recall проверены."
+      ],
+      "artifacts": [
+        "src/rag_coding/storage/vector_index.py",
+        "src/rag_coding/retrieval/ranking.py"
+      ]
+    },
+    {
+      "id": "RC-025",
+      "milestone": "M06",
+      "title": "Измерить вклад context closure и hybrid retrieval",
+      "status": "planned",
+      "priority": "P1",
+      "size": "M",
+      "depends_on": [
+        "RC-004",
+        "RC-020",
+        "RC-024"
+      ],
+      "acceptance": [
+        "D/E сравниваются с замороженным baseline при одинаковом budget.",
+        "Публикуются dependency recall, task outcome, latency и costs."
+      ],
+      "artifacts": [
+        "evaluation/runs/",
+        "docs/evaluation-hybrid.md"
+      ]
+    },
+    {
+      "id": "RC-026",
+      "milestone": "M07",
+      "title": "Создать bounded enrichment envelope",
+      "status": "planned",
+      "priority": "P1",
+      "size": "M",
+      "depends_on": [
+        "RC-014",
+        "RC-022"
+      ],
+      "acceptance": [
+        "Окно содержит известные ID, source spans, guards и только нужное окружение.",
+        "Контракт сообщает insufficient_context и fingerprint."
+      ],
+      "artifacts": [
+        "src/rag_coding/enrichment/envelope.py"
+      ]
+    },
+    {
+      "id": "RC-027",
+      "milestone": "M07",
+      "title": "Добавить провайдер и структурированные proposals",
+      "status": "planned",
+      "priority": "P1",
+      "size": "M",
+      "depends_on": [
+        "RC-023",
+        "RC-026"
+      ],
+      "acceptance": [
+        "Model/prompt версия и token cost сохраняются без секретов.",
+        "Replay и живые вызовы имеют разные evidence статусы."
+      ],
+      "artifacts": [
+        "src/rag_coding/enrichment/providers.py"
+      ]
+    },
+    {
+      "id": "RC-028",
+      "milestone": "M07",
+      "title": "Реализовать admission и review trail",
+      "status": "planned",
+      "priority": "P1",
+      "size": "L",
+      "depends_on": [
+        "RC-020",
+        "RC-027"
+      ],
+      "acceptance": [
+        "Неизвестные IDs, stale evidence и несовместимый predicate отклоняются.",
+        "Кандидат модели не перезаписывает derived binding или review молча."
+      ],
+      "artifacts": [
+        "src/rag_coding/enrichment/admission.py",
+        "tests/admission/"
+      ]
+    },
+    {
+      "id": "RC-029",
+      "milestone": "M07",
+      "title": "Оценить точечные объяснения и смысловые связи",
+      "status": "planned",
+      "priority": "P1",
+      "size": "M",
+      "depends_on": [
+        "RC-004",
+        "RC-025",
+        "RC-028"
+      ],
+      "acceptance": [
+        "Есть ручная rubric происхождения и правильности интерпретации.",
+        "Сравнение фиксирует пользу и регрессии, включая отказы и стоимость."
+      ],
+      "artifacts": [
+        "evaluation/enrichment/",
+        "docs/evaluation-enrichment.md"
+      ]
+    },
+    {
+      "id": "RC-030",
+      "milestone": "M08",
+      "title": "Сделать локальный source и glossary viewer",
+      "status": "planned",
+      "priority": "P1",
+      "size": "L",
+      "depends_on": [
+        "RC-017"
+      ],
+      "acceptance": [
+        "Карточка открывает правильный snapshot, scope и usage.",
+        "Breadcrumbs и exact highlight согласованы с bytes."
+      ],
+      "artifacts": [
+        "viewer/",
+        "tests/viewer_smoke/"
+      ]
+    },
+    {
+      "id": "RC-031",
+      "milestone": "M08",
+      "title": "Добавить ограниченный graph и context viewer",
+      "status": "planned",
+      "priority": "P1",
+      "size": "L",
+      "depends_on": [
+        "RC-020",
+        "RC-025",
+        "RC-030"
+      ],
+      "acceptance": [
+        "Каждое ребро открывает evidence, candidate status виден.",
+        "Пакет показывает reasons, omissions и ограничения coverage."
+      ],
+      "artifacts": [
+        "viewer/graph/",
+        "viewer/context/"
+      ]
+    },
+    {
+      "id": "RC-032",
+      "milestone": "M08",
+      "title": "Поддержать editor buffer и overlay navigation",
+      "status": "planned",
+      "priority": "P1",
+      "size": "M",
+      "depends_on": [
+        "RC-021",
+        "RC-030"
+      ],
+      "acceptance": [
+        "Несохранённый buffer проверяется по hash.",
+        "Старые coordinates не применяются к новому тексту, conflict виден."
+      ],
+      "artifacts": [
+        "src/rag_coding/interfaces/editor/",
+        "tests/editor_overlay/"
+      ]
+    },
+    {
+      "id": "RC-033",
+      "milestone": "M08",
+      "title": "Создать read-only adapter для помощников",
+      "status": "planned",
+      "priority": "P1",
+      "size": "M",
+      "depends_on": [
+        "RC-017",
+        "RC-031",
+        "RC-032"
+      ],
+      "acceptance": [
+        "Поиск и чтение используют тот же ContextPackage API.",
+        "Нет расширения прав на изменения проекта из retrieved content."
+      ],
+      "artifacts": [
+        "src/rag_coding/interfaces/assistant/"
+      ]
+    },
+    {
+      "id": "RC-034",
+      "milestone": "M09",
+      "title": "Реализовать TypeScript/TSX adapter",
+      "status": "planned",
+      "priority": "P1",
+      "size": "L",
+      "depends_on": [
+        "RC-013",
+        "RC-020"
+      ],
+      "acceptance": [
+        "Symbol identity, overload, callbacks и JSX имеют опубликованные capabilities.",
+        "Fixtures и реальные tsconfig/dependencies проходят навигационный smoke."
+      ],
+      "artifacts": [
+        "src/rag_coding/adapters/typescript/"
+      ]
+    },
+    {
+      "id": "RC-035",
+      "milestone": "M09",
+      "title": "Реализовать C# adapter",
+      "status": "planned",
+      "priority": "P1",
+      "size": "L",
+      "depends_on": [
+        "RC-013",
+        "RC-020"
+      ],
+      "acceptance": [
+        "Partial, generics и overload различаются на уровне symbols.",
+        "Compilation references и неизвестные типы отражаются в coverage."
+      ],
+      "artifacts": [
+        "src/rag_coding/adapters/csharp/"
+      ]
+    },
+    {
+      "id": "RC-036",
+      "milestone": "M09",
+      "title": "Связать API, события и поля contracts",
+      "status": "planned",
+      "priority": "P1",
+      "size": "L",
+      "depends_on": [
+        "RC-034",
+        "RC-035"
+      ],
+      "acceptance": [
+        "Mappings имеют evidence из схем, сериализации или registration.",
+        "Сходство названий полей остаётся только candidate при отсутствии evidence."
+      ],
+      "artifacts": [
+        "src/rag_coding/analysis/contracts.py"
+      ]
+    },
+    {
+      "id": "RC-037",
+      "milestone": "M09",
+      "title": "Оценить многоязычный и составной snapshot",
+      "status": "planned",
+      "priority": "P1",
+      "size": "M",
+      "depends_on": [
+        "RC-036"
+      ],
+      "acceptance": [
+        "Manifest нескольких repo фиксирует конкретные версии.",
+        "Языковые capabilities и contract mismatch проверены на сквозных задачах."
+      ],
+      "artifacts": [
+        "evaluation/multirepo/",
+        "docs/evaluation-multilanguage.md"
+      ]
+    },
+    {
+      "id": "RC-038",
+      "milestone": "M10",
+      "title": "Сохранить память принятых решений",
+      "status": "planned",
+      "priority": "P1",
+      "size": "M",
+      "depends_on": [
+        "RC-028",
+        "RC-031"
+      ],
+      "acceptance": [
+        "SolutionCase имеет before/after, applicability и проверки точной версии.",
+        "Исторический пример не выдаётся как текущая реализация."
+      ],
+      "artifacts": [
+        "src/rag_coding/domain/solution_cases.py"
+      ]
+    },
+    {
+      "id": "RC-039",
+      "milestone": "M10",
+      "title": "Оценить повторное использование решений",
+      "status": "planned",
+      "priority": "P1",
+      "size": "M",
+      "depends_on": [
+        "RC-038"
+      ],
+      "acceptance": [
+        "Повторная задача возвращает совместимый принятый пример.",
+        "Несовместимая библиотека или контракт показывает ограничение применения."
+      ],
+      "artifacts": [
+        "evaluation/solution_cases/"
+      ]
+    },
+    {
+      "id": "RC-040",
+      "milestone": "M10",
+      "title": "Ввести командный access scope и cache isolation",
+      "status": "planned",
+      "priority": "P1",
+      "size": "L",
+      "depends_on": [
+        "RC-022",
+        "RC-031"
+      ],
+      "acceptance": [
+        "Source, graph, summaries и cache проверяются до выдачи.",
+        "Тесты двух областей доступа исключают перенос частного контекста."
+      ],
+      "artifacts": [
+        "src/rag_coding/security/",
+        "tests/access_isolation/"
+      ]
+    },
+    {
+      "id": "RC-041",
+      "milestone": "M10",
+      "title": "Подготовить локальную поставку и runbooks",
+      "status": "planned",
+      "priority": "P1",
+      "size": "M",
+      "depends_on": [
+        "RC-009",
+        "RC-031",
+        "RC-039"
+      ],
+      "acceptance": [
+        "Воспроизводимы install, migration, index, restore и bounded smoke.",
+        "Опубликованы coverage, ограничения и фактические результаты."
+      ],
+      "artifacts": [
+        "docs/runbooks/",
+        "packaging/"
+      ]
+    },
+    {
+      "id": "RC-042",
+      "milestone": "M10",
+      "title": "Провести сквозную приёмку следующей поставки",
+      "status": "planned",
+      "priority": "P1",
+      "size": "L",
+      "depends_on": [
+        "RC-029",
+        "RC-037",
+        "RC-040",
+        "RC-041"
+      ],
+      "acceptance": [
+        "Реальные сценарии UC-01…UC-08 проверены на точном release SHA.",
+        "Локальные, CI, provider, deployment и acceptance статусы разделены."
+      ],
+      "artifacts": [
+        "evaluation/release-proof.json",
+        "docs/release-notes.md"
+      ]
+    }
+  ]
+}

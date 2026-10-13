@@ -1,0 +1,301 @@
+{
+  "purpose": "Offline evidence for a concept; not retrieval or runtime quality validation",
+  "source_revision_observed": "ca46b31d8db97f704bf33065b8f35a2cadcfd572",
+  "code_executed": false,
+  "llm_or_external_calls": false,
+  "files": [
+    {
+      "path": "external/ProjectKnowledgeService/pks/pipelines/scene_enrich.py",
+      "sha256": "ec01c9a6a5636c7aa87dba62968a767dc009e92f840d10652dc0273c058f727f",
+      "bytes": 95594,
+      "lines": 2199,
+      "definitions_including_nested": 48,
+      "full_file_compile_without_execution": "PASS",
+      "largest_definitions": [
+        {
+          "name": "_knowledge_items",
+          "kind": "FunctionDef",
+          "lines": [
+            1504,
+            1781
+          ]
+        },
+        {
+          "name": "_process_window",
+          "kind": "AsyncFunctionDef",
+          "lines": [
+            1784,
+            2000
+          ]
+        },
+        {
+          "name": "run_scene_enrichment",
+          "kind": "AsyncFunctionDef",
+          "lines": [
+            2003,
+            2191
+          ]
+        },
+        {
+          "name": "_admit_entities",
+          "kind": "FunctionDef",
+          "lines": [
+            860,
+            1015
+          ]
+        },
+        {
+          "name": "_load_candidate_windows",
+          "kind": "AsyncFunctionDef",
+          "lines": [
+            327,
+            468
+          ]
+        }
+      ]
+    },
+    {
+      "path": "external/ProjectKnowledgeService/pks/fact_admission.py",
+      "sha256": "bfab87341fa4887640a89920151071552a992d19b24613b886b6ab0990f0e9fa",
+      "bytes": 24975,
+      "lines": 642,
+      "definitions_including_nested": 21,
+      "full_file_compile_without_execution": "PASS",
+      "largest_definitions": [
+        {
+          "name": "admit_fact_candidates",
+          "kind": "FunctionDef",
+          "lines": [
+            400,
+            633
+          ]
+        },
+        {
+          "name": "_normalize_direction",
+          "kind": "FunctionDef",
+          "lines": [
+            259,
+            302
+          ]
+        },
+        {
+          "name": "_entity_index",
+          "kind": "FunctionDef",
+          "lines": [
+            143,
+            183
+          ]
+        },
+        {
+          "name": "_merge_evidence",
+          "kind": "FunctionDef",
+          "lines": [
+            316,
+            352
+          ]
+        },
+        {
+          "name": "_evidence_rows_for_fact",
+          "kind": "FunctionDef",
+          "lines": [
+            226,
+            256
+          ]
+        }
+      ]
+    },
+    {
+      "path": "external/ProjectKnowledgeService/pks/services/ingest.py",
+      "sha256": "36ea4011121bacd67542bd001d870075d2d73926247131daf35ddaec0e9a77bd",
+      "bytes": 17782,
+      "lines": 451,
+      "definitions_including_nested": 19,
+      "full_file_compile_without_execution": "PASS",
+      "largest_definitions": [
+        {
+          "name": "IngestService",
+          "kind": "ClassDef",
+          "lines": [
+            28,
+            451
+          ]
+        },
+        {
+          "name": "ingest",
+          "kind": "AsyncFunctionDef",
+          "lines": [
+            63,
+            211
+          ]
+        },
+        {
+          "name": "_index_derived_after_ledger",
+          "kind": "AsyncFunctionDef",
+          "lines": [
+            213,
+            330
+          ]
+        },
+        {
+          "name": "upsert_term_candidate",
+          "kind": "AsyncFunctionDef",
+          "lines": [
+            395,
+            427
+          ]
+        },
+        {
+          "name": "__init__",
+          "kind": "FunctionDef",
+          "lines": [
+            35,
+            61
+          ]
+        }
+      ]
+    }
+  ],
+  "focused_probe": {
+    "path": "external/ProjectKnowledgeService/pks/pipelines/scene_enrich.py",
+    "parent": "plan_scene_windows",
+    "parent_lines": [
+      243,
+      289
+    ],
+    "method": "AST compound statements and adjacent simple statements; no size tuning or LLM",
+    "groups": [
+      {
+        "kind": "statement_group",
+        "lines": [
+          249,
+          257
+        ],
+        "byte_span_half_open": [
+          9196,
+          9549
+        ],
+        "sha256": "c51857c86345914139cbead88eab7f403e3912db96ea71306c91e1eb10d74ac3",
+        "bytes": 353,
+        "parent": "plan_scene_windows",
+        "statements": [
+          "Expr",
+          "Assign",
+          "AnnAssign",
+          "Assign",
+          "AnnAssign",
+          "Assign",
+          "Assign",
+          "AnnAssign"
+        ]
+      },
+      {
+        "kind": "FunctionDef",
+        "lines": [
+          258,
+          265
+        ],
+        "byte_span_half_open": [
+          9549,
+          9850
+        ],
+        "sha256": "c4d66176609b7fc9429d9bab3a6048736730b7d2a48f22ea71812aca5536acf1",
+        "bytes": 301,
+        "parent": "plan_scene_windows",
+        "statements": [
+          "FunctionDef"
+        ]
+      },
+      {
+        "kind": "For",
+        "lines": [
+          266,
+          287
+        ],
+        "byte_span_half_open": [
+          9850,
+          10748
+        ],
+        "sha256": "c4e9827d96c83c85ea034e93613e0afcb7d804ccf8426ec1b49b4b9e52b4e395",
+        "bytes": 898,
+        "parent": "plan_scene_windows",
+        "statements": [
+          "For"
+        ]
+      },
+      {
+        "kind": "statement_group",
+        "lines": [
+          288,
+          289
+        ],
+        "byte_span_half_open": [
+          10748,
+          10781
+        ],
+        "sha256": "f43da6eb958a8081b7e843fcf334bae6dc9b87a48507944c9af5f2db86c038ce",
+        "bytes": 33,
+        "parent": "plan_scene_windows",
+        "statements": [
+          "Expr",
+          "Return"
+        ]
+      }
+    ],
+    "exact_byte_reconstruction": "PASS",
+    "sibling_body_ranges_contiguous": "PASS",
+    "nested_function": {
+      "name": "flush",
+      "lines": [
+        258,
+        264
+      ],
+      "closure_symbols": [
+        {
+          "name": "chunk_index",
+          "free": true,
+          "nonlocal": true,
+          "assigned": true,
+          "referenced": true
+        },
+        {
+          "name": "current_key",
+          "free": true,
+          "nonlocal": false,
+          "assigned": false,
+          "referenced": true
+        },
+        {
+          "name": "current_rows",
+          "free": true,
+          "nonlocal": true,
+          "assigned": true,
+          "referenced": true
+        },
+        {
+          "name": "current_source_chars",
+          "free": true,
+          "nonlocal": true,
+          "assigned": true,
+          "referenced": false
+        },
+        {
+          "name": "windows",
+          "free": true,
+          "nonlocal": false,
+          "assigned": false,
+          "referenced": true
+        }
+      ],
+      "module_references": [
+        "_make_window"
+      ],
+      "standalone_syntax_probe": {
+        "compiled": false,
+        "error_type": "SyntaxError",
+        "reason": "no binding for nonlocal 'current_rows' found"
+      }
+    }
+  },
+  "source_repository": "FlashMT Portal Services",
+  "publication_note": "Historical structural metadata only. Source files are not distributed; paths are relative to the original repository."
+}

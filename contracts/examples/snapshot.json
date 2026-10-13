@@ -1,0 +1,16 @@
+{
+  "schema": "Snapshot",
+  "value": {
+    "schema_version": "0.1.0",
+    "snapshot_id": "snapshot:fixture-lf",
+    "repo_id": "repo:owned-fixture",
+    "base_commit": null,
+    "overlay_hash": "321a0cb0f6a2ba6727f34774801b009ee69f7a1e4cb60e627db8076bddc104d7",
+    "state": "ready",
+    "analysis_config_hash": "0ac83c76e054d9dd96bbbf87c1d7d61cc4ca6bfe830e49b5b45d4c90e3fd564d",
+    "capabilities": [
+      "fixture_syntax",
+      "fixture_scopes"
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "Relation",
+  "value": {
+    "schema_version": "0.1.0",
+    "relation_id": "relation:fixture:captures-pending",
+    "snapshot_id": "snapshot:fixture-lf",
+    "from_id": "unit:fixture:flush",
+    "to_id": "symbol:fixture:pending",
+    "predicate": "captures",
+    "origin": {
+      "kind": "language_analyzer",
+      "name": "python-symtable",
+      "version": "fixture-contract-0.1.0"
+    },
+    "status": "derived",
+    "evidence": [
+      {
+        "span": {
+          "file_version_id": "blob:321a0cb0f6a2ba6727f34774801b009ee69f7a1e4cb60e627db8076bddc104d7",
+          "start_byte": 341,
+          "end_byte": 371,
+          "line_start": 11,
+          "line_end": 11
+        },
+        "source_hash": "321a0cb0f6a2ba6727f34774801b009ee69f7a1e4cb60e627db8076bddc104d7",
+        "kind": "binding"
+      }
+    ],
+    "analysis_fingerprint": "0ac83c76e054d9dd96bbbf87c1d7d61cc4ca6bfe830e49b5b45d4c90e3fd564d"
+  }
+}

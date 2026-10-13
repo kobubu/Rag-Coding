@@ -1,0 +1,34 @@
+{
+  "schema": "ContextPackage",
+  "value": {
+    "schema_version": "0.1.0",
+    "package_id": "package:fixture:example",
+    "snapshot_id": "snapshot:fixture-lf",
+    "items": [
+      {
+        "unit_id": "unit:fixture:flush",
+        "span": {
+          "file_version_id": "blob:321a0cb0f6a2ba6727f34774801b009ee69f7a1e4cb60e627db8076bddc104d7",
+          "start_byte": 308,
+          "end_byte": 491,
+          "line_start": 10,
+          "line_end": 16
+        },
+        "reason": "Illustrative contract for a nested-function query"
+      }
+    ],
+    "budget_tokens": 2048,
+    "tokens_used": null,
+    "tokenizer": "example-not-measured",
+    "completeness": "partial",
+    "omissions": [
+      {
+        "target_id": "unit:fixture:collect_batches",
+        "reason": "Outer context intentionally omitted from this contract example"
+      }
+    ],
+    "diagnostics": [
+      "Contract fixture only; not a running retrieval service"
+    ]
+  }
+}
