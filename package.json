@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-code-memory",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "CM (Code Memory): read-only repository knowledge plugin for DeepSeek Harness",
   "type": "module",
@@ -16,7 +16,8 @@
     "cm:index": "node dist/src/code-memory/cli.js",
     "plugin:smoke": "node dist/scripts/smoke_plugin.js",
     "harness:ab": "node dist/scripts/run_harness_ab.js",
-    "verify": "npm run build && npm run check && npm test && npm run probe"
+    "verify": "npm run build && npm run check && npm test && npm run probe",
+    "cm:vectors": "node dist/src/code-memory/vector_cli.js"
   },
   "main": "./dist/src/harness/plugin.js",
   "types": "./dist/src/harness/plugin.d.ts",
@@ -27,7 +28,8 @@
     }
   },
   "bin": {
-    "cm-index": "dist/src/code-memory/cli.js"
+    "cm-index": "dist/src/code-memory/cli.js",
+    "cm-vector-index": "dist/src/code-memory/vector_cli.js"
   },
   "files": [
     "dist/src/",
@@ -46,15 +48,23 @@
     "@deepseek-ai/dsh-tools": "0.2.0-rc.2"
   },
   "dependencies": {
+    "@huggingface/transformers": "4.3.1",
+    "@lancedb/lancedb": "0.40.0",
     "ajv": "8.20.0",
     "typescript": "6.0.3"
   },
   "devDependencies": {
     "@deepseek-ai/cordis": "4.0.4",
     "@deepseek-ai/cordis-plugin-include": "1.0.9",
+    "@deepseek-ai/dsh-agent": "0.2.0-rc.2",
     "@deepseek-ai/dsh-app-boot": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-fs": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-system-prompt": "0.2.0-rc.2",
     "@deepseek-ai/dsh-tools": "0.2.0-rc.2",
     "@types/js-yaml": "4.0.9",
     "@types/node": "24.19.2"
+  },
+  "overrides": {
+    "sharp": "0.35.5"
   }
 }

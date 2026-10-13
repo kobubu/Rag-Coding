@@ -80,3 +80,6 @@ viewer/           # будущий React + TypeScript интерфейс
 ```
 
 Эта структура описывает развитие core; большинство перечисленных подсистем ещё не реализовано. Уже созданы `src/code-memory/` (local index/store/query/CLI), `src/harness/` (plugin), `harness/bundle.yml` (distribution entry). TS-средства находятся в `scripts/`, регрессии — в `tests/`; `tsconfig.json` собирает их в `dist/`. Локальный JSON backend отдельно версионирован и не объявляется PostgreSQL ledger или полноценным API v0.1.
+
+
+Local vector/compact prototype уже проверен настоящим [вторым Harness A/B](HYBRID-RESULTS.md). Primary source/graph остаётся JSON, learned embeddings и vector projection — локальные. Full ledger/FTS, MCP, map UI и broad benchmark остаются планом.

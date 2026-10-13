@@ -17,6 +17,12 @@
       "status": "completed"
     },
     {
+      "id": "M00V",
+      "title": "Local vector/compact CM и подтверждённый pilot",
+      "gate": "Learned local embeddings, vector storage, compact auto context, CAS observations и новый полный A/B проверены; ограничения опубликованы.",
+      "status": "completed"
+    },
+    {
       "id": "M01",
       "title": "Зафиксированный корпус и контракты",
       "gate": "Есть размеченные задачи, способности первого языка и корректные публичные форматы.",
@@ -958,13 +964,19 @@
       "status": "done",
       "priority": "P0",
       "size": "M",
-      "depends_on": ["RC-043"],
+      "depends_on": [
+        "RC-043"
+      ],
       "acceptance": [
         "TS/JS interfile scopes и точные UTF-8 spans проверены без исполнения исходников.",
         "224-файловый Geo Dash corpus индексируется; результаты до/после оптимизации семантически совпадают.",
         "Общий writer/reader size limit, immutable cache и проверка текущих source hashes сохраняют границы snapshot."
       ],
-      "artifacts": ["src/code-memory/", "tests/code_memory.test.ts", "docs/AB-RESULTS.md"]
+      "artifacts": [
+        "src/code-memory/",
+        "tests/code_memory.test.ts",
+        "docs/AB-RESULTS.md"
+      ]
     },
     {
       "id": "RC-046",
@@ -973,13 +985,21 @@
       "status": "done",
       "priority": "P0",
       "size": "M",
-      "depends_on": ["RC-044", "RC-045"],
+      "depends_on": [
+        "RC-044",
+        "RC-045"
+      ],
       "acceptance": [
         "Одна модель выполняет 28 независимых sessions на семи seeded regressions, по два повтора A/B с фиксированным oracle.",
         "Provider usage, cache, цена, calls и все failures сохранены; успешность проверяется вне модели.",
         "Публичный итог не содержит private source и явно указывает отсутствие vector retrieval и неподтверждённую экономию."
       ],
-      "artifacts": ["scripts/harness_ab.ts", "scripts/harness_meter.ts", "docs/HARNESS-AB.md", "evaluation/geo-dash-pilot/results.json"]
+      "artifacts": [
+        "scripts/harness_ab.ts",
+        "scripts/harness_meter.ts",
+        "docs/HARNESS-AB.md",
+        "evaluation/geo-dash-pilot/results.json"
+      ]
     },
     {
       "id": "RC-047",
@@ -988,13 +1008,19 @@
       "status": "planned",
       "priority": "P0",
       "size": "L",
-      "depends_on": ["RC-045"],
+      "depends_on": [
+        "RC-045"
+      ],
       "acceptance": [
         "Кандидат native storage/embedding stack работает локально на Windows; веса, indexes и source остаются в user data directory.",
         "Versioned vector projection и add/change/delete/branch refresh проверены; измерены CPU, RAM, disk и cold/warm время.",
         "Exact/FTS канал и ledger сохраняются; full rebuild не скрывает stale или missing sources."
       ],
-      "artifacts": ["src/local-storage/", "src/embeddings/", "evaluation/local-vector-spike.json"]
+      "artifacts": [
+        "src/local-storage/",
+        "src/embeddings/",
+        "evaluation/local-vector-spike.json"
+      ]
     },
     {
       "id": "RC-048",
@@ -1003,13 +1029,21 @@
       "status": "planned",
       "priority": "P0",
       "size": "L",
-      "depends_on": ["RC-046", "RC-047"],
+      "depends_on": [
+        "RC-046",
+        "RC-047"
+      ],
       "acceptance": [
         "Один вызов внутри выполняет exact/FTS/vector merge, rerank, bounded dependencies и dedupe с source references и omissions.",
         "Новые holdout tasks проверяют итог всей задачи при одинаковых budgets, включая retrieval/enrichment расходы и cache.",
         "Снижение tokens/cost не заявляется без измерения; качество и cold/warm indexing сообщаются отдельно."
       ],
-      "artifacts": ["src/retrieval/", "src/harness/", "evaluation/hybrid-pilot/", "docs/AB-RESULTS.md"]
+      "artifacts": [
+        "src/retrieval/",
+        "src/harness/",
+        "evaluation/hybrid-pilot/",
+        "docs/AB-RESULTS.md"
+      ]
     },
     {
       "id": "RC-049",
@@ -1018,13 +1052,19 @@
       "status": "planned",
       "priority": "P0",
       "size": "M",
-      "depends_on": ["RC-048"],
+      "depends_on": [
+        "RC-048"
+      ],
       "acceptance": [
         "Реальный desktop MCP client запускает local process и получает тот же retrieve_context, что Harness.",
         "Output budget, cancellation, snapshot mismatch и разрешённые project roots проверены.",
         "Remote/localhost bridge требует отдельной конфигурации; cloud login сам по себе не предоставляет доступ к файлам."
       ],
-      "artifacts": ["src/mcp/", "docs/mcp-setup.md", "evaluation/mcp-client-proof.json"]
+      "artifacts": [
+        "src/mcp/",
+        "docs/mcp-setup.md",
+        "evaluation/mcp-client-proof.json"
+      ]
     },
     {
       "id": "RC-050",
@@ -1033,13 +1073,19 @@
       "status": "planned",
       "priority": "P1",
       "size": "L",
-      "depends_on": ["RC-047"],
+      "depends_on": [
+        "RC-047"
+      ],
       "acceptance": [
         "React/TypeScript viewer раскрывает concepts → functions/classes → exact source spans и glossary.",
         "Structural facts, similarity и inferred concepts имеют разные types/evidence/status; stale и unresolved состояния видимы.",
         "Zoom, фильтр связей и поиск проходят реальную интерфейсную проверку на indexed project."
       ],
-      "artifacts": ["apps/local-viewer/", "docs/LOCAL-PRODUCT.md", "evaluation/map-ui-proof.json"]
+      "artifacts": [
+        "apps/local-viewer/",
+        "docs/LOCAL-PRODUCT.md",
+        "evaluation/map-ui-proof.json"
+      ]
     },
     {
       "id": "RC-051",
@@ -1048,12 +1094,19 @@
       "status": "planned",
       "priority": "P1",
       "size": "L",
-      "depends_on": ["RC-049", "RC-050"],
+      "depends_on": [
+        "RC-049",
+        "RC-050"
+      ],
       "acceptance": [
         "Чистая установка Windows, native dependencies и запуск MCP/map проходят на поддерживаемом runtime.",
         "Update, rollback и export сохраняют source, user indexes и настройки; macOS/Linux проверены перед заявлением поддержки."
       ],
-      "artifacts": ["packaging/local-agent/", "docs/runbooks/", "evaluation/installer-proof.json"]
+      "artifacts": [
+        "packaging/local-agent/",
+        "docs/runbooks/",
+        "evaluation/installer-proof.json"
+      ]
     },
     {
       "id": "RC-052",
@@ -1062,13 +1115,105 @@
       "status": "planned",
       "priority": "P1",
       "size": "L",
-      "depends_on": ["RC-051"],
+      "depends_on": [
+        "RC-051"
+      ],
       "acceptance": [
         "Login выдаёт signed entitlement; offline grace и отмена подписки не удаляют пользовательские данные и export.",
         "BYOK или явно ограниченные credits отделены от цены продукта; финансовая модель включает поддержку и выбранные services.",
         "Hosted deployment и подключение платежей выполняются только в отдельно разрешённой поставке."
       ],
-      "artifacts": ["apps/account-service/", "docs/LOCAL-PRODUCT.md", "evaluation/subscription-pilot.json"]
+      "artifacts": [
+        "apps/account-service/",
+        "docs/LOCAL-PRODUCT.md",
+        "evaluation/subscription-pilot.json"
+      ]
+    },
+    {
+      "id": "RC-053",
+      "milestone": "M00V",
+      "title": "Реализовать local learned embeddings и LanceDB projection",
+      "status": "done",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-045"
+      ],
+      "acceptance": [
+        "Pinned MiniLM q8 реально выполняется на CPU; vector queries используют local files only.",
+        "LanceDB хранит 384-dimensional vectors; snapshot/model fencing и embedding reuse проверены.",
+        "Это prototype projection: primary JSON сохранён, SQLite/FTS/ANN не объявлены готовыми."
+      ],
+      "artifacts": [
+        "src/code-memory/vector.ts",
+        "src/code-memory/vector_cli.ts",
+        "tests/vector.test.ts"
+      ]
+    },
+    {
+      "id": "RC-054",
+      "milestone": "M00V",
+      "title": "Свести CM в compact context с auto admission и FS observations",
+      "status": "done",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-044",
+        "RC-053"
+      ],
+      "acceptance": [
+        "Один tool объединяет lexical/dense ranking, required declarations, budgets и dedupe.",
+        "Logged source context доходит до первого model call; штатный CAS edit работает после CM observation.",
+        "Dependency activation, disposal и paid-call guard проверены на реальном Harness."
+      ],
+      "artifacts": [
+        "src/code-memory/retrieve.ts",
+        "src/harness/plugin.ts",
+        "scripts/harness_meter.ts"
+      ]
+    },
+    {
+      "id": "RC-055",
+      "milestone": "M00V",
+      "title": "Подтвердить экономию и качество на новом полном A/B",
+      "status": "done",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-046",
+        "RC-054"
+      ],
+      "acceptance": [
+        "32 sessions на восьми заранее выбранных типах задач сохраняют все failures и полный settled provider usage.",
+        "Total tokens и cache-aware price меньше baseline, independent-check success не ниже; время и sampling limits раскрыты.",
+        "Raw private corpus/trace не публикуется; JSON, plot, protocol/source hashes и фактические проверки доступны."
+      ],
+      "artifacts": [
+        "docs/HYBRID-RESULTS.md",
+        "evaluation/geo-hybrid-pilot/",
+        "scripts/summarize_hybrid.ts"
+      ]
+    },
+    {
+      "id": "RC-056",
+      "milestone": "M11",
+      "title": "Улучшить provenance/scope и latency без потери нужных источников",
+      "status": "planned",
+      "priority": "P0",
+      "size": "L",
+      "depends_on": [
+        "RC-055"
+      ],
+      "acceptance": [
+        "First-party, vendor и параллельные модули различаются с явными scopes; known failures не объявляются новым holdout.",
+        "На новых tasks измерены recall/precision и latency; full provider/retrieval costs и failures сохраняются.",
+        "Контекст не расширяет actor permissions; exact/library navigation и snapshot boundaries остаются проверяемыми."
+      ],
+      "artifacts": [
+        "src/retrieval/",
+        "evaluation/scope-latency-pilot/",
+        "docs/HYBRID-RESULTS.md"
+      ]
     }
   ]
 }

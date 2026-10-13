@@ -1,5 +1,5 @@
 import { execFileSync, spawn } from "node:child_process";
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { performance } from "node:perf_hooks";
@@ -8,7 +8,7 @@ import { hash, inside, MAX_INDEX_BYTES } from "../src/code-memory/source.js";
 import { validateIndex } from "../src/code-memory/store.js";
 import { ROOT } from "./lib.js";
 
-export type ABOptions = { project: string; output: string; node: string; harness: string; apiKey: string; model: string; environment?: Record<string, string> };
+export type ABOptions = { project: string; output: string; node: string; harness: string; apiKey: string; model: string; environment?: Record<string, string>; cmMode?: "legacy" | "compact"; modelCache?: string; repetitions?: number };
 export type ABCase = { id: string; prompt: string; mutations: { path: string; before: string; after: string }[] };
 type ABManifest = ReturnType<typeof createCorpus>;
 
@@ -38,8 +38,9 @@ export function prepareCases(options: Omit<ABOptions, "apiKey" | "model">, cases
   const casesHash = hash(JSON.stringify(cases));
   writeFileSync(join(output, "frozen-protocol.json"), JSON.stringify({ cases_hash: casesHash, oracle_sha256: hash(readFileSync(oracle)),
     primary_metric: "All independent behavioral checks pass after patch", secondary_metrics: ["Provider billed input+output tokens", "Cache-aware USD estimate", "Latency", "CM tool use"],
-    repetitions: 2, order: "AB/BA counterbalanced by case and repetition", model: "gpt-6-luna", reasoning_effort: "low", max_model_calls: 12,
-    max_output_tokens: 8192, max_run_seconds: 180, corpus_manifest: manifest.manifest_hash, seed_regressions: true }, null, 2));
+    repetitions: options.repetitions ?? 2, order: "AB/BA counterbalanced by case and repetition", model: "gpt-6-luna", reasoning_effort: "low", max_model_calls: 12,
+    max_output_tokens: 8192, max_run_seconds: 180, corpus_manifest: manifest.manifest_hash, seed_regressions: true,
+    cm_mode: options.cmMode ?? "legacy", auto_context: options.cmMode === "compact" }, null, 2));
   const clean = execFileSync(options.node, [oracle, manifest.corpus], { encoding: "utf8" });
   checks.push({ stage: "original", exit_code: 0, result: JSON.parse(clean) });
   for (const task of cases) {
@@ -75,6 +76,7 @@ export function createRunWorkspace(options: Omit<ABOptions, "apiKey" | "model">,
   copySources(manifest, from, workspace);
   mkdirSync(join(workspace, ".code-memory"));
   copyFileSync(join(from, ".code-memory/index.json"), join(workspace, ".code-memory/index.json"));
+  if (options.cmMode === "compact") cpSync(join(from, ".code-memory/vectors"), join(workspace, ".code-memory/vectors"), { recursive: true });
   return workspace;
 }
 
@@ -113,7 +115,8 @@ export async function runBenchmark(options: ABOptions, cases: ABCase[], oracle: 
   const output = resolve(options.output);
   const protocol = JSON.parse(readFileSync(join(output, "frozen-protocol.json"), "utf8"));
   if (protocol.cases_hash !== hash(JSON.stringify(cases)) || protocol.oracle_sha256 !== hash(readFileSync(oracle))) throw new Error("Frozen experiment inputs changed");
-  const files = ["src/code-memory/indexer.ts", "src/code-memory/source.ts", "src/code-memory/store.ts", "src/code-memory/query.ts", "src/harness/plugin.ts", "scripts/harness_ab.ts", "scripts/harness_meter.ts"];
+  if (options.model !== protocol.model || repetitions !== protocol.repetitions || (options.cmMode ?? "legacy") !== (protocol.cm_mode ?? "legacy")) throw new Error("Frozen model, repetitions or retrieval mode changed");
+  const files = ["src/code-memory/indexer.ts", "src/code-memory/source.ts", "src/code-memory/store.ts", "src/code-memory/query.ts", "src/code-memory/vector.ts", "src/code-memory/retrieve.ts", "src/harness/plugin.ts", "scripts/harness_ab.ts", "scripts/harness_meter.ts"];
   const implementation = files.map((path) => ({ path, sha256: hash(readFileSync(join(ROOT, path))) }));
   writeFileSync(join(output, "implementation-manifest.json"), JSON.stringify(implementation, null, 2));
   const results: object[] = [];
@@ -203,9 +206,10 @@ export async function bootProfile(options: ABOptions, workspace: string, runId: 
   entries.push({ id: "approval", config: { policy: "never" } });
   entries.push({ id: "permission", config: { presets: { "workspace-write": { sandbox: "workspace-write", approval: "never" } }, defaultPreset: "workspace-write" } });
   const inserted: { id: string; name: string; config: Record<string, unknown> }[] = [{ id: "ab-meter", name: pathToFileURL(join(ROOT, "dist/scripts/harness_meter.js")).href,
-    config: { output: meter, model: options.model, maxCalls: 12 } }];
+    config: { output: meter, model: options.model, maxCalls: 12, requireCMContext: cm && options.cmMode === "compact" } }];
   if (cm) inserted.push({ id: "code-memory", name: pathToFileURL(join(ROOT, "dist/src/harness/plugin.js")).href,
-    config: { projectRoot: workspace } });
+    config: { projectRoot: workspace, ...(options.cmMode === "compact" ? { mode: "compact", autoContext: true,
+      modelCache: options.modelCache, maxContextBytes: 6000, diagnosticsPath: join(directory, "retrieval.json") } : {}) } });
   entries.push({ insert: inserted });
   writeFileSync(patch, JSON.stringify(entries));
   const args = [options.harness, "--profile", profile, "--from-default-profile", "headless", "--patch", patch, "--json"];

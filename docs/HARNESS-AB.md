@@ -34,6 +34,10 @@ Shell, web, subagents и автоматическая генерация заг�
 
 Оценка USD использует ставки выбранной модели на дату эксперимента; это расчёт по reported tokens, не банковское списание или billing export. Кэш показывается отдельно, поскольку он влияет на цену даже при одинаковом количестве input tokens. Indexing CPU/time хранится отдельно от расходов модели. Небольшая выборка одного проекта не доказывает универсального выигрыша.
 
+## Compact series
+
+После lexical pilot добавлен local vector/auto-context вариант. [Полный второй результат](HYBRID-RESULTS.md). В CLI передать `--cm-mode compact --model-cache /absolute/cache`; он строит vectors в prepared snapshots с shared embedding cache. Guard требует CM context/schema до первого платного B call. Все settled provider calls учитываются и при budget-limit errors; runtime/quality statuses отдельные.
+
 ## Воспроизведение
 
 Нужен Node.js 24 и installed Harness CLI. Ключ передаётся только через environment. На Windows можно взять его из буфера без вывода значения:

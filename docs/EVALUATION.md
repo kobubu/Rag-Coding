@@ -72,3 +72,6 @@ Local CM и plugin покрыты `tests/code_memory.test.ts`; `npm run plugin:s
 Distribution entry проверяется реальными Harness bundle/patch consumer functions. Локально tarball также установлен в полный Web-профиль CLI, включая независимый Harness home: профиль boot и четыре registry calls прошли. Это дополнение к автоматизированным checks, с отдельным статусом без живого model loop и browser interaction QA.
 
 Сохранённая проверка FlashMT подтверждает структуру одного примера. Добавлен отдельный [живой Harness A/B pilot](HARNESS-AB.md) на JS-снимке Geo Dash с GPT-6 Luna, exact provider usage и независимыми behavioral checks. Семь holdout tasks и два повтора не заменяют полный 40-задачный benchmark. Полноценный PostgreSQL service и измерения vector/enrichment остаются планом.
+
+
+Local vector/compact prototype уже проверен настоящим [вторым Harness A/B](HYBRID-RESULTS.md). Primary source/graph остаётся JSON, learned embeddings и vector projection — локальные. Full ledger/FTS, MCP, map UI и broad benchmark остаются планом.

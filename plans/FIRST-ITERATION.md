@@ -1,8 +1,8 @@
-# Ближайшая итерация: локальные векторы и компактный context
+# Ближайшая итерация: provenance, latency и локальная поставка
 
 ## Отправная точка
 
-RC-001/RC-002 и RC-043…RC-046 выполнены: документы, TS/JS CM core, настоящий Harness plugin, 224-file corpus и live model A/B. CM прошёл 14/14 правок против 13/14, но total tokens выросли на 6,2%, расчётная цена — на 2,4%. [Итог и ограничения](../docs/AB-RESULTS.md). Это lexical/structural prototype; embeddings ещё отсутствуют.
+RC-001/RC-002 и RC-043…RC-046 выполнены: документы, TS/JS CM core, настоящий Harness plugin, 224-file corpus и live model A/B. CM прошёл 14/14 правок против 13/14, но total tokens выросли на 6,2%, расчётная цена — на 2,4%. [Итог и ограничения](../docs/AB-RESULTS.md). Это исходный lexical pilot. После него RC-053…RC-055 реализовали local vectors/compact auto context и подтвердили −69,4% tokens, −56,9% цены, 12/16 против 9/16 на новом наборе; [итог](../docs/HYBRID-RESULTS.md).
 
 Источник статусов — [backlog.json](backlog.json), представление — [BACKLOG](BACKLOG.md). Расширенный M01 corpus, общий ContextPackage и серверный backend не объявляются готовыми по результатам pilot.
 
@@ -38,3 +38,6 @@ RC-003…RC-007 остаются путём к более широкому repro
 ## Evidence и приёмка
 
 Сохранить source/model/config hashes, версии runtime/storage, команды, resources, реальные клиентские проверки и все task results. Vector database не считается готовностью RAG; MCP registration не считается проверкой клиента; карта не считается фактом языка без evidence. Установка: `npm ci`, проверки текущего plugin: `npm run verify`.
+
+
+Приоритет после pilot: RC-056 исправляет selection vendor/параллельных модулей и проверяет latency на новых tasks. Local embedding/LanceDB части RC-047 уже доступны как prototype; SQLite ledger/FTS, watcher, installer и общая capability model ещё не закрыты. RC-048 сохраняет следующий независимый benchmark и общий ContextPackage. MCP/map остаются RC-049/RC-050.

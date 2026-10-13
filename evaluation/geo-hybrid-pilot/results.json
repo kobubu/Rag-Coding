@@ -1,0 +1,1503 @@
+{
+  "schema_version": "geo-hybrid-pilot-1",
+  "experiment_date": "2026-10-13",
+  "status": "complete",
+  "runtime": {
+    "node": "24.21.0",
+    "harness_cli": "0.2.0-rc.2",
+    "transformers_js": "4.3.1",
+    "lancedb": "0.40.0"
+  },
+  "corpus": {
+    "project": "Geo Dash",
+    "revision": "47ed7fef0d3961333ab61ccf131e28249742d68e",
+    "files": 224,
+    "source_bytes": 3559518,
+    "manifest_hash": "430d2380f6bb073436b52df5be264c8ceefe4ebb2ec81b857b55980f3c072261"
+  },
+  "protocol": {
+    "cases_hash": "9fbe4dc630bd1fbafd1fa4bb6eadfc1abcc0917e6a4caf7cbc093f680e71b931",
+    "oracle_sha256": "d994c149a6642d77c82e64d5551aa903fa70dde9f3ae73ea84c5c85255699dd5",
+    "primary_metric": "All independent behavioral checks pass after patch",
+    "secondary_metrics": [
+      "Provider billed input+output tokens",
+      "Cache-aware USD estimate",
+      "Latency",
+      "CM tool use"
+    ],
+    "repetitions": 2,
+    "order": "AB/BA counterbalanced by case and repetition",
+    "model": "gpt-6-luna",
+    "reasoning_effort": "low",
+    "max_model_calls": 12,
+    "max_output_tokens": 8192,
+    "max_run_seconds": 180,
+    "corpus_manifest": "430d2380f6bb073436b52df5be264c8ceefe4ebb2ec81b857b55980f3c072261",
+    "seed_regressions": true,
+    "cm_mode": "compact",
+    "auto_context": true,
+    "embedding": {
+      "model": "Xenova/all-MiniLM-L6-v2",
+      "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+      "dtype": "q8",
+      "dimensions": 384,
+      "projection": "cm-hybrid-1"
+    },
+    "development_tasks": [
+      "quota-clock-rollback",
+      "stale-save-grants"
+    ],
+    "holdout_tasks": [
+      "interpolation-endpoints",
+      "rectangle-vertical-separation",
+      "motion-phase-origin",
+      "record-bonus-validation",
+      "purchase-receipt-validation",
+      "duplicate-coin-pickup",
+      "skin-exact-balance",
+      "login-replay-idempotence"
+    ],
+    "selection": "New task types chosen before candidate model runs; tuning only on previous pilot types",
+    "retrieval_cost": "Local CPU embeddings, zero embedding/enrichment provider calls",
+    "common_navigation_instruction": "Identical task prompt; use CM source context when sufficient, otherwise inspect with available tools"
+  },
+  "protocol_sha256": "4cc43516971ad4e2b6dcb777a806a05b5f915a1f4257c7137012e3b919016067",
+  "implementation": [
+    {
+      "path": "src/code-memory/indexer.ts",
+      "sha256": "8ed9a303d853ae7690886cb1c6345255591648cc1c3c83f0bacc02609edf0634"
+    },
+    {
+      "path": "src/code-memory/source.ts",
+      "sha256": "6f52abcda6a1dc564841b8cdae73485fe220dd3f84749fb8a6b18878047d4a99"
+    },
+    {
+      "path": "src/code-memory/store.ts",
+      "sha256": "4177898b99dbeba76626cca5bc24e3fd7ba3ef9bf3b94d9086e238cee3453b18"
+    },
+    {
+      "path": "src/code-memory/query.ts",
+      "sha256": "380478b4914fc633ee58193d428a91509d566da52e9889640d91b07662d01bc3"
+    },
+    {
+      "path": "src/code-memory/vector.ts",
+      "sha256": "806a6e63193d810f6a3f370cb4f95878a1e27ffcb5fd17939f0685f966ce5077"
+    },
+    {
+      "path": "src/code-memory/retrieve.ts",
+      "sha256": "28fab3e6ba7fee591d4988b0079e31686f4636ff5defd3ddce0ebcd61ee230b4"
+    },
+    {
+      "path": "src/harness/plugin.ts",
+      "sha256": "2edb9c3dbc7f50f8555020b0d5acc31157b4e3e79a5d50282d0cf0fe387692c5"
+    },
+    {
+      "path": "scripts/harness_ab.ts",
+      "sha256": "c4ba2beb06e950d09aa9d50d07a760e256c6dbb183c4c4b67f21f48d6aa6d81b"
+    },
+    {
+      "path": "scripts/harness_meter.ts",
+      "sha256": "1164c816eb1259539ae868f2f34b2099ac05153c4f9b09fd2a038aeb3d5c3d9b"
+    }
+  ],
+  "summary": {
+    "groups": [
+      {
+        "arm": "A",
+        "runs": 16,
+        "successful": 9,
+        "runtime_errors": 2,
+        "missing_usage": 0,
+        "model_calls": 160,
+        "cm_tool_calls": 0,
+        "total_tokens": 1385771,
+        "total_input": 1374751,
+        "output": 11020,
+        "uncached_input": 480,
+        "cache_read": 1168199,
+        "cache_write": 206072,
+        "usd_estimate": 0.04299899,
+        "mean_seconds": 29.479381562500002,
+        "tokens_per_success": 153974.55555555556
+      },
+      {
+        "arm": "B",
+        "runs": 16,
+        "successful": 12,
+        "runtime_errors": 0,
+        "missing_usage": 0,
+        "model_calls": 68,
+        "cm_tool_calls": 7,
+        "total_tokens": 423790,
+        "total_input": 417340,
+        "output": 6450,
+        "uncached_input": 204,
+        "cache_read": 320432,
+        "cache_write": 96704,
+        "usd_estimate": 0.018537720000000004,
+        "mean_seconds": 32.10973479375001,
+        "tokens_per_success": 35315.833333333336
+      }
+    ],
+    "paired_cases": [
+      {
+        "case_id": "interpolation-endpoints",
+        "repetitions": 2,
+        "A_tokens": 132970,
+        "B_tokens": 80589,
+        "saving_pct": 39.393096187109876,
+        "A_success": 1,
+        "B_success": 2
+      },
+      {
+        "case_id": "rectangle-vertical-separation",
+        "repetitions": 2,
+        "A_tokens": 189175,
+        "B_tokens": 113083,
+        "saving_pct": 40.22307387339765,
+        "A_success": 0,
+        "B_success": 1
+      },
+      {
+        "case_id": "motion-phase-origin",
+        "repetitions": 2,
+        "A_tokens": 248341,
+        "B_tokens": 126524,
+        "saving_pct": 49.05231113670317,
+        "A_success": 0,
+        "B_success": 0
+      },
+      {
+        "case_id": "record-bonus-validation",
+        "repetitions": 2,
+        "A_tokens": 75522,
+        "B_tokens": 12846,
+        "saving_pct": 82.9903869071264,
+        "A_success": 2,
+        "B_success": 2
+      },
+      {
+        "case_id": "purchase-receipt-validation",
+        "repetitions": 2,
+        "A_tokens": 222177,
+        "B_tokens": 17640,
+        "saving_pct": 92.06038428820264,
+        "A_success": 0,
+        "B_success": 2
+      },
+      {
+        "case_id": "duplicate-coin-pickup",
+        "repetitions": 2,
+        "A_tokens": 108512,
+        "B_tokens": 44265,
+        "saving_pct": 59.207276614567974,
+        "A_success": 2,
+        "B_success": 1
+      },
+      {
+        "case_id": "skin-exact-balance",
+        "repetitions": 2,
+        "A_tokens": 303797,
+        "B_tokens": 15601,
+        "saving_pct": 94.86466291635533,
+        "A_success": 2,
+        "B_success": 2
+      },
+      {
+        "case_id": "login-replay-idempotence",
+        "repetitions": 2,
+        "A_tokens": 105277,
+        "B_tokens": 13242,
+        "saving_pct": 87.42175403934382,
+        "A_success": 2,
+        "B_success": 2
+      }
+    ],
+    "accounting_complete": true,
+    "token_saving_pct": 69.41846813073734,
+    "cost_saving_pct": 56.88801062536584,
+    "quality_delta_pp": 18.75,
+    "exploratory_task_bootstrap_95_pct": [
+      50.89313941775089,
+      86.05882992516635
+    ],
+    "limitations": [
+      "8 task types from one project; repeated tasks are not independent",
+      "Seeded regressions; no historical production bug claim",
+      "Same conditional navigation instruction in both arms; availability alone is not tested",
+      "USD is calculated from provider usage, not a billing export"
+    ],
+    "activation": [
+      {
+        "run_id": "interpolation-endpoints-r1-B",
+        "arm": "B",
+        "cm_active": true,
+        "auto_context_bytes": 2376,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "interpolation-endpoints-r1-A",
+        "arm": "A",
+        "cm_active": false,
+        "auto_context_bytes": 0,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "rectangle-vertical-separation-r1-A",
+        "arm": "A",
+        "cm_active": false,
+        "auto_context_bytes": 0,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "rectangle-vertical-separation-r1-B",
+        "arm": "B",
+        "cm_active": true,
+        "auto_context_bytes": 4726,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "motion-phase-origin-r1-B",
+        "arm": "B",
+        "cm_active": true,
+        "auto_context_bytes": 5534,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "motion-phase-origin-r1-A",
+        "arm": "A",
+        "cm_active": false,
+        "auto_context_bytes": 0,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "record-bonus-validation-r1-A",
+        "arm": "A",
+        "cm_active": false,
+        "auto_context_bytes": 0,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "record-bonus-validation-r1-B",
+        "arm": "B",
+        "cm_active": true,
+        "auto_context_bytes": 391,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "purchase-receipt-validation-r1-B",
+        "arm": "B",
+        "cm_active": true,
+        "auto_context_bytes": 239,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "purchase-receipt-validation-r1-A",
+        "arm": "A",
+        "cm_active": false,
+        "auto_context_bytes": 0,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "duplicate-coin-pickup-r1-A",
+        "arm": "A",
+        "cm_active": false,
+        "auto_context_bytes": 0,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "duplicate-coin-pickup-r1-B",
+        "arm": "B",
+        "cm_active": true,
+        "auto_context_bytes": 5995,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "skin-exact-balance-r1-B",
+        "arm": "B",
+        "cm_active": true,
+        "auto_context_bytes": 2315,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "skin-exact-balance-r1-A",
+        "arm": "A",
+        "cm_active": false,
+        "auto_context_bytes": 0,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "login-replay-idempotence-r1-A",
+        "arm": "A",
+        "cm_active": false,
+        "auto_context_bytes": 0,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "login-replay-idempotence-r1-B",
+        "arm": "B",
+        "cm_active": true,
+        "auto_context_bytes": 512,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "interpolation-endpoints-r2-A",
+        "arm": "A",
+        "cm_active": false,
+        "auto_context_bytes": 0,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "interpolation-endpoints-r2-B",
+        "arm": "B",
+        "cm_active": true,
+        "auto_context_bytes": 2376,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "rectangle-vertical-separation-r2-B",
+        "arm": "B",
+        "cm_active": true,
+        "auto_context_bytes": 4726,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "rectangle-vertical-separation-r2-A",
+        "arm": "A",
+        "cm_active": false,
+        "auto_context_bytes": 0,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "motion-phase-origin-r2-A",
+        "arm": "A",
+        "cm_active": false,
+        "auto_context_bytes": 0,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "motion-phase-origin-r2-B",
+        "arm": "B",
+        "cm_active": true,
+        "auto_context_bytes": 5534,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "record-bonus-validation-r2-B",
+        "arm": "B",
+        "cm_active": true,
+        "auto_context_bytes": 391,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "record-bonus-validation-r2-A",
+        "arm": "A",
+        "cm_active": false,
+        "auto_context_bytes": 0,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "purchase-receipt-validation-r2-A",
+        "arm": "A",
+        "cm_active": false,
+        "auto_context_bytes": 0,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "purchase-receipt-validation-r2-B",
+        "arm": "B",
+        "cm_active": true,
+        "auto_context_bytes": 239,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "duplicate-coin-pickup-r2-B",
+        "arm": "B",
+        "cm_active": true,
+        "auto_context_bytes": 5995,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "duplicate-coin-pickup-r2-A",
+        "arm": "A",
+        "cm_active": false,
+        "auto_context_bytes": 0,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "skin-exact-balance-r2-A",
+        "arm": "A",
+        "cm_active": false,
+        "auto_context_bytes": 0,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "skin-exact-balance-r2-B",
+        "arm": "B",
+        "cm_active": true,
+        "auto_context_bytes": 2315,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "login-replay-idempotence-r2-B",
+        "arm": "B",
+        "cm_active": true,
+        "auto_context_bytes": 512,
+        "artifact_exposure_in_tool_results": false
+      },
+      {
+        "run_id": "login-replay-idempotence-r2-A",
+        "arm": "A",
+        "cm_active": false,
+        "auto_context_bytes": 0,
+        "artifact_exposure_in_tool_results": true
+      }
+    ],
+    "local_embedding_api_cost_usd": 0,
+    "goal_achieved_in_this_pilot": true
+  },
+  "per_run": [
+    {
+      "run_id": "interpolation-endpoints-r1-B",
+      "case_id": "interpolation-endpoints",
+      "repetition": 1,
+      "arm": "B",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 6,
+      "usage": {
+        "uncached_input": 18,
+        "cache_read": 37155,
+        "cache_write": 9755,
+        "output": 369,
+        "total_input": 46928,
+        "total_tokens": 47297,
+        "missing_usage": 0,
+        "usd_estimate": 0.001777225
+      },
+      "tool_calls": {
+        "cm_retrieve_context": 1,
+        "grep": 2,
+        "read": 1,
+        "edit": 1
+      },
+      "duration_ms": 43684.1614,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "interpolation-endpoints-r1-A",
+      "case_id": "interpolation-endpoints",
+      "repetition": 1,
+      "arm": "A",
+      "task_success": false,
+      "exit_code": 0,
+      "model_calls": 9,
+      "usage": {
+        "uncached_input": 27,
+        "cache_read": 49131,
+        "cache_write": 10940,
+        "output": 794,
+        "total_input": 60098,
+        "total_tokens": 60892,
+        "missing_usage": 0,
+        "usd_estimate": 0.00225851
+      },
+      "tool_calls": {
+        "glob": 1,
+        "grep": 2,
+        "read": 4,
+        "edit": 1
+      },
+      "duration_ms": 26564.151700000002,
+      "failed_checks": [
+        "interpolation-endpoints"
+      ],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "rectangle-vertical-separation-r1-A",
+      "case_id": "rectangle-vertical-separation",
+      "repetition": 1,
+      "arm": "A",
+      "task_success": false,
+      "exit_code": 0,
+      "model_calls": 12,
+      "usage": {
+        "uncached_input": 36,
+        "cache_read": 67837,
+        "cache_write": 8584,
+        "output": 1142,
+        "total_input": 76457,
+        "total_tokens": 77599,
+        "missing_usage": 0,
+        "usd_estimate": 0.00232597
+      },
+      "tool_calls": {
+        "glob": 1,
+        "grep": 7,
+        "read": 3
+      },
+      "duration_ms": 34422.10370000001,
+      "failed_checks": [
+        "rectangle-vertical-separation"
+      ],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "rectangle-vertical-separation-r1-B",
+      "case_id": "rectangle-vertical-separation",
+      "repetition": 1,
+      "arm": "B",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 4,
+      "usage": {
+        "uncached_input": 12,
+        "cache_read": 14815,
+        "cache_write": 5860,
+        "output": 280,
+        "total_input": 20687,
+        "total_tokens": 20967,
+        "missing_usage": 0,
+        "usd_estimate": 0.00102185
+      },
+      "tool_calls": {
+        "cm_retrieve_context": 1,
+        "read": 1,
+        "edit": 1
+      },
+      "duration_ms": 32567.4825,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "motion-phase-origin-r1-B",
+      "case_id": "motion-phase-origin",
+      "repetition": 1,
+      "arm": "B",
+      "task_success": false,
+      "exit_code": 0,
+      "model_calls": 5,
+      "usage": {
+        "uncached_input": 15,
+        "cache_read": 32958,
+        "cache_write": 13495,
+        "output": 813,
+        "total_input": 46468,
+        "total_tokens": 47281,
+        "missing_usage": 0,
+        "usd_estimate": 0.002424455
+      },
+      "tool_calls": {
+        "cm_retrieve_context": 1,
+        "grep": 1,
+        "read": 3,
+        "edit": 1
+      },
+      "duration_ms": 40543.82310000001,
+      "failed_checks": [
+        "motion-phase-origin"
+      ],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "motion-phase-origin-r1-A",
+      "case_id": "motion-phase-origin",
+      "repetition": 1,
+      "arm": "A",
+      "task_success": false,
+      "exit_code": 0,
+      "model_calls": 12,
+      "usage": {
+        "uncached_input": 36,
+        "cache_read": 136636,
+        "cache_write": 23034,
+        "output": 1026,
+        "total_input": 159706,
+        "total_tokens": 160732,
+        "missing_usage": 0,
+        "usd_estimate": 0.00476221
+      },
+      "tool_calls": {
+        "glob": 3,
+        "grep": 3,
+        "read": 4,
+        "edit": 1
+      },
+      "duration_ms": 61256.9222,
+      "failed_checks": [
+        "motion-phase-origin"
+      ],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "record-bonus-validation-r1-A",
+      "case_id": "record-bonus-validation",
+      "repetition": 1,
+      "arm": "A",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 6,
+      "usage": {
+        "uncached_input": 18,
+        "cache_read": 20578,
+        "cache_write": 5436,
+        "output": 311,
+        "total_input": 26032,
+        "total_tokens": 26343,
+        "missing_usage": 0,
+        "usd_estimate": 0.00104258
+      },
+      "tool_calls": {
+        "glob": 1,
+        "grep": 2,
+        "read": 1,
+        "edit": 1
+      },
+      "duration_ms": 22083.99270000003,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "record-bonus-validation-r1-B",
+      "case_id": "record-bonus-validation",
+      "repetition": 1,
+      "arm": "B",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 2,
+      "usage": {
+        "uncached_input": 6,
+        "cache_read": 3041,
+        "cache_write": 3217,
+        "output": 153,
+        "total_input": 6264,
+        "total_tokens": 6417,
+        "missing_usage": 0,
+        "usd_estimate": 0.000509635
+      },
+      "tool_calls": {
+        "edit": 1
+      },
+      "duration_ms": 26311.575399999972,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "purchase-receipt-validation-r1-B",
+      "case_id": "purchase-receipt-validation",
+      "repetition": 1,
+      "arm": "B",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 3,
+      "usage": {
+        "uncached_input": 9,
+        "cache_read": 6866,
+        "cache_write": 4079,
+        "output": 214,
+        "total_input": 10954,
+        "total_tokens": 11168,
+        "missing_usage": 0,
+        "usd_estimate": 0.000686435
+      },
+      "tool_calls": {
+        "read": 1,
+        "edit": 1
+      },
+      "duration_ms": 23735.612399999984,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "purchase-receipt-validation-r1-A",
+      "case_id": "purchase-receipt-validation",
+      "repetition": 1,
+      "arm": "A",
+      "task_success": false,
+      "exit_code": 1,
+      "model_calls": 12,
+      "usage": {
+        "uncached_input": 36,
+        "cache_read": 70934,
+        "cache_write": 11510,
+        "output": 484,
+        "total_input": 82480,
+        "total_tokens": 82964,
+        "missing_usage": 0,
+        "usd_estimate": 0.00239369
+      },
+      "tool_calls": {
+        "glob": 2,
+        "grep": 6,
+        "read": 4
+      },
+      "duration_ms": 29839.617900000012,
+      "failed_checks": [
+        "purchase-receipt-validation"
+      ],
+      "stop_reason": "error"
+    },
+    {
+      "run_id": "duplicate-coin-pickup-r1-A",
+      "case_id": "duplicate-coin-pickup",
+      "repetition": 1,
+      "arm": "A",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 7,
+      "usage": {
+        "uncached_input": 21,
+        "cache_read": 30010,
+        "cache_write": 8122,
+        "output": 290,
+        "total_input": 38153,
+        "total_tokens": 38443,
+        "missing_usage": 0,
+        "usd_estimate": 0.0014624500000000001
+      },
+      "tool_calls": {
+        "glob": 1,
+        "grep": 3,
+        "read": 1,
+        "edit": 1
+      },
+      "duration_ms": 17812.01079999999,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "duplicate-coin-pickup-r1-B",
+      "case_id": "duplicate-coin-pickup",
+      "repetition": 1,
+      "arm": "B",
+      "task_success": false,
+      "exit_code": 0,
+      "model_calls": 5,
+      "usage": {
+        "uncached_input": 15,
+        "cache_read": 20688,
+        "cache_write": 6191,
+        "output": 795,
+        "total_input": 26894,
+        "total_tokens": 27689,
+        "missing_usage": 0,
+        "usd_estimate": 0.001379755
+      },
+      "tool_calls": {
+        "edit": 3,
+        "read": 1
+      },
+      "duration_ms": 40631.36090000003,
+      "failed_checks": [
+        "duplicate-coin-pickup"
+      ],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "skin-exact-balance-r1-B",
+      "case_id": "skin-exact-balance",
+      "repetition": 1,
+      "arm": "B",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 2,
+      "usage": {
+        "uncached_input": 6,
+        "cache_read": 3748,
+        "cache_write": 3893,
+        "output": 127,
+        "total_input": 7647,
+        "total_tokens": 7774,
+        "missing_usage": 0,
+        "usd_estimate": 0.0005882050000000001
+      },
+      "tool_calls": {
+        "edit": 1
+      },
+      "duration_ms": 23449.131700000027,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "skin-exact-balance-r1-A",
+      "case_id": "skin-exact-balance",
+      "repetition": 1,
+      "arm": "A",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 12,
+      "usage": {
+        "uncached_input": 36,
+        "cache_read": 129194,
+        "cache_write": 18861,
+        "output": 644,
+        "total_input": 148091,
+        "total_tokens": 148735,
+        "missing_usage": 0,
+        "usd_estimate": 0.003975165
+      },
+      "tool_calls": {
+        "glob": 2,
+        "grep": 4,
+        "read": 4,
+        "edit": 1
+      },
+      "duration_ms": 31045.944900000002,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "login-replay-idempotence-r1-A",
+      "case_id": "login-replay-idempotence",
+      "repetition": 1,
+      "arm": "A",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 8,
+      "usage": {
+        "uncached_input": 24,
+        "cache_read": 46657,
+        "cache_write": 10059,
+        "output": 559,
+        "total_input": 56740,
+        "total_tokens": 57299,
+        "missing_usage": 0,
+        "usd_estimate": 0.002005845
+      },
+      "tool_calls": {
+        "glob": 2,
+        "grep": 2,
+        "read": 4,
+        "edit": 1
+      },
+      "duration_ms": 19136.96140000003,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "login-replay-idempotence-r1-B",
+      "case_id": "login-replay-idempotence",
+      "repetition": 1,
+      "arm": "B",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 2,
+      "usage": {
+        "uncached_input": 6,
+        "cache_read": 3103,
+        "cache_write": 3290,
+        "output": 165,
+        "total_input": 6399,
+        "total_tokens": 6564,
+        "missing_usage": 0,
+        "usd_estimate": 0.00052538
+      },
+      "tool_calls": {
+        "edit": 1
+      },
+      "duration_ms": 21857.56880000001,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "interpolation-endpoints-r2-A",
+      "case_id": "interpolation-endpoints",
+      "repetition": 2,
+      "arm": "A",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 9,
+      "usage": {
+        "uncached_input": 27,
+        "cache_read": 58246,
+        "cache_write": 13294,
+        "output": 511,
+        "total_input": 71567,
+        "total_tokens": 72078,
+        "missing_usage": 0,
+        "usd_estimate": 0.00250241
+      },
+      "tool_calls": {
+        "glob": 1,
+        "grep": 2,
+        "read": 4,
+        "edit": 1
+      },
+      "duration_ms": 25730.93180000002,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "interpolation-endpoints-r2-B",
+      "case_id": "interpolation-endpoints",
+      "repetition": 2,
+      "arm": "B",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 5,
+      "usage": {
+        "uncached_input": 15,
+        "cache_read": 24753,
+        "cache_write": 8267,
+        "output": 257,
+        "total_input": 33035,
+        "total_tokens": 33292,
+        "missing_usage": 0,
+        "usd_estimate": 0.001410905
+      },
+      "tool_calls": {
+        "cm_retrieve_context": 1,
+        "grep": 1,
+        "read": 1,
+        "edit": 1
+      },
+      "duration_ms": 33958.29980000004,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "rectangle-vertical-separation-r2-B",
+      "case_id": "rectangle-vertical-separation",
+      "repetition": 2,
+      "arm": "B",
+      "task_success": false,
+      "exit_code": 0,
+      "model_calls": 12,
+      "usage": {
+        "uncached_input": 36,
+        "cache_read": 81164,
+        "cache_write": 9716,
+        "output": 1200,
+        "total_input": 90916,
+        "total_tokens": 92116,
+        "missing_usage": 0,
+        "usd_estimate": 0.0026297399999999998
+      },
+      "tool_calls": {
+        "cm_retrieve_context": 1,
+        "grep": 3,
+        "read": 5,
+        "edit": 2
+      },
+      "duration_ms": 64374.629799999995,
+      "failed_checks": [
+        "rectangle-vertical-separation"
+      ],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "rectangle-vertical-separation-r2-A",
+      "case_id": "rectangle-vertical-separation",
+      "repetition": 2,
+      "arm": "A",
+      "task_success": false,
+      "exit_code": 0,
+      "model_calls": 12,
+      "usage": {
+        "uncached_input": 36,
+        "cache_read": 95007,
+        "cache_write": 14930,
+        "output": 1603,
+        "total_input": 109973,
+        "total_tokens": 111576,
+        "missing_usage": 0,
+        "usd_estimate": 0.00362142
+      },
+      "tool_calls": {
+        "glob": 2,
+        "grep": 4,
+        "read": 4,
+        "edit": 1
+      },
+      "duration_ms": 46810.82959999994,
+      "failed_checks": [
+        "rectangle-vertical-separation"
+      ],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "motion-phase-origin-r2-A",
+      "case_id": "motion-phase-origin",
+      "repetition": 2,
+      "arm": "A",
+      "task_success": false,
+      "exit_code": 0,
+      "model_calls": 9,
+      "usage": {
+        "uncached_input": 27,
+        "cache_read": 74011,
+        "cache_write": 12991,
+        "output": 580,
+        "total_input": 87029,
+        "total_tokens": 87609,
+        "missing_usage": 0,
+        "usd_estimate": 0.0026566849999999998
+      },
+      "tool_calls": {
+        "glob": 3,
+        "grep": 2,
+        "read": 2,
+        "edit": 1
+      },
+      "duration_ms": 26690.703899999964,
+      "failed_checks": [
+        "motion-phase-origin"
+      ],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "motion-phase-origin-r2-B",
+      "case_id": "motion-phase-origin",
+      "repetition": 2,
+      "arm": "B",
+      "task_success": false,
+      "exit_code": 0,
+      "model_calls": 11,
+      "usage": {
+        "uncached_input": 33,
+        "cache_read": 68936,
+        "cache_write": 9325,
+        "output": 949,
+        "total_input": 78294,
+        "total_tokens": 79243,
+        "missing_usage": 0,
+        "usd_estimate": 0.002332785
+      },
+      "tool_calls": {
+        "cm_retrieve_context": 1,
+        "glob": 1,
+        "grep": 3,
+        "read": 4,
+        "edit": 1
+      },
+      "duration_ms": 53097.329600000056,
+      "failed_checks": [
+        "motion-phase-origin"
+      ],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "record-bonus-validation-r2-B",
+      "case_id": "record-bonus-validation",
+      "repetition": 2,
+      "arm": "B",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 2,
+      "usage": {
+        "uncached_input": 6,
+        "cache_read": 3041,
+        "cache_write": 3223,
+        "output": 159,
+        "total_input": 6270,
+        "total_tokens": 6429,
+        "missing_usage": 0,
+        "usd_estimate": 0.000513385
+      },
+      "tool_calls": {
+        "edit": 1
+      },
+      "duration_ms": 20609.635699999984,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "record-bonus-validation-r2-A",
+      "case_id": "record-bonus-validation",
+      "repetition": 2,
+      "arm": "A",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 9,
+      "usage": {
+        "uncached_input": 27,
+        "cache_read": 40218,
+        "cache_write": 8428,
+        "output": 506,
+        "total_input": 48673,
+        "total_tokens": 49179,
+        "missing_usage": 0,
+        "usd_estimate": 0.0017113800000000002
+      },
+      "tool_calls": {
+        "grep": 4,
+        "glob": 2,
+        "read": 1,
+        "edit": 1
+      },
+      "duration_ms": 21062.409199999995,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "purchase-receipt-validation-r2-A",
+      "case_id": "purchase-receipt-validation",
+      "repetition": 2,
+      "arm": "A",
+      "task_success": false,
+      "exit_code": 0,
+      "model_calls": 11,
+      "usage": {
+        "uncached_input": 33,
+        "cache_read": 114827,
+        "cache_write": 23298,
+        "output": 1055,
+        "total_input": 138158,
+        "total_tokens": 139213,
+        "missing_usage": 0,
+        "usd_estimate": 0.004591319999999999
+      },
+      "tool_calls": {
+        "glob": 2,
+        "grep": 4,
+        "read": 3,
+        "edit": 2
+      },
+      "duration_ms": 31621.204999999958,
+      "failed_checks": [
+        "purchase-receipt-validation"
+      ],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "purchase-receipt-validation-r2-B",
+      "case_id": "purchase-receipt-validation",
+      "repetition": 2,
+      "arm": "B",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 2,
+      "usage": {
+        "uncached_input": 6,
+        "cache_read": 2982,
+        "cache_write": 3246,
+        "output": 238,
+        "total_input": 6234,
+        "total_tokens": 6472,
+        "missing_usage": 0,
+        "usd_estimate": 0.0005551700000000001
+      },
+      "tool_calls": {
+        "edit": 1
+      },
+      "duration_ms": 18845.054000000004,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "duplicate-coin-pickup-r2-B",
+      "case_id": "duplicate-coin-pickup",
+      "repetition": 2,
+      "arm": "B",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 3,
+      "usage": {
+        "uncached_input": 9,
+        "cache_read": 10331,
+        "cache_write": 5880,
+        "output": 356,
+        "total_input": 16220,
+        "total_tokens": 16576,
+        "missing_usage": 0,
+        "usd_estimate": 0.00101721
+      },
+      "tool_calls": {
+        "cm_retrieve_context": 1,
+        "edit": 1
+      },
+      "duration_ms": 31565.079299999983,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "duplicate-coin-pickup-r2-A",
+      "case_id": "duplicate-coin-pickup",
+      "repetition": 2,
+      "arm": "A",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 10,
+      "usage": {
+        "uncached_input": 30,
+        "cache_read": 58799,
+        "cache_write": 10767,
+        "output": 473,
+        "total_input": 69596,
+        "total_tokens": 70069,
+        "missing_usage": 0,
+        "usd_estimate": 0.0021733649999999996
+      },
+      "tool_calls": {
+        "glob": 3,
+        "grep": 3,
+        "read": 2,
+        "edit": 1
+      },
+      "duration_ms": 24014.74369999999,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "skin-exact-balance-r2-A",
+      "case_id": "skin-exact-balance",
+      "repetition": 2,
+      "arm": "A",
+      "task_success": true,
+      "exit_code": 1,
+      "model_calls": 12,
+      "usage": {
+        "uncached_input": 36,
+        "cache_read": 134874,
+        "cache_write": 19606,
+        "output": 546,
+        "total_input": 154516,
+        "total_tokens": 155062,
+        "missing_usage": 0,
+        "usd_estimate": 0.00407609
+      },
+      "tool_calls": {
+        "glob": 4,
+        "grep": 3,
+        "read": 4,
+        "edit": 1
+      },
+      "duration_ms": 28648.920000000042,
+      "failed_checks": [],
+      "stop_reason": "error"
+    },
+    {
+      "run_id": "skin-exact-balance-r2-B",
+      "case_id": "skin-exact-balance",
+      "repetition": 2,
+      "arm": "B",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 2,
+      "usage": {
+        "uncached_input": 6,
+        "cache_read": 3748,
+        "cache_write": 3920,
+        "output": 153,
+        "total_input": 7674,
+        "total_tokens": 7827,
+        "missing_usage": 0,
+        "usd_estimate": 0.0006045800000000001
+      },
+      "tool_calls": {
+        "edit": 1
+      },
+      "duration_ms": 18928.88130000001,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "login-replay-idempotence-r2-B",
+      "case_id": "login-replay-idempotence",
+      "repetition": 2,
+      "arm": "B",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 2,
+      "usage": {
+        "uncached_input": 6,
+        "cache_read": 3103,
+        "cache_write": 3347,
+        "output": 222,
+        "total_input": 6456,
+        "total_tokens": 6678,
+        "missing_usage": 0,
+        "usd_estimate": 0.0005610049999999999
+      },
+      "tool_calls": {
+        "edit": 1
+      },
+      "duration_ms": 19596.131000000052,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    },
+    {
+      "run_id": "login-replay-idempotence-r2-A",
+      "case_id": "login-replay-idempotence",
+      "repetition": 2,
+      "arm": "A",
+      "task_success": true,
+      "exit_code": 0,
+      "model_calls": 10,
+      "usage": {
+        "uncached_input": 30,
+        "cache_read": 41240,
+        "cache_write": 6212,
+        "output": 496,
+        "total_input": 47482,
+        "total_tokens": 47978,
+        "missing_usage": 0,
+        "usd_estimate": 0.0014399
+      },
+      "tool_calls": {
+        "glob": 4,
+        "grep": 2,
+        "read": 2,
+        "edit": 1
+      },
+      "duration_ms": 24928.65650000004,
+      "failed_checks": [],
+      "stop_reason": "completed"
+    }
+  ],
+  "indexing": [
+    {
+      "task": "interpolation-endpoints",
+      "rows": 7503,
+      "embedded": 0,
+      "reused": 7503,
+      "milliseconds": 11901.270900000003,
+      "embedding": {
+        "model": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dtype": "q8",
+        "dimensions": 384,
+        "projection": "cm-hybrid-1"
+      }
+    },
+    {
+      "task": "rectangle-vertical-separation",
+      "rows": 7503,
+      "embedded": 1,
+      "reused": 7502,
+      "milliseconds": 20128.110400000005,
+      "embedding": {
+        "model": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dtype": "q8",
+        "dimensions": 384,
+        "projection": "cm-hybrid-1"
+      }
+    },
+    {
+      "task": "motion-phase-origin",
+      "rows": 7503,
+      "embedded": 0,
+      "reused": 7503,
+      "milliseconds": 9119.044800000003,
+      "embedding": {
+        "model": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dtype": "q8",
+        "dimensions": 384,
+        "projection": "cm-hybrid-1"
+      }
+    },
+    {
+      "task": "record-bonus-validation",
+      "rows": 7503,
+      "embedded": 2,
+      "reused": 7501,
+      "milliseconds": 7215.5783999999985,
+      "embedding": {
+        "model": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dtype": "q8",
+        "dimensions": 384,
+        "projection": "cm-hybrid-1"
+      }
+    },
+    {
+      "task": "purchase-receipt-validation",
+      "rows": 7503,
+      "embedded": 2,
+      "reused": 7501,
+      "milliseconds": 10299.64539999998,
+      "embedding": {
+        "model": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dtype": "q8",
+        "dimensions": 384,
+        "projection": "cm-hybrid-1"
+      }
+    },
+    {
+      "task": "duplicate-coin-pickup",
+      "rows": 7503,
+      "embedded": 1,
+      "reused": 7502,
+      "milliseconds": 9233.823600000003,
+      "embedding": {
+        "model": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dtype": "q8",
+        "dimensions": 384,
+        "projection": "cm-hybrid-1"
+      }
+    },
+    {
+      "task": "skin-exact-balance",
+      "rows": 7503,
+      "embedded": 0,
+      "reused": 7503,
+      "milliseconds": 6466.876799999998,
+      "embedding": {
+        "model": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dtype": "q8",
+        "dimensions": 384,
+        "projection": "cm-hybrid-1"
+      }
+    },
+    {
+      "task": "login-replay-idempotence",
+      "rows": 7503,
+      "embedded": 1,
+      "reused": 7502,
+      "milliseconds": 16262.434199999989,
+      "embedding": {
+        "model": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dtype": "q8",
+        "dimensions": 384,
+        "projection": "cm-hybrid-1"
+      }
+    }
+  ],
+  "source_proof": {
+    "files_checked": 224,
+    "source_changes": [],
+    "measured_source_matches": true
+  },
+  "cold_embedding_index": {
+    "rows": 7503,
+    "unique_texts_embedded": 7342,
+    "milliseconds": 259963.7857,
+    "source": "Recorded local indexing process output; one measurement"
+  },
+  "pricing": {
+    "unit": "USD per million tokens",
+    "uncached_input": 0.1,
+    "cache_read": 0.01,
+    "cache_write": 0.125,
+    "output": 0.5,
+    "source": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+    "estimate_only": true
+  },
+  "development_runs": {
+    "invalid_activation_variants": [
+      "geo-hybrid-tuning",
+      "geo-hybrid-tuning-v2",
+      "geo-hybrid-tuning-v3"
+    ],
+    "valid_variant": "geo-hybrid-tuning-v4",
+    "excluded_from_main_series": true
+  },
+  "limitations": [
+    "One project; eight seeded task types and dependent repeats",
+    "Runtime limit 12 calls held constant; two A sessions reached it and all settled provider usage is included",
+    "Four CM sessions failed; vendor/parallel module selection remains a retrieval issue",
+    "B mean latency is higher; CPU indexing is reported separately from API price",
+    "Hybrid retrieval, compact schemas, auto context and filesystem observations changed together; no isolated vector ablation",
+    "One A tool result listed a CM artifact path; no source artifact reading claim without trace audit",
+    "Pricing is calculated; no billing export; implementation/development expenses are outside per-task benchmark"
+  ],
+  "publication_scope": "Aggregates, case identities and hashes only; private code/prompts/oracle/raw traces remain local"
+}

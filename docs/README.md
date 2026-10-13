@@ -2,7 +2,9 @@
 
 [Harness A/B pilot](HARNESS-AB.md) описывает запуск живой модели, token accounting, независимые проверки и ограничения сравнения.
 
-[Результаты pilot](AB-RESULTS.md): CM 14/14 против 13/14; экономия tokens/cost не подтвердилась.
+[Первый pilot](AB-RESULTS.md): CM 14/14 против 13/14; экономия не подтвердилась.
+
+[Второй pilot с local vectors/compact context](HYBRID-RESULTS.md): −69,4% tokens, −56,9% расчётной цены, 12/16 против 9/16; latency и failures раскрыты.
 
 [Локальный продукт](LOCAL-PRODUCT.md): index на компьютере пользователя, MCP, подписка и карта концептов.
 

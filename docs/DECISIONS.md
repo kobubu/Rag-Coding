@@ -35,3 +35,6 @@
 | Размещение и командная модель доступа | После локального MVP | Конкретные пользователи, инфраструктура, данные и цена эксплуатации |
 
 Датированные результаты spikes добавляются сюда с точной версией, измерениями и последствиями для backlog. Отклонённый вариант сохраняется, если он объясняет выбор.
+
+
+ADR-015: local learned embeddings и LanceDB projection реализованы отдельно от primary JSON; compact auto context использует logged producer message и штатные FS observations. Root legacy protocol сохранён; новые holdout и полный usage проверили экономию. Изменения сравнивались вместе, без отдельного vector ablation; scope/latency gaps остаются открытыми.

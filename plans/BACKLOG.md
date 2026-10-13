@@ -82,6 +82,46 @@
 
 Ожидаемые материалы: `scripts/harness_ab.ts`, `scripts/harness_meter.ts`, `docs/HARNESS-AB.md`, `evaluation/geo-dash-pilot/results.json`.
 
+## M00V: Local vector/compact CM и подтверждённый pilot
+
+Критерий этапа: Learned local embeddings, vector storage, compact auto context, CAS observations и новый полный A/B проверены; ограничения опубликованы.
+
+### RC-053: Реализовать local learned embeddings и LanceDB projection
+
+Статус: **done**. Приоритет: P0. Размер: M. Зависимости: RC-045.
+
+Приёмка:
+
+- Pinned MiniLM q8 реально выполняется на CPU; vector queries используют local files only.
+- LanceDB хранит 384-dimensional vectors; snapshot/model fencing и embedding reuse проверены.
+- Это prototype projection: primary JSON сохранён, SQLite/FTS/ANN не объявлены готовыми.
+
+Ожидаемые материалы: `src/code-memory/vector.ts`, `src/code-memory/vector_cli.ts`, `tests/vector.test.ts`.
+
+### RC-054: Свести CM в compact context с auto admission и FS observations
+
+Статус: **done**. Приоритет: P0. Размер: M. Зависимости: RC-044, RC-053.
+
+Приёмка:
+
+- Один tool объединяет lexical/dense ranking, required declarations, budgets и dedupe.
+- Logged source context доходит до первого model call; штатный CAS edit работает после CM observation.
+- Dependency activation, disposal и paid-call guard проверены на реальном Harness.
+
+Ожидаемые материалы: `src/code-memory/retrieve.ts`, `src/harness/plugin.ts`, `scripts/harness_meter.ts`.
+
+### RC-055: Подтвердить экономию и качество на новом полном A/B
+
+Статус: **done**. Приоритет: P0. Размер: M. Зависимости: RC-046, RC-054.
+
+Приёмка:
+
+- 32 sessions на восьми заранее выбранных типах задач сохраняют все failures и полный settled provider usage.
+- Total tokens и cache-aware price меньше baseline, independent-check success не ниже; время и sampling limits раскрыты.
+- Raw private corpus/trace не публикуется; JSON, plot, protocol/source hashes и фактические проверки доступны.
+
+Ожидаемые материалы: `docs/HYBRID-RESULTS.md`, `evaluation/geo-hybrid-pilot/`, `scripts/summarize_hybrid.ts`.
+
 ## M01: Зафиксированный корпус и контракты
 
 Критерий этапа: Есть размеченные задачи, способности первого языка и корректные публичные форматы.
@@ -639,3 +679,15 @@
 - Hosted deployment и подключение платежей выполняются только в отдельно разрешённой поставке.
 
 Ожидаемые материалы: `apps/account-service/`, `docs/LOCAL-PRODUCT.md`, `evaluation/subscription-pilot.json`.
+
+### RC-056: Улучшить provenance/scope и latency без потери нужных источников
+
+Статус: **planned**. Приоритет: P0. Размер: L. Зависимости: RC-055.
+
+Приёмка:
+
+- First-party, vendor и параллельные модули различаются с явными scopes; known failures не объявляются новым holdout.
+- На новых tasks измерены recall/precision и latency; full provider/retrieval costs и failures сохраняются.
+- Контекст не расширяет actor permissions; exact/library navigation и snapshot boundaries остаются проверяемыми.
+
+Ожидаемые материалы: `src/retrieval/`, `evaluation/scope-latency-pilot/`, `docs/HYBRID-RESULTS.md`.

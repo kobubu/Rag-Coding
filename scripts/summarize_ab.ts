@@ -40,13 +40,13 @@ export function summarizeAB(records: ABRecord[]) {
   }
   bootstrap.sort((a, b) => a - b);
   const baseline = groups[0]!, candidate = groups[1]!;
-  const accountingComplete = groups.every((group) => group.runtime_errors === 0 && group.missing_usage === 0 && group.model_calls >= group.runs);
+  const accountingComplete = records.every((run) => run.usage.missing_usage === 0 && run.model_calls > 0);
   return { groups, paired_cases: paired, accounting_complete: accountingComplete,
     token_saving_pct: 100 * (1 - candidate.total_tokens / baseline.total_tokens),
     cost_saving_pct: 100 * (1 - candidate.usd_estimate / baseline.usd_estimate),
     quality_delta_pp: 100 * (candidate.successful / candidate.runs - baseline.successful / baseline.runs),
     exploratory_task_bootstrap_95_pct: [bootstrap[500], bootstrap[19499]],
-    limitations: ["Seven task types from one project; repeated tasks are not independent", "Seeded regressions; no historical production bug claim",
+    limitations: [`${paired.length} task types from one project; repeated tasks are not independent`, "Seeded regressions; no historical production bug claim",
       "Same conditional navigation instruction in both arms; availability alone is not tested", "USD is calculated from provider usage, not a billing export"] };
 }
 

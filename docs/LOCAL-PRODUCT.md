@@ -1,6 +1,6 @@
 # CM на компьютере пользователя: MCP, подписка и карта концептов
 
-Это концепция следующей поставки. Сейчас реализованы локальный TS/JS CM core и Harness adapter; vector database, MCP server, карта концептов, accounts и billing ещё не реализованы. [A/B pilot](HARNESS-AB.md) проверил lexical/structural prototype, поэтому не является тестом полноценного vector RAG.
+Это концепция продукта с выделенным рабочим prototype. Сейчас реализованы TS/JS CM core, local embeddings/LanceDB и compact Harness adapter с [измеренной экономией](HYBRID-RESULTS.md). MCP, карта, SQLite ledger/FTS, accounts и billing запланированы. [Первый A/B](AB-RESULTS.md) проверял lexical/structural prototype и сохраняется отдельно.
 
 ## Пользовательский путь
 
@@ -27,7 +27,7 @@ flowchart LR
 
 Предлагаемый desktop backend: SQLite для transactional ledger, symbols, source manifests, FTS и graph edge tables; LanceDB для производных embeddings. Небольшие bounded graph traversals выполняются локально по tables. Отдельная Neo4j instance не требуется для первого клиента. PostgreSQL/pgvector сохраняется вариантом shared/team server, а не обязательной установкой на каждом ноутбуке.
 
-LanceDB поддерживает локальную поставку, Node.js/TypeScript, vector и full-text поиск. Это кандидат для spike, а не dependency нынешнего plugin. Проверить native packaging, CPU/RAM, installer и updates на Windows/Linux/macOS до фиксации клиента. [Официальный LanceDB README](https://github.com/lancedb/lancedb/blob/main/README.md), [TypeScript API](https://lancedb.github.io/lancedb/js/globals/).
+LanceDB поддерживает локальную поставку, Node.js/TypeScript, vector и full-text поиск. В нынешнем plugin уже используется local vector store с CPU embeddings. FTS, полный installer и updates на Windows/Linux/macOS ещё требуют своих проверок. [Официальный LanceDB README](https://github.com/lancedb/lancedb/blob/main/README.md), [TypeScript API](https://lancedb.github.io/lancedb/js/globals/).
 
 Source blobs и version IDs остаются первичными. Embeddings имеют model/version/config fingerprint и перестраиваются по изменившимся source hashes. Local model weights и indexes находятся в user data directory, исключены из обычного Git. Different projects не смешивают scopes; смена branch, rename, add/delete и unsaved overlay требуют корректного refresh.
 
@@ -37,7 +37,7 @@ Source blobs и version IDs остаются первичными. Embeddings и
 
 Vector search отбирает candidates, но не гарантирует минимальный или правильный context. Для exact identifiers сохраняется точный канал. Graph expansion имеет бюджет и останавливается после необходимых declarations/guards. Полные parents не прикладываются автоматически к каждому nested block. Reranker или enrichment, использующие LLM, учитываются в общей цене, включая вызовы вне coding session.
 
-Pilot показал необходимость именно этого интерфейса: B сделал 90 model calls против 84, добавил 42 CM calls и всё ещё использовал 14 обычных read. Нынешний prototype не имеет embeddings; он не подтвердил экономию всей задачи. Сначала измерить новый retrieve-context path, затем рекламировать подтверждённый результат, а не наличие vector database.
+Первый pilot показал лишние turns: 90 calls против 84. После local embeddings и compact auto context новый pilot дал 68 calls против 160 и подтвердил экономию всей серии. Вклад отдельных изменений не изолирован; четыре CM failures и более высокая latency сохранены в итогах. Дальше проверять provenance/scope и новый holdout, сохраняя полный учёт расходов.
 
 ## World map проекта
 

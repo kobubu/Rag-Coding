@@ -1,6 +1,6 @@
 # Подробный план разработки
 
-Дата плана: 13 октября 2026 года. Завершены документы, TS/JS CM/Harness prototype и настоящий 28-session A/B pilot. Экономия tokens/cost не подтвердилась; [итог](../docs/AB-RESULTS.md) сохраняет и failure, и ограничения. Полный backend, векторы, MCP, карта и подписка остаются планом. Этап закрывается результатом на указанной границе.
+Дата плана: 13 октября 2026 года. Завершены документы, TS/JS CM/Harness prototype и настоящий 28-session A/B pilot. Экономия tokens/cost не подтвердилась; [итог](../docs/AB-RESULTS.md) сохраняет и failure, и ограничения. Local vector/compact prototype проверен новым A/B: −69,4% tokens, −56,9% расчётной цены, 12/16 против 9/16. Full backend, MCP, карта и подписка остаются планом. Этап закрывается результатом на указанной границе.
 
 ## Последовательность и критерии перехода
 
@@ -22,7 +22,7 @@
 
 Минимальный полезный MVP заканчивается M04: один TypeScript-проект, точный и текстовый поиск, глоссарий, блоки и проверяемый пакет окружения. Core/CLI/API/workers пишутся на TypeScript + Node.js; API — Fastify, будущий viewer — React + TS. M05–M08 расширяют качество и удобство. Дополнительные языки и командный выпуск не задерживают первый локальный результат. Уже работающие npm-инструменты проверяют документы и ограниченную fixture; они не закрывают продуктовые этапы.
 
-CM означает Code Memory. Plugin даёт bounded local index/query поверх JSON snapshot и уже проверен с живой моделью. M01–M04 доводят core до более широкого корпуса, ledger и полного ContextPackage API; pilot не закрывает 40-задачный benchmark. Автоматический context hook и общий ContextService остаются частью RC-033.
+CM означает Code Memory. Plugin даёт bounded local index/query поверх JSON snapshot и уже проверен с живой моделью. M01–M04 доводят core до более широкого корпуса, ledger и полного ContextPackage API; pilot не закрывает 40-задачный benchmark. Compact auto context уже реализован; общий ContextService остаётся частью RC-033.
 
 Ближайший путь продукта — RC-047/RC-048: локальные embeddings/SQLite/LanceDB и один компактный hybrid retrieve_context. Затем RC-049/RC-050: MCP stdio и карта concepts → symbols → source. RC-051 проверяет installer/update, RC-052 — cloud account и signed entitlement с гипотезой $10/месяц. Модельный бюджет отделён от подписки. PostgreSQL/pgvector остаются вариантом team server; локальный клиент не ждёт всей серверной поставки. [Обоснование](../docs/LOCAL-PRODUCT.md).
 
@@ -78,3 +78,8 @@ Green test не доказывает улучшения retrieval. Для так
 Нужны роли core/backend, language analysis, retrieval/evaluation и interface. Один разработчик может выполнять их последовательно. Размеры S/M/L в backlog отражают относительную сложность, не обещают срок. Календарная оценка делается после M01 и spikes с учётом доступного состава и корпуса.
 
 Провайдер для pilot уже выбран и проверен: GPT-6 Luna, одинаковый в обеих группах. Новый benchmark получает собственный protocol/holdout и учитывает retrieval/enrichment расходы. Hosted deployment, лицензия, платежи и team delivery решаются на своих этапах.
+
+
+## После второго A/B
+
+M00V / RC-053…RC-055 завершили local learned vectors, compact auto context и новый полный pilot. [Результат](../docs/HYBRID-RESULTS.md) сохраняет четыре CM failures, две baseline budget stops и более высокую latency. Ближайшее развитие — RC-056 provenance/scope/latency и RC-047 SQLite/FTS/native delivery; RC-048 расширяет retrieval/evaluation до общего API. Полный server/MCP/map/subscription продукт остаётся планом.
