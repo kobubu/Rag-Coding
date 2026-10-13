@@ -34,6 +34,7 @@ export interface Config {
   maxContextBytes?: number;
   diagnosticsPath?: string;
   chunking?: ChunkingStrategy;
+  searchMode?: "exact" | "ann";
 }
 
 export function apply(ctx: Context, config: Config = {}): void {
@@ -48,7 +49,7 @@ export function apply(ctx: Context, config: Config = {}): void {
     const record = (value: object) => { if (config.diagnosticsPath) { diagnostics.push(value); writeFileSync(config.diagnosticsPath, JSON.stringify(diagnostics)); } };
     record({ event: "compact_registered", mode, autoContext });
     const vectors = new LocalVectors({ directory: resolve(root, config.vectorsPath ?? ".code-memory/vectors"),
-      modelCache: resolve(root, config.modelCache ?? ".code-memory/models"), chunking: config.chunking ?? "unit" });
+      modelCache: resolve(root, config.modelCache ?? ".code-memory/models"), chunking: config.chunking ?? "unit", searchMode: config.searchMode ?? "exact" });
     ctx.effect(() => () => vectors.close(), "CM local vector cleanup");
     const observe = async (index: CMIndex, context: RetrievedContext, signal: AbortSignal, actor: object) => {
       for (const path of new Set(context.parts.map((part) => part.path))) {

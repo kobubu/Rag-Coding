@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-code-memory",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "private": true,
   "description": "CM (Code Memory): read-only repository knowledge plugin for DeepSeek Harness",
   "type": "module",
@@ -8,7 +8,8 @@
     "node": "^22.19.0 || ^24.0.0"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "npm run build:core && npm run viewer:check && npm run viewer:build",
+    "build:core": "tsc -p tsconfig.json",
     "check": "node dist/scripts/check_docs.js",
     "test": "node --test dist/tests/*.test.js",
     "probe": "node dist/scripts/probe_chunking.js",
@@ -19,7 +20,12 @@
     "harness:optimization": "node dist/scripts/run_optimization_ab.js",
     "verify": "npm run build && npm run check && npm test && npm run probe",
     "cm:vectors": "node dist/src/code-memory/vector_cli.js",
-    "cm:search": "node dist/src/code-memory/search_cli.js"
+    "cm:search": "node dist/src/code-memory/search_cli.js",
+    "viewer:check": "tsc -p apps/local-viewer/tsconfig.json",
+    "viewer:build": "vite build --config apps/local-viewer/vite.config.ts",
+    "cm:agent": "node dist/src/local-agent/cli.js",
+    "cm:mcp": "node dist/src/mcp/cli.js",
+    "cm:ann": "node dist/src/code-memory/ann_cli.js"
   },
   "main": "./dist/src/harness/plugin.js",
   "types": "./dist/src/harness/plugin.d.ts",
@@ -32,15 +38,22 @@
   "bin": {
     "cm-index": "dist/src/code-memory/cli.js",
     "cm-vector-index": "dist/src/code-memory/vector_cli.js",
-    "cm-search": "dist/src/code-memory/search_cli.js"
+    "cm-search": "dist/src/code-memory/search_cli.js",
+    "cm-agent": "dist/src/local-agent/cli.js",
+    "cm-mcp": "dist/src/mcp/cli.js",
+    "cm-ann-index": "dist/src/code-memory/ann_cli.js"
   },
   "files": [
     "dist/src/",
+    "dist/viewer/",
     "harness/",
     "contracts/cm-local.schema.json",
     "README.md",
     "docs/DEEPSEEK-PLUGIN.md",
-    "docs/VECTOR-SEARCH.md"
+    "docs/VECTOR-SEARCH.md",
+    "docs/MCP-SETUP.md",
+    "docs/LOCAL-ATLAS.md",
+    "docs/HNSW.md"
   ],
   "dsh": {
     "bundle": {
@@ -54,8 +67,12 @@
   "dependencies": {
     "@huggingface/transformers": "4.3.1",
     "@lancedb/lancedb": "0.40.0",
+    "@modelcontextprotocol/sdk": "1.32.1",
     "ajv": "8.20.0",
-    "typescript": "6.0.3"
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "typescript": "6.0.3",
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@deepseek-ai/cordis": "4.0.4",
@@ -66,7 +83,10 @@
     "@deepseek-ai/dsh-system-prompt": "0.2.0-rc.2",
     "@deepseek-ai/dsh-tools": "0.2.0-rc.2",
     "@types/js-yaml": "4.0.9",
-    "@types/node": "24.19.2"
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "vite": "8.3.4"
   },
   "overrides": {
     "sharp": "0.35.5"

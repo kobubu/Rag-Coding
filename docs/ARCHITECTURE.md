@@ -39,7 +39,9 @@ TypeScript в strict mode и Node.js 24 LTS — основа управляющ�
 
 Граф начинается с типизированных таблиц связей и ограниченных обходов. Выделение графовой БД зависит от профилирования, а не размера рисунка. Векторы и граф — производные представления, их готовность отделена от сохранения исходника. Основания выбора перечислены в [решениях](DECISIONS.md).
 
-Первый API на Fastify и CLI используют одинаковые доменные операции чтения и поиска. Viewer планируется на React + TypeScript. Внешние контракты остаются JSON Schema draft 2020-12; runtime-проверка выполняется Ajv2020. ORM/SQL-доступ и модель embeddings выбираются на своих технических spikes. Fastify, React и доступ к БД пока не реализованы и не установлены как зависимости диагностики.
+В 0.5.0 локальный Node.js HTTP server, React/TypeScript viewer и официальный MCP stdio server используют один `LocalCM` service поверх существующего core. HTTP слушает только loopback; source/API read-only, bounded и привязаны к snapshot. [Запуск MCP](MCP-SETUP.md), [карта](LOCAL-ATLAS.md). Fastify/team auth/общий ContextService и SQL ledger остаются планом. Внешние source contracts проверяются Ajv2020; MCP tool inputs — SDK/Zod.
+
+Optional native LanceDB `IVF_HNSW_SQ` хранит технический graph nearest neighbors отдельно от compiler relation graph. Exact search явно обходит ANN index; opt-in ANN проверяет manifest и physical index. [Параметры и измерение](HNSW.md). Topic regions viewer пока inferred from names/paths; semantic similarity — candidates, structural relations — compiler facts.
 
 CPU-intensive parsing, segmentation и анализ связей выполняются в отдельных CLI/worker процессах, отдельно от runtime обработчиков tools/API. Jobs будущего сервиса имеют lease/fingerprint правила независимо от процесса. Node.js не является основанием обещать ускорение retrieval без измерений. Поддерживаются Node.js 22 от 22.19.0 и Node.js 24; целевая версия продукта — 24 LTS.
 

@@ -1,6 +1,6 @@
 # Подробный план разработки
 
-Дата плана: 13 октября 2026 года. Завершены документы, TS/JS CM/Harness prototype и настоящий 28-session A/B pilot. Экономия tokens/cost не подтвердилась; [итог](../docs/AB-RESULTS.md) сохраняет и failure, и ограничения. Local vector/compact prototype проверен новым A/B: −69,4% tokens, −56,9% расчётной цены, 12/16 против 9/16. Full backend, MCP, карта и подписка остаются планом. Этап закрывается результатом на указанной границе.
+Дата плана: 13 октября 2026 года. Завершены документы, TS/JS CM/Harness prototype и настоящий 28-session A/B pilot. Экономия tokens/cost не подтвердилась; [итог](../docs/AB-RESULTS.md) сохраняет и failure, и ограничения. Local vector/compact prototype проверен новым A/B: −69,4% tokens, −56,9% расчётной цены, 12/16 против 9/16. В 0.5.0 MCP stdio, read-only CM Atlas и optional HNSW уже проверены; full backend, installer и подписка остаются планом. Этап закрывается результатом на указанной границе.
 
 ## Последовательность и критерии перехода
 
@@ -24,7 +24,7 @@
 
 CM означает Code Memory. Plugin даёт bounded local index/query поверх JSON snapshot и уже проверен с живой моделью. M01–M04 доводят core до более широкого корпуса, ledger и полного ContextPackage API; pilot не закрывает 40-задачный benchmark. Compact auto context уже реализован; общий ContextService остаётся частью RC-033.
 
-Ближайший путь продукта — RC-047/RC-048: локальные embeddings/SQLite/LanceDB и один компактный hybrid retrieve_context. Затем RC-049/RC-050: MCP stdio и карта concepts → symbols → source. RC-051 проверяет installer/update, RC-052 — cloud account и signed entitlement с гипотезой $10/месяц. Модельный бюджет отделён от подписки. PostgreSQL/pgvector остаются вариантом team server; локальный клиент не ждёт всей серверной поставки. [Обоснование](../docs/LOCAL-PRODUCT.md).
+Ближайший путь продукта — RC-047/RC-048: локальные embeddings/SQLite/LanceDB и один компактный hybrid retrieve_context. RC-049 уже закрывает MCP stdio текущего core; RC-062 — Atlas prototype, RC-063 — HNSW. RC-050 развивает полноценную карту подтверждённых concepts/unresolved states. RC-051 проверяет installer/update, RC-052 — cloud account и signed entitlement с гипотезой $10/месяц. Модельный бюджет отделён от подписки. PostgreSQL/pgvector остаются вариантом team server; локальный клиент не ждёт всей серверной поставки. [Обоснование](../docs/LOCAL-PRODUCT.md).
 
 ## Критический путь
 
@@ -82,4 +82,4 @@ Green test не доказывает улучшения retrieval. Для так
 
 ## После второго A/B
 
-M00V / RC-053…RC-055 завершили local learned vectors, compact auto context и новый полный pilot. [Результат](../docs/HYBRID-RESULTS.md) сохраняет четыре CM failures, две baseline budget stops и более высокую latency. Ближайшее развитие — RC-056 provenance/scope/latency и RC-047 SQLite/FTS/native delivery; RC-048 расширяет retrieval/evaluation до общего API. Полный server/MCP/map/subscription продукт остаётся планом.
+M00V / RC-053…RC-055 завершили local learned vectors, compact auto context и новый полный pilot. [Результат](../docs/HYBRID-RESULTS.md) сохраняет четыре CM failures, две baseline budget stops и более высокую latency. Ближайшее развитие — RC-056 provenance/scope/latency и RC-047 SQLite/FTS/native delivery; RC-048 расширяет retrieval/evaluation до общего API. Read-only MCP/Atlas prototype и optional HNSW уже доступны. Полный server/concept enrichment/installer/subscription продукт остаётся планом.

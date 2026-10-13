@@ -11,9 +11,10 @@ import { bounded } from "./query.js";
 
 export const EMBEDDING = { model: "Xenova/all-MiniLM-L6-v2", revision: "751bff37182d3f1213fa05d7196b954e230abad9", dtype: "q8", dimensions: 384, projection: "cm-hybrid-1" } as const;
 export type Embedder = (texts: string[], signal?: AbortSignal) => Promise<number[][]>;
-export type VectorConfig = { directory: string; modelCache: string; embeddingCache?: string; allowDownload?: boolean; chunking?: ChunkingStrategy };
+export type VectorConfig = { directory: string; modelCache: string; embeddingCache?: string; allowDownload?: boolean; chunking?: ChunkingStrategy; searchMode?: "exact" | "ann" };
 type RecordUnit = { id: string; path: string; text: string; fingerprint: string };
-type Manifest = { format: "cm-vectors-2"; snapshot_id: string; embedding: typeof EMBEDDING; chunking: ReturnType<typeof chunkingPolicy>; table: string; records_hash: string; rows: number };
+export type VectorManifest = { format: "cm-vectors-2"; snapshot_id: string; embedding: typeof EMBEDDING; chunking: ReturnType<typeof chunkingPolicy>; table: string; records_hash: string; rows: number;
+  ann?: { type: "IVF_HNSW_SQ"; partitions: number; m: number; ef_construction: number; ef_search: number; refine_factor: number } };
 const models = new Map<string, Promise<FeatureExtractionPipeline>>();
 const sourceBuffers = new WeakMap<CMFile, { source: string; bytes: Buffer }>();
 
@@ -94,7 +95,7 @@ export async function buildVectors(index: CMIndex, config: VectorConfig, embed =
   const recordsHash = hash(JSON.stringify(entries.map(({ id, fingerprint }) => [id, fingerprint])));
   const name = "cm_" + hash(index.snapshot_id + recordsHash).slice(0, 32);
   const table = await database.createTable(name, entries.map((entry) => ({ id: entry.id, path: entry.path, fingerprint: entry.fingerprint, vector: cached[entry.fingerprint] })), { mode: "overwrite" });
-  const manifest: Manifest = { format: "cm-vectors-2", snapshot_id: index.snapshot_id, embedding: EMBEDDING, chunking: chunkingPolicy(config.chunking), table: name, records_hash: recordsHash, rows: entries.length };
+  const manifest: VectorManifest = { format: "cm-vectors-2", snapshot_id: index.snapshot_id, embedding: EMBEDDING, chunking: chunkingPolicy(config.chunking), table: name, records_hash: recordsHash, rows: entries.length };
   const temporary = join(config.directory, "manifest." + globalThis.process.pid + ".tmp");
   await writeFile(temporary, JSON.stringify(manifest, null, 2));
   await rename(temporary, join(config.directory, "manifest.json"));
@@ -113,17 +114,27 @@ export class LocalVectors {
     }
     return this.projection.chunks;
   }
-  async search(index: CMIndex, query: string, limit = 24, signal?: AbortSignal): Promise<{ id: string; score: number }[]> {
+  async metadata(index: CMIndex, signal?: AbortSignal): Promise<VectorManifest> {
     signal?.throwIfAborted();
-    if (!query.trim() || query.length > 16000) throw new CMError("invalid_argument", "query must contain 1..16000 characters");
-    limit = bounded(limit, 24, 50, "limit");
-    const manifest = JSON.parse(await readFile(join(this.config.directory, "manifest.json"), "utf8")) as Manifest;
+    const manifest = JSON.parse(await readFile(join(this.config.directory, "manifest.json"), "utf8")) as VectorManifest;
     const chunks = this.chunks(index);
     if (manifest.format !== "cm-vectors-2" || manifest.snapshot_id !== index.snapshot_id || JSON.stringify(manifest.embedding) !== JSON.stringify(EMBEDDING) ||
         JSON.stringify(manifest.chunking) !== JSON.stringify(chunkingPolicy(this.config.chunking)) || manifest.records_hash !== this.projection!.recordsHash || manifest.rows !== chunks.length) {
       throw new CMError("vectors_outdated", "Rebuild the vector projection for this source snapshot/model");
     }
     if (!/^cm_[0-9a-f]{32}$/.test(manifest.table)) throw new CMError("invalid_vectors", "Invalid vector table identity");
+    if (manifest.ann && (manifest.ann.type !== "IVF_HNSW_SQ" || [manifest.ann.partitions, manifest.ann.m, manifest.ann.ef_construction, manifest.ann.ef_search, manifest.ann.refine_factor].some(value => !Number.isInteger(value) || value < 1))) {
+      throw new CMError("invalid_vectors", "Invalid ANN settings");
+    }
+    if (this.config.searchMode === "ann" && !manifest.ann) throw new CMError("vectors_outdated", "Build the ANN projection before selecting ann search");
+    return manifest;
+  }
+  async search(index: CMIndex, query: string, limit = 24, signal?: AbortSignal): Promise<{ id: string; score: number }[]> {
+    signal?.throwIfAborted();
+    if (!query.trim() || query.length > 16000) throw new CMError("invalid_argument", "query must contain 1..16000 characters");
+    limit = bounded(limit, 24, 50, "limit");
+    const manifest = await this.metadata(index, signal);
+    const chunks = this.chunks(index);
     if (this.opened?.snapshot !== index.snapshot_id) {
       this.close();
       const { connect } = await import("@lancedb/lancedb");
@@ -133,11 +144,36 @@ export class LocalVectors {
     }
     const [vector] = await this.embed([query], signal);
     checkVector(vector!);
-    const results = await this.opened.table.vectorSearch(vector!).distanceType("cosine").limit(limit).select(["id", "_distance"]).toArray();
+    let search = this.opened.table.vectorSearch(vector!).distanceType("cosine").limit(limit);
+    if (this.config.searchMode === "ann") {
+      if (!manifest.ann) throw new CMError("vectors_outdated", "Build the ANN projection before selecting ann search");
+      const indices = await this.opened.table.listIndices();
+      if (!indices.some(item => item.columns.includes("vector") && item.indexType.toUpperCase().includes("HNSW"))) throw new CMError("vectors_outdated", "The declared HNSW index is unavailable");
+      search = search.nprobes(manifest.ann.partitions).ef(Math.max(manifest.ann.ef_search, limit * manifest.ann.refine_factor)).refineFactor(manifest.ann.refine_factor);
+    } else search = search.bypassVectorIndex();
+    const results = await search.select(["id", "_distance"]).toArray();
     signal?.throwIfAborted();
     const ids = new Set(chunks.map((unit) => unit.id));
     if (results.some((item) => !ids.has(String(item.id)))) throw new CMError("invalid_vectors", "Vector results refer to another snapshot");
     return results.map((item) => ({ id: String(item.id), score: 1 - Number(item._distance) }));
   }
   close(): void { this.opened?.close(); this.opened = undefined; }
+}
+
+export async function buildAnn(index: CMIndex, config: VectorConfig) {
+  const vectors = new LocalVectors(config);
+  const manifest = await vectors.metadata(index);
+  if (manifest.rows < 256) throw new CMError("index_limit", "HNSW requires at least 256 records in this projection");
+  const { connect, Index } = await import("@lancedb/lancedb");
+  const database = await connect(resolve(config.directory));
+  const table = await database.openTable(manifest.table);
+  const started = performance.now();
+  try {
+    await table.createIndex("vector", { config: Index.hnswSq({ distanceType: "cosine", numPartitions: 1, m: 16, efConstruction: 200 }), replace: true });
+    const ann = { type: "IVF_HNSW_SQ" as const, partitions: 1, m: 16, ef_construction: 200, ef_search: 128, refine_factor: 4 };
+    const path = join(config.directory, "manifest.json"), temporary = path + "." + process.pid + ".tmp";
+    await writeFile(temporary, JSON.stringify({ ...manifest, ann }, null, 2));
+    await rename(temporary, path);
+    return { rows: manifest.rows, ann, milliseconds: performance.now() - started };
+  } finally { table.close(); database.close(); vectors.close(); }
 }

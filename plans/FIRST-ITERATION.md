@@ -12,8 +12,8 @@ RC-001/RC-002 и RC-043…RC-046 выполнены: документы, TS/JS C
 |---|---|---|---|
 | 1 | RC-047 | SQLite ledger/FTS/graph и LanceDB vector spike, local embedding model | Чистая Windows установка; cold/warm CPU/RAM/disk; exact version и add/change/delete/branch refresh |
 | 2 | RC-048 | Один retrieve_context: exact/FTS/vector → rerank → bounded dependencies → dedupe | Компактный source context с omissions; новый holdout A/B учитывает всю стоимость и качество |
-| 3 | RC-049 | MCP stdio adapter того же core | Реальный desktop client, budgets, cancellation, roots и stale snapshot |
-| 4 | RC-050 | React/TS concept world map | Concept → symbol → exact source; типы/evidence/status связей и stale/unresolved состояния |
+| 3 | RC-049 — done | MCP stdio adapter текущего core | Official stdio client и полный Web Harness dispatch; boundary tests budgets/cancel/root/snapshot |
+| 4 | RC-062 — done; RC-050 — planned | React/TS Atlas prototype; затем подтверждённые concepts/unresolved UI | Topics → module → symbol → source/evidence в real Chrome; полная concept model ещё planned |
 | 5 | RC-051 | Local installer, update, rollback и export | User data сохраняются; native dependencies проходят поддерживаемые платформы |
 | 6 | RC-052 | Account и signed local entitlement; тарифная гипотеза | Offline grace, отмена без удаления данных; BYOK/credits и отдельная проверка экономики |
 
@@ -40,6 +40,6 @@ RC-003…RC-007 остаются путём к более широкому repro
 Сохранить source/model/config hashes, версии runtime/storage, команды, resources, реальные клиентские проверки и все task results. Vector database не считается готовностью RAG; MCP registration не считается проверкой клиента; карта не считается фактом языка без evidence. Установка: `npm ci`, проверки текущего plugin: `npm run verify`.
 
 
-Приоритет после pilot: RC-056 исправляет selection vendor/параллельных модулей и проверяет latency на новых tasks. Local embedding/LanceDB части RC-047 уже доступны как prototype; SQLite ledger/FTS, watcher, installer и общая capability model ещё не закрыты. RC-048 сохраняет следующий независимый benchmark и общий ContextPackage. MCP/map остаются RC-049/RC-050.
+Приоритет после pilot: RC-056 исправляет selection vendor/параллельных модулей и проверяет latency на новых tasks. Local embedding/LanceDB части RC-047 уже доступны как prototype; SQLite ledger/FTS, watcher, installer и общая capability model ещё не закрыты. RC-048 сохраняет следующий независимый benchmark и общий ContextPackage. RC-049 уже завершён на текущем core; RC-062/RC-063 добавляют проверенные Atlas prototype и HNSW. RC-050 остаётся путём к полноценным подтверждённым concepts, unresolved UI и automatic refresh.
 
 M00Q завершён сравнением unit/window/AST на оптимизации исправного кода. RC-057 фиксирует projections и scope recovery; RC-058 отделяет behavior от CPU и даёт одинаковый public smoke агенту; RC-059 сохраняет все 24 sessions и проверку лучших patches. Экономия и actual caller speedup не подтверждены; [результаты](../docs/OPTIMIZATION-RESULTS.md) сохраняют отрицательный итог. RC-060 планирует adaptive whole-function retrieval на новом корпусе с caller performance. Протокол — [OPTIMIZATION-AB](../docs/OPTIMIZATION-AB.md).

@@ -16,7 +16,7 @@ npm.cmd run cm:vectors -- 'D:/project' 'D:/project/.code-memory/models' unit
 npm.cmd run cm:search -- --project 'D:/project' --query 'remaining daily reward allowance' --mode vector
 ```
 
-Primary index — `.code-memory/index.json`; vectors — `.code-memory/vectors`. Первая подготовка модели может скачивать pinned model/tokenizer; query inference использует local files only. API-ключ для этих команд не требуется. Модель `Xenova/all-MiniLM-L6-v2`, revision `751bff37182d3f1213fa05d7196b954e230abad9`, q8, 384 dimensions. База использует flat cosine scan; ANN не заявляется.
+Primary index — `.code-memory/index.json`; vectors — `.code-memory/vectors`. Первая подготовка модели может скачивать pinned model/tokenizer; query inference использует local files only. API-ключ для этих команд не требуется. Модель `Xenova/all-MiniLM-L6-v2`, revision `751bff37182d3f1213fa05d7196b954e230abad9`, q8, 384 dimensions. По умолчанию база использует exact cosine scan. С 0.5.0 можно построить optional [HNSW](HNSW.md), выбрать `--search-mode ann` в CLI/MCP/viewer или `searchMode: ann` в native Harness config; exact явно обходит ANN index.
 
 `cm-search` входит в tarball как bin. `--mode vector` вызывает только dense ranking и выводит snapshot, path/name/span и cosine similarity. `--mode hybrid` (default) собирает exact/lexical/dense context с required declarations, signature/dedupe и source budget. `--limit 1..50` относится к vector results; `--max-bytes 1..32000` — к hybrid source. Query должен содержать 1..16000 characters.
 

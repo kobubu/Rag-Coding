@@ -687,17 +687,17 @@
 
 ### RC-049: Дать локальному CM настоящий MCP stdio adapter
 
-Статус: **planned**. Приоритет: P0. Размер: M. Зависимости: RC-048.
+Статус: **done**. Приоритет: P0. Размер: M. Зависимости: RC-061.
 
 Приёмка:
 
-- Реальный desktop MCP client запускает local process и получает тот же retrieve_context, что Harness.
-- Output budget, cancellation, snapshot mismatch и разрешённые project roots проверены.
+- Official stdio MCP client и installed Harness 0.2.0-rc.2 Web profile запускают процесс и вызывают тот же learned retrieve core; сторонний desktop UI не заявляется проверенным.
+- Output budget, cancellation, snapshot mismatch и один configured project root проверены boundary tests; код не дублируется в structuredContent.
 - Remote/localhost bridge требует отдельной конфигурации; cloud login сам по себе не предоставляет доступ к файлам.
 
-Ожидаемые материалы: `src/mcp/`, `docs/mcp-setup.md`, `evaluation/mcp-client-proof.json`.
+Ожидаемые материалы: `src/mcp/`, `docs/MCP-SETUP.md`, `tests/local_agent.test.ts`, `research/evidence/local-cm-mcp-atlas-2026-10-13.json`.
 
-### RC-050: Сделать локальную world map концептов и source navigation
+### RC-050: Довести Atlas prototype до карты подтверждённых concepts и unresolved states
 
 Статус: **planned**. Приоритет: P1. Размер: L. Зависимости: RC-047.
 
@@ -707,7 +707,7 @@
 - Structural facts, similarity и inferred concepts имеют разные types/evidence/status; stale и unresolved состояния видимы.
 - Zoom, фильтр связей и поиск проходят реальную интерфейсную проверку на indexed project.
 
-Ожидаемые материалы: `apps/local-viewer/`, `docs/LOCAL-PRODUCT.md`, `evaluation/map-ui-proof.json`.
+Ожидаемые материалы: `apps/local-viewer/`, `docs/LOCAL-ATLAS.md`, `docs/LOCAL-PRODUCT.md`, `research/evidence/local-cm-mcp-atlas-2026-10-13.json`.
 
 ### RC-051: Упаковать локальный агент и проверить update/restore
 
@@ -755,3 +755,27 @@
 - Все arms используют один final version, полный provider usage и preserved failures; результат не выбирается по изученным задачам.
 
 Ожидаемые материалы: `docs/OPTIMIZATION-RESULTS.md`, `docs/OPTIMIZATION-AB.md`.
+
+### RC-062: Проверить локальный CM Atlas: modules, glossary и source/evidence navigation
+
+Статус: **done**. Приоритет: P0. Размер: M. Зависимости: RC-061.
+
+Приёмка:
+
+- React/TypeScript viewer через loopback раскрывает inferred topics → module → symbol → current UTF-8 source; read-only scope и stale errors проверены.
+- Compiler facts/evidence и semantic candidates различаются; zoom/search/filter/glossary проходят реальную Chrome проверку 1440×1000, 844×390, 390×844.
+- Names/path inference, overview edge cap, manual refresh и отсутствие аккаунта/installer раскрыты; UI assets входят в tarball.
+
+Ожидаемые материалы: `src/local-agent/`, `apps/local-viewer/`, `docs/LOCAL-ATLAS.md`, `tests/local_agent.test.ts`, `research/evidence/local-cm-mcp-atlas-2026-10-13.json`.
+
+### RC-063: Добавить opt-in HNSW и сравнить с exact на локальной projection
+
+Статус: **done**. Приоритет: P1. Размер: M. Зависимости: RC-057, RC-061.
+
+Приёмка:
+
+- LanceDB IVF_HNSW_SQ строится из существующих learned vectors без API; declaration/fences/physical index проверены; exact default сохранён.
+- 48 queries, k24, пять ABBA/BAAB blocks фиксируют recall и native latency; исходная projection сохранена; безопасные measurements опубликованы.
+- Native query gain отделён от embedding/source/context и качества/стоимости LLM; измеренный recall не объявлен универсальной гарантией.
+
+Ожидаемые материалы: `src/code-memory/ann_cli.ts`, `src/code-memory/vector.ts`, `scripts/measure_ann.mjs`, `docs/HNSW.md`, `evaluation/hnsw/results.json`.

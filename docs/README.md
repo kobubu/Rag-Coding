@@ -12,6 +12,8 @@
 
 [Локальный продукт](LOCAL-PRODUCT.md): index на компьютере пользователя, MCP, подписка и карта концептов.
 
+В 0.5.0 уже доступны [MCP stdio](MCP-SETUP.md), [CM Atlas](LOCAL-ATLAS.md) и optional [HNSW](HNSW.md). Account, billing, installer и automatic refresh остаются планом; native ANN timing не заменяет model-quality/cost A/B.
+
 Главная точка входа — [README](../README.md). Полный CM/RAG backend описан как план; уже работающий local prototype и Harness plugin выделены в отдельную инструкцию.
 
 [Векторный поиск](VECTOR-SEARCH.md): learned local embeddings, vector-only CLI и compact/auto default в bundle 0.4.2; historical lexical pilot отделён от последующих vector experiments.

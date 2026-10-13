@@ -1055,27 +1055,28 @@
       "id": "RC-049",
       "milestone": "M11",
       "title": "Дать локальному CM настоящий MCP stdio adapter",
-      "status": "planned",
+      "status": "done",
       "priority": "P0",
       "size": "M",
       "depends_on": [
-        "RC-048"
+        "RC-061"
       ],
       "acceptance": [
-        "Реальный desktop MCP client запускает local process и получает тот же retrieve_context, что Harness.",
-        "Output budget, cancellation, snapshot mismatch и разрешённые project roots проверены.",
+        "Official stdio MCP client и installed Harness 0.2.0-rc.2 Web profile запускают процесс и вызывают тот же learned retrieve core; сторонний desktop UI не заявляется проверенным.",
+        "Output budget, cancellation, snapshot mismatch и один configured project root проверены boundary tests; код не дублируется в structuredContent.",
         "Remote/localhost bridge требует отдельной конфигурации; cloud login сам по себе не предоставляет доступ к файлам."
       ],
       "artifacts": [
         "src/mcp/",
-        "docs/mcp-setup.md",
-        "evaluation/mcp-client-proof.json"
+        "docs/MCP-SETUP.md",
+        "tests/local_agent.test.ts",
+        "research/evidence/local-cm-mcp-atlas-2026-10-13.json"
       ]
     },
     {
       "id": "RC-050",
       "milestone": "M11",
-      "title": "Сделать локальную world map концептов и source navigation",
+      "title": "Довести Atlas prototype до карты подтверждённых concepts и unresolved states",
       "status": "planned",
       "priority": "P1",
       "size": "L",
@@ -1089,8 +1090,9 @@
       ],
       "artifacts": [
         "apps/local-viewer/",
+        "docs/LOCAL-ATLAS.md",
         "docs/LOCAL-PRODUCT.md",
-        "evaluation/map-ui-proof.json"
+        "research/evidence/local-cm-mcp-atlas-2026-10-13.json"
       ]
     },
     {
@@ -1331,6 +1333,53 @@
         "harness/bundle.yml",
         "docs/VECTOR-SEARCH.md",
         "research/evidence/vector-default-smoke-2026-10-13.json"
+      ]
+    },
+    {
+      "id": "RC-062",
+      "milestone": "M11",
+      "title": "Проверить локальный CM Atlas: modules, glossary и source/evidence navigation",
+      "status": "done",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-061"
+      ],
+      "acceptance": [
+        "React/TypeScript viewer через loopback раскрывает inferred topics → module → symbol → current UTF-8 source; read-only scope и stale errors проверены.",
+        "Compiler facts/evidence и semantic candidates различаются; zoom/search/filter/glossary проходят реальную Chrome проверку 1440×1000, 844×390, 390×844.",
+        "Names/path inference, overview edge cap, manual refresh и отсутствие аккаунта/installer раскрыты; UI assets входят в tarball."
+      ],
+      "artifacts": [
+        "src/local-agent/",
+        "apps/local-viewer/",
+        "docs/LOCAL-ATLAS.md",
+        "tests/local_agent.test.ts",
+        "research/evidence/local-cm-mcp-atlas-2026-10-13.json"
+      ]
+    },
+    {
+      "id": "RC-063",
+      "milestone": "M11",
+      "title": "Добавить opt-in HNSW и сравнить с exact на локальной projection",
+      "status": "done",
+      "priority": "P1",
+      "size": "M",
+      "depends_on": [
+        "RC-057",
+        "RC-061"
+      ],
+      "acceptance": [
+        "LanceDB IVF_HNSW_SQ строится из существующих learned vectors без API; declaration/fences/physical index проверены; exact default сохранён.",
+        "48 queries, k24, пять ABBA/BAAB blocks фиксируют recall и native latency; исходная projection сохранена; безопасные measurements опубликованы.",
+        "Native query gain отделён от embedding/source/context и качества/стоимости LLM; измеренный recall не объявлен универсальной гарантией."
+      ],
+      "artifacts": [
+        "src/code-memory/ann_cli.ts",
+        "src/code-memory/vector.ts",
+        "scripts/measure_ann.mjs",
+        "docs/HNSW.md",
+        "evaluation/hnsw/results.json"
       ]
     }
   ]

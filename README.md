@@ -2,7 +2,9 @@
 
 База знаний для разработки: **сущности — в глоссарии, код — в CM (Code Memory), зависимости — в графе**. CM хранит точные версии исходников и записи функций/блоков. Поиск собирает контекст нужной детализации и привязывает его к snapshot проекта.
 
-Состояние на 13 октября 2026 года: работают TS/JS CM, локальные learned embeddings/LanceDB и **DeepSeek Harness plugin** с compact auto context и unit/window/AST projections. [Pilot на исправлениях](docs/HYBRID-RESULTS.md), 32 sessions: −69,4% tokens, −56,9% расчётной цены, 12/16 правильных правок против 9/16; latency выросла, failures сохранены. [Новый pilot оптимизации](docs/OPTIMIZATION-RESULTS.md), 24 sessions: экономия и прирост числа полезных решений не подтвердились; actual caller почти не ускорился. В 0.4.1 отдельно исправлена retrieval latency с сохранением контекста. MCP, карта концептов и подписка пока запланированы.
+Состояние на 13 октября 2026 года: работают TS/JS CM, локальные learned embeddings/LanceDB, **DeepSeek Harness plugin**, **MCP stdio** и **CM Atlas** — локальная карта модулей, символов и связей. В 0.5.0 добавлен optional [HNSW](docs/HNSW.md): native vector search на 7503 rows ускорился в 3,12–3,37×; на одинаковых 48 queries в двух построениях recall@24 составил 100% и 99,91%. Exact остаётся default. Новая модельная A/B серия не выполнялась. Installer, автоматический refresh, cloud account и подписка пока запланированы.
+
+[Pilot на исправлениях](docs/HYBRID-RESULTS.md), 32 sessions: −69,4% tokens, −56,9% расчётной цены, 12/16 правильных правок против 9/16; latency выросла, failures сохранены. [Pilot оптимизации](docs/OPTIMIZATION-RESULTS.md), 24 sessions: экономия и прирост числа полезных решений не подтвердились; actual caller почти не ускорился. Эти разные результаты сохранены без обещания универсальной экономии.
 
 Основной язык — **TypeScript**, среда выполнения — **Node.js 24 LTS**. Индексируются TypeScript и JavaScript. Агентская оболочка — DeepSeek Harness с нашим plugin; CM core остаётся независимым. Source/graph пока хранятся в JSON, vectors — в локальной LanceDB. SQLite ledger/graph и PostgreSQL/pgvector team server запланированы. Подробнее — [архитектура](docs/ARCHITECTURE.md) и [локальный продукт](docs/LOCAL-PRODUCT.md).
 
@@ -22,6 +24,9 @@
 10. [Качество оптимизации и варианты дробления](docs/OPTIMIZATION-AB.md) — независимые behavioral/CPU проверки и unit/window/AST projections.
 11. [Итог оптимизационного сравнения](docs/OPTIMIZATION-RESULTS.md) — все 24 runs, токены, target/caller CPU и причины дополнительного расхода.
 12. [Векторный поиск: запуск и проверка](docs/VECTOR-SEARCH.md) — локальная модель, база, CLI и стандартное подключение Harness.
+13. [MCP: подключение](docs/MCP-SETUP.md) — stdio, tools, snapshot и budgets; фактическая проверка в Harness.
+14. [CM Atlas](docs/LOCAL-ATLAS.md) — запуск карты, glossary, source и evidence navigation.
+15. [HNSW](docs/HNSW.md) — параметры, exact/ANN comparison и ограничения измерения.
 
 ## Основная схема
 

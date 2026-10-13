@@ -12,9 +12,9 @@
 
 ## Предлагаемые операции API v0.1
 
-Пути являются спецификацией будущего HTTP ContextService; сервер сейчас отсутствует. Рабочий локальный plugin использует независимый query core напрямую. Auth и область доступа используются там, где включён командный режим.
+Пути ниже являются спецификацией будущего командного HTTP ContextService. В 0.5.0 отдельный локальный read-only API уже работает для [CM Atlas](LOCAL-ATLAS.md): `/api/status`, `/api/map`, `/api/search`, `/api/symbols`, `/api/source`, `/api/graph`, `/api/similar`. Он слушает loopback и читает один configured snapshot; это не реализация team auth или всех контрактов таблицы ниже.
 
-Реализация API планируется на TypeScript + Node.js/Fastify, viewer — на React + TypeScript. CLI и API вызывают одинаковые доменные операции; внешние payload проверяются JSON Schema на входе. Тяжёлый индексатор работает отдельно от обработчиков запросов.
+Локальные adapter/API уже используют TypeScript + Node.js, viewer — React + TypeScript. Fastify и shared service остаются планом. Индексатор работает отдельно; MCP и viewer используют один `LocalCM` core с UTF-8 paging, snapshot checks и cancellation.
 
 | Операция | Запрос | Ответ |
 |---|---|---|
@@ -44,7 +44,7 @@
 
 Интеграция редактора передаёт repo identity, base commit, текущий файл, выделенный span и hash несохранённого буфера. Если source не совпадает, сервис создаёт новый overlay или возвращает conflict. Номера строк старого snapshot не применяются к текущему buffer.
 
-Позднее read-only MCP adapter предоставит операции поиска и чтения другим помощникам через тот же ContextService. Плагин DeepSeek Harness уже реализован по запросу пользователя; он не расширяет права на изменение проекта. Hosted service и MCP остаются отдельными этапами.
+Read-only [MCP adapter](MCP-SETUP.md) уже предоставляет `cm_retrieve_context`, `cm_project_status` и status resource. Full installed Harness MCP client реально запускает процесс и вызывает learned retrieval через ToolRuntime. Стандартный MCP не регистрирует CAS observations native Harness FS adapter; права правки остаются у клиента. Hosted service и commercial account остаются отдельными этапами.
 
 Для агентской оболочки выбран DeepSeek Harness. Внешний CM plugin и bundle подключаются поверх tools API; fork не создаётся. Локальные cm_symbol_search/cm_code_search/cm_context_get/cm_graph_expand и настоящий registry dispatch проверяются в M00P. Текущие ответы используют byte budgets и отдельный local format; переход к полному ContextPackage API, live model loop и UI проверяется в RC-033. [Инструкция](DEEPSEEK-PLUGIN.md), [исследование](../research/DEEPSEEK-HARNESS.md).
 

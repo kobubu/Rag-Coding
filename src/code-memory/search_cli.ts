@@ -9,7 +9,7 @@ import { chunkingPolicy } from "./chunks.js";
 import type { ChunkingStrategy } from "./chunks.js";
 
 const options = new Map<string, string>();
-const allowed = new Set(["--project", "--index", "--vectors", "--model-cache", "--query", "--mode", "--chunking", "--limit", "--max-bytes"]);
+const allowed = new Set(["--project", "--index", "--vectors", "--model-cache", "--query", "--mode", "--chunking", "--limit", "--max-bytes", "--search-mode"]);
 for (let i = 2; i < process.argv.length; i += 2) {
   const key = process.argv[i]!, value = process.argv[i + 1];
   if (!allowed.has(key) || value === undefined || value.startsWith("--") || options.has(key)) {
@@ -26,10 +26,12 @@ const budget = bounded(options.has("--max-bytes") ? Number(options.get("--max-by
 const root = resolve(options.get("--project") ?? ".");
 const chunking = (options.get("--chunking") ?? "unit") as ChunkingStrategy;
 chunkingPolicy(chunking);
+const searchMode = options.get("--search-mode") ?? "exact";
+if (searchMode !== "exact" && searchMode !== "ann") throw new CMError("invalid_argument", "search-mode must be exact or ann");
 const signal = new AbortController().signal;
 const index = await new CMStore(root, resolve(root, options.get("--index") ?? ".code-memory/index.json")).load(signal);
 const vectors = new LocalVectors({ directory: resolve(root, options.get("--vectors") ?? ".code-memory/vectors"),
-  modelCache: resolve(root, options.get("--model-cache") ?? ".code-memory/models"), chunking });
+  modelCache: resolve(root, options.get("--model-cache") ?? ".code-memory/models"), chunking, searchMode });
 try {
   if (mode === "vector") {
     const chunks = new Map(vectors.chunks(index).map(chunk => [chunk.id, chunk]));

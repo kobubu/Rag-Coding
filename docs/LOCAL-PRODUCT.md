@@ -1,12 +1,12 @@
 # CM на компьютере пользователя: MCP, подписка и карта концептов
 
-Это концепция продукта с выделенным рабочим prototype. Сейчас реализованы TS/JS CM core, local embeddings/LanceDB и compact Harness adapter с [измеренной экономией](HYBRID-RESULTS.md). MCP, карта, SQLite ledger/FTS, accounts и billing запланированы. [Первый A/B](AB-RESULTS.md) проверял lexical/structural prototype и сохраняется отдельно.
+В 0.5.0 работают TS/JS CM core, local embeddings/LanceDB, compact Harness adapter, [MCP stdio](MCP-SETUP.md) и [CM Atlas](LOCAL-ATLAS.md). Optional [HNSW](HNSW.md) ускоряет native vector stage, exact остаётся default. SQLite ledger/FTS, automatic refresh, installer, accounts и billing запланированы. [Измеренная экономия](HYBRID-RESULTS.md) относится к отдельному pilot исправлений; [optimization pilot](OPTIMIZATION-RESULTS.md) экономию не подтвердил. [Первый A/B](AB-RESULTS.md) проверял lexical/structural prototype и сохраняется отдельно.
 
 ## Пользовательский путь
 
 Пользователь регистрируется, оформляет подписку, устанавливает локальный CM Agent, выбирает проекты и подключает его к MCP-клиенту. Индексатор, source snapshots, векторы, глоссарий и граф находятся на его компьютере. Локальная панель показывает карту проекта и результаты поиска. Cloud account выдаёт entitlement и обновления; исходный код не требуется переносить в облачную базу.
 
-MCP может подключать локальный процесс через stdio либо сервер через Streamable HTTP. Для desktop-клиента предпочтителен stdio: клиент запускает CM Agent и вызывает его инструменты. Удалённый клиент не получает доступ к локальным файлам только от наличия облачного аккаунта: для него нужен явно настроенный bridge или remote endpoint. [Официальные транспорты MCP](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports), [локальное подключение SDK](https://ts.sdk.modelcontextprotocol.io/v2/clients/connect).
+MCP может подключать локальный процесс через stdio либо сервер через Streamable HTTP. Для desktop-клиента предпочтителен stdio: клиент запускает CM Agent и вызывает его инструменты. Удалённый клиент не получает доступ к локальным файлам только от наличия облачного аккаунта: для него нужен явно настроенный bridge или remote endpoint. [Официальный MCP server guide](https://modelcontextprotocol.io/docs/2026-07-28/develop/build-server), [TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk).
 
 ```mermaid
 flowchart LR
@@ -57,10 +57,10 @@ Login выдаёт подписанный local entitlement с сроком де
 
 ## Следующие проверяемые этапы
 
-1. Local vector/embedding spike: работа без внешнего embedding API, инкрементальный rebuild, точная версия projection и измерение resources.
-2. Один bounded retrieve-context call с hybrid retrieval и компактным output; A/B на новых задачах, с полной стоимостью enrichment/retrieval.
-3. MCP stdio adapter поверх того же core; реальный клиент проверяет cancellation, snapshots, permissions и output budgets.
-4. Локальный viewer: из concept/graph node в реальные source spans; stale/unresolved состояния видны пользователю.
+1. Реализован local vector/embedding prototype; дальнейший spike: работа без внешнего embedding API, инкрементальный rebuild, точная версия projection и измерение resources.
+2. Реализован один bounded retrieve-context call с hybrid retrieval и компактным output; A/B на новых задачах, с полной стоимостью enrichment/retrieval.
+3. MCP stdio adapter поверх того же core уже проверен: official SDK client и полный installed Harness; cancellation/budgets/scope отдельно покрыты boundary tests. Общий ContextService/capability model развивается в RC-048.
+4. CM Atlas уже показывает inferred topics → module → symbol → current source/evidence; stale errors видны. Semantic clustering/enrichment, ручное подтверждение concepts и полный unresolved UI остаются RC-050.
 5. Installer и update path: совместимость native dependencies и сохранность local data.
 6. Cloud account/entitlement и только затем billing experiment. Hosted service и приём платежей этим документом не запускаются.
 

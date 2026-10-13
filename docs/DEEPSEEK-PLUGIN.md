@@ -7,7 +7,7 @@
 - Node.js 24 LTS; поддерживаемый дополнительный runtime — Node.js 22 от 22.19.0.
 - `@deepseek-ai/dsh-tools` 0.2.0-rc.2 и `@deepseek-ai/cordis` 4.0.4. Версии явно закреплены для проверенного runtime API.
 - Локальный backend `code-memory-0.1`: неизменяемые source blobs внутри JSON snapshot. PostgreSQL/pgvector остаются запланированным storage backend.
-- Проверки registry используют настоящие Cordis Context, SystemPrompt и Harness ToolRuntime: schemas, calls, canonical JSON, errors, cancellation и unload. Legacy CLI installation проверялась ранее; 0.4.2 извлечён из tarball в отдельный full Web profile с local dependency junctions, actual vector/context dispatch PASS. Это manual offline installation, не проверка one-command pnpm installer. Живая модель измерялась в предыдущих A/B; новые model/UI calls здесь не выполнялись.
+- Проверки registry используют настоящие Cordis Context, SystemPrompt и Harness ToolRuntime: schemas, calls, canonical JSON, errors, cancellation и unload. Legacy CLI installation проверялась ранее; 0.4.2 извлечён из tarball в отдельный full Web profile с local dependency junctions, actual vector/context dispatch PASS. Это manual offline installation, не проверка one-command pnpm installer. Живая модель измерялась в предыдущих A/B. В 0.5.0 отдельно проверены MCP client полного Web profile и реальная Chrome навигация CM Atlas; новых paid model calls нет.
 
 ## Сборка и создание CM
 
@@ -38,13 +38,13 @@ npm run cm:index -- --project /absolute/project --out /absolute/project/.code-me
 npm pack --pack-destination .artifacts
 ```
 
-В Harness Plugin Manager установить полученный локальный `dsh-plugin-code-memory-0.4.2.tgz` как bundle и включить его в нужном профиле. Использовать Harness 0.2.0-rc.2. Bundle добавляет entry `code-memory` с compact vector mode и auto context; существующие model/file tools остаются в профиле. Для этого режима нужны подготовленные primary index, vectors и локальная модель.
+В Harness Plugin Manager установить полученный локальный `dsh-plugin-code-memory-0.5.0.tgz` как bundle и включить его в нужном профиле. Использовать Harness 0.2.0-rc.2. Bundle добавляет entry `code-memory` с compact vector mode и auto context; существующие model/file tools остаются в профиле. Для этого режима нужны подготовленные primary index, vectors и локальная модель.
 
 CLI-вариант после установки Harness:
 
 ```bash
 dsh --profile code-memory --from-default-profile web --dump-config
-dsh plugin --profile code-memory add /absolute/dsh-plugin-code-memory-0.4.2.tgz
+dsh plugin --profile code-memory add /absolute/dsh-plugin-code-memory-0.5.0.tgz
 dsh --profile code-memory --no-open
 ```
 
@@ -60,6 +60,7 @@ dsh --profile code-memory --no-open
 | `indexPath` | Путь JSON index, абсолютный либо относительно projectRoot; по умолчанию `CM_INDEX_PATH` или `.code-memory/index.json` |
 | `mode` | `compact` по умолчанию с 0.4.2; `legacy` явно включает прежние четыре lexical/graph tools |
 | `autoContext` | true по умолчанию в bundle и source plugin; false отключает автоматическую подачу |
+| `searchMode` | `exact` по умолчанию; `ann` требует HNSW projection и сохраняет source/model/policy fences |
 | `vectorsPath` / `modelCache` | По умолчанию `.code-memory/vectors` / `.code-memory/models` относительно projectRoot |
 
 Для source checkout можно подключить собранный entry отдельным patch, задав абсолютный путь к `dist/src/harness/plugin.js`:
@@ -100,7 +101,7 @@ Reader повторно проверяет digest JSON и реальные sourc
 
 `npm test` проверяет реальные bindings/captures, cross-file calls, shadowed locals, UTF-8/BOM/CRLF, JS modules, frozen cache, бюджеты, повреждённые данные, outdated snapshots/config и runtime lifecycle. Harness `bundlePatchFiles/composeEntries` проверяют distribution entry через production consumer API. `npm run plugin:smoke` индексирует этот checkout и делает четыре dispatch calls через Harness ToolRuntime, затем проверяет unload. Проверены также CLI install/composition/boot и установленный bundle в полном Web-профиле. Для живого provider/tool loop добавлен [A/B protocol](HARNESS-AB.md): GPT-6 Luna управляет настоящим Harness headless на отдельных копиях Geo Dash.
 
-Продолжение: 40-задачный corpus и оценка retrieval, полноценный recursive segmenter/dataflow, SQLite/PostgreSQL ledger, indexed FTS, ContextService, MCP, provenance/scope, latency и map UI. Live loop и auto context уже проверены в compact prototype. [Backlog](../plans/BACKLOG.md) различает завершённый prototype и эти запланированные этапы.
+Продолжение: 40-задачный corpus и оценка retrieval, полноценный recursive segmenter/dataflow, SQLite/PostgreSQL ledger, indexed FTS, общий ContextService, provenance/scope, latency и полноценное concept enrichment. MCP stdio и CM Atlas prototype уже доступны в 0.5.0; см. [MCP](MCP-SETUP.md) и [viewer](LOCAL-ATLAS.md). Live loop и auto context уже проверены в compact prototype. [Backlog](../plans/BACKLOG.md) различает завершённый prototype и эти запланированные этапы.
 
 ## Compact vector/context режим
 
@@ -130,6 +131,6 @@ npm.cmd run cm:search -- --project 'D:/project' --model-cache 'D:/CM-model-cache
 
 Для compact fiber объявлены tools/systemPrompt/fs dependencies; basic legacy runtime может работать без FS service. `diagnosticsPath` опционально сохраняет только события, paths и размеры без prompts/code/credentials. Число CM tool calls может быть нулевым при действующем auto context; A/B meter проверяет actual model-visible context отдельно.
 
-Текущий stack: Transformers.js 4.3.1, LanceDB 0.40.0, pinned MiniLM q8, 384 dimensions. Flat cosine search; PostgreSQL, SQLite, ANN и FTS не реализованы в этом режиме. Root checkout фиксирует sharp override 0.35.5 для transitive optional image dependency LanceDB; при установке tarball dependency overrides не наследуются: consumer root также должен закрепить этот override. Native installer/updates проверяются отдельной поставкой.
+Текущий stack: Transformers.js 4.3.1, LanceDB 0.40.0, pinned MiniLM q8, 384 dimensions. Exact cosine search остаётся default. С 0.5.0 optional [IVF_HNSW_SQ](HNSW.md) включается через `searchMode: ann` после построения ANN projection; PostgreSQL, SQLite и FTS ещё не реализованы в этом режиме. Root checkout фиксирует sharp override 0.35.5 для transitive optional image dependency LanceDB; при установке tarball dependency overrides не наследуются: consumer root также должен закрепить этот override. Native installer/updates проверяются отдельной поставкой.
 
 [Второй A/B](HYBRID-RESULTS.md) сохраняет все 32 sessions и ограничения: −69,4% tokens, −56,9% расчётной цены; 12/16 против 9/16. Это эффект всей связки, не isolated vector ablation.
