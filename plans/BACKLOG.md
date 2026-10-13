@@ -122,6 +122,46 @@
 
 Ожидаемые материалы: `docs/HYBRID-RESULTS.md`, `evaluation/geo-hybrid-pilot/`, `scripts/summarize_hybrid.ts`.
 
+## M00Q: Качество оптимизации и дробление CM
+
+Критерий этапа: Полный comparison unit/window/AST/none на реальной оптимизации; behavior/CPU/scopes/usage измерены отдельно, все failures сохранены.
+
+### RC-057: Реализовать policy-fenced unit/window/AST projections
+
+Статус: **done**. Приоритет: P0. Размер: M. Зависимости: RC-054.
+
+Приёмка:
+
+- UTF-8/CRLF windows покрывают source, overlap дедуплицирован без потери тела после signature.
+- AST statement groups и compiler-bound declarations/signatures сохраняют scopes; отсутствие полного dataflow раскрыто.
+- Snapshot/model/policy/records fencing и default unit compatibility проверены.
+
+Ожидаемые материалы: `src/code-memory/chunks.ts`, `src/code-memory/vector.ts`, `src/code-memory/retrieve.ts`, `tests/chunks.test.ts`.
+
+### RC-058: Добавить behavioral и CPU grader для задач оптимизации
+
+Статус: **done**. Приоритет: P0. Размер: M. Зависимости: RC-055.
+
+Приёмка:
+
+- Одинаковый project_checks позволяет всем agents проверить patch; final geometry/fuzz/callers отдельно.
+- Неверная быстрая правка и неизменный source не считаются оптимизацией; loaded module следует current content hash.
+- ABBA/BAAB, реальные workloads, stress/build cost, protected scopes и полная usage фиксируются отдельно.
+
+Ожидаемые материалы: `scripts/optimization_checks.ts`, `scripts/project_checks_plugin.ts`, `tests/optimization.test.ts`, `docs/OPTIMIZATION-AB.md`.
+
+### RC-059: Измерить качество и стоимость дробления на реальной оптимизации Geo Dash
+
+Статус: **done**. Приоритет: P0. Размер: M. Зависимости: RC-057, RC-058.
+
+Приёмка:
+
+- 24/24 живых sessions с frozen source, полным usage и независимой behavior/CPU оценкой; все stops и failures учтены.
+- Unit/window/AST сравнение, actual caller QA и локальные physics/browser проверки опубликованы; ускорение FPS не заявляется.
+- Отрицательная экономия раскрыта; post-study cache fix 0.4.1 не выдан за новый paid A/B. Original Geo JS сохранены.
+
+Ожидаемые материалы: `scripts/optimization_ab.ts`, `docs/OPTIMIZATION-AB.md`, `evaluation/geo-optimization/`, `docs/OPTIMIZATION-RESULTS.md`.
+
 ## M01: Зафиксированный корпус и контракты
 
 Критерий этапа: Есть размеченные задачи, способности первого языка и корректные публичные форматы.
@@ -691,3 +731,15 @@
 - Контекст не расширяет actor permissions; exact/library navigation и snapshot boundaries остаются проверяемыми.
 
 Ожидаемые материалы: `src/retrieval/`, `evaluation/scope-latency-pilot/`, `docs/HYBRID-RESULTS.md`.
+
+### RC-060: Проверить adaptive whole-function retrieval на новом корпусе с caller performance
+
+Статус: **planned**. Приоритет: P0. Размер: M. Зависимости: RC-057, RC-059.
+
+Приёмка:
+
+- Exact path/name и небольшие owners получают whole-function context; большие fragments сохраняют neighbors/scopes и budget.
+- Новые holdout задачи используют штатный caller workload; correctness, CPU и цена полезного решения измеряются отдельно.
+- Все arms используют один final version, полный provider usage и preserved failures; результат не выбирается по изученным задачам.
+
+Ожидаемые материалы: `docs/OPTIMIZATION-RESULTS.md`, `docs/OPTIMIZATION-AB.md`.

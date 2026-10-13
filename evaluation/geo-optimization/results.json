@@ -1,0 +1,4477 @@
+{
+  "protocol": {
+    "format": "cm-optimization-ab-1",
+    "source_project": "Local Geo Dash checkout",
+    "source_revision": "17007329bd381384f494278f2206a70727f0e723",
+    "corpus_hash": "430d2380f6bb073436b52df5be264c8ceefe4ebb2ec81b857b55980f3c072261",
+    "cases_hash": "47af27a2930ad87409b56acfe7dee7bcd0296ea0f8cb4a2aa4941402d9902f2b",
+    "implementations": [
+      {
+        "path": "src/code-memory/indexer.ts",
+        "sha256": "8ed9a303d853ae7690886cb1c6345255591648cc1c3c83f0bacc02609edf0634"
+      },
+      {
+        "path": "src/code-memory/source.ts",
+        "sha256": "6f52abcda6a1dc564841b8cdae73485fe220dd3f84749fb8a6b18878047d4a99"
+      },
+      {
+        "path": "src/code-memory/store.ts",
+        "sha256": "4177898b99dbeba76626cca5bc24e3fd7ba3ef9bf3b94d9086e238cee3453b18"
+      },
+      {
+        "path": "src/code-memory/query.ts",
+        "sha256": "380478b4914fc633ee58193d428a91509d566da52e9889640d91b07662d01bc3"
+      },
+      {
+        "path": "src/code-memory/chunks.ts",
+        "sha256": "1661142e32222431c32de0d62b38e27df4c4094c5b3db297d543a208d596f1f0"
+      },
+      {
+        "path": "src/code-memory/vector.ts",
+        "sha256": "17b3515c4d374f9931812453da9975b9ae2f9743d68ee048d9d94887feec843d"
+      },
+      {
+        "path": "src/code-memory/retrieve.ts",
+        "sha256": "e60b72d3e2ed932cd57ffd02b1a1f7a3845e417f3d36d7de88c8bba938a86506"
+      },
+      {
+        "path": "src/harness/plugin.ts",
+        "sha256": "724249c5cf2cfaa210dd4e92c2cd73778bbb316a62e02a3c6bd11ec47859e7e4"
+      },
+      {
+        "path": "scripts/harness_ab.ts",
+        "sha256": "8d427f0961f72281a4f84e561fbde9940bce1db0e3aea18f075a45b738e75b5c"
+      },
+      {
+        "path": "scripts/harness_meter.ts",
+        "sha256": "1164c816eb1259539ae868f2f34b2099ac05153c4f9b09fd2a038aeb3d5c3d9b"
+      },
+      {
+        "path": "scripts/project_checks_plugin.ts",
+        "sha256": "1728a4a14bc0a96c299b7821b6b6027301be72a3287429a25d085d8cce232e0c"
+      },
+      {
+        "path": "scripts/optimization_ab.ts",
+        "sha256": "d65331e77e1c1b9c3a482de1cd98e214fb8cc234fcbf76b80e9ba43c298f69ff"
+      },
+      {
+        "path": "scripts/optimization_checks.ts",
+        "sha256": "bf5872923a34eb6b51993a2b92f8cde9a235891ba7655adfe0bda200fd3e40ab"
+      }
+    ],
+    "arms": [
+      "none",
+      "unit",
+      "window",
+      "ast"
+    ],
+    "repetitions": 3,
+    "model": "gpt-6-luna",
+    "reasoning_effort": "low",
+    "context_bytes": 6000,
+    "max_model_calls": 20,
+    "max_run_seconds": 300,
+    "order": "Rotated arm order by task/repetition; reversed alternating rows",
+    "seed_regressions": false,
+    "quality": "All independent behavior and protected-source checks; real CPU elapsed time <=85% baseline with >=7/9 paired wins, stress speedup >=0.9; horizontal construction slowdown <=4; actual changed source required",
+    "measurements": "9 serial four-pass ABBA/BAAB timing blocks on unchanged actual geometry, paired means; stress separate; no whole-game FPS claim",
+    "public_checks": "Fixed project_checks tool identical in every arm; three-city short smoke, different fuzz seed from final",
+    "chunking": "Unit; overlapping UTF-8 windows 768/128 bytes; AST groups bounded to 768 plus compiler-bound dependencies and scope signatures",
+    "artifact_isolation": "No .code-memory files in agent workspaces; B plugin reads its frozen projection externally and observes exact source through the workspace filesystem",
+    "limitation": "Two related optimization types in one project, three stochastic repeats; AST scope enrichment changes with granularity",
+    "finalized_before_paid_runs": true,
+    "projection_revisions": []
+  },
+  "summary": {
+    "status": "complete",
+    "accounting_complete": true,
+    "max_request_input_tokens": 13713,
+    "groups": [
+      {
+        "arm": "none",
+        "runs": 6,
+        "behavioral_successes": 6,
+        "optimization_successes": 3,
+        "model_calls": 50,
+        "project_checks_calls": 11,
+        "total_tokens": 358234,
+        "usd_estimate": 0.015811555,
+        "mean_seconds": 38.16612359999997,
+        "missing_usage": 0,
+        "tokens_per_successful_optimization": 119411.33333333333,
+        "tasks": [
+          {
+            "task": "horizontal",
+            "runs": 3,
+            "behavior": 3,
+            "useful": 0,
+            "median_correct_cpu_speedup": 0.8875417405493347
+          },
+          {
+            "task": "union",
+            "runs": 3,
+            "behavior": 3,
+            "useful": 3,
+            "median_correct_cpu_speedup": 2.548640127303917
+          }
+        ]
+      },
+      {
+        "arm": "unit",
+        "runs": 6,
+        "behavioral_successes": 6,
+        "optimization_successes": 3,
+        "model_calls": 68,
+        "project_checks_calls": 16,
+        "total_tokens": 496017,
+        "usd_estimate": 0.021335555000000003,
+        "mean_seconds": 81.22858041666663,
+        "missing_usage": 0,
+        "tokens_per_successful_optimization": 165339,
+        "tasks": [
+          {
+            "task": "horizontal",
+            "runs": 3,
+            "behavior": 3,
+            "useful": 0,
+            "median_correct_cpu_speedup": 0.9493373052391186
+          },
+          {
+            "task": "union",
+            "runs": 3,
+            "behavior": 3,
+            "useful": 3,
+            "median_correct_cpu_speedup": 3.010405441477386
+          }
+        ]
+      },
+      {
+        "arm": "window",
+        "runs": 6,
+        "behavioral_successes": 6,
+        "optimization_successes": 3,
+        "model_calls": 70,
+        "project_checks_calls": 14,
+        "total_tokens": 527321,
+        "usd_estimate": 0.020298525,
+        "mean_seconds": 78.92873346666664,
+        "missing_usage": 0,
+        "tokens_per_successful_optimization": 175773.66666666666,
+        "tasks": [
+          {
+            "task": "horizontal",
+            "runs": 3,
+            "behavior": 3,
+            "useful": 0,
+            "median_correct_cpu_speedup": 0.9580275208247071
+          },
+          {
+            "task": "union",
+            "runs": 3,
+            "behavior": 3,
+            "useful": 3,
+            "median_correct_cpu_speedup": 2.6697049795852488
+          }
+        ]
+      },
+      {
+        "arm": "ast",
+        "runs": 6,
+        "behavioral_successes": 6,
+        "optimization_successes": 3,
+        "model_calls": 59,
+        "project_checks_calls": 12,
+        "total_tokens": 380421,
+        "usd_estimate": 0.0166739,
+        "mean_seconds": 77.48925098333335,
+        "missing_usage": 0,
+        "tokens_per_successful_optimization": 126807,
+        "tasks": [
+          {
+            "task": "horizontal",
+            "runs": 3,
+            "behavior": 3,
+            "useful": 0,
+            "median_correct_cpu_speedup": 1.0384904236248704
+          },
+          {
+            "task": "union",
+            "runs": 3,
+            "behavior": 3,
+            "useful": 3,
+            "median_correct_cpu_speedup": 2.711102465602371
+          }
+        ]
+      }
+    ],
+    "comparisons": [
+      {
+        "arm": "unit",
+        "token_saving_pct": -38.46173171725744,
+        "price_saving_pct": -34.93647525496386,
+        "behavioral_delta": 0,
+        "useful_optimization_delta": 0
+      },
+      {
+        "arm": "window",
+        "token_saving_pct": -47.2001540892266,
+        "price_saving_pct": -28.377790799197157,
+        "behavioral_delta": 0,
+        "useful_optimization_delta": 0
+      },
+      {
+        "arm": "ast",
+        "token_saving_pct": -6.193437808806523,
+        "price_saving_pct": -5.45389115744781,
+        "behavioral_delta": 0,
+        "useful_optimization_delta": 0
+      }
+    ],
+    "total_runs": 24,
+    "source_proof": {
+      "original_files_checked": 224,
+      "original_source_changes": [],
+      "measured_implementation_unchanged": true
+    },
+    "limitations": [
+      "Two related optimization targets in one project, three repeats",
+      "AST scope enrichment differs from whole units",
+      "Local target CPU, not whole-game/phone FPS",
+      "Price estimate, not billing export"
+    ],
+    "audit": [
+      {
+        "run_id": "horizontal-r1-none",
+        "arm": "none",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": false
+      },
+      {
+        "run_id": "horizontal-r1-ast",
+        "arm": "ast",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": false
+      },
+      {
+        "run_id": "horizontal-r1-window",
+        "arm": "window",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": false
+      },
+      {
+        "run_id": "horizontal-r1-unit",
+        "arm": "unit",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": false
+      },
+      {
+        "run_id": "union-r1-window",
+        "arm": "window",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": true
+      },
+      {
+        "run_id": "union-r1-ast",
+        "arm": "ast",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": true
+      },
+      {
+        "run_id": "union-r1-none",
+        "arm": "none",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": true
+      },
+      {
+        "run_id": "union-r1-unit",
+        "arm": "unit",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": true
+      },
+      {
+        "run_id": "horizontal-r2-window",
+        "arm": "window",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": false
+      },
+      {
+        "run_id": "horizontal-r2-ast",
+        "arm": "ast",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": false
+      },
+      {
+        "run_id": "horizontal-r2-none",
+        "arm": "none",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": false
+      },
+      {
+        "run_id": "horizontal-r2-unit",
+        "arm": "unit",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": false
+      },
+      {
+        "run_id": "union-r2-window",
+        "arm": "window",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": true
+      },
+      {
+        "run_id": "union-r2-unit",
+        "arm": "unit",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": true
+      },
+      {
+        "run_id": "union-r2-none",
+        "arm": "none",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": true
+      },
+      {
+        "run_id": "union-r2-ast",
+        "arm": "ast",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": true
+      },
+      {
+        "run_id": "horizontal-r3-window",
+        "arm": "window",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": false
+      },
+      {
+        "run_id": "horizontal-r3-unit",
+        "arm": "unit",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": false
+      },
+      {
+        "run_id": "horizontal-r3-none",
+        "arm": "none",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": false
+      },
+      {
+        "run_id": "horizontal-r3-ast",
+        "arm": "ast",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": false
+      },
+      {
+        "run_id": "union-r3-none",
+        "arm": "none",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": true
+      },
+      {
+        "run_id": "union-r3-unit",
+        "arm": "unit",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": true
+      },
+      {
+        "run_id": "union-r3-window",
+        "arm": "window",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": true
+      },
+      {
+        "run_id": "union-r3-ast",
+        "arm": "ast",
+        "scope_changes": [],
+        "behavior": true,
+        "useful": true
+      }
+    ]
+  },
+  "indexing": [
+    {
+      "strategy": "unit",
+      "rows": 7503,
+      "embedded": 7342,
+      "reused": 161,
+      "milliseconds": 280717.0764,
+      "embedding": {
+        "model": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dtype": "q8",
+        "dimensions": 384,
+        "projection": "cm-hybrid-1"
+      }
+    },
+    {
+      "strategy": "window",
+      "rows": 5658,
+      "embedded": 5658,
+      "reused": 0,
+      "milliseconds": 195680.7454,
+      "embedding": {
+        "model": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dtype": "q8",
+        "dimensions": 384,
+        "projection": "cm-hybrid-1"
+      }
+    },
+    {
+      "strategy": "ast",
+      "rows": 12181,
+      "embedded": 5583,
+      "reused": 6598,
+      "milliseconds": 156616.7207,
+      "embedding": {
+        "model": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dtype": "q8",
+        "dimensions": 384,
+        "projection": "cm-hybrid-1"
+      }
+    }
+  ],
+  "retrieval_preview": [
+    {
+      "strategy": "unit",
+      "task": "horizontal",
+      "source_bytes": 900,
+      "omissions": 0,
+      "target_coverage_pct": 100
+    },
+    {
+      "strategy": "unit",
+      "task": "union",
+      "source_bytes": 1054,
+      "omissions": 0,
+      "target_coverage_pct": 100
+    },
+    {
+      "strategy": "window",
+      "task": "horizontal",
+      "source_bytes": 1060,
+      "omissions": 0,
+      "target_coverage_pct": 100
+    },
+    {
+      "strategy": "window",
+      "task": "union",
+      "source_bytes": 3354,
+      "omissions": 3,
+      "target_coverage_pct": 90.31945788964182
+    },
+    {
+      "strategy": "ast",
+      "task": "horizontal",
+      "source_bytes": 897,
+      "omissions": 0,
+      "target_coverage_pct": 99.66666666666667
+    },
+    {
+      "strategy": "ast",
+      "task": "union",
+      "source_bytes": 221,
+      "omissions": 0,
+      "target_coverage_pct": 21.39399806389158
+    }
+  ],
+  "results": [
+    {
+      "run_id": "horizontal-r1-none",
+      "task": "horizontal",
+      "repetition": 1,
+      "arm": "none",
+      "behavior": true,
+      "useful_optimization": false,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 50681.821299999996,
+      "model_calls": 12,
+      "usage": {
+        "uncached_input": 36,
+        "cache_read": 105284,
+        "cache_write": 13710,
+        "output": 2540,
+        "total_input": 119030,
+        "total_tokens": 121570,
+        "missing_usage": 0,
+        "usd_estimate": 0.00404019
+      },
+      "tool_calls": {
+        "todo_write": 3,
+        "read": 3,
+        "glob": 1,
+        "grep": 1,
+        "edit": 3,
+        "project_checks": 2
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 164,
+        "total": 164,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 17.56880000000001,
+          "after_ms": 19.794899999999984,
+          "speedup": 0.8875417405493347,
+          "paired_wins": 4,
+          "samples": [
+            {
+              "before_ms": 19.702650000000062,
+              "after_ms": 20.755600000000072
+            },
+            {
+              "before_ms": 22.546699999999987,
+              "after_ms": 21.406249999999886
+            },
+            {
+              "before_ms": 16.745699999999943,
+              "after_ms": 16.38569999999993
+            },
+            {
+              "before_ms": 17.9931499999999,
+              "after_ms": 21.85895000000005
+            },
+            {
+              "before_ms": 19.17145000000005,
+              "after_ms": 17.096900000000005
+            },
+            {
+              "before_ms": 17.56880000000001,
+              "after_ms": 20.449799999999982
+            },
+            {
+              "before_ms": 17.28660000000002,
+              "after_ms": 16.4935999999999
+            },
+            {
+              "before_ms": 17.256649999999922,
+              "after_ms": 18.432050000000118
+            },
+            {
+              "before_ms": 17.384849999999915,
+              "after_ms": 19.794899999999984
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 12.616650000000163,
+          "after_ms": 1.2540499999997792,
+          "speedup": 10.06072325665036,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 12.201999999999998,
+              "after_ms": 1.192600000000084
+            },
+            {
+              "before_ms": 12.27170000000001,
+              "after_ms": 2.133000000000152
+            },
+            {
+              "before_ms": 12.64404999999988,
+              "after_ms": 1.1650999999999385
+            },
+            {
+              "before_ms": 12.897899999999709,
+              "after_ms": 1.2315499999999702
+            },
+            {
+              "before_ms": 12.616650000000163,
+              "after_ms": 1.2540499999997792
+            },
+            {
+              "before_ms": 12.74819999999977,
+              "after_ms": 1.7198000000000775
+            },
+            {
+              "before_ms": 14.309799999999996,
+              "after_ms": 1.3827000000001135
+            },
+            {
+              "before_ms": 12.289299999999912,
+              "after_ms": 1.165499999999838
+            },
+            {
+              "before_ms": 12.144000000000005,
+              "after_ms": 1.361750000000029
+            }
+          ]
+        },
+        "construction": {
+          "before_ms": 4.316949999999906,
+          "after_ms": 4.394949999999881,
+          "speedup": 0.9822523578197757,
+          "paired_wins": 4,
+          "samples": [
+            {
+              "before_ms": 4.555949999999939,
+              "after_ms": 4.643800000000056
+            },
+            {
+              "before_ms": 4.288050000000112,
+              "after_ms": 4.730800000000045
+            },
+            {
+              "before_ms": 4.320450000000164,
+              "after_ms": 4.233800000000201
+            },
+            {
+              "before_ms": 4.872899999999845,
+              "after_ms": 5.546299999999974
+            },
+            {
+              "before_ms": 4.316949999999906,
+              "after_ms": 5.40435000000025
+            },
+            {
+              "before_ms": 4.2987000000000535,
+              "after_ms": 4.208249999999907
+            },
+            {
+              "before_ms": 4.259300000000167,
+              "after_ms": 4.2322499999997945
+            },
+            {
+              "before_ms": 4.1197000000001935,
+              "after_ms": 4.394949999999881
+            },
+            {
+              "before_ms": 4.508899999999812,
+              "after_ms": 4.116649999999709
+            }
+          ]
+        },
+        "contract": "Exact order/identity, duplicate entries, strict overlap, snapshotted bounds, fresh query arrays"
+      },
+      "target_sha256": "6fad7d84b0e38390f3bea120512aa5d34dea958523cdad94ba311aea6dace7b2"
+    },
+    {
+      "run_id": "horizontal-r1-ast",
+      "task": "horizontal",
+      "repetition": 1,
+      "arm": "ast",
+      "behavior": true,
+      "useful_optimization": false,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 91433.6311,
+      "model_calls": 15,
+      "usage": {
+        "uncached_input": 45,
+        "cache_read": 88274,
+        "cache_write": 9617,
+        "output": 3176,
+        "total_input": 97936,
+        "total_tokens": 101112,
+        "missing_usage": 0,
+        "usd_estimate": 0.0036773649999999997
+      },
+      "tool_calls": {
+        "todo_write": 3,
+        "read": 1,
+        "edit": 6,
+        "project_checks": 4
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 164,
+        "total": 164,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 37.60474999999974,
+          "after_ms": 35.6018499999999,
+          "speedup": 1.0562583124191536,
+          "paired_wins": 5,
+          "samples": [
+            {
+              "before_ms": 42.00604999999996,
+              "after_ms": 38.26379999999995
+            },
+            {
+              "before_ms": 57.18719999999996,
+              "after_ms": 65.83364999999992
+            },
+            {
+              "before_ms": 34.739999999999895,
+              "after_ms": 35.6018499999999
+            },
+            {
+              "before_ms": 47.7320000000002,
+              "after_ms": 44.40639999999985
+            },
+            {
+              "before_ms": 37.60474999999974,
+              "after_ms": 42.664650000000165
+            },
+            {
+              "before_ms": 46.94085000000018,
+              "after_ms": 32.722600000000284
+            },
+            {
+              "before_ms": 30.155750000000126,
+              "after_ms": 22.23109999999997
+            },
+            {
+              "before_ms": 25.50414999999998,
+              "after_ms": 25.58665000000019
+            },
+            {
+              "before_ms": 24.689899999999852,
+              "after_ms": 21.812950000000228
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 16.40475000000015,
+          "after_ms": 1.608449999999948,
+          "speedup": 10.199104728154857,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 15.80114999999978,
+              "after_ms": 2.8311999999998534
+            },
+            {
+              "before_ms": 16.37350000000015,
+              "after_ms": 1.608449999999948
+            },
+            {
+              "before_ms": 15.918499999999995,
+              "after_ms": 1.3432499999998981
+            },
+            {
+              "before_ms": 18.813649999999825,
+              "after_ms": 1.7316000000000713
+            },
+            {
+              "before_ms": 19.241899999999987,
+              "after_ms": 1.079050000000052
+            },
+            {
+              "before_ms": 17.660350000000108,
+              "after_ms": 1.743900000000167
+            },
+            {
+              "before_ms": 18.44625000000019,
+              "after_ms": 1.2358999999999014
+            },
+            {
+              "before_ms": 15.854050000000143,
+              "after_ms": 1.6652999999998883
+            },
+            {
+              "before_ms": 16.40475000000015,
+              "after_ms": 1.0692000000001372
+            }
+          ]
+        },
+        "construction": {
+          "before_ms": 7.11324999999988,
+          "after_ms": 6.965249999999969,
+          "speedup": 1.021248339973427,
+          "paired_wins": 4,
+          "samples": [
+            {
+              "before_ms": 13.890449999999873,
+              "after_ms": 10.613100000000031
+            },
+            {
+              "before_ms": 11.521250000000009,
+              "after_ms": 11.343049999999948
+            },
+            {
+              "before_ms": 8.778999999999996,
+              "after_ms": 10.730749999999944
+            },
+            {
+              "before_ms": 7.11324999999988,
+              "after_ms": 6.0154
+            },
+            {
+              "before_ms": 5.8297000000000025,
+              "after_ms": 6.965249999999969
+            },
+            {
+              "before_ms": 5.873349999999846,
+              "after_ms": 6.692250000000058
+            },
+            {
+              "before_ms": 8.290399999999863,
+              "after_ms": 6.623499999999922
+            },
+            {
+              "before_ms": 5.9265499999999065,
+              "after_ms": 6.410099999999829
+            },
+            {
+              "before_ms": 7.059499999999844,
+              "after_ms": 7.064199999999801
+            }
+          ]
+        },
+        "contract": "Exact order/identity, duplicate entries, strict overlap, snapshotted bounds, fresh query arrays"
+      },
+      "target_sha256": "6f8247cada39026c4179f6b8bb49835016e6fdfc2a81c3279f07f7ec7b602fdd"
+    },
+    {
+      "run_id": "horizontal-r1-window",
+      "task": "horizontal",
+      "repetition": 1,
+      "arm": "window",
+      "behavior": true,
+      "useful_optimization": false,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 96907.9382,
+      "model_calls": 16,
+      "usage": {
+        "uncached_input": 48,
+        "cache_read": 100155,
+        "cache_write": 11365,
+        "output": 4073,
+        "total_input": 111568,
+        "total_tokens": 115641,
+        "missing_usage": 0,
+        "usd_estimate": 0.004463475000000001
+      },
+      "tool_calls": {
+        "todo_write": 3,
+        "read": 2,
+        "edit": 6,
+        "project_checks": 4
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 164,
+        "total": 164,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 22.968150000000037,
+          "after_ms": 25.942499999999995,
+          "speedup": 0.885348366579938,
+          "paired_wins": 2,
+          "samples": [
+            {
+              "before_ms": 26.748300000000086,
+              "after_ms": 29.92750000000001
+            },
+            {
+              "before_ms": 39.26055000000008,
+              "after_ms": 29.662199999999984
+            },
+            {
+              "before_ms": 22.968150000000037,
+              "after_ms": 25.942499999999995
+            },
+            {
+              "before_ms": 22.528749999999945,
+              "after_ms": 25.047849999999926
+            },
+            {
+              "before_ms": 27.46474999999998,
+              "after_ms": 22.714450000000056
+            },
+            {
+              "before_ms": 19.733199999999897,
+              "after_ms": 23.282100000000128
+            },
+            {
+              "before_ms": 24.84979999999996,
+              "after_ms": 27.01384999999982
+            },
+            {
+              "before_ms": 19.61519999999996,
+              "after_ms": 30.390800000000127
+            },
+            {
+              "before_ms": 21.076999999999998,
+              "after_ms": 23.355999999999995
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 15.340550000000121,
+          "after_ms": 2.6254500000000007,
+          "speedup": 5.843017387495522,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 20.117150000000038,
+              "after_ms": 4.816700000000083
+            },
+            {
+              "before_ms": 15.975800000000163,
+              "after_ms": 2.4288500000000113
+            },
+            {
+              "before_ms": 15.340550000000121,
+              "after_ms": 3.4036000000000968
+            },
+            {
+              "before_ms": 14.574299999999994,
+              "after_ms": 2.6254500000000007
+            },
+            {
+              "before_ms": 14.107549999999947,
+              "after_ms": 2.0661999999999807
+            },
+            {
+              "before_ms": 14.695400000000063,
+              "after_ms": 2.8297499999998763
+            },
+            {
+              "before_ms": 14.96329999999989,
+              "after_ms": 4.431299999999965
+            },
+            {
+              "before_ms": 17.231700000000046,
+              "after_ms": 2.0805999999997766
+            },
+            {
+              "before_ms": 15.6574999999998,
+              "after_ms": 2.4426499999997304
+            }
+          ]
+        },
+        "construction": {
+          "before_ms": 5.724250000000211,
+          "after_ms": 5.18444999999997,
+          "speedup": 1.104119048307968,
+          "paired_wins": 5,
+          "samples": [
+            {
+              "before_ms": 15.319999999999936,
+              "after_ms": 9.457750000000033
+            },
+            {
+              "before_ms": 7.3726500000000215,
+              "after_ms": 8.722300000000132
+            },
+            {
+              "before_ms": 4.934249999999793,
+              "after_ms": 5.162500000000136
+            },
+            {
+              "before_ms": 5.69055000000003,
+              "after_ms": 6.1110499999999774
+            },
+            {
+              "before_ms": 7.801500000000033,
+              "after_ms": 5.0399499999998625
+            },
+            {
+              "before_ms": 5.057350000000042,
+              "after_ms": 5.9599000000000615
+            },
+            {
+              "before_ms": 5.724250000000211,
+              "after_ms": 4.687249999999949
+            },
+            {
+              "before_ms": 5.263350000000173,
+              "after_ms": 5.18444999999997
+            },
+            {
+              "before_ms": 6.881750000000238,
+              "after_ms": 4.981499999999869
+            }
+          ]
+        },
+        "contract": "Exact order/identity, duplicate entries, strict overlap, snapshotted bounds, fresh query arrays"
+      },
+      "target_sha256": "cf39329a3ac288fde62eab20bbed3a278f34384287c7ae6bd35d1a4b2089fe0c"
+    },
+    {
+      "run_id": "horizontal-r1-unit",
+      "task": "horizontal",
+      "repetition": 1,
+      "arm": "unit",
+      "behavior": true,
+      "useful_optimization": false,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 106118.02890000003,
+      "model_calls": 14,
+      "usage": {
+        "uncached_input": 42,
+        "cache_read": 93657,
+        "cache_write": 12536,
+        "output": 4745,
+        "total_input": 106235,
+        "total_tokens": 110980,
+        "missing_usage": 0,
+        "usd_estimate": 0.004880270000000001
+      },
+      "tool_calls": {
+        "cm_retrieve_context": 1,
+        "read": 2,
+        "edit": 6,
+        "project_checks": 4
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 164,
+        "total": 164,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 40.43105000000014,
+          "after_ms": 41.84480000000008,
+          "speedup": 0.9662144400260024,
+          "paired_wins": 4,
+          "samples": [
+            {
+              "before_ms": 26.018299999999954,
+              "after_ms": 28.057350000000042
+            },
+            {
+              "before_ms": 42.94089999999994,
+              "after_ms": 41.84480000000008
+            },
+            {
+              "before_ms": 24.234100000000012,
+              "after_ms": 31.363000000000056
+            },
+            {
+              "before_ms": 25.06104999999991,
+              "after_ms": 23.995200000000068
+            },
+            {
+              "before_ms": 26.434399999999982,
+              "after_ms": 28.03965000000005
+            },
+            {
+              "before_ms": 40.462600000000066,
+              "after_ms": 68.52694999999994
+            },
+            {
+              "before_ms": 59.044349999999895,
+              "after_ms": 53.57465000000002
+            },
+            {
+              "before_ms": 58.161350000000084,
+              "after_ms": 56.99415000000022
+            },
+            {
+              "before_ms": 40.43105000000014,
+              "after_ms": 43.04430000000002
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 16.06224999999995,
+          "after_ms": 2.3743500000000495,
+          "speedup": 6.764904079010935,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 19.48615000000018,
+              "after_ms": 6.41840000000002
+            },
+            {
+              "before_ms": 17.464449999999943,
+              "after_ms": 2.466400000000249
+            },
+            {
+              "before_ms": 16.729700000000093,
+              "after_ms": 3.3301000000001295
+            },
+            {
+              "before_ms": 14.661299999999983,
+              "after_ms": 2.2676500000000033
+            },
+            {
+              "before_ms": 14.025499999999965,
+              "after_ms": 1.848549999999932
+            },
+            {
+              "before_ms": 14.674850000000106,
+              "after_ms": 2.2830500000002303
+            },
+            {
+              "before_ms": 15.335800000000063,
+              "after_ms": 4.006799999999885
+            },
+            {
+              "before_ms": 18.05659999999989,
+              "after_ms": 2.3640000000000327
+            },
+            {
+              "before_ms": 16.06224999999995,
+              "after_ms": 2.3743500000000495
+            }
+          ]
+        },
+        "construction": {
+          "before_ms": 6.261449999999968,
+          "after_ms": 5.61485000000016,
+          "speedup": 1.115158908964583,
+          "paired_wins": 7,
+          "samples": [
+            {
+              "before_ms": 8.316649999999981,
+              "after_ms": 9.222050000000081
+            },
+            {
+              "before_ms": 8.909000000000106,
+              "after_ms": 6.902649999999994
+            },
+            {
+              "before_ms": 11.38435000000004,
+              "after_ms": 7.511799999999994
+            },
+            {
+              "before_ms": 6.1792499999996835,
+              "after_ms": 6.809450000000197
+            },
+            {
+              "before_ms": 6.86220000000003,
+              "after_ms": 5.429650000000038
+            },
+            {
+              "before_ms": 5.67534999999998,
+              "after_ms": 5.61485000000016
+            },
+            {
+              "before_ms": 6.261449999999968,
+              "after_ms": 4.4227499999997235
+            },
+            {
+              "before_ms": 5.8740999999999985,
+              "after_ms": 4.745349999999917
+            },
+            {
+              "before_ms": 5.224100000000135,
+              "after_ms": 4.510899999999992
+            }
+          ]
+        },
+        "contract": "Exact order/identity, duplicate entries, strict overlap, snapshotted bounds, fresh query arrays"
+      },
+      "target_sha256": "e430379394024ad08e150b3f32299885343dd666ff3a0860ece14f252ce9011a"
+    },
+    {
+      "run_id": "union-r1-window",
+      "task": "union",
+      "repetition": 1,
+      "arm": "window",
+      "behavior": true,
+      "useful_optimization": true,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 44056.1605,
+      "model_calls": 4,
+      "usage": {
+        "uncached_input": 12,
+        "cache_read": 17453,
+        "cache_write": 7662,
+        "output": 997,
+        "total_input": 25127,
+        "total_tokens": 26124,
+        "missing_usage": 0,
+        "usd_estimate": 0.00163198
+      },
+      "tool_calls": {
+        "read": 1,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 156,
+        "total": 156,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 90.24244999999996,
+          "after_ms": 33.66055000000006,
+          "speedup": 2.680955896442566,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 84.1807500000001,
+              "after_ms": 29.57445000000007
+            },
+            {
+              "before_ms": 84.33360000000005,
+              "after_ms": 31.24059999999986
+            },
+            {
+              "before_ms": 91.64789999999994,
+              "after_ms": 30.143499999999904
+            },
+            {
+              "before_ms": 90.24244999999996,
+              "after_ms": 33.66055000000006
+            },
+            {
+              "before_ms": 100.79755000000023,
+              "after_ms": 40.80049999999983
+            },
+            {
+              "before_ms": 127.95029999999997,
+              "after_ms": 35.712499999999864
+            },
+            {
+              "before_ms": 90.93380000000002,
+              "after_ms": 34.214699999999766
+            },
+            {
+              "before_ms": 89.67820000000006,
+              "after_ms": 33.72784999999976
+            },
+            {
+              "before_ms": 73.35604999999987,
+              "after_ms": 25.398100000000113
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 22.669800000000123,
+          "after_ms": 3.7605499999999665,
+          "speedup": 6.0283203254843905,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 21.05410000000029,
+              "after_ms": 3.451100000000224
+            },
+            {
+              "before_ms": 21.457300000000032,
+              "after_ms": 4.4456499999996595
+            },
+            {
+              "before_ms": 24.98169999999982,
+              "after_ms": 3.5010999999999513
+            },
+            {
+              "before_ms": 27.2515999999996,
+              "after_ms": 3.7605499999999665
+            },
+            {
+              "before_ms": 27.119300000000294,
+              "after_ms": 5.407500000000255
+            },
+            {
+              "before_ms": 31.45580000000018,
+              "after_ms": 5.613950000000386
+            },
+            {
+              "before_ms": 22.669800000000123,
+              "after_ms": 3.7089500000001863
+            },
+            {
+              "before_ms": 16.11185000000023,
+              "after_ms": 3.2547999999997046
+            },
+            {
+              "before_ms": 19.40274999999974,
+              "after_ms": 5.217200000000048
+            }
+          ]
+        },
+        "contract": "Exact cells/order/merging/epsilon; no input mutation; fresh output; other exported callers unchanged"
+      },
+      "target_sha256": "3fa4d7ff27613b1ca59df88c358bf9d2b7901e10fb53bc3de476911d0562d3c4"
+    },
+    {
+      "run_id": "union-r1-ast",
+      "task": "union",
+      "repetition": 1,
+      "arm": "ast",
+      "behavior": true,
+      "useful_optimization": true,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 67767.9447,
+      "model_calls": 8,
+      "usage": {
+        "uncached_input": 24,
+        "cache_read": 40907,
+        "cache_write": 8068,
+        "output": 1466,
+        "total_input": 48999,
+        "total_tokens": 50465,
+        "missing_usage": 0,
+        "usd_estimate": 0.00215297
+      },
+      "tool_calls": {
+        "todo_write": 3,
+        "read": 2,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 156,
+        "total": 156,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 149.4755500000001,
+          "after_ms": 55.134599999999864,
+          "speedup": 2.711102465602371,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 107.72834999999986,
+              "after_ms": 33.450649999999996
+            },
+            {
+              "before_ms": 93.33474999999999,
+              "after_ms": 32.4692500000001
+            },
+            {
+              "before_ms": 133.5353,
+              "after_ms": 44.03419999999983
+            },
+            {
+              "before_ms": 176.79860000000008,
+              "after_ms": 60.80839999999989
+            },
+            {
+              "before_ms": 187.27499999999986,
+              "after_ms": 60.585000000000036
+            },
+            {
+              "before_ms": 149.4755500000001,
+              "after_ms": 66.36695000000009
+            },
+            {
+              "before_ms": 223.1868999999997,
+              "after_ms": 55.134599999999864
+            },
+            {
+              "before_ms": 176.13659999999982,
+              "after_ms": 56.62604999999985
+            },
+            {
+              "before_ms": 142.71019999999953,
+              "after_ms": 47.60690000000022
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 33.165700000000015,
+          "after_ms": 5.987999999999829,
+          "speedup": 5.538694054776379,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 33.165700000000015,
+              "after_ms": 5.9402500000001055
+            },
+            {
+              "before_ms": 35.39694999999983,
+              "after_ms": 6.275000000000091
+            },
+            {
+              "before_ms": 33.94850000000042,
+              "after_ms": 6.562350000000151
+            },
+            {
+              "before_ms": 33.28939999999966,
+              "after_ms": 6.031300000000101
+            },
+            {
+              "before_ms": 32.06604999999945,
+              "after_ms": 5.987999999999829
+            },
+            {
+              "before_ms": 25.281350000000202,
+              "after_ms": 4.275900000000092
+            },
+            {
+              "before_ms": 25.440700000000106,
+              "after_ms": 4.644350000000031
+            },
+            {
+              "before_ms": 32.14800000000014,
+              "after_ms": 4.916900000000169
+            },
+            {
+              "before_ms": 37.01809999999978,
+              "after_ms": 8.39895000000024
+            }
+          ]
+        },
+        "contract": "Exact cells/order/merging/epsilon; no input mutation; fresh output; other exported callers unchanged"
+      },
+      "target_sha256": "7ee4e8345019eed21f2d9a27be5fe1aa46dd39ab918dc6fd52e57ddd54bc1be2"
+    },
+    {
+      "run_id": "union-r1-none",
+      "task": "union",
+      "repetition": 1,
+      "arm": "none",
+      "behavior": true,
+      "useful_optimization": true,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 20464.312199999986,
+      "model_calls": 4,
+      "usage": {
+        "uncached_input": 12,
+        "cache_read": 14081,
+        "cache_write": 6634,
+        "output": 1135,
+        "total_input": 20727,
+        "total_tokens": 21862,
+        "missing_usage": 0,
+        "usd_estimate": 0.00153876
+      },
+      "tool_calls": {
+        "read": 1,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 156,
+        "total": 156,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 81.52195000000006,
+          "after_ms": 31.986449999999877,
+          "speedup": 2.548640127303917,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 91.61175000000003,
+              "after_ms": 35.85874999999987
+            },
+            {
+              "before_ms": 75.3300999999999,
+              "after_ms": 25.198699999999917
+            },
+            {
+              "before_ms": 70.77244999999994,
+              "after_ms": 25.409400000000005
+            },
+            {
+              "before_ms": 81.52195000000006,
+              "after_ms": 34.34400000000005
+            },
+            {
+              "before_ms": 83.5876000000003,
+              "after_ms": 25.65054999999984
+            },
+            {
+              "before_ms": 72.74439999999981,
+              "after_ms": 31.986449999999877
+            },
+            {
+              "before_ms": 84.60340000000042,
+              "after_ms": 32.75285000000031
+            },
+            {
+              "before_ms": 112.86810000000014,
+              "after_ms": 41.16310000000021
+            },
+            {
+              "before_ms": 74.32790000000023,
+              "after_ms": 26.49040000000059
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 16.872599999999693,
+          "after_ms": 2.4986000000003514,
+          "speedup": 6.752821580083775,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 21.773399999999583,
+              "after_ms": 3.4412500000003092
+            },
+            {
+              "before_ms": 27.70600000000013,
+              "after_ms": 3.739400000000387
+            },
+            {
+              "before_ms": 25.717099999999846,
+              "after_ms": 4.2504500000004555
+            },
+            {
+              "before_ms": 17.345400000000154,
+              "after_ms": 2.3296000000000276
+            },
+            {
+              "before_ms": 16.566900000000714,
+              "after_ms": 2.3825999999999112
+            },
+            {
+              "before_ms": 16.251199999999244,
+              "after_ms": 2.4986000000003514
+            },
+            {
+              "before_ms": 16.446850000000268,
+              "after_ms": 2.569500000000062
+            },
+            {
+              "before_ms": 16.872599999999693,
+              "after_ms": 2.4061500000002525
+            },
+            {
+              "before_ms": 16.534999999999854,
+              "after_ms": 2.4603500000002896
+            }
+          ]
+        },
+        "contract": "Exact cells/order/merging/epsilon; no input mutation; fresh output; other exported callers unchanged"
+      },
+      "target_sha256": "2dedf155ab5a171ce071abd2655ae64501ee44b434ea93c7bff2f9239ec00169"
+    },
+    {
+      "run_id": "union-r1-unit",
+      "task": "union",
+      "repetition": 1,
+      "arm": "unit",
+      "behavior": true,
+      "useful_optimization": true,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 55276.730899999966,
+      "model_calls": 6,
+      "usage": {
+        "uncached_input": 18,
+        "cache_read": 27477,
+        "cache_write": 7439,
+        "output": 2675,
+        "total_input": 34934,
+        "total_tokens": 37609,
+        "missing_usage": 0,
+        "usd_estimate": 0.0025439449999999997
+      },
+      "tool_calls": {
+        "edit": 3,
+        "read": 1,
+        "project_checks": 2
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 156,
+        "total": 156,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 64.9700499999999,
+          "after_ms": 21.35349999999994,
+          "speedup": 3.0425948907673255,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 64.9700499999999,
+              "after_ms": 21.12245000000007
+            },
+            {
+              "before_ms": 68.21519999999998,
+              "after_ms": 23.4067
+            },
+            {
+              "before_ms": 64.49090000000001,
+              "after_ms": 20.594100000000026
+            },
+            {
+              "before_ms": 63.97785000000022,
+              "after_ms": 20.752949999999828
+            },
+            {
+              "before_ms": 62.91534999999999,
+              "after_ms": 20.37799999999993
+            },
+            {
+              "before_ms": 64.10270000000014,
+              "after_ms": 21.35349999999994
+            },
+            {
+              "before_ms": 68.57484999999974,
+              "after_ms": 21.4987000000001
+            },
+            {
+              "before_ms": 77.08345000000008,
+              "after_ms": 26.46010000000001
+            },
+            {
+              "before_ms": 71.85675000000015,
+              "after_ms": 22.873800000000074
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 18.00780000000009,
+          "after_ms": 2.2880999999997584,
+          "speedup": 7.870197980858349,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 18.110850000000028,
+              "after_ms": 2.901650000000018
+            },
+            {
+              "before_ms": 21.2521499999998,
+              "after_ms": 3.3767499999999018
+            },
+            {
+              "before_ms": 21.16605000000004,
+              "after_ms": 3.5335999999999785
+            },
+            {
+              "before_ms": 19.283349999999928,
+              "after_ms": 3.3153500000000804
+            },
+            {
+              "before_ms": 16.14635000000021,
+              "after_ms": 2.2880999999997584
+            },
+            {
+              "before_ms": 16.22329999999988,
+              "after_ms": 2.2373499999998785
+            },
+            {
+              "before_ms": 18.00780000000009,
+              "after_ms": 2.207499999999982
+            },
+            {
+              "before_ms": 15.872199999999793,
+              "after_ms": 2.1756000000000313
+            },
+            {
+              "before_ms": 15.823250000000144,
+              "after_ms": 2.1323999999999614
+            }
+          ]
+        },
+        "contract": "Exact cells/order/merging/epsilon; no input mutation; fresh output; other exported callers unchanged"
+      },
+      "target_sha256": "8c5ea82ed8d7e0121423cc1cfc6d1b21072c6ad372cbfb102c904a5db3a5e6b6"
+    },
+    {
+      "run_id": "horizontal-r2-window",
+      "task": "horizontal",
+      "repetition": 2,
+      "arm": "window",
+      "behavior": true,
+      "useful_optimization": false,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 77306.37890000001,
+      "model_calls": 17,
+      "usage": {
+        "uncached_input": 51,
+        "cache_read": 110434,
+        "cache_write": 11060,
+        "output": 4066,
+        "total_input": 121545,
+        "total_tokens": 125611,
+        "missing_usage": 0,
+        "usd_estimate": 0.00452494
+      },
+      "tool_calls": {
+        "todo_write": 3,
+        "read": 2,
+        "edit": 8,
+        "project_checks": 3
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 164,
+        "total": 164,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 16.182250000000067,
+          "after_ms": 15.8352000000001,
+          "speedup": 1.0219163635445063,
+          "paired_wins": 7,
+          "samples": [
+            {
+              "before_ms": 18.620150000000024,
+              "after_ms": 20.124199999999973
+            },
+            {
+              "before_ms": 21.09635000000003,
+              "after_ms": 20.003000000000043
+            },
+            {
+              "before_ms": 16.182250000000067,
+              "after_ms": 15.51660000000004
+            },
+            {
+              "before_ms": 16.396650000000022,
+              "after_ms": 15.8352000000001
+            },
+            {
+              "before_ms": 18.076549999999997,
+              "after_ms": 16.84839999999997
+            },
+            {
+              "before_ms": 15.126850000000104,
+              "after_ms": 15.844899999999939
+            },
+            {
+              "before_ms": 16.091749999999934,
+              "after_ms": 15.675299999999993
+            },
+            {
+              "before_ms": 15.231899999999996,
+              "after_ms": 14.74834999999996
+            },
+            {
+              "before_ms": 15.2029,
+              "after_ms": 14.541500000000042
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 12.355000000000018,
+          "after_ms": 1.523149999999987,
+          "speedup": 8.111479499721055,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 12.048649999999952,
+              "after_ms": 2.196199999999976
+            },
+            {
+              "before_ms": 12.214750000000095,
+              "after_ms": 1.1739000000000033
+            },
+            {
+              "before_ms": 12.355000000000018,
+              "after_ms": 1.523149999999987
+            },
+            {
+              "before_ms": 12.498100000000022,
+              "after_ms": 2.0330999999999904
+            },
+            {
+              "before_ms": 12.217550000000074,
+              "after_ms": 1.4883500000000822
+            },
+            {
+              "before_ms": 12.339749999999981,
+              "after_ms": 1.2314999999999827
+            },
+            {
+              "before_ms": 12.48014999999998,
+              "after_ms": 1.801499999999919
+            },
+            {
+              "before_ms": 12.874249999999961,
+              "after_ms": 2.1650500000000648
+            },
+            {
+              "before_ms": 12.47264999999993,
+              "after_ms": 1.2149499999999307
+            }
+          ]
+        },
+        "construction": {
+          "before_ms": 4.3647500000001855,
+          "after_ms": 4.6021500000000515,
+          "speedup": 0.9484154145345407,
+          "paired_wins": 2,
+          "samples": [
+            {
+              "before_ms": 5.8954499999999825,
+              "after_ms": 5.640999999999963
+            },
+            {
+              "before_ms": 4.479649999999992,
+              "after_ms": 5.232400000000098
+            },
+            {
+              "before_ms": 4.264650000000074,
+              "after_ms": 4.332400000000121
+            },
+            {
+              "before_ms": 4.2411500000000615,
+              "after_ms": 4.6021500000000515
+            },
+            {
+              "before_ms": 4.113150000000019,
+              "after_ms": 4.559700000000021
+            },
+            {
+              "before_ms": 4.507200000000012,
+              "after_ms": 4.619399999999928
+            },
+            {
+              "before_ms": 4.3647500000001855,
+              "after_ms": 4.52475000000004
+            },
+            {
+              "before_ms": 4.124499999999898,
+              "after_ms": 4.848550000000159
+            },
+            {
+              "before_ms": 4.488750000000209,
+              "after_ms": 4.439650000000029
+            }
+          ]
+        },
+        "contract": "Exact order/identity, duplicate entries, strict overlap, snapshotted bounds, fresh query arrays"
+      },
+      "target_sha256": "445dc356d33a7d1a23aa5d0694acb8a020b761e9e4a0b5dd1e6abf0c762eedff"
+    },
+    {
+      "run_id": "horizontal-r2-ast",
+      "task": "horizontal",
+      "repetition": 2,
+      "arm": "ast",
+      "behavior": true,
+      "useful_optimization": false,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 96574.50800000003,
+      "model_calls": 14,
+      "usage": {
+        "uncached_input": 42,
+        "cache_read": 81907,
+        "cache_write": 9812,
+        "output": 3790,
+        "total_input": 91761,
+        "total_tokens": 95551,
+        "missing_usage": 0,
+        "usd_estimate": 0.00394477
+      },
+      "tool_calls": {
+        "todo_write": 3,
+        "read": 1,
+        "edit": 5,
+        "project_checks": 3,
+        "grep": 1
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 164,
+        "total": 164,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 18.574899999999957,
+          "after_ms": 19.649650000000065,
+          "speedup": 0.9453043692890151,
+          "paired_wins": 4,
+          "samples": [
+            {
+              "before_ms": 19.048999999999864,
+              "after_ms": 17.031150000000025
+            },
+            {
+              "before_ms": 21.45114999999987,
+              "after_ms": 22.951999999999998
+            },
+            {
+              "before_ms": 17.212549999999965,
+              "after_ms": 18.198750000000018
+            },
+            {
+              "before_ms": 17.08235000000002,
+              "after_ms": 17.791499999999928
+            },
+            {
+              "before_ms": 18.574899999999957,
+              "after_ms": 19.75229999999999
+            },
+            {
+              "before_ms": 16.38519999999994,
+              "after_ms": 21.030900000000088
+            },
+            {
+              "before_ms": 16.66284999999982,
+              "after_ms": 16.44959999999992
+            },
+            {
+              "before_ms": 19.959799999999973,
+              "after_ms": 19.649650000000065
+            },
+            {
+              "before_ms": 20.788400000000024,
+              "after_ms": 19.9520500000001
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 12.91115000000002,
+          "after_ms": 1.529449999999997,
+          "speedup": 8.441694726862627,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 12.425599999999918,
+              "after_ms": 2.0323499999999513
+            },
+            {
+              "before_ms": 12.801750000000084,
+              "after_ms": 1.0800999999999021
+            },
+            {
+              "before_ms": 12.77760000000012,
+              "after_ms": 1.529449999999997
+            },
+            {
+              "before_ms": 12.925200000000018,
+              "after_ms": 1.5733000000000175
+            },
+            {
+              "before_ms": 13.015800000000013,
+              "after_ms": 1.2262499999999363
+            },
+            {
+              "before_ms": 14.356499999999983,
+              "after_ms": 1.2782499999998436
+            },
+            {
+              "before_ms": 12.894699999999943,
+              "after_ms": 1.5667499999999563
+            },
+            {
+              "before_ms": 12.91115000000002,
+              "after_ms": 1.6537999999999329
+            },
+            {
+              "before_ms": 13.158000000000015,
+              "after_ms": 1.019900000000007
+            }
+          ]
+        },
+        "construction": {
+          "before_ms": 4.810799999999972,
+          "after_ms": 5.4227000000003045,
+          "speedup": 0.887159533073875,
+          "paired_wins": 5,
+          "samples": [
+            {
+              "before_ms": 5.444999999999936,
+              "after_ms": 5.4227000000003045
+            },
+            {
+              "before_ms": 4.683100000000195,
+              "after_ms": 4.584299999999757
+            },
+            {
+              "before_ms": 4.3448000000000775,
+              "after_ms": 5.336999999999989
+            },
+            {
+              "before_ms": 4.475849999999809,
+              "after_ms": 5.641300000000001
+            },
+            {
+              "before_ms": 4.810799999999972,
+              "after_ms": 5.042349999999942
+            },
+            {
+              "before_ms": 7.548350000000028,
+              "after_ms": 5.528600000000097
+            },
+            {
+              "before_ms": 6.821149999999761,
+              "after_ms": 6.679750000000013
+            },
+            {
+              "before_ms": 4.605549999999994,
+              "after_ms": 5.717799999999897
+            },
+            {
+              "before_ms": 5.1448999999997795,
+              "after_ms": 4.956649999999854
+            }
+          ]
+        },
+        "contract": "Exact order/identity, duplicate entries, strict overlap, snapshotted bounds, fresh query arrays"
+      },
+      "target_sha256": "69de7a26c4e0c474b9a543a0c42e6a616fee390faa8307222771d8bdf3a678bc"
+    },
+    {
+      "run_id": "horizontal-r2-none",
+      "task": "horizontal",
+      "repetition": 2,
+      "arm": "none",
+      "behavior": true,
+      "useful_optimization": false,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 53084.74860000005,
+      "model_calls": 12,
+      "usage": {
+        "uncached_input": 36,
+        "cache_read": 56261,
+        "cache_write": 8350,
+        "output": 3027,
+        "total_input": 64647,
+        "total_tokens": 67674,
+        "missing_usage": 0,
+        "usd_estimate": 0.00312346
+      },
+      "tool_calls": {
+        "todo_write": 3,
+        "glob": 1,
+        "read": 1,
+        "edit": 3,
+        "project_checks": 3
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 164,
+        "total": 164,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 22.43539999999996,
+          "after_ms": 23.727750000000015,
+          "speedup": 0.9455342373381355,
+          "paired_wins": 2,
+          "samples": [
+            {
+              "before_ms": 32.88329999999996,
+              "after_ms": 32.63330000000008
+            },
+            {
+              "before_ms": 43.24585000000002,
+              "after_ms": 47.16170000000011
+            },
+            {
+              "before_ms": 24.827650000000062,
+              "after_ms": 21.340650000000096
+            },
+            {
+              "before_ms": 17.019149999999968,
+              "after_ms": 20.588449999999966
+            },
+            {
+              "before_ms": 24.610950000000003,
+              "after_ms": 28.113800000000083
+            },
+            {
+              "before_ms": 22.287000000000035,
+              "after_ms": 23.727750000000015
+            },
+            {
+              "before_ms": 22.43539999999996,
+              "after_ms": 27.901550000000043
+            },
+            {
+              "before_ms": 19.29214999999988,
+              "after_ms": 22.8296499999999
+            },
+            {
+              "before_ms": 19.560449999999946,
+              "after_ms": 20.074350000000095
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 18.374300000000176,
+          "after_ms": 10.427099999999882,
+          "speedup": 1.7621678127188176,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 13.017149999999674,
+              "after_ms": 6.180949999999939
+            },
+            {
+              "before_ms": 13.397549999999683,
+              "after_ms": 8.210850000000164
+            },
+            {
+              "before_ms": 18.374300000000176,
+              "after_ms": 9.052050000000236
+            },
+            {
+              "before_ms": 19.275750000000016,
+              "after_ms": 10.427099999999882
+            },
+            {
+              "before_ms": 18.998849999999948,
+              "after_ms": 11.627150000000029
+            },
+            {
+              "before_ms": 16.69845000000032,
+              "after_ms": 11.201499999999896
+            },
+            {
+              "before_ms": 17.44809999999984,
+              "after_ms": 11.897050000000036
+            },
+            {
+              "before_ms": 20.049900000000207,
+              "after_ms": 11.456950000000234
+            },
+            {
+              "before_ms": 20.289649999999938,
+              "after_ms": 8.629799999999932
+            }
+          ]
+        },
+        "construction": {
+          "before_ms": 7.83524999999986,
+          "after_ms": 6.407249999999749,
+          "speedup": 1.22287252721529,
+          "paired_wins": 8,
+          "samples": [
+            {
+              "before_ms": 15.317250000000058,
+              "after_ms": 10.858099999999922
+            },
+            {
+              "before_ms": 7.978599999999915,
+              "after_ms": 7.66820000000007
+            },
+            {
+              "before_ms": 9.899599999999737,
+              "after_ms": 10.44914999999969
+            },
+            {
+              "before_ms": 7.561849999999822,
+              "after_ms": 5.96205000000009
+            },
+            {
+              "before_ms": 6.390799999999899,
+              "after_ms": 4.769749999999931
+            },
+            {
+              "before_ms": 5.526050000000168,
+              "after_ms": 4.519149999999854
+            },
+            {
+              "before_ms": 5.925050000000283,
+              "after_ms": 4.694699999999784
+            },
+            {
+              "before_ms": 7.83524999999986,
+              "after_ms": 6.94159999999988
+            },
+            {
+              "before_ms": 7.995100000000093,
+              "after_ms": 6.407249999999749
+            }
+          ]
+        },
+        "contract": "Exact order/identity, duplicate entries, strict overlap, snapshotted bounds, fresh query arrays"
+      },
+      "target_sha256": "4f66046a1d0b40dea649c7877ca2d4df2566f50f34818cf37ea846669bbe0fb9"
+    },
+    {
+      "run_id": "horizontal-r2-unit",
+      "task": "horizontal",
+      "repetition": 2,
+      "arm": "unit",
+      "behavior": true,
+      "useful_optimization": false,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 99946.67219999991,
+      "model_calls": 19,
+      "usage": {
+        "uncached_input": 57,
+        "cache_read": 129075,
+        "cache_write": 11422,
+        "output": 4741,
+        "total_input": 140554,
+        "total_tokens": 145295,
+        "missing_usage": 0,
+        "usd_estimate": 0.0050947
+      },
+      "tool_calls": {
+        "todo_write": 3,
+        "read": 2,
+        "edit": 9,
+        "project_checks": 4
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 164,
+        "total": 164,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 56.78950000000009,
+          "after_ms": 59.82015000000024,
+          "speedup": 0.9493373052391186,
+          "paired_wins": 1,
+          "samples": [
+            {
+              "before_ms": 58.422649999999976,
+              "after_ms": 71.97479999999996
+            },
+            {
+              "before_ms": 62.940700000000106,
+              "after_ms": 63.97019999999998
+            },
+            {
+              "before_ms": 56.337499999999864,
+              "after_ms": 62.467350000000124
+            },
+            {
+              "before_ms": 56.78950000000009,
+              "after_ms": 59.82015000000024
+            },
+            {
+              "before_ms": 57.28654999999981,
+              "after_ms": 62.43749999999977
+            },
+            {
+              "before_ms": 41.40370000000007,
+              "after_ms": 49.981649999999945
+            },
+            {
+              "before_ms": 37.01735000000008,
+              "after_ms": 50.559200000000374
+            },
+            {
+              "before_ms": 58.34629999999993,
+              "after_ms": 57.33420000000001
+            },
+            {
+              "before_ms": 38.85730000000012,
+              "after_ms": 49.12384999999995
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 22.55769999999984,
+          "after_ms": 8.13610000000017,
+          "speedup": 2.772544585243467,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 25.217249999999694,
+              "after_ms": 10.707349999999678
+            },
+            {
+              "before_ms": 22.751549999999952,
+              "after_ms": 11.831749999999829
+            },
+            {
+              "before_ms": 24.176350000000184,
+              "after_ms": 7.9956999999999425
+            },
+            {
+              "before_ms": 25.524399999999787,
+              "after_ms": 8.540800000000218
+            },
+            {
+              "before_ms": 22.55769999999984,
+              "after_ms": 8.512700000000223
+            },
+            {
+              "before_ms": 22.348199999999906,
+              "after_ms": 8.13610000000017
+            },
+            {
+              "before_ms": 20.426150000000234,
+              "after_ms": 6.060249999999996
+            },
+            {
+              "before_ms": 20.76195000000007,
+              "after_ms": 2.5529499999997824
+            },
+            {
+              "before_ms": 17.91175000000021,
+              "after_ms": 4.089100000000144
+            }
+          ]
+        },
+        "construction": {
+          "before_ms": 9.23700000000008,
+          "after_ms": 6.911750000000211,
+          "speedup": 1.3364198647230872,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 9.682149999999638,
+              "after_ms": 6.911750000000211
+            },
+            {
+              "before_ms": 6.147899999999936,
+              "after_ms": 4.5578999999997905
+            },
+            {
+              "before_ms": 7.800899999999729,
+              "after_ms": 5.561849999999595
+            },
+            {
+              "before_ms": 11.679900000000089,
+              "after_ms": 7.523049999999785
+            },
+            {
+              "before_ms": 9.23700000000008,
+              "after_ms": 5.775150000000394
+            },
+            {
+              "before_ms": 10.81354999999985,
+              "after_ms": 8.012099999999919
+            },
+            {
+              "before_ms": 7.8421000000003005,
+              "after_ms": 6.827150000000074
+            },
+            {
+              "before_ms": 8.826100000000224,
+              "after_ms": 8.10739999999987
+            },
+            {
+              "before_ms": 11.066949999999906,
+              "after_ms": 9.814350000000104
+            }
+          ]
+        },
+        "contract": "Exact order/identity, duplicate entries, strict overlap, snapshotted bounds, fresh query arrays"
+      },
+      "target_sha256": "f98de1cad8a8ad7057b5214541b3a2953ffd39bc4febcc837913be9e29ec6944"
+    },
+    {
+      "run_id": "union-r2-window",
+      "task": "union",
+      "repetition": 2,
+      "arm": "window",
+      "behavior": true,
+      "useful_optimization": true,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 75618.58990000002,
+      "model_calls": 4,
+      "usage": {
+        "uncached_input": 12,
+        "cache_read": 17421,
+        "cache_write": 7726,
+        "output": 1244,
+        "total_input": 25159,
+        "total_tokens": 26403,
+        "missing_usage": 0,
+        "usd_estimate": 0.0017631600000000002
+      },
+      "tool_calls": {
+        "read": 1,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 156,
+        "total": 156,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 142.82015,
+          "after_ms": 53.54145000000017,
+          "speedup": 2.66746884890117,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 116.08270000000016,
+              "after_ms": 39.685849999999846
+            },
+            {
+              "before_ms": 134.10024999999996,
+              "after_ms": 39.586250000000064
+            },
+            {
+              "before_ms": 120.39730000000009,
+              "after_ms": 41.17579999999998
+            },
+            {
+              "before_ms": 163.06709999999998,
+              "after_ms": 53.95844999999986
+            },
+            {
+              "before_ms": 163.15670000000023,
+              "after_ms": 55.48379999999952
+            },
+            {
+              "before_ms": 137.5956000000001,
+              "after_ms": 53.54145000000017
+            },
+            {
+              "before_ms": 145.99959999999965,
+              "after_ms": 57.78724999999986
+            },
+            {
+              "before_ms": 153.75495,
+              "after_ms": 45.19579999999996
+            },
+            {
+              "before_ms": 142.82015,
+              "after_ms": 61.57470000000012
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 23.603500000000167,
+          "after_ms": 3.2798499999998967,
+          "speedup": 7.1965181334515025,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 27.134000000000015,
+              "after_ms": 4.1580000000003565
+            },
+            {
+              "before_ms": 22.41919999999982,
+              "after_ms": 2.673649999999725
+            },
+            {
+              "before_ms": 23.603500000000167,
+              "after_ms": 3.2192999999997483
+            },
+            {
+              "before_ms": 27.46074999999928,
+              "after_ms": 3.2798499999998967
+            },
+            {
+              "before_ms": 22.532399999999598,
+              "after_ms": 3.2915500000003703
+            },
+            {
+              "before_ms": 22.43294999999989,
+              "after_ms": 4.339999999999691
+            },
+            {
+              "before_ms": 21.753249999999753,
+              "after_ms": 2.913050000000112
+            },
+            {
+              "before_ms": 28.70219999999972,
+              "after_ms": 2.6345000000001164
+            },
+            {
+              "before_ms": 26.796499999999924,
+              "after_ms": 4.559799999999996
+            }
+          ]
+        },
+        "contract": "Exact cells/order/merging/epsilon; no input mutation; fresh output; other exported callers unchanged"
+      },
+      "target_sha256": "aae4e75faa2b40449a3ef745382560d9141650b06a67915303943e06df9e86eb"
+    },
+    {
+      "run_id": "union-r2-unit",
+      "task": "union",
+      "repetition": 2,
+      "arm": "unit",
+      "behavior": true,
+      "useful_optimization": true,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 42222.00640000007,
+      "model_calls": 4,
+      "usage": {
+        "uncached_input": 12,
+        "cache_read": 15952,
+        "cache_write": 7367,
+        "output": 1453,
+        "total_input": 23331,
+        "total_tokens": 24784,
+        "missing_usage": 0,
+        "usd_estimate": 0.001808095
+      },
+      "tool_calls": {
+        "read": 1,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 156,
+        "total": 156,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 91.34984999999983,
+          "after_ms": 30.34470000000033,
+          "speedup": 3.010405441477386,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 151.17345000000012,
+              "after_ms": 50.28805
+            },
+            {
+              "before_ms": 134.06899999999996,
+              "after_ms": 48.53695000000016
+            },
+            {
+              "before_ms": 84.40880000000016,
+              "after_ms": 25.646549999999934
+            },
+            {
+              "before_ms": 74.09285000000023,
+              "after_ms": 25.451049999999896
+            },
+            {
+              "before_ms": 76.80980000000022,
+              "after_ms": 31.359149999999772
+            },
+            {
+              "before_ms": 121.83330000000024,
+              "after_ms": 35.32379999999989
+            },
+            {
+              "before_ms": 97.24230000000011,
+              "after_ms": 29.010899999999765
+            },
+            {
+              "before_ms": 86.24519999999984,
+              "after_ms": 30.34470000000033
+            },
+            {
+              "before_ms": 91.34984999999983,
+              "after_ms": 28.506549999999834
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 18.117299999999886,
+          "after_ms": 2.8132000000000517,
+          "speedup": 6.440103796388295,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 21.996399999999994,
+              "after_ms": 2.391149999999925
+            },
+            {
+              "before_ms": 17.448249999999916,
+              "after_ms": 2.248399999999492
+            },
+            {
+              "before_ms": 18.117299999999886,
+              "after_ms": 2.8132000000000517
+            },
+            {
+              "before_ms": 17.368200000000343,
+              "after_ms": 2.9731500000002598
+            },
+            {
+              "before_ms": 18.012250000000222,
+              "after_ms": 2.4226500000004307
+            },
+            {
+              "before_ms": 19.24805000000015,
+              "after_ms": 3.1913500000000568
+            },
+            {
+              "before_ms": 18.57609999999977,
+              "after_ms": 2.7779999999997926
+            },
+            {
+              "before_ms": 16.747849999999744,
+              "after_ms": 2.928599999999733
+            },
+            {
+              "before_ms": 20.119650000000092,
+              "after_ms": 3.320549999999457
+            }
+          ]
+        },
+        "contract": "Exact cells/order/merging/epsilon; no input mutation; fresh output; other exported callers unchanged"
+      },
+      "target_sha256": "0dc1695a28cdaa2887f5c7c6a95cc86d789b8b6b1e113e5f2258bdfc5880caf1"
+    },
+    {
+      "run_id": "union-r2-none",
+      "task": "union",
+      "repetition": 2,
+      "arm": "none",
+      "behavior": true,
+      "useful_optimization": true,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 24642.00789999985,
+      "model_calls": 4,
+      "usage": {
+        "uncached_input": 12,
+        "cache_read": 14322,
+        "cache_write": 7040,
+        "output": 1531,
+        "total_input": 21374,
+        "total_tokens": 22905,
+        "missing_usage": 0,
+        "usd_estimate": 0.00178992
+      },
+      "tool_calls": {
+        "read": 1,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 156,
+        "total": 156,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 89.21350000000007,
+          "after_ms": 36.67719999999986,
+          "speedup": 2.4323966933135686,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 81.50635,
+              "after_ms": 42.762950000000046
+            },
+            {
+              "before_ms": 89.21350000000007,
+              "after_ms": 28.712350000000015
+            },
+            {
+              "before_ms": 79.69994999999994,
+              "after_ms": 30.279449999999997
+            },
+            {
+              "before_ms": 80.03935000000001,
+              "after_ms": 28.17780000000016
+            },
+            {
+              "before_ms": 96.95990000000006,
+              "after_ms": 36.67719999999986
+            },
+            {
+              "before_ms": 113.63164999999981,
+              "after_ms": 37.40554999999995
+            },
+            {
+              "before_ms": 84.47855000000004,
+              "after_ms": 29.92235000000005
+            },
+            {
+              "before_ms": 126.56449999999995,
+              "after_ms": 44.357750000000124
+            },
+            {
+              "before_ms": 147.82699999999977,
+              "after_ms": 73.64174999999955
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 20.614450000000033,
+          "after_ms": 3.6308499999995547,
+          "speedup": 5.6775823842908855,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 19.044350000000577,
+              "after_ms": 2.740850000000137
+            },
+            {
+              "before_ms": 18.797649999999976,
+              "after_ms": 2.872400000000198
+            },
+            {
+              "before_ms": 21.42475000000013,
+              "after_ms": 3.0756499999997686
+            },
+            {
+              "before_ms": 18.850850000000264,
+              "after_ms": 3.911250000000109
+            },
+            {
+              "before_ms": 20.614450000000033,
+              "after_ms": 3.6308499999995547
+            },
+            {
+              "before_ms": 29.399099999999635,
+              "after_ms": 3.7388999999998305
+            },
+            {
+              "before_ms": 25.57420000000002,
+              "after_ms": 3.798200000000179
+            },
+            {
+              "before_ms": 20.434549999999945,
+              "after_ms": 4.607449999999972
+            },
+            {
+              "before_ms": 22.4045000000001,
+              "after_ms": 3.0917999999996937
+            }
+          ]
+        },
+        "contract": "Exact cells/order/merging/epsilon; no input mutation; fresh output; other exported callers unchanged"
+      },
+      "target_sha256": "9ef93298fe3e3a89f298ba6329da1bab16a0c36116fc780576b85121795b7817"
+    },
+    {
+      "run_id": "union-r2-ast",
+      "task": "union",
+      "repetition": 2,
+      "arm": "ast",
+      "behavior": true,
+      "useful_optimization": true,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 65807.24040000001,
+      "model_calls": 9,
+      "usage": {
+        "uncached_input": 27,
+        "cache_read": 47388,
+        "cache_write": 8430,
+        "output": 1799,
+        "total_input": 55845,
+        "total_tokens": 57644,
+        "missing_usage": 0,
+        "usd_estimate": 0.00242983
+      },
+      "tool_calls": {
+        "todo_write": 3,
+        "read": 2,
+        "edit": 2,
+        "project_checks": 1
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 156,
+        "total": 156,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 121.37829999999985,
+          "after_ms": 48.33719999999994,
+          "speedup": 2.5110742864708757,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 82.6597999999999,
+              "after_ms": 42.07225000000017
+            },
+            {
+              "before_ms": 99.95814999999993,
+              "after_ms": 45.475599999999986
+            },
+            {
+              "before_ms": 131.96789999999987,
+              "after_ms": 48.63304999999991
+            },
+            {
+              "before_ms": 110.9018500000002,
+              "after_ms": 52.65319999999997
+            },
+            {
+              "before_ms": 121.37829999999985,
+              "after_ms": 48.33719999999994
+            },
+            {
+              "before_ms": 128.46065,
+              "after_ms": 46.76050000000009
+            },
+            {
+              "before_ms": 111.82489999999962,
+              "after_ms": 40.10859999999957
+            },
+            {
+              "before_ms": 128.0388499999999,
+              "after_ms": 54.0282000000002
+            },
+            {
+              "before_ms": 142.83860000000004,
+              "after_ms": 65.68539999999939
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 30.013100000000122,
+          "after_ms": 6.5287500000004,
+          "speedup": 4.597066819835081,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 30.013100000000122,
+              "after_ms": 6.474150000000009
+            },
+            {
+              "before_ms": 30.05054999999993,
+              "after_ms": 6.521400000000085
+            },
+            {
+              "before_ms": 25.79944999999998,
+              "after_ms": 6.5287500000004
+            },
+            {
+              "before_ms": 27.30495000000019,
+              "after_ms": 7.3387000000002445
+            },
+            {
+              "before_ms": 35.74324999999999,
+              "after_ms": 7.173099999999977
+            },
+            {
+              "before_ms": 31.39989999999989,
+              "after_ms": 8.735650000000078
+            },
+            {
+              "before_ms": 33.87890000000016,
+              "after_ms": 6.363900000000285
+            },
+            {
+              "before_ms": 29.09265000000005,
+              "after_ms": 7.275349999999889
+            },
+            {
+              "before_ms": 26.088400000000092,
+              "after_ms": 5.470749999999953
+            }
+          ]
+        },
+        "contract": "Exact cells/order/merging/epsilon; no input mutation; fresh output; other exported callers unchanged"
+      },
+      "target_sha256": "4fc4c733acc53d74afd2ba6f7885bca51f1dea2528c090289eda382cd5dffded"
+    },
+    {
+      "run_id": "horizontal-r3-window",
+      "task": "horizontal",
+      "repetition": 3,
+      "arm": "window",
+      "behavior": true,
+      "useful_optimization": false,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 121749.26349999988,
+      "model_calls": 20,
+      "usage": {
+        "uncached_input": 60,
+        "cache_read": 149215,
+        "cache_write": 11809,
+        "output": 4342,
+        "total_input": 161084,
+        "total_tokens": 165426,
+        "missing_usage": 0,
+        "usd_estimate": 0.0051452749999999995
+      },
+      "tool_calls": {
+        "todo_write": 3,
+        "read": 1,
+        "cm_retrieve_context": 1,
+        "edit": 10,
+        "project_checks": 4
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 164,
+        "total": 164,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 52.042450000000144,
+          "after_ms": 54.32249999999999,
+          "speedup": 0.9580275208247071,
+          "paired_wins": 4,
+          "samples": [
+            {
+              "before_ms": 29.422599999999875,
+              "after_ms": 34.86124999999993
+            },
+            {
+              "before_ms": 28.413950000000114,
+              "after_ms": 42.179600000000164
+            },
+            {
+              "before_ms": 42.303300000000036,
+              "after_ms": 47.410899999999856
+            },
+            {
+              "before_ms": 35.581649999999854,
+              "after_ms": 45.324150000000145
+            },
+            {
+              "before_ms": 55.839950000000044,
+              "after_ms": 54.32249999999999
+            },
+            {
+              "before_ms": 52.042450000000144,
+              "after_ms": 58.52054999999973
+            },
+            {
+              "before_ms": 74.36374999999998,
+              "after_ms": 63.61740000000009
+            },
+            {
+              "before_ms": 65.10860000000002,
+              "after_ms": 64.94574999999986
+            },
+            {
+              "before_ms": 60.83320000000003,
+              "after_ms": 56.238549999999805
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 22.42980000000034,
+          "after_ms": 3.9947000000001935,
+          "speedup": 5.614889728890594,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 21.117899999999963,
+              "after_ms": 4.46425000000022
+            },
+            {
+              "before_ms": 23.03509999999983,
+              "after_ms": 3.5727999999999156
+            },
+            {
+              "before_ms": 21.12445000000025,
+              "after_ms": 4.054100000000062
+            },
+            {
+              "before_ms": 24.967949999999973,
+              "after_ms": 4.9184999999999945
+            },
+            {
+              "before_ms": 22.14540000000011,
+              "after_ms": 3.9947000000001935
+            },
+            {
+              "before_ms": 33.318100000000186,
+              "after_ms": 3.9910500000000866
+            },
+            {
+              "before_ms": 23.2653499999999,
+              "after_ms": 5.237599999999475
+            },
+            {
+              "before_ms": 20.807799999999588,
+              "after_ms": 3.5261500000001433
+            },
+            {
+              "before_ms": 22.42980000000034,
+              "after_ms": 2.9473000000002685
+            }
+          ]
+        },
+        "construction": {
+          "before_ms": 12.062750000000051,
+          "after_ms": 13.435700000000452,
+          "speedup": 0.8978132884776859,
+          "paired_wins": 4,
+          "samples": [
+            {
+              "before_ms": 24.693900000000212,
+              "after_ms": 28.882599999999456
+            },
+            {
+              "before_ms": 10.204349999999977,
+              "after_ms": 19.522750000000542
+            },
+            {
+              "before_ms": 21.808500000000095,
+              "after_ms": 17.73954999999978
+            },
+            {
+              "before_ms": 19.147750000000087,
+              "after_ms": 20.58030000000008
+            },
+            {
+              "before_ms": 15.739450000000033,
+              "after_ms": 13.435700000000452
+            },
+            {
+              "before_ms": 12.062750000000051,
+              "after_ms": 12.82864999999947
+            },
+            {
+              "before_ms": 10.795650000000023,
+              "after_ms": 13.194750000000113
+            },
+            {
+              "before_ms": 11.024849999999788,
+              "after_ms": 10.07654999999977
+            },
+            {
+              "before_ms": 7.9193499999996675,
+              "after_ms": 7.775549999999839
+            }
+          ]
+        },
+        "contract": "Exact order/identity, duplicate entries, strict overlap, snapshotted bounds, fresh query arrays"
+      },
+      "target_sha256": "b14bb79757356217f79248dcb5a0ab6440fb991000d0dc1d7a6bc5052bbc3e4d"
+    },
+    {
+      "run_id": "horizontal-r3-unit",
+      "task": "horizontal",
+      "repetition": 3,
+      "arm": "unit",
+      "behavior": true,
+      "useful_optimization": false,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 112917.70499999984,
+      "model_calls": 14,
+      "usage": {
+        "uncached_input": 42,
+        "cache_read": 85582,
+        "cache_write": 10650,
+        "output": 4080,
+        "total_input": 96274,
+        "total_tokens": 100354,
+        "missing_usage": 0,
+        "usd_estimate": 0.0042312700000000005
+      },
+      "tool_calls": {
+        "todo_write": 3,
+        "cm_retrieve_context": 1,
+        "read": 1,
+        "edit": 5,
+        "project_checks": 3
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 164,
+        "total": 164,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 24.92730000000006,
+          "after_ms": 34.961400000000026,
+          "speedup": 0.7129949029501118,
+          "paired_wins": 1,
+          "samples": [
+            {
+              "before_ms": 29.77634999999998,
+              "after_ms": 35.74189999999999
+            },
+            {
+              "before_ms": 24.655200000000036,
+              "after_ms": 34.961400000000026
+            },
+            {
+              "before_ms": 40.42900000000009,
+              "after_ms": 39.02330000000006
+            },
+            {
+              "before_ms": 38.43959999999993,
+              "after_ms": 50.23770000000002
+            },
+            {
+              "before_ms": 30.77595000000008,
+              "after_ms": 41.49885000000006
+            },
+            {
+              "before_ms": 24.92730000000006,
+              "after_ms": 28.077550000000087
+            },
+            {
+              "before_ms": 19.112949999999955,
+              "after_ms": 22.797250000000076
+            },
+            {
+              "before_ms": 16.823799999999892,
+              "after_ms": 22.381199999999808
+            },
+            {
+              "before_ms": 17.160300000000007,
+              "after_ms": 23.567450000000008
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 14.64384999999993,
+          "after_ms": 5.7111999999999625,
+          "speedup": 2.564058341504417,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 14.050550000000158,
+              "after_ms": 4.904700000000048
+            },
+            {
+              "before_ms": 13.679599999999937,
+              "after_ms": 4.968800000000101
+            },
+            {
+              "before_ms": 12.934950000000072,
+              "after_ms": 4.694750000000113
+            },
+            {
+              "before_ms": 14.308350000000019,
+              "after_ms": 5.132699999999886
+            },
+            {
+              "before_ms": 14.64384999999993,
+              "after_ms": 7.3275000000001
+            },
+            {
+              "before_ms": 15.357600000000275,
+              "after_ms": 6.080200000000104
+            },
+            {
+              "before_ms": 16.04809999999975,
+              "after_ms": 5.7111999999999625
+            },
+            {
+              "before_ms": 15.277950000000146,
+              "after_ms": 7.327049999999645
+            },
+            {
+              "before_ms": 18.640699999999924,
+              "after_ms": 8.081249999999955
+            }
+          ]
+        },
+        "construction": {
+          "before_ms": 5.255949999999757,
+          "after_ms": 5.417250000000195,
+          "speedup": 0.9702247450273789,
+          "paired_wins": 5,
+          "samples": [
+            {
+              "before_ms": 7.224950000000035,
+              "after_ms": 6.481799999999794
+            },
+            {
+              "before_ms": 5.143949999999904,
+              "after_ms": 5.3316500000000815
+            },
+            {
+              "before_ms": 5.255949999999757,
+              "after_ms": 5.361549999999852
+            },
+            {
+              "before_ms": 4.759599999999864,
+              "after_ms": 5.312050000000227
+            },
+            {
+              "before_ms": 6.5844999999999345,
+              "after_ms": 5.417250000000195
+            },
+            {
+              "before_ms": 4.751750000000129,
+              "after_ms": 4.541650000000118
+            },
+            {
+              "before_ms": 4.86304999999993,
+              "after_ms": 5.790449999999964
+            },
+            {
+              "before_ms": 6.470300000000179,
+              "after_ms": 5.808700000000272
+            },
+            {
+              "before_ms": 7.228799999999865,
+              "after_ms": 5.5499999999999545
+            }
+          ]
+        },
+        "contract": "Exact order/identity, duplicate entries, strict overlap, snapshotted bounds, fresh query arrays"
+      },
+      "target_sha256": "a638e79435cfc345c4bffda2e2ca6ef8af46c42b92b8b8f356933fa05edafcdb"
+    },
+    {
+      "run_id": "horizontal-r3-none",
+      "task": "horizontal",
+      "repetition": 3,
+      "arm": "none",
+      "behavior": true,
+      "useful_optimization": false,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 42973.01530000009,
+      "model_calls": 9,
+      "usage": {
+        "uncached_input": 27,
+        "cache_read": 60019,
+        "cache_write": 11574,
+        "output": 1986,
+        "total_input": 71620,
+        "total_tokens": 73606,
+        "missing_usage": 0,
+        "usd_estimate": 0.0030426400000000005
+      },
+      "tool_calls": {
+        "read": 2,
+        "grep": 1,
+        "project_checks": 3,
+        "edit": 2
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 164,
+        "total": 164,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 32.89104999999995,
+          "after_ms": 38.021799999999985,
+          "speedup": 0.8650576774376795,
+          "paired_wins": 5,
+          "samples": [
+            {
+              "before_ms": 22.381449999999973,
+              "after_ms": 21.059300000000007
+            },
+            {
+              "before_ms": 22.835950000000025,
+              "after_ms": 31.780599999999936
+            },
+            {
+              "before_ms": 32.89104999999995,
+              "after_ms": 33.28454999999997
+            },
+            {
+              "before_ms": 25.95505000000003,
+              "after_ms": 38.021799999999985
+            },
+            {
+              "before_ms": 34.86809999999991,
+              "after_ms": 31.41109999999992
+            },
+            {
+              "before_ms": 48.83719999999994,
+              "after_ms": 48.73599999999999
+            },
+            {
+              "before_ms": 49.996849999999995,
+              "after_ms": 44.97905000000014
+            },
+            {
+              "before_ms": 50.382500000000164,
+              "after_ms": 48.05030000000011
+            },
+            {
+              "before_ms": 26.77364999999986,
+              "after_ms": 40.971000000000004
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 22.83159999999998,
+          "after_ms": 4.242550000000165,
+          "speedup": 5.381574760462244,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 17.972549999999956,
+              "after_ms": 2.9456999999997606
+            },
+            {
+              "before_ms": 24.63480000000004,
+              "after_ms": 4.534750000000031
+            },
+            {
+              "before_ms": 20.102349999999888,
+              "after_ms": 2.6021000000002914
+            },
+            {
+              "before_ms": 24.445649999999887,
+              "after_ms": 4.058749999999918
+            },
+            {
+              "before_ms": 23.940149999999903,
+              "after_ms": 4.242550000000165
+            },
+            {
+              "before_ms": 22.326450000000023,
+              "after_ms": 5.697299999999814
+            },
+            {
+              "before_ms": 22.008399999999938,
+              "after_ms": 4.0301999999999225
+            },
+            {
+              "before_ms": 23.594950000000154,
+              "after_ms": 6.599950000000035
+            },
+            {
+              "before_ms": 22.83159999999998,
+              "after_ms": 7.0191500000000815
+            }
+          ]
+        },
+        "construction": {
+          "before_ms": 13.949149999999918,
+          "after_ms": 13.615400000000136,
+          "speedup": 1.0245126841664423,
+          "paired_wins": 6,
+          "samples": [
+            {
+              "before_ms": 16.685950000000048,
+              "after_ms": 14.136899999999969
+            },
+            {
+              "before_ms": 18.90314999999987,
+              "after_ms": 12.000450000000228
+            },
+            {
+              "before_ms": 12.818149999999832,
+              "after_ms": 8.662600000000111
+            },
+            {
+              "before_ms": 13.949149999999918,
+              "after_ms": 19.329100000000153
+            },
+            {
+              "before_ms": 9.817900000000009,
+              "after_ms": 10.561050000000023
+            },
+            {
+              "before_ms": 13.714249999999993,
+              "after_ms": 13.615400000000136
+            },
+            {
+              "before_ms": 15.727100000000064,
+              "after_ms": 11.500300000000152
+            },
+            {
+              "before_ms": 22.52110000000016,
+              "after_ms": 16.335849999999937
+            },
+            {
+              "before_ms": 11.967650000000276,
+              "after_ms": 14.31659999999988
+            }
+          ]
+        },
+        "contract": "Exact order/identity, duplicate entries, strict overlap, snapshotted bounds, fresh query arrays"
+      },
+      "target_sha256": "2b8d330532f6b4b8d59860d1fc37907e16b96550cc7ffe35b0f53215abba3d40"
+    },
+    {
+      "run_id": "horizontal-r3-ast",
+      "task": "horizontal",
+      "repetition": 3,
+      "arm": "ast",
+      "behavior": true,
+      "useful_optimization": false,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 85421.2202000001,
+      "model_calls": 9,
+      "usage": {
+        "uncached_input": 27,
+        "cache_read": 41958,
+        "cache_write": 8036,
+        "output": 2983,
+        "total_input": 50021,
+        "total_tokens": 53004,
+        "missing_usage": 0,
+        "usd_estimate": 0.0029182799999999997
+      },
+      "tool_calls": {
+        "todo_write": 2,
+        "read": 1,
+        "edit": 3,
+        "project_checks": 2
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 164,
+        "total": 164,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 27.517400000000066,
+          "after_ms": 26.49750000000006,
+          "speedup": 1.0384904236248704,
+          "paired_wins": 5,
+          "samples": [
+            {
+              "before_ms": 34.34899999999993,
+              "after_ms": 26.47339999999997
+            },
+            {
+              "before_ms": 27.517400000000066,
+              "after_ms": 26.787199999999984
+            },
+            {
+              "before_ms": 26.802900000000022,
+              "after_ms": 23.768500000000017
+            },
+            {
+              "before_ms": 30.30690000000004,
+              "after_ms": 24.801450000000045
+            },
+            {
+              "before_ms": 26.31009999999992,
+              "after_ms": 26.49750000000006
+            },
+            {
+              "before_ms": 27.970649999999978,
+              "after_ms": 26.77160000000015
+            },
+            {
+              "before_ms": 29.452850000000126,
+              "after_ms": 30.712150000000065
+            },
+            {
+              "before_ms": 22.38164999999981,
+              "after_ms": 27.477949999999964
+            },
+            {
+              "before_ms": 22.666400000000067,
+              "after_ms": 25.664800000000014
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 14.953799999999774,
+          "after_ms": 0.9706499999999778,
+          "speedup": 15.405965074949895,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 15.593699999999899,
+              "after_ms": 1.532950000000028
+            },
+            {
+              "before_ms": 14.953799999999774,
+              "after_ms": 0.7118000000000393
+            },
+            {
+              "before_ms": 15.440050000000156,
+              "after_ms": 0.6952000000001135
+            },
+            {
+              "before_ms": 14.795449999999846,
+              "after_ms": 0.893800000000283
+            },
+            {
+              "before_ms": 15.511949999999842,
+              "after_ms": 0.6754000000000815
+            },
+            {
+              "before_ms": 14.101200000000063,
+              "after_ms": 1.0543500000001131
+            },
+            {
+              "before_ms": 17.012899999999945,
+              "after_ms": 1.676050000000032
+            },
+            {
+              "before_ms": 14.920450000000073,
+              "after_ms": 0.9706499999999778
+            },
+            {
+              "before_ms": 14.65260000000012,
+              "after_ms": 1.297649999999976
+            }
+          ]
+        },
+        "construction": {
+          "before_ms": 7.207349999999906,
+          "after_ms": 8.989550000000008,
+          "speedup": 0.801747584695552,
+          "paired_wins": 0,
+          "samples": [
+            {
+              "before_ms": 7.487099999999828,
+              "after_ms": 11.081000000000131
+            },
+            {
+              "before_ms": 10.995799999999917,
+              "after_ms": 12.059600000000046
+            },
+            {
+              "before_ms": 10.81899999999996,
+              "after_ms": 11.726100000000088
+            },
+            {
+              "before_ms": 7.237100000000055,
+              "after_ms": 8.989550000000008
+            },
+            {
+              "before_ms": 6.76480000000015,
+              "after_ms": 6.9480499999999665
+            },
+            {
+              "before_ms": 5.741349999999784,
+              "after_ms": 7.331900000000132
+            },
+            {
+              "before_ms": 7.207349999999906,
+              "after_ms": 13.682399999999916
+            },
+            {
+              "before_ms": 6.401349999999866,
+              "after_ms": 7.600200000000086
+            },
+            {
+              "before_ms": 6.671949999999924,
+              "after_ms": 6.929249999999911
+            }
+          ]
+        },
+        "contract": "Exact order/identity, duplicate entries, strict overlap, snapshotted bounds, fresh query arrays"
+      },
+      "target_sha256": "012109b455c1a30fe88dd81016ae42ccc0f17795d6a9cf92401f901cda3689e4"
+    },
+    {
+      "run_id": "union-r3-none",
+      "task": "union",
+      "repetition": 3,
+      "arm": "none",
+      "behavior": true,
+      "useful_optimization": true,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 37150.83629999985,
+      "model_calls": 9,
+      "usage": {
+        "uncached_input": 27,
+        "cache_read": 41226,
+        "cache_write": 7521,
+        "output": 1843,
+        "total_input": 48774,
+        "total_tokens": 50617,
+        "missing_usage": 0,
+        "usd_estimate": 0.0022765850000000002
+      },
+      "tool_calls": {
+        "todo_write": 3,
+        "glob": 1,
+        "read": 1,
+        "edit": 2,
+        "project_checks": 1
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 156,
+        "total": 156,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 130.5681000000004,
+          "after_ms": 39.34934999999996,
+          "speedup": 3.318176793263435,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 133.92345,
+              "after_ms": 45.60079999999971
+            },
+            {
+              "before_ms": 133.15849999999978,
+              "after_ms": 52.209350000000086
+            },
+            {
+              "before_ms": 133.7005999999999,
+              "after_ms": 39.34934999999996
+            },
+            {
+              "before_ms": 93.77200000000016,
+              "after_ms": 34.6246500000002
+            },
+            {
+              "before_ms": 100.61874999999964,
+              "after_ms": 36.58609999999999
+            },
+            {
+              "before_ms": 115.20815000000039,
+              "after_ms": 36.92554999999993
+            },
+            {
+              "before_ms": 130.5681000000004,
+              "after_ms": 48.558700000000044
+            },
+            {
+              "before_ms": 95.53444999999965,
+              "after_ms": 39.234899999999925
+            },
+            {
+              "before_ms": 139.3427999999999,
+              "after_ms": 67.94159999999965
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 30.933300000000145,
+          "after_ms": 4.853050000000167,
+          "speedup": 6.373991613521205,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 31.31755000000021,
+              "after_ms": 4.853050000000167
+            },
+            {
+              "before_ms": 36.00930000000017,
+              "after_ms": 5.517899999999827
+            },
+            {
+              "before_ms": 32.53324999999995,
+              "after_ms": 4.282500000000255
+            },
+            {
+              "before_ms": 29.36550000000034,
+              "after_ms": 5.04989999999998
+            },
+            {
+              "before_ms": 30.642949999999928,
+              "after_ms": 7.402149999999892
+            },
+            {
+              "before_ms": 31.721349999999802,
+              "after_ms": 5.944650000000365
+            },
+            {
+              "before_ms": 27.412700000000314,
+              "after_ms": 4.828500000000076
+            },
+            {
+              "before_ms": 30.933300000000145,
+              "after_ms": 4.0266499999997905
+            },
+            {
+              "before_ms": 30.014100000000326,
+              "after_ms": 4.167000000000371
+            }
+          ]
+        },
+        "contract": "Exact cells/order/merging/epsilon; no input mutation; fresh output; other exported callers unchanged"
+      },
+      "target_sha256": "9b8854299a32ee71a85f17c69811c23e8c5ffddde46ba680e0bf29832b336a10"
+    },
+    {
+      "run_id": "union-r3-unit",
+      "task": "union",
+      "repetition": 3,
+      "arm": "unit",
+      "behavior": true,
+      "useful_optimization": true,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 70890.33909999998,
+      "model_calls": 11,
+      "usage": {
+        "uncached_input": 33,
+        "cache_read": 66035,
+        "cache_write": 8933,
+        "output": 1994,
+        "total_input": 75001,
+        "total_tokens": 76995,
+        "missing_usage": 0,
+        "usd_estimate": 0.002777275
+      },
+      "tool_calls": {
+        "todo_write": 3,
+        "read": 2,
+        "edit": 3,
+        "project_checks": 2
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 156,
+        "total": 156,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 142.0521000000001,
+          "after_ms": 52.203700000000026,
+          "speedup": 2.7211117219660683,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 101.20440000000008,
+              "after_ms": 38.53769999999986
+            },
+            {
+              "before_ms": 142.0521000000001,
+              "after_ms": 52.203700000000026
+            },
+            {
+              "before_ms": 158.72174999999993,
+              "after_ms": 57.12215000000015
+            },
+            {
+              "before_ms": 180.46669999999995,
+              "after_ms": 55.787900000000036
+            },
+            {
+              "before_ms": 159.92599999999993,
+              "after_ms": 42.529599999999846
+            },
+            {
+              "before_ms": 141.88724999999977,
+              "after_ms": 54.64755000000014
+            },
+            {
+              "before_ms": 97.52739999999949,
+              "after_ms": 35.46680000000015
+            },
+            {
+              "before_ms": 108.63980000000038,
+              "after_ms": 46.891799999999876
+            },
+            {
+              "before_ms": 148.80159999999978,
+              "after_ms": 65.67364999999972
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 29.133899999999812,
+          "after_ms": 4.343250000000353,
+          "speedup": 6.707857019512449,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 24.960349999999835,
+              "after_ms": 4.343250000000353
+            },
+            {
+              "before_ms": 29.133899999999812,
+              "after_ms": 4.3978000000001884
+            },
+            {
+              "before_ms": 29.758949999999913,
+              "after_ms": 3.1035000000001673
+            },
+            {
+              "before_ms": 27.616649999999936,
+              "after_ms": 4.245850000000246
+            },
+            {
+              "before_ms": 25.508400000000165,
+              "after_ms": 2.7051500000002306
+            },
+            {
+              "before_ms": 25.58815000000004,
+              "after_ms": 4.595350000000508
+            },
+            {
+              "before_ms": 35.2790500000001,
+              "after_ms": 5.508850000000166
+            },
+            {
+              "before_ms": 33.33670000000029,
+              "after_ms": 4.447450000000117
+            },
+            {
+              "before_ms": 32.08779999999979,
+              "after_ms": 4.242200000000139
+            }
+          ]
+        },
+        "contract": "Exact cells/order/merging/epsilon; no input mutation; fresh output; other exported callers unchanged"
+      },
+      "target_sha256": "0f63ff387264cc0e2c6c7c8f583096da871f7cc48d174d9da829f2d00875f229"
+    },
+    {
+      "run_id": "union-r3-window",
+      "task": "union",
+      "repetition": 3,
+      "arm": "window",
+      "behavior": true,
+      "useful_optimization": true,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 57934.06979999994,
+      "model_calls": 9,
+      "usage": {
+        "uncached_input": 27,
+        "cache_read": 56487,
+        "cache_write": 9597,
+        "output": 2005,
+        "total_input": 66111,
+        "total_tokens": 68116,
+        "missing_usage": 0,
+        "usd_estimate": 0.002769695
+      },
+      "tool_calls": {
+        "todo_write": 3,
+        "read": 2,
+        "edit": 2,
+        "project_checks": 1
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 156,
+        "total": 156,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 115.89789999999994,
+          "after_ms": 43.412250000000085,
+          "speedup": 2.6697049795852488,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 88.99009999999998,
+              "after_ms": 43.412250000000085
+            },
+            {
+              "before_ms": 85.6525999999999,
+              "after_ms": 32.82080000000019
+            },
+            {
+              "before_ms": 88.56190000000015,
+              "after_ms": 35.04489999999987
+            },
+            {
+              "before_ms": 115.89789999999994,
+              "after_ms": 42.87525000000005
+            },
+            {
+              "before_ms": 119.06549999999993,
+              "after_ms": 46.42320000000018
+            },
+            {
+              "before_ms": 113.38305000000014,
+              "after_ms": 37.47434999999996
+            },
+            {
+              "before_ms": 132.7012000000002,
+              "after_ms": 51.56425000000013
+            },
+            {
+              "before_ms": 126.96119999999974,
+              "after_ms": 44.672199999999975
+            },
+            {
+              "before_ms": 119.84490000000005,
+              "after_ms": 46.86104999999998
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 33.157550000000356,
+          "after_ms": 5.469849999999951,
+          "speedup": 6.061875554174365,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 28.992550000000392,
+              "after_ms": 4.829799999999523
+            },
+            {
+              "before_ms": 30.253999999999905,
+              "after_ms": 6.141699999999673
+            },
+            {
+              "before_ms": 34.26125000000002,
+              "after_ms": 4.310199999999895
+            },
+            {
+              "before_ms": 24.489849999999933,
+              "after_ms": 4.601750000000266
+            },
+            {
+              "before_ms": 35.378400000000056,
+              "after_ms": 5.469849999999951
+            },
+            {
+              "before_ms": 36.99039999999968,
+              "after_ms": 6.086149999999634
+            },
+            {
+              "before_ms": 33.157550000000356,
+              "after_ms": 6.3586999999997715
+            },
+            {
+              "before_ms": 38.32600000000002,
+              "after_ms": 6.6683499999999185
+            },
+            {
+              "before_ms": 32.08650000000034,
+              "after_ms": 5.313850000000002
+            }
+          ]
+        },
+        "contract": "Exact cells/order/merging/epsilon; no input mutation; fresh output; other exported callers unchanged"
+      },
+      "target_sha256": "0aecefc6768358eeecb014c7f93653c0d49a6e0bdc0296ff866062af414ac680"
+    },
+    {
+      "run_id": "union-r3-ast",
+      "task": "union",
+      "repetition": 3,
+      "arm": "ast",
+      "behavior": true,
+      "useful_optimization": true,
+      "patch_changed": true,
+      "exit_code": 0,
+      "duration_ms": 57930.961499999976,
+      "model_calls": 4,
+      "usage": {
+        "uncached_input": 12,
+        "cache_read": 14711,
+        "cache_write": 6823,
+        "output": 1099,
+        "total_input": 21546,
+        "total_tokens": 22645,
+        "missing_usage": 0,
+        "usd_estimate": 0.001550685
+      },
+      "tool_calls": {
+        "read": 1,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "scope_changes": [],
+      "checks": {
+        "passed": 156,
+        "total": 156,
+        "failed_check_ids": []
+      },
+      "performance": {
+        "real": {
+          "before_ms": 89.87889999999993,
+          "after_ms": 30.81159999999977,
+          "speedup": 2.9170474756260822,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 75.93435000000011,
+              "after_ms": 32.42775000000006
+            },
+            {
+              "before_ms": 76.08680000000004,
+              "after_ms": 26.422700000000077
+            },
+            {
+              "before_ms": 84.60840000000007,
+              "after_ms": 24.92464999999993
+            },
+            {
+              "before_ms": 89.87889999999993,
+              "after_ms": 30.81159999999977
+            },
+            {
+              "before_ms": 100.78730000000019,
+              "after_ms": 26.976049999999987
+            },
+            {
+              "before_ms": 104.15695000000005,
+              "after_ms": 35.871450000000095
+            },
+            {
+              "before_ms": 97.67470000000003,
+              "after_ms": 26.417650000000094
+            },
+            {
+              "before_ms": 85.17315000000008,
+              "after_ms": 32.23765000000003
+            },
+            {
+              "before_ms": 105.62054999999987,
+              "after_ms": 35.03245000000015
+            }
+          ]
+        },
+        "stress": {
+          "before_ms": 27.79424999999992,
+          "after_ms": 3.1296000000002095,
+          "speedup": 8.88108703987668,
+          "paired_wins": 9,
+          "samples": [
+            {
+              "before_ms": 27.79424999999992,
+              "after_ms": 3.9301000000000386
+            },
+            {
+              "before_ms": 25.727300000000014,
+              "after_ms": 2.618749999999636
+            },
+            {
+              "before_ms": 20.667899999999918,
+              "after_ms": 2.5595499999999447
+            },
+            {
+              "before_ms": 20.716749999999593,
+              "after_ms": 2.3092999999998938
+            },
+            {
+              "before_ms": 22.98849999999993,
+              "after_ms": 2.2041999999996733
+            },
+            {
+              "before_ms": 28.423949999999877,
+              "after_ms": 3.1296000000002095
+            },
+            {
+              "before_ms": 27.994199999999637,
+              "after_ms": 4.608100000000377
+            },
+            {
+              "before_ms": 33.198999999999614,
+              "after_ms": 5.5702000000001135
+            },
+            {
+              "before_ms": 30.239700000000084,
+              "after_ms": 4.3087500000001455
+            }
+          ]
+        },
+        "contract": "Exact cells/order/merging/epsilon; no input mutation; fresh output; other exported callers unchanged"
+      },
+      "target_sha256": "2a47e37f23d0630ccdc0e150fc7a34ea2f78aa380638bb1558b1d2538e66b6c6"
+    }
+  ],
+  "measured_package_version": "0.4.0",
+  "current_package_version": "0.4.1",
+  "secondary_caller_qa": [
+    {
+      "task": "horizontal",
+      "run_id": "horizontal-r2-none",
+      "arm": "none",
+      "behavior": true,
+      "caller": "geoCollisionCandidates.js",
+      "before_ms": 11.723799999999983,
+      "after_ms": 12.337350000000015,
+      "speedup": 0.9502688989126489,
+      "paired_wins": 8,
+      "samples": [
+        {
+          "before_ms": 17.869000000000028,
+          "after_ms": 13.836900000000014
+        },
+        {
+          "before_ms": 14.392299999999977,
+          "after_ms": 12.493100000000027
+        },
+        {
+          "before_ms": 8.50380000000007,
+          "after_ms": 7.784250000000043
+        },
+        {
+          "before_ms": 11.723799999999983,
+          "after_ms": 9.44575000000009
+        },
+        {
+          "before_ms": 11.496649999999931,
+          "after_ms": 8.018749999999955
+        },
+        {
+          "before_ms": 8.948249999999916,
+          "after_ms": 8.595750000000066
+        },
+        {
+          "before_ms": 9.803849999999898,
+          "after_ms": 13.489949999999908
+        },
+        {
+          "before_ms": 12.88590000000022,
+          "after_ms": 12.337350000000015
+        },
+        {
+          "before_ms": 16.203250000000025,
+          "after_ms": 16.184999999999945
+        }
+      ],
+      "limitation": "Secondary actual caller CPU workload; added after initial model comparison protocol, descriptive QA not a replacement of the frozen primary endpoint"
+    },
+    {
+      "task": "horizontal",
+      "run_id": "horizontal-r1-ast",
+      "arm": "ast",
+      "behavior": true,
+      "caller": "geoCollisionCandidates.js",
+      "before_ms": 12.366399999999999,
+      "after_ms": 12.210449999999923,
+      "speedup": 1.0127718470654297,
+      "paired_wins": 2,
+      "samples": [
+        {
+          "before_ms": 15.391099999999938,
+          "after_ms": 17.10859999999991
+        },
+        {
+          "before_ms": 13.259699999999953,
+          "after_ms": 14.442499999999995
+        },
+        {
+          "before_ms": 13.862699999999904,
+          "after_ms": 15.275800000000004
+        },
+        {
+          "before_ms": 13.173149999999964,
+          "after_ms": 15.327900000000113
+        },
+        {
+          "before_ms": 11.69240000000002,
+          "after_ms": 12.210449999999923
+        },
+        {
+          "before_ms": 10.028549999999996,
+          "after_ms": 11.038099999999986
+        },
+        {
+          "before_ms": 11.06860000000006,
+          "after_ms": 10.215199999999982
+        },
+        {
+          "before_ms": 9.403549999999996,
+          "after_ms": 11.234900000000039
+        },
+        {
+          "before_ms": 12.366399999999999,
+          "after_ms": 11.199100000000044
+        }
+      ],
+      "limitation": "Secondary actual caller CPU workload; added after initial model comparison protocol, descriptive QA not a replacement of the frozen primary endpoint"
+    },
+    {
+      "task": "union",
+      "run_id": "union-r3-none",
+      "arm": "none",
+      "behavior": true,
+      "caller": "platformVisualModel.js",
+      "before_ms": 137.48264999999992,
+      "after_ms": 134.30679999999984,
+      "speedup": 1.023646233846686,
+      "paired_wins": 4,
+      "samples": [
+        {
+          "before_ms": 127.92504999999983,
+          "after_ms": 149.46170000000006
+        },
+        {
+          "before_ms": 147.52015000000006,
+          "after_ms": 123.73604999999998
+        },
+        {
+          "before_ms": 162.50429999999983,
+          "after_ms": 222.72059999999988
+        },
+        {
+          "before_ms": 140.6904000000004,
+          "after_ms": 155.90809999999965
+        },
+        {
+          "before_ms": 161.7185000000004,
+          "after_ms": 160.48700000000008
+        },
+        {
+          "before_ms": 137.48264999999992,
+          "after_ms": 134.30679999999984
+        },
+        {
+          "before_ms": 123.39495000000034,
+          "after_ms": 128.67295000000058
+        },
+        {
+          "before_ms": 112.68184999999994,
+          "after_ms": 122.51620000000003
+        },
+        {
+          "before_ms": 131.10285000000022,
+          "after_ms": 115.14139999999998
+        }
+      ],
+      "limitation": "Secondary actual caller CPU workload; added after initial model comparison protocol, descriptive QA not a replacement of the frozen primary endpoint"
+    },
+    {
+      "task": "union",
+      "run_id": "union-r1-unit",
+      "arm": "unit",
+      "behavior": true,
+      "caller": "platformVisualModel.js",
+      "before_ms": 120.12474999999995,
+      "after_ms": 120.88464999999997,
+      "speedup": 0.9937138420800323,
+      "paired_wins": 2,
+      "samples": [
+        {
+          "before_ms": 131.52724999999987,
+          "after_ms": 150.78520000000003
+        },
+        {
+          "before_ms": 123.26279999999997,
+          "after_ms": 126.35919999999987
+        },
+        {
+          "before_ms": 133.30839999999966,
+          "after_ms": 144.98109999999997
+        },
+        {
+          "before_ms": 128.24190000000044,
+          "after_ms": 120.88464999999997
+        },
+        {
+          "before_ms": 106.20185000000038,
+          "after_ms": 116.96709999999985
+        },
+        {
+          "before_ms": 111.91985000000022,
+          "after_ms": 111.79329999999982
+        },
+        {
+          "before_ms": 106.45719999999983,
+          "after_ms": 114.16485000000011
+        },
+        {
+          "before_ms": 120.12474999999995,
+          "after_ms": 120.99495000000024
+        },
+        {
+          "before_ms": 107.77919999999995,
+          "after_ms": 118.26839999999993
+        }
+      ],
+      "limitation": "Secondary actual caller CPU workload; added after initial model comparison protocol, descriptive QA not a replacement of the frozen primary endpoint"
+    }
+  ],
+  "post_study_retrieval_cache": {
+    "version": "0.4.1",
+    "paid_model_repeated": false,
+    "measurements": [
+      {
+        "strategy": "unit",
+        "task": "horizontal",
+        "source_bytes": 900,
+        "render_sha256": "e049eb52844a2b17289da6ca7bd3200b5a7844ae75bc5a56c0e7997b50d5d412",
+        "context_sha256": "853151e968ece4301401bb08c73fd3650165d2754242922f5ac126a8231fb3f6",
+        "before_ms": 19015.265700000004,
+        "after_ms": 4347.2438999999995,
+        "context_equal": true
+      },
+      {
+        "strategy": "unit",
+        "task": "union",
+        "source_bytes": 1054,
+        "render_sha256": "e5f97105aa823b7b6f52c3786e045bedb6a892b101d60f2704a9749097b18479",
+        "context_sha256": "3eb92f6af29fff980b7d8d16232b4370b50aee70a003579bf81ae37b05e364ef",
+        "before_ms": 10824.846299999997,
+        "after_ms": 568.4014000000006,
+        "context_equal": true
+      },
+      {
+        "strategy": "window",
+        "task": "horizontal",
+        "source_bytes": 1060,
+        "render_sha256": "a604363d39c02e3dd18b20f3a7fe979825ffbb1174578b7cf4ffaddeaeb71917",
+        "context_sha256": "1f0fbf7575a281c4f7164a6603f682c518a57e73f223d6974aed0697777a26a7",
+        "before_ms": 11722.757999999998,
+        "after_ms": 2409.3940999999995,
+        "context_equal": true
+      },
+      {
+        "strategy": "window",
+        "task": "union",
+        "source_bytes": 3354,
+        "render_sha256": "aa4e3b2aa824ac723d65a69cca7f9ff64fda3c26dedb9dcad095de887dcb08b3",
+        "context_sha256": "a64657e8f44ef9862f7bb10cb8eaa405a4c84ec427cb01b48c16569542aea4c9",
+        "before_ms": 7329.6191000000035,
+        "after_ms": 503.4961000000003,
+        "context_equal": true
+      },
+      {
+        "strategy": "ast",
+        "task": "horizontal",
+        "source_bytes": 897,
+        "render_sha256": "20ac9faf1dfc0d9192653aa3d404aac7a295bcc6c29e58a49bc1518996487c06",
+        "context_sha256": "bc8c11f374a4ec3391f6ed2d6acc6e5193e5ceed837b893eec78997631a24cba",
+        "before_ms": 23327.9306,
+        "after_ms": 2292.4035999999996,
+        "context_equal": true
+      },
+      {
+        "strategy": "ast",
+        "task": "union",
+        "source_bytes": 221,
+        "render_sha256": "b96421a90332524d7c823a39a3ee3fe20509c4dbcabf77839e923599da03b902",
+        "context_sha256": "3671a715d28d84dd9d2987ec9488d0144605c1d2dd97bc59c122005b09138e64",
+        "before_ms": 15850.082500000004,
+        "after_ms": 751.8633000000009,
+        "context_equal": true
+      }
+    ],
+    "limitation": "One local before/after pass; first query includes cold model, subsequent queries warm; exact context digest preserved"
+  },
+  "physics_qa": {
+    "equal": true,
+    "variants": 45,
+    "baseline_passed": 45,
+    "candidate_passed": 45
+  },
+  "browser_qa": {
+    "client_exit": 0,
+    "rows": [
+      {
+        "city": "berlin",
+        "width": 900,
+        "height": 420,
+        "pair": [
+          {
+            "arm": "baseline",
+            "errors": [],
+            "state_sha256": "2023aeba9616c0d954ae7fb6a31921208e70eac605778f29349eabfc5ecb1538",
+            "png_sha256": "10b39158f03f2f84eb94a586fcb8ba61be005443c35a6ed805e0f48eefa91c66",
+            "state_time": 1.5
+          },
+          {
+            "arm": "candidate",
+            "errors": [],
+            "state_sha256": "2023aeba9616c0d954ae7fb6a31921208e70eac605778f29349eabfc5ecb1538",
+            "png_sha256": "6769a7ea9fa63745c28b3e742db2081863cf57d028125feb98681fae66c336a9",
+            "state_time": 1.5
+          }
+        ],
+        "state_equal": true,
+        "pixels_equal": false
+      },
+      {
+        "city": "berlin",
+        "width": 844,
+        "height": 390,
+        "pair": [
+          {
+            "arm": "baseline",
+            "errors": [],
+            "state_sha256": "f12f04aab8dc6cd6b2e6a5f7751100b3449f89b40a727cd0850a07b69e8bd12b",
+            "png_sha256": "fd0bbf1651e89c2278564da65fa0b1ce924f8c408907a0521e8459b788a8f655",
+            "state_time": 1.5
+          },
+          {
+            "arm": "candidate",
+            "errors": [],
+            "state_sha256": "f12f04aab8dc6cd6b2e6a5f7751100b3449f89b40a727cd0850a07b69e8bd12b",
+            "png_sha256": "0deefa2abceb147dcf7a635e6d573bf40e8bb97dbdf69ae8074a9a4aa07f3005",
+            "state_time": 1.5
+          }
+        ],
+        "state_equal": true,
+        "pixels_equal": false
+      },
+      {
+        "city": "paris",
+        "width": 900,
+        "height": 420,
+        "pair": [
+          {
+            "arm": "baseline",
+            "errors": [],
+            "state_sha256": "838bc819ee0dfc498a36b5789768108e94a0962a5d267b097778af207b06f59b",
+            "png_sha256": "c9e367b923127c96b6c1b54f6af53898e5c15ccb81f59aed3e19919488f5da87",
+            "state_time": 1.5
+          },
+          {
+            "arm": "candidate",
+            "errors": [],
+            "state_sha256": "838bc819ee0dfc498a36b5789768108e94a0962a5d267b097778af207b06f59b",
+            "png_sha256": "1f5ea8d29409c5526b5368e9dadc026e312721ad96509b3120081a961fcf719a",
+            "state_time": 1.5
+          }
+        ],
+        "state_equal": true,
+        "pixels_equal": false
+      },
+      {
+        "city": "paris",
+        "width": 844,
+        "height": 390,
+        "pair": [
+          {
+            "arm": "baseline",
+            "errors": [],
+            "state_sha256": "f0f9bcd86b219145bb1802a68b3926bbcb44fa96264287e49186a85e06022351",
+            "png_sha256": "746deacd0160df3bfc75af5730818440fdede5c0f0227198392f6474beec0f3f",
+            "state_time": 1.5
+          },
+          {
+            "arm": "candidate",
+            "errors": [],
+            "state_sha256": "f0f9bcd86b219145bb1802a68b3926bbcb44fa96264287e49186a85e06022351",
+            "png_sha256": "0c9ee27d2434aea0b92bd155c4ed74ebf1ad98a3230ef69ff4ba008cf44960b4",
+            "state_time": 1.5
+          }
+        ],
+        "state_equal": true,
+        "pixels_equal": false
+      },
+      {
+        "city": "rio",
+        "width": 900,
+        "height": 420,
+        "pair": [
+          {
+            "arm": "baseline",
+            "errors": [],
+            "state_sha256": "14b02a81e82ce87cf4f2ca66100a85e9a9329c2a515e134f9ae662877b295b74",
+            "png_sha256": "be404fb5aef88c944f10dff1f235f139c48696c7c71032cdb00a26c1b43bb5e4",
+            "state_time": 1.5
+          },
+          {
+            "arm": "candidate",
+            "errors": [],
+            "state_sha256": "14b02a81e82ce87cf4f2ca66100a85e9a9329c2a515e134f9ae662877b295b74",
+            "png_sha256": "62fdc38e46bf935f3819111ec750112f8b1e9d0c89507d95e2b39649feb38c95",
+            "state_time": 1.5
+          }
+        ],
+        "state_equal": true,
+        "pixels_equal": false
+      },
+      {
+        "city": "rio",
+        "width": 844,
+        "height": 390,
+        "pair": [
+          {
+            "arm": "baseline",
+            "errors": [],
+            "state_sha256": "1148d6eb55eb21578e26ab69c12145b49ddec2db711446ab78b1e00087146564",
+            "png_sha256": "86b06b94c2f91aff8d7930ada9cc6ce95b008cf677022a0db283d1c59e6c2bdb",
+            "state_time": 1.5
+          },
+          {
+            "arm": "candidate",
+            "errors": [],
+            "state_sha256": "1148d6eb55eb21578e26ab69c12145b49ddec2db711446ab78b1e00087146564",
+            "png_sha256": "0de6a05ae0095a19993008822891bcbf0ec49def90f779fddf7f24afc9b0a7eb",
+            "state_time": 1.5
+          }
+        ],
+        "state_equal": true,
+        "pixels_equal": false
+      }
+    ],
+    "scope": "Local Chrome input smoke and six fixed-frame desktop/mobile-width pairs; no FPS or real-phone acceptance",
+    "visually_inspected": true
+  }
+}

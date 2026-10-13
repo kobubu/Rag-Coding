@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-code-memory",
-  "version": "0.3.0",
+  "version": "0.4.1",
   "private": true,
   "description": "CM (Code Memory): read-only repository knowledge plugin for DeepSeek Harness",
   "type": "module",
@@ -16,6 +16,7 @@
     "cm:index": "node dist/src/code-memory/cli.js",
     "plugin:smoke": "node dist/scripts/smoke_plugin.js",
     "harness:ab": "node dist/scripts/run_harness_ab.js",
+    "harness:optimization": "node dist/scripts/run_optimization_ab.js",
     "verify": "npm run build && npm run check && npm test && npm run probe",
     "cm:vectors": "node dist/src/code-memory/vector_cli.js"
   },

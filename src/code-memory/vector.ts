@@ -4,14 +4,17 @@ import { performance } from "node:perf_hooks";
 import type { Table } from "@lancedb/lancedb";
 import type { FeatureExtractionPipeline } from "@huggingface/transformers";
 import { CMError, hash } from "./source.js";
-import type { CMIndex, CMUnit } from "./types.js";
+import type { CMFile, CMIndex, CMUnit } from "./types.js";
+import { chunkingPolicy, projectChunks } from "./chunks.js";
+import type { ChunkingStrategy, CMChunk } from "./chunks.js";
 
 export const EMBEDDING = { model: "Xenova/all-MiniLM-L6-v2", revision: "751bff37182d3f1213fa05d7196b954e230abad9", dtype: "q8", dimensions: 384, projection: "cm-hybrid-1" } as const;
 export type Embedder = (texts: string[], signal?: AbortSignal) => Promise<number[][]>;
-export type VectorConfig = { directory: string; modelCache: string; embeddingCache?: string; allowDownload?: boolean };
+export type VectorConfig = { directory: string; modelCache: string; embeddingCache?: string; allowDownload?: boolean; chunking?: ChunkingStrategy };
 type RecordUnit = { id: string; path: string; text: string; fingerprint: string };
-type Manifest = { format: "cm-vectors-1"; snapshot_id: string; embedding: typeof EMBEDDING; table: string; records_hash: string; rows: number };
+type Manifest = { format: "cm-vectors-2"; snapshot_id: string; embedding: typeof EMBEDDING; chunking: ReturnType<typeof chunkingPolicy>; table: string; records_hash: string; rows: number };
 const models = new Map<string, Promise<FeatureExtractionPipeline>>();
+const sourceBuffers = new WeakMap<CMFile, { source: string; bytes: Buffer }>();
 
 export function localEmbedder(cache: string, allowDownload = false): Embedder {
   const key = resolve(cache) + ":" + allowDownload;
@@ -34,18 +37,20 @@ export function localEmbedder(cache: string, allowDownload = false): Embedder {
 
 export function sourceSlice(index: CMIndex, unit: CMUnit): string {
   const file = index.files.find((item) => item.path === unit.path)!;
-  return Buffer.from(file.source, "utf8").subarray(unit.span.start_byte, unit.span.end_byte).toString("utf8");
+  let cached = sourceBuffers.get(file);
+  if (!cached || cached.source !== file.source) {
+    cached = { source: file.source, bytes: Buffer.from(file.source, "utf8") };
+    sourceBuffers.set(file, cached);
+  }
+  return cached.bytes.subarray(unit.span.start_byte, unit.span.end_byte).toString("utf8");
 }
 
 export function words(text: string): string[] {
   return text.replace(/([a-z\d])([A-Z])/g, "$1 $2").toLowerCase().match(/[\p{L}\d]+/gu) ?? [];
 }
 
-function records(index: CMIndex): RecordUnit[] {
-  const byId = new Map(index.units.map((unit) => [unit.id, unit]));
-  return index.units.filter((unit) => unit.kind === "function" || unit.kind === "method" || unit.kind === "type" ||
-    unit.kind === "block" && (byId.get(unit.parent_id ?? "")?.kind === "file" ||
-      (byId.get(unit.parent_id ?? "")?.span.end_byte ?? 0) - (byId.get(unit.parent_id ?? "")?.span.start_byte ?? 0) > 6000))
+function records(index: CMIndex, chunks: CMChunk[]): RecordUnit[] {
+  return chunks
     .map((unit) => {
       const code = sourceSlice(index, unit);
       const text = [...words(unit.path + " " + unit.name), ...words(code.slice(0, 1800))].slice(0, 200).join(" ");
@@ -60,7 +65,8 @@ function checkVector(vector: number[]): void {
 export async function buildVectors(index: CMIndex, config: VectorConfig, embed = localEmbedder(config.modelCache, config.allowDownload), signal?: AbortSignal) {
   const started = performance.now();
   signal?.throwIfAborted();
-  const entries = records(index);
+  const chunks = projectChunks(index, config.chunking);
+  const entries = records(index, chunks);
   if (!entries.length) throw new CMError("empty_vectors", "No retrievable source units");
   const cachePath = config.embeddingCache ?? join(config.directory, "embedding-cache.json");
   const cached: Record<string, number[]> = {};
@@ -87,7 +93,7 @@ export async function buildVectors(index: CMIndex, config: VectorConfig, embed =
   const recordsHash = hash(JSON.stringify(entries.map(({ id, fingerprint }) => [id, fingerprint])));
   const name = "cm_" + hash(index.snapshot_id + recordsHash).slice(0, 32);
   const table = await database.createTable(name, entries.map((entry) => ({ id: entry.id, path: entry.path, fingerprint: entry.fingerprint, vector: cached[entry.fingerprint] })), { mode: "overwrite" });
-  const manifest: Manifest = { format: "cm-vectors-1", snapshot_id: index.snapshot_id, embedding: EMBEDDING, table: name, records_hash: recordsHash, rows: entries.length };
+  const manifest: Manifest = { format: "cm-vectors-2", snapshot_id: index.snapshot_id, embedding: EMBEDDING, chunking: chunkingPolicy(config.chunking), table: name, records_hash: recordsHash, rows: entries.length };
   const temporary = join(config.directory, "manifest." + globalThis.process.pid + ".tmp");
   await writeFile(temporary, JSON.stringify(manifest, null, 2));
   await rename(temporary, join(config.directory, "manifest.json"));
@@ -97,11 +103,21 @@ export async function buildVectors(index: CMIndex, config: VectorConfig, embed =
 
 export class LocalVectors {
   private opened: { snapshot: string; table: Table; close: () => void } | undefined;
+  private projection: { index: CMIndex; chunks: CMChunk[]; recordsHash: string } | undefined;
   constructor(readonly config: VectorConfig, private readonly embed = localEmbedder(config.modelCache)) {}
+  chunks(index: CMIndex): CMChunk[] {
+    if (this.projection?.index !== index) {
+      const chunks = projectChunks(index, this.config.chunking);
+      this.projection = { index, chunks, recordsHash: hash(JSON.stringify(records(index, chunks).map(({ id, fingerprint }) => [id, fingerprint]))) };
+    }
+    return this.projection.chunks;
+  }
   async search(index: CMIndex, query: string, limit = 24, signal?: AbortSignal): Promise<{ id: string; score: number }[]> {
     signal?.throwIfAborted();
     const manifest = JSON.parse(await readFile(join(this.config.directory, "manifest.json"), "utf8")) as Manifest;
-    if (manifest.format !== "cm-vectors-1" || manifest.snapshot_id !== index.snapshot_id || JSON.stringify(manifest.embedding) !== JSON.stringify(EMBEDDING)) {
+    const chunks = this.chunks(index);
+    if (manifest.format !== "cm-vectors-2" || manifest.snapshot_id !== index.snapshot_id || JSON.stringify(manifest.embedding) !== JSON.stringify(EMBEDDING) ||
+        JSON.stringify(manifest.chunking) !== JSON.stringify(chunkingPolicy(this.config.chunking)) || manifest.records_hash !== this.projection!.recordsHash || manifest.rows !== chunks.length) {
       throw new CMError("vectors_outdated", "Rebuild the vector projection for this source snapshot/model");
     }
     if (!/^cm_[0-9a-f]{32}$/.test(manifest.table)) throw new CMError("invalid_vectors", "Invalid vector table identity");
@@ -116,7 +132,7 @@ export class LocalVectors {
     checkVector(vector!);
     const results = await this.opened.table.vectorSearch(vector!).distanceType("cosine").limit(limit).select(["id", "_distance"]).toArray();
     signal?.throwIfAborted();
-    const ids = new Set(index.units.map((unit) => unit.id));
+    const ids = new Set(chunks.map((unit) => unit.id));
     if (results.some((item) => !ids.has(String(item.id)))) throw new CMError("invalid_vectors", "Vector results refer to another snapshot");
     return results.map((item) => ({ id: String(item.id), score: 1 - Number(item._distance) }));
   }

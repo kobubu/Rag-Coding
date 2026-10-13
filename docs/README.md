@@ -6,6 +6,10 @@
 
 [Второй pilot с local vectors/compact context](HYBRID-RESULTS.md): −69,4% tokens, −56,9% расчётной цены, 12/16 против 9/16; latency и failures раскрыты.
 
+[Качество оптимизации и дробление](OPTIMIZATION-AB.md): behavioral/CPU gates, public checks для агента и unit/window/AST projections.
+
+[Итог оптимизационной серии](OPTIMIZATION-RESULTS.md): 24 runs; дополнительный расход всех CM arms, одинаковый target success и отсутствие существенного caller speedup.
+
 [Локальный продукт](LOCAL-PRODUCT.md): index на компьютере пользователя, MCP, подписка и карта концептов.
 
 Главная точка входа — [README](../README.md). Полный CM/RAG backend описан как план; уже работающий local prototype и Harness plugin выделены в отдельную инструкцию.
@@ -29,4 +33,4 @@
 
 Исследование существующего продукта находится в [FlashMT enrichment](../research/FLASHMT-ENRICHMENT.md). Оно объясняет происхождение идей, но не является спецификацией нового сервиса.
 
-Выбор агентской оболочки обоснован в [DeepSeek Harness: plugin или fork](../research/DEEPSEEK-HARNESS.md). Внешнее расширение реализовано на закреплённом runtime API; настоящий model loop проверен pilot. Автоматическая подстановка контекста и полноценный ContextService остаются планом.
+Выбор агентской оболочки обоснован в [DeepSeek Harness: plugin или fork](../research/DEEPSEEK-HARNESS.md). Внешнее расширение реализовано на закреплённом runtime API; model loop и compact auto context проверены pilot. Полноценный ContextService остаётся планом.

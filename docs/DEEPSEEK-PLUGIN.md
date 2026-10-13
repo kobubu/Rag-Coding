@@ -38,17 +38,19 @@ npm run cm:index -- --project /absolute/project --out /absolute/project/.code-me
 npm pack --pack-destination .artifacts
 ```
 
-В Harness Plugin Manager установить полученный локальный `dsh-plugin-code-memory-0.3.0.tgz` как bundle и включить его в нужном профиле. Использовать Harness 0.2.0-rc.2. Bundle добавляет entry `code-memory`; существующие model/file tools остаются в профиле.
+В Harness Plugin Manager установить полученный локальный `dsh-plugin-code-memory-0.4.1.tgz` как bundle и включить его в нужном профиле. Использовать Harness 0.2.0-rc.2. Bundle добавляет entry `code-memory`; существующие model/file tools остаются в профиле.
 
 CLI-вариант после установки Harness:
 
 ```bash
 dsh --profile code-memory --from-default-profile web --dump-config
-dsh plugin --profile code-memory add /absolute/dsh-plugin-code-memory-0.3.0.tgz
+dsh plugin --profile code-memory add /absolute/dsh-plugin-code-memory-0.4.1.tgz
 dsh --profile code-memory --no-open
 ```
 
 Для локальной разработки при изменении tarball использовать новый version/filename или обновление dependency: pnpm может сохранить прежнее содержимое при повторном `add` той же версии по тому же file path. Корректность подключения проверять по composed profile, а не только install exit code. Новый bundle использует `insert`, поскольку обычный patch по `id` меняет уже существующий entry.
+
+В 0.4 compact mode допускает `chunking: unit | window | ast` (default `unit`). Projection policy должна совпадать с config; после обновления с 0.3 требуется rebuild vectors. [Варианты дробления и протокол качества](OPTIMIZATION-AB.md) объясняют размеры, scope enrichment и приёмку оптимизации. Это experimental choices; default не меняется по экономии tokens без behavioral/CPU evidence.
 
 Настройки плагина:
 

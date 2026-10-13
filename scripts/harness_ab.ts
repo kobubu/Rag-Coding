@@ -7,8 +7,9 @@ import { buildIndex } from "../src/code-memory/indexer.js";
 import { hash, inside, MAX_INDEX_BYTES } from "../src/code-memory/source.js";
 import { validateIndex } from "../src/code-memory/store.js";
 import { ROOT } from "./lib.js";
+import type { ChunkingStrategy } from "../src/code-memory/chunks.js";
 
-export type ABOptions = { project: string; output: string; node: string; harness: string; apiKey: string; model: string; environment?: Record<string, string>; cmMode?: "legacy" | "compact"; modelCache?: string; repetitions?: number };
+export type ABOptions = { project: string; output: string; node: string; harness: string; apiKey: string; model: string; environment?: Record<string, string>; cmMode?: "legacy" | "compact"; modelCache?: string; repetitions?: number; chunking?: ChunkingStrategy; maxCalls?: number; maxSeconds?: number; cmIndexPath?: string; cmVectorsPath?: string; projectCheck?: { plugin: string; script: string; task: string; baseline: string } };
 export type ABCase = { id: string; prompt: string; mutations: { path: string; before: string; after: string }[] };
 type ABManifest = ReturnType<typeof createCorpus>;
 
@@ -206,10 +207,12 @@ export async function bootProfile(options: ABOptions, workspace: string, runId: 
   entries.push({ id: "approval", config: { policy: "never" } });
   entries.push({ id: "permission", config: { presets: { "workspace-write": { sandbox: "workspace-write", approval: "never" } }, defaultPreset: "workspace-write" } });
   const inserted: { id: string; name: string; config: Record<string, unknown> }[] = [{ id: "ab-meter", name: pathToFileURL(join(ROOT, "dist/scripts/harness_meter.js")).href,
-    config: { output: meter, model: options.model, maxCalls: 12, requireCMContext: cm && options.cmMode === "compact" } }];
+    config: { output: meter, model: options.model, maxCalls: options.maxCalls ?? 12, requireCMContext: cm && options.cmMode === "compact" } }];
+  if (options.projectCheck) inserted.push({ id: "project-checks", name: pathToFileURL(resolve(options.projectCheck.plugin)).href,
+    config: { node: options.node, script: options.projectCheck.script, task: options.projectCheck.task, baseline: options.projectCheck.baseline, workspace } });
   if (cm) inserted.push({ id: "code-memory", name: pathToFileURL(join(ROOT, "dist/src/harness/plugin.js")).href,
     config: { projectRoot: workspace, ...(options.cmMode === "compact" ? { mode: "compact", autoContext: true,
-      modelCache: options.modelCache, maxContextBytes: 6000, diagnosticsPath: join(directory, "retrieval.json") } : {}) } });
+      modelCache: options.modelCache, chunking: options.chunking ?? "unit", ...(options.cmIndexPath ? { indexPath: options.cmIndexPath } : {}), ...(options.cmVectorsPath ? { vectorsPath: options.cmVectorsPath } : {}), maxContextBytes: 6000, diagnosticsPath: join(directory, "retrieval.json") } : {}) } });
   entries.push({ insert: inserted });
   writeFileSync(patch, JSON.stringify(entries));
   const args = [options.harness, "--profile", profile, "--from-default-profile", "headless", "--patch", patch, "--json"];
@@ -218,7 +221,7 @@ export async function bootProfile(options: ABOptions, workspace: string, runId: 
   return await new Promise<{ run_id: string; exit_code: number | null; duration_ms: number; directory: string; events: unknown[] }>((complete, fail) => {
     const child = spawn(options.node, args, { cwd: workspace, env, windowsHide: true, stdio: ["pipe", "pipe", "pipe"] });
     let stdout = "", stderr = "";
-    const timer = setTimeout(() => child.kill(), 180000);
+    const timer = setTimeout(() => child.kill(), (options.maxSeconds ?? 180) * 1000);
     child.stdout.setEncoding("utf8").on("data", (chunk: string) => { stdout += chunk; });
     child.stderr.setEncoding("utf8").on("data", (chunk: string) => { stderr += chunk; });
     child.on("error", (error) => { clearTimeout(timer); fail(error); });

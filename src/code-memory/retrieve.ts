@@ -1,9 +1,10 @@
 import { bounded } from "./query.js";
 import { CMError } from "./source.js";
 import { LocalVectors, sourceSlice, words } from "./vector.js";
-import type { CMIndex, CMUnit, SourceSpan } from "./types.js";
+import type { CMIndex, SourceSpan } from "./types.js";
+import type { CMChunk } from "./chunks.js";
 
-type ContextPart = { path: string; span: SourceSpan; text: string; reason: "match" | "dependency" };
+type ContextPart = { path: string; span: SourceSpan; text: string; reason: "match" | "dependency" | "signature" };
 export type RetrievedContext = { snapshot_id: string; channels: string[]; bytes_used: number; parts: ContextPart[]; omissions: number; complete: false };
 const STOP = new Set(words("a an the of to in for from with and or is are be should must when then this that fix bug regression ensure preserve behavior existing code apply use please task change project"));
 function terms(text: string): string[] {
@@ -16,9 +17,10 @@ export async function retrieveContext(index: CMIndex, vectors: LocalVectors, que
   if (!query.trim() || query.length > 16000) throw new CMError("invalid_argument", "query must contain 1..16000 characters");
   const budget = bounded(maxBytes, 6000, 32000, "max_bytes");
   const queryWords = [...new Set(terms(query).filter((word) => word.length > 1 && !STOP.has(word)))];
-  const unitById = new Map(index.units.map((unit) => [unit.id, unit]));
+  const chunks = vectors.chunks(index);
+  const unitById = new Map(chunks.map((unit) => [unit.id, unit]));
   const symbols = new Map(index.symbols.map((symbol) => [symbol.id, symbol]));
-  const candidates = index.units.filter((unit) => unit.kind !== "file" && unit.kind !== "block");
+  const candidates = chunks.filter((unit) => vectors.config.chunking && vectors.config.chunking !== "unit" || unit.kind !== "block");
   const vocabulary = new Map(candidates.map((unit) => [unit.id, new Set(terms(unit.name + " " + unit.path + " " + sourceSlice(index, unit)))]));
   const frequencies = new Map(queryWords.map((word) => [word, candidates.reduce((count, unit) => count + Number(vocabulary.get(unit.id)!.has(word)), 0)]));
   const ranked = candidates.map((unit) => {
@@ -32,20 +34,31 @@ export async function retrieveContext(index: CMIndex, vectors: LocalVectors, que
   for (const [rank, item] of dense.entries()) combined.set(item.id, (combined.get(item.id) ?? 0) + 1 / (10 + rank));
   const explicitNames = new Set([...query.matchAll(/`([\w$]+)`/g)].map((match) => match[1]!));
   if (/^[\w$]+$/.test(query.trim())) explicitNames.add(query.trim());
-  for (const unit of candidates) if (explicitNames.has(unit.name)) combined.set(unit.id, (combined.get(unit.id) ?? 0) + 1);
+  for (const unit of candidates) if (unit.symbol_names.some(name => explicitNames.has(name))) combined.set(unit.id, (combined.get(unit.id) ?? 0) + 1);
   const ordered = [...combined].sort((a, b) => b[1] - a[1]);
-  const selected: CMUnit[] = ordered.filter(([, score]) => score >= (ordered[0]?.[1] ?? 0) * 0.85).slice(0, 2).map(([id]) => unitById.get(id)!);
+  const selected: CMChunk[] = ordered.filter(([, score]) => score >= (ordered[0]?.[1] ?? 0) * 0.85).slice(0, 2).map(([id]) => unitById.get(id)!);
   const parts: ContextPart[] = [];
   let bytes = 0, omissions = 0;
   const add = (path: string, span: SourceSpan, reason: ContextPart["reason"]) => {
     if (parts.some((part) => part.path === path && part.span.start_byte <= span.start_byte && part.span.end_byte >= span.end_byte)) return;
-    if (parts.some((part) => part.path === path && span.start_byte <= part.span.start_byte && span.end_byte >= part.span.end_byte)) { omissions++; return; }
-    const length = span.end_byte - span.start_byte;
-    if (bytes + length > budget) { omissions++; return; }
+    if (reason === "dependency" && parts.some((part) => part.reason !== "signature" && part.path === path && span.start_byte <= part.span.start_byte && span.end_byte >= part.span.end_byte)) { omissions++; return; }
     const file = index.files.find((item) => item.path === path)!;
-    const text = Buffer.from(file.source, "utf8").subarray(span.start_byte, span.end_byte).toString("utf8");
-    parts.push({ path, span, text, reason }); bytes += length;
+    const raw = Buffer.from(file.source, "utf8");
+    let ranges = [[span.start_byte, span.end_byte]];
+    for (const part of parts.filter(part => part.path === path)) ranges = ranges.flatMap(([start, end]) =>
+      part.span.end_byte <= start! || part.span.start_byte >= end! ? [[start!, end!]] :
+      [[start!, Math.min(end!, part.span.start_byte)], [Math.max(start!, part.span.end_byte), end!]].filter(([a, b]) => b! > a!));
+    const length = ranges.reduce((total, [start, end]) => total + end! - start!, 0);
+    if (bytes + length > budget) { omissions++; return; }
+    for (const [start, end] of ranges) {
+      const actualSpan = { ...span, start_byte: start!, end_byte: end!,
+        line_start: raw.subarray(0, start!).toString("utf8").split("\n").length,
+        line_end: raw.subarray(0, Math.max(start!, end! - 1)).toString("utf8").split("\n").length };
+      parts.push({ path, span: actualSpan, text: raw.subarray(start!, end!).toString("utf8"), reason });
+    }
+    bytes += length;
   };
+  for (const unit of selected) for (const signature of unit.signatures) add(unit.path, signature, "signature");
   for (const unit of selected) add(unit.path, unit.span, "match");
   for (const unit of selected) {
     for (const id of unit.required_symbol_ids) {

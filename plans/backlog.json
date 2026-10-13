@@ -23,6 +23,12 @@
       "status": "completed"
     },
     {
+      "id": "M00Q",
+      "title": "Качество оптимизации и дробление CM",
+      "gate": "Полный comparison unit/window/AST/none на реальной оптимизации; behavior/CPU/scopes/usage измерены отдельно, все failures сохранены.",
+      "status": "completed"
+    },
+    {
       "id": "M01",
       "title": "Зафиксированный корпус и контракты",
       "gate": "Есть размеченные задачи, способности первого языка и корректные публичные форматы.",
@@ -1213,6 +1219,94 @@
         "src/retrieval/",
         "evaluation/scope-latency-pilot/",
         "docs/HYBRID-RESULTS.md"
+      ]
+    },
+    {
+      "id": "RC-057",
+      "milestone": "M00Q",
+      "title": "Реализовать policy-fenced unit/window/AST projections",
+      "status": "done",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-054"
+      ],
+      "acceptance": [
+        "UTF-8/CRLF windows покрывают source, overlap дедуплицирован без потери тела после signature.",
+        "AST statement groups и compiler-bound declarations/signatures сохраняют scopes; отсутствие полного dataflow раскрыто.",
+        "Snapshot/model/policy/records fencing и default unit compatibility проверены."
+      ],
+      "artifacts": [
+        "src/code-memory/chunks.ts",
+        "src/code-memory/vector.ts",
+        "src/code-memory/retrieve.ts",
+        "tests/chunks.test.ts"
+      ]
+    },
+    {
+      "id": "RC-058",
+      "milestone": "M00Q",
+      "title": "Добавить behavioral и CPU grader для задач оптимизации",
+      "status": "done",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-055"
+      ],
+      "acceptance": [
+        "Одинаковый project_checks позволяет всем agents проверить patch; final geometry/fuzz/callers отдельно.",
+        "Неверная быстрая правка и неизменный source не считаются оптимизацией; loaded module следует current content hash.",
+        "ABBA/BAAB, реальные workloads, stress/build cost, protected scopes и полная usage фиксируются отдельно."
+      ],
+      "artifacts": [
+        "scripts/optimization_checks.ts",
+        "scripts/project_checks_plugin.ts",
+        "tests/optimization.test.ts",
+        "docs/OPTIMIZATION-AB.md"
+      ]
+    },
+    {
+      "id": "RC-059",
+      "milestone": "M00Q",
+      "title": "Измерить качество и стоимость дробления на реальной оптимизации Geo Dash",
+      "status": "done",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-057",
+        "RC-058"
+      ],
+      "acceptance": [
+        "24/24 живых sessions с frozen source, полным usage и независимой behavior/CPU оценкой; все stops и failures учтены.",
+        "Unit/window/AST сравнение, actual caller QA и локальные physics/browser проверки опубликованы; ускорение FPS не заявляется.",
+        "Отрицательная экономия раскрыта; post-study cache fix 0.4.1 не выдан за новый paid A/B. Original Geo JS сохранены."
+      ],
+      "artifacts": [
+        "scripts/optimization_ab.ts",
+        "docs/OPTIMIZATION-AB.md",
+        "evaluation/geo-optimization/",
+        "docs/OPTIMIZATION-RESULTS.md"
+      ]
+    },
+    {
+      "id": "RC-060",
+      "milestone": "M11",
+      "title": "Проверить adaptive whole-function retrieval на новом корпусе с caller performance",
+      "status": "planned",
+      "priority": "P0",
+      "size": "M",
+      "depends_on": [
+        "RC-057",
+        "RC-059"
+      ],
+      "acceptance": [
+        "Exact path/name и небольшие owners получают whole-function context; большие fragments сохраняют neighbors/scopes и budget.",
+        "Новые holdout задачи используют штатный caller workload; correctness, CPU и цена полезного решения измеряются отдельно.",
+        "Все arms используют один final version, полный provider usage и preserved failures; результат не выбирается по изученным задачам."
+      ],
+      "artifacts": [
+        "docs/OPTIMIZATION-RESULTS.md",
+        "docs/OPTIMIZATION-AB.md"
       ]
     }
   ]

@@ -10,6 +10,7 @@ import { LocalVectors } from "../code-memory/vector.js";
 import { retrieveContext, renderContext } from "../code-memory/retrieve.js";
 import type { RetrievedContext } from "../code-memory/retrieve.js";
 import type { CMIndex } from "../code-memory/types.js";
+import type { ChunkingStrategy } from "../code-memory/chunks.js";
 import { CMError, hash } from "../code-memory/source.js";
 import { codeSearch, contextGet, graphExpand, symbolSearch } from "../code-memory/query.js";
 import { CMStore } from "../code-memory/store.js";
@@ -32,6 +33,7 @@ export interface Config {
   autoContext?: boolean;
   maxContextBytes?: number;
   diagnosticsPath?: string;
+  chunking?: ChunkingStrategy;
 }
 
 export function apply(ctx: Context, config: Config = {}): void {
@@ -43,7 +45,7 @@ export function apply(ctx: Context, config: Config = {}): void {
     const record = (value: object) => { if (config.diagnosticsPath) { diagnostics.push(value); writeFileSync(config.diagnosticsPath, JSON.stringify(diagnostics)); } };
     record({ event: "compact_registered" });
     const vectors = new LocalVectors({ directory: resolve(root, config.vectorsPath ?? ".code-memory/vectors"),
-      modelCache: resolve(root, config.modelCache ?? ".code-memory/models") });
+      modelCache: resolve(root, config.modelCache ?? ".code-memory/models"), chunking: config.chunking ?? "unit" });
     ctx.effect(() => () => vectors.close(), "CM local vector cleanup");
     const observe = async (index: CMIndex, context: RetrievedContext, signal: AbortSignal, actor: object) => {
       for (const path of new Set(context.parts.map((part) => part.path))) {
@@ -83,7 +85,7 @@ export function apply(ctx: Context, config: Config = {}): void {
         if (query.trim()) {
           const context = await retrieve(query.slice(0, 16000), undefined, payload.signal, payload);
           const text = renderContext(context);
-          record({ event: "retrieved", agent: payload.agent.id, bytes: context.bytes_used, paths: [...new Set(context.parts.map((part) => part.path))], omissions: context.omissions });
+          record({ event: "retrieved", agent: payload.agent.id, bytes: context.bytes_used, chunking: config.chunking ?? "unit", paths: [...new Set(context.parts.map((part) => part.path))], omissions: context.omissions });
           return { ...decision, messages: [...decision.messages, createUserMessage({ content: [{ type: "text", text }],
             source: { kind: "code-memory", snapshot_id: context.snapshot_id, form: "snapshot", sections: [{ name: "cm-source-context", text }] } })] };
         }

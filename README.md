@@ -2,7 +2,7 @@
 
 База знаний для разработки: **сущности — в глоссарии, код — в CM (Code Memory), зависимости — в графе**. CM хранит точные версии исходников и записи функций/блоков. Поиск собирает контекст нужной детализации и привязывает его к snapshot проекта.
 
-Состояние на 13 октября 2026 года: работают TS/JS CM, локальные learned embeddings/LanceDB и **DeepSeek Harness plugin** с compact auto context. Новый 32-session A/B дал −69,4% tokens, −56,9% расчётной цены и 12/16 правильных правок против 9/16 без CM. Время выросло примерно на 9%; четыре CM failures сохранены. [Полный итог](docs/HYBRID-RESULTS.md). MCP, карта концептов и подписка пока запланированы.
+Состояние на 13 октября 2026 года: работают TS/JS CM, локальные learned embeddings/LanceDB и **DeepSeek Harness plugin** с compact auto context и unit/window/AST projections. [Pilot на исправлениях](docs/HYBRID-RESULTS.md), 32 sessions: −69,4% tokens, −56,9% расчётной цены, 12/16 правильных правок против 9/16; latency выросла, failures сохранены. [Новый pilot оптимизации](docs/OPTIMIZATION-RESULTS.md), 24 sessions: экономия и прирост числа полезных решений не подтвердились; actual caller почти не ускорился. В 0.4.1 отдельно исправлена retrieval latency с сохранением контекста. MCP, карта концептов и подписка пока запланированы.
 
 Основной язык — **TypeScript**, среда выполнения — **Node.js 24 LTS**. Индексируются TypeScript и JavaScript. Агентская оболочка — DeepSeek Harness с нашим plugin; CM core остаётся независимым. Source/graph пока хранятся в JSON, vectors — в локальной LanceDB. SQLite ledger/graph и PostgreSQL/pgvector team server запланированы. Подробнее — [архитектура](docs/ARCHITECTURE.md) и [локальный продукт](docs/LOCAL-PRODUCT.md).
 
@@ -17,6 +17,8 @@
 7. [Живое A/B сравнение](docs/HARNESS-AB.md) — настоящие модели, одинаковые задачи, provider tokens и независимые проверки.
 8. [Локальный CM-продукт](docs/LOCAL-PRODUCT.md) — MCP, карта концептов и модель подписки.
 9. [Второй A/B: local vectors и compact CM](docs/HYBRID-RESULTS.md) — подтверждённая в pilot экономия и все failures.
+10. [Качество оптимизации и варианты дробления](docs/OPTIMIZATION-AB.md) — независимые behavioral/CPU проверки и unit/window/AST projections.
+11. [Итог оптимизационного сравнения](docs/OPTIMIZATION-RESULTS.md) — все 24 runs, токены, target/caller CPU и причины дополнительного расхода.
 
 ## Основная схема
 
