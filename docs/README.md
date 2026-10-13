@@ -19,3 +19,5 @@
 Исполняемые примеры формата находятся в [contracts](../contracts/README.md). Последовательность разработки — в [roadmap](../plans/ROADMAP.md), детализация первой итерации — в [FIRST-ITERATION](../plans/FIRST-ITERATION.md).
 
 Исследование существующего продукта находится в [FlashMT enrichment](../research/FLASHMT-ENRICHMENT.md). Оно объясняет происхождение идей, но не является спецификацией нового сервиса.
+
+Вариант готовой агентской оболочки изучен в [DeepSeek Harness: plugin или fork](../research/DEEPSEEK-HARNESS.md). Рекомендован integration spike внешнего расширения; сам Harness и интеграция пока не запускались.

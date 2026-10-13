@@ -7,7 +7,7 @@
 | Этап | Что получается | Зависимости | Условие готовности |
 |---|---|---|---|
 | M00 | Документы, контракты, план, переносимый probe | Исходный концепт | Навигация и документационные checks проходят |
-| M01 | Целевой corpus и 40 размеченных задач | M00 | Hashes, ground truth, holdout и Python capabilities зафиксированы |
+| M01 | Целевой TypeScript corpus и 40 размеченных задач | M00 | Hashes, ground truth, holdout и TypeScript capabilities зафиксированы |
 | M02 | Reader, blobs, ledger и restore | M01 contracts | Source roundtrip, стабильный manifest и реальная SQL/restore проверка |
 | M03 | Глоссарий, CodeUnit и required context | M02 | Scope identity, exact partition, captures и крайние случаи проходят |
 | M04 | Exact/text retrieval, package, CLI/API | M03 | Сквозной реальный поиск с источниками; A/B/C baseline измерен |
@@ -15,10 +15,10 @@
 | M06 | Embeddings, hybrid ranking и graph contribution | M04/M05 | D/E оценены при фиксированном corpus и budget |
 | M07 | Bounded enrichment, admission, review | M05/M06 | Evidence и статусы проверены; качество живой модели измерено отдельно |
 | M08 | Viewer, editor overlay, read-only integration | M04–M07 по задачам | Навигация, graph evidence и ContextPackage проверены через интерфейс |
-| M09 | TS/TSX, C# и межсервисные contracts | Общий core M03/M05 | Языковые и межрепозиторные сценарии проходят на реальных версиях |
+| M09 | Python, C# и межсервисные contracts | Общий TS core M03/M05 | Языковые и межрепозиторные сценарии проходят на реальных версиях |
 | M10 | Память решений, команда и следующая поставка | M07–M09 по задачам | Restore, access isolation, реальные UC и release proof выполнены |
 
-Минимальный полезный MVP заканчивается M04: один Python-проект, точный и текстовый поиск, глоссарий, блоки и проверяемый пакет окружения. M05–M08 расширяют качество и удобство. Языки и командный выпуск не задерживают первый локальный результат.
+Минимальный полезный MVP заканчивается M04: один TypeScript-проект, точный и текстовый поиск, глоссарий, блоки и проверяемый пакет окружения. Core/CLI/API/workers пишутся на TypeScript + Node.js; API — Fastify, будущий viewer — React + TS. M05–M08 расширяют качество и удобство. Дополнительные языки и командный выпуск не задерживают первый локальный результат. Уже работающие npm-инструменты проверяют документы и ограниченную fixture; они не закрывают продуктовые этапы.
 
 ## Критический путь
 
@@ -43,7 +43,7 @@ flowchart LR
 
 1. **Corpus и правила версии.** Выбрать одну реальную задачу проекта, сохранить manifest и expected sources; зафиксировать spans и capabilities. Проверка: повторить manifest и ground truth.
 2. **Source reader и blobs.** Реализовать один воспроизводимый снимок без анализа. Проверка: прочитать Git/overlay и восстановить bytes, включая deletion и CRLF.
-3. **Symbols и CodeUnit.** Добавить Python scopes, hierarchy и partition. Проверка: точный source плюс nested captures и одноимённые locals.
+3. **Symbols и CodeUnit.** Добавить TypeScript scopes через Compiler API, hierarchy и partition. Проверка: точный source плюс nested captures, shadowed locals и UTF-16→byte mapping.
 4. **Ledger и exact navigation.** Сохранить данные в PostgreSQL и читать их через CLI/API. Проверка: реальные миграции и переход к нужному source.
 5. **ContextPackage.** Раскрыть required context с budget и omissions. Проверка: реальная задача с closure/guard и сравнение baseline.
 

@@ -9,20 +9,31 @@ permissions:
 
 jobs:
   docs:
-    name: Docs and fixture (${{ matrix.os }})
+    name: TypeScript checks (${{ matrix.os }}, Node ${{ matrix.node }})
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
+        node: [22, 24]
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          python-version: '3.11'
-      - name: Install documentation validator
-        run: python -m pip install -r requirements-dev.txt
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci --ignore-scripts
+      - name: Build TypeScript tools
+        run: npm run build
       - name: Check documentation, plan and contracts
-        run: python scripts/check_docs.py
+        run: npm run check
+      - name: Test byte mapping, bindings and rejected inputs
+        run: npm test
       - name: Smoke portable diagnostic CLI
-        run: python scripts/probe_flashmt_chunking.py --fixture --output .artifacts/ci-fixture.json
+        run: npm run probe -- --fixture --output .artifacts/ci-fixture-ts.json
+      - name: Verify generated backlog
+        run: npm run backlog -- --check

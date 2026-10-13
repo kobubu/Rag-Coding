@@ -49,7 +49,9 @@ Segmenter получает конкретный файл снимка, синт�
 
 В исследовании FlashMT `plan_scene_windows()` разбита на подготовку, вложенную `flush()`, цикл и завершение. Byte reconstruction и внешние привязки проверены; оптимальность границ — нет. Подробности и revision находятся в [исследовании](../research/FLASHMT-ENRICHMENT.md).
 
-Публикуемая собственная [fixture](../fixtures/batching.py) позволяет повторить такой структурный сценарий без checkout FlashMT. Текущий скрипт группирует только прямые инструкции выбранной функции и показывает closure. Он не реализует весь описанный рекурсивный segmenter, токенизацию, alias-analysis или retrieval.
+Основная собственная [TS-fixture](../fixtures/batching.ts) позволяет повторить структурный сценарий без checkout FlashMT и Python. `npm run probe` после сборки использует TypeScript Compiler API: четыре группы тела, exact bytes и captures `batchNumber`, `batches`, `pending`. Изолированная `flush()` синтаксически допустима, но TypeChecker находит неразрешённые внешние имена. Это другой механизм, чем Python `nonlocal` в исследовании FlashMT.
+
+Текущий TS-скрипт группирует только прямые инструкции выбранной функции; замыкания связываются по compiler symbols, включая проверку shadowed locals. Он не реализует весь рекурсивный segmenter, токенизацию, alias-analysis, cross-file resolution или retrieval. [Python-fixture](../fixtures/batching.py) и исторический probe сохранены только для исследования дополнительного языка.
 
 ## Что проверять перед принятием изменения
 

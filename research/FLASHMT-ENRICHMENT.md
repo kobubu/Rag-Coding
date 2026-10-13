@@ -58,6 +58,8 @@
 
 Создан локальный [probe_flashmt_chunking.py](../scripts/probe_flashmt_chunking.py), который только читает файлы и использует стандартную библиотеку Python. Он не импортирует и не исполняет FlashMT, не обращается к LLM, БД или внешнему сервису. Результат — [chunking-probe.json](evidence/flashmt-chunking-probe-2026-10-13.json); в нём сохранены наблюдавшийся commit и хеши исходных файлов.
 
+После перехода core на TypeScript + Node.js этот скрипт оставлен как необязательный исследовательский инструмент для Python-исходников. Обычные проверки и CI используют TS-инструменты и [собственную TS-fixture](../fixtures/batching.ts); сохранённые ниже результаты FlashMT относятся к исходному Python-анализатору и не переименованы в результаты TS.
+
 Проверены три файла: `scene_enrich.py`, `fact_admission.py`, `services/ingest.py`. В них обнаружено соответственно 48, 21 и 19 определений, включая вложенные функции и классы. Полные файлы проходят синтаксическую компиляцию без исполнения.
 
 Фокус — реальная `Portal Services/external/ProjectKnowledgeService/pks/pipelines/scene_enrich.py:243` (plan_scene_windows()), строки 243–289. Четыре группы тела:

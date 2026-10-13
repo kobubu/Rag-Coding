@@ -60,7 +60,7 @@
     },
     {
       "id": "M09",
-      "title": "TypeScript, C# и contracts",
+      "title": "Python, C# и contracts",
       "gate": "Адаптеры публикуют реальные capabilities; связи слоёв доказуемы.",
       "status": "planned"
     },
@@ -94,7 +94,7 @@
     {
       "id": "RC-002",
       "milestone": "M00",
-      "title": "Сделать структурный probe переносимым",
+      "title": "Сделать TypeScript structural probe переносимым",
       "status": "done",
       "priority": "P0",
       "size": "S",
@@ -102,18 +102,19 @@
         "RC-001"
       ],
       "acceptance": [
-        "Собственная fixture выполняется без FlashMT checkout.",
-        "Проверяются exact bytes, closure и пределы сценария."
+        "Собственная TS-fixture анализируется через npm без Python и FlashMT checkout.",
+        "Проверяются exact bytes LF/CRLF/BOM, Unicode mapping, compiler-symbol captures и пределы сценария."
       ],
       "artifacts": [
-        "scripts/probe_flashmt_chunking.py",
-        "fixtures/batching.py"
+        "scripts/probe_chunking.ts",
+        "fixtures/batching.ts",
+        "tests/tooling.test.ts"
       ]
     },
     {
       "id": "RC-003",
       "milestone": "M01",
-      "title": "Зафиксировать целевой Python-корпус",
+      "title": "Зафиксировать целевой TypeScript-корпус",
       "status": "planned",
       "priority": "P0",
       "size": "S",
@@ -159,11 +160,11 @@
       ],
       "acceptance": [
         "Snapshot, spans, units, relations и package имеют версии.",
-        "Матрица Python явно перечисляет unsupported и unresolved случаи."
+        "Матрица TypeScript/JS/TSX явно перечисляет unsupported и unresolved случаи."
       ],
       "artifacts": [
         "contracts/",
-        "docs/capabilities-python.md"
+        "docs/capabilities-typescript.md"
       ]
     },
     {
@@ -181,7 +182,7 @@
         "Concurrent change, delete и выход symlink за корень имеют явный результат."
       ],
       "artifacts": [
-        "src/rag_coding/repositories/"
+        "src/repositories/"
       ]
     },
     {
@@ -199,7 +200,7 @@
         "Неподдерживаемая кодировка не получает приблизительных offsets."
       ],
       "artifacts": [
-        "src/rag_coding/repositories/blobs.py",
+        "src/repositories/blobs.ts",
         "tests/source_ranges/"
       ]
     },
@@ -219,7 +220,7 @@
         "Дубли identities и неверные ссылки отклоняются на реальной БД."
       ],
       "artifacts": [
-        "src/rag_coding/storage/",
+        "src/storage/",
         "migrations/"
       ]
     },
@@ -245,7 +246,7 @@
     {
       "id": "RC-010",
       "milestone": "M03",
-      "title": "Реализовать Python syntax adapter",
+      "title": "Реализовать TypeScript/TSX syntax adapter",
       "status": "planned",
       "priority": "P0",
       "size": "M",
@@ -254,11 +255,11 @@
         "RC-007"
       ],
       "acceptance": [
-        "Функции, классы, decorators и nested scopes имеют exact ranges.",
-        "Syntax error и unsupported grammar показывают partial diagnostics."
+        "Функции, классы, callbacks, decorators и nested scopes имеют exact byte ranges через UTF-16 mapping.",
+        "Syntax error, JS/TSX и unsupported grammar показывают явные capabilities и partial diagnostics."
       ],
       "artifacts": [
-        "src/rag_coding/adapters/python/"
+        "src/adapters/typescript/"
       ]
     },
     {
@@ -274,10 +275,10 @@
       ],
       "acceptance": [
         "Одноимённые locals различаются по scope.",
-        "Free/nonlocal/global bindings проверены; неизвестный target остаётся null."
+        "Lexical captures, shadowing и import bindings проверены; неизвестный target остаётся null."
       ],
       "artifacts": [
-        "src/rag_coding/analysis/symbols.py",
+        "src/analysis/symbols.ts",
         "tests/symbol_navigation/"
       ]
     },
@@ -297,7 +298,7 @@
         "Комментарии, headers и decorators не теряются."
       ],
       "artifacts": [
-        "src/rag_coding/segmentation/hierarchy.py"
+        "src/segmentation/hierarchy.ts"
       ]
     },
     {
@@ -315,7 +316,7 @@
         "Большие конструкции, literals и исключения бюджета имеют явные роли."
       ],
       "artifacts": [
-        "src/rag_coding/segmentation/partition.py",
+        "src/segmentation/partition.ts",
         "tests/chunking/"
       ]
     },
@@ -332,10 +333,10 @@
       ],
       "acceptance": [
         "Captures, type references, guards и lifecycle-owner связаны с конкретными ID.",
-        "Object mutation не объявляется отсутствующей из-за отсутствия Name assignment."
+        "Object mutation не объявляется отсутствующей из-за отсутствия присваивания переменной."
       ],
       "artifacts": [
-        "src/rag_coding/analysis/context_requirements.py"
+        "src/analysis/contextRequirements.ts"
       ]
     },
     {
@@ -354,7 +355,7 @@
         "Camel/snake tokens дополняют exact identity; parent/child дубли контролируются."
       ],
       "artifacts": [
-        "src/rag_coding/storage/text_index.py",
+        "src/storage/textIndex.ts",
         "tests/search/"
       ]
     },
@@ -374,13 +375,13 @@
         "Source spans проверяются, lifecycle не обрезается молча."
       ],
       "artifacts": [
-        "src/rag_coding/retrieval/context.py"
+        "src/retrieval/context.ts"
       ]
     },
     {
       "id": "RC-017",
       "milestone": "M04",
-      "title": "Ввести минимальные CLI и read API",
+      "title": "Ввести TypeScript CLI и Fastify read API",
       "status": "planned",
       "priority": "P0",
       "size": "M",
@@ -389,10 +390,11 @@
       ],
       "acceptance": [
         "Сценарий snapshot → symbol → unit → context проходит через внешний интерфейс.",
-        "Errors, pagination и snapshot mismatch имеют контрактные ответы."
+        "Errors, pagination и snapshot mismatch имеют контрактные ответы.",
+        "Внешние JSON payload валидируются runtime-схемой; тяжёлый анализ вынесен из HTTP event loop."
       ],
       "artifacts": [
-        "src/rag_coding/interfaces/",
+        "src/interfaces/",
         "tests/api_smoke/"
       ]
     },
@@ -420,7 +422,7 @@
     {
       "id": "RC-019",
       "milestone": "M05",
-      "title": "Выбрать Python cross-file semantic backend",
+      "title": "Зафиксировать TypeScript project semantic configuration",
       "status": "planned",
       "priority": "P1",
       "size": "M",
@@ -428,8 +430,8 @@
         "RC-018"
       ],
       "acceptance": [
-        "Spike проверяет imports, re-exports, missing dependencies и dynamic attributes.",
-        "Выбор сопровождается capability matrix и ограничениями."
+        "Program/TypeChecker spike проверяет tsconfig paths, project references, imports/re-exports и missing dependencies.",
+        "Стратегия incremental update сопровождается capability matrix и ограничениями."
       ],
       "artifacts": [
         "docs/semantic-spike.md",
@@ -451,7 +453,7 @@
         "Unresolved targets и неоднозначность видны в API."
       ],
       "artifacts": [
-        "src/rag_coding/analysis/project_links.py"
+        "src/analysis/projectLinks.ts"
       ]
     },
     {
@@ -469,7 +471,7 @@
         "Выдача не смешивает предыдущий graph и новые source blobs."
       ],
       "artifacts": [
-        "src/rag_coding/analysis/invalidation.py",
+        "src/analysis/invalidation.ts",
         "tests/snapshot_updates/"
       ]
     },
@@ -489,7 +491,7 @@
         "Late result старого fingerprint не перезаписывает актуальный результат."
       ],
       "artifacts": [
-        "src/rag_coding/enrichment/jobs.py",
+        "src/enrichment/jobs.ts",
         "tests/job_recovery/"
       ]
     },
@@ -529,8 +531,8 @@
         "Точный snapshot/access filtering и approximate recall проверены."
       ],
       "artifacts": [
-        "src/rag_coding/storage/vector_index.py",
-        "src/rag_coding/retrieval/ranking.py"
+        "src/storage/vectorIndex.ts",
+        "src/retrieval/ranking.ts"
       ]
     },
     {
@@ -570,7 +572,7 @@
         "Контракт сообщает insufficient_context и fingerprint."
       ],
       "artifacts": [
-        "src/rag_coding/enrichment/envelope.py"
+        "src/enrichment/envelope.ts"
       ]
     },
     {
@@ -589,7 +591,7 @@
         "Replay и живые вызовы имеют разные evidence статусы."
       ],
       "artifacts": [
-        "src/rag_coding/enrichment/providers.py"
+        "src/enrichment/providers.ts"
       ]
     },
     {
@@ -608,7 +610,7 @@
         "Кандидат модели не перезаписывает derived binding или review молча."
       ],
       "artifacts": [
-        "src/rag_coding/enrichment/admission.py",
+        "src/enrichment/admission.ts",
         "tests/admission/"
       ]
     },
@@ -636,7 +638,7 @@
     {
       "id": "RC-030",
       "milestone": "M08",
-      "title": "Сделать локальный source и glossary viewer",
+      "title": "Сделать локальный React + TypeScript source и glossary viewer",
       "status": "planned",
       "priority": "P1",
       "size": "L",
@@ -689,7 +691,7 @@
         "Старые coordinates не применяются к новому тексту, conflict виден."
       ],
       "artifacts": [
-        "src/rag_coding/interfaces/editor/",
+        "src/interfaces/editor/",
         "tests/editor_overlay/"
       ]
     },
@@ -710,13 +712,13 @@
         "Нет расширения прав на изменения проекта из retrieved content."
       ],
       "artifacts": [
-        "src/rag_coding/interfaces/assistant/"
+        "src/interfaces/assistant/"
       ]
     },
     {
       "id": "RC-034",
       "milestone": "M09",
-      "title": "Реализовать TypeScript/TSX adapter",
+      "title": "Реализовать дополнительный Python adapter",
       "status": "planned",
       "priority": "P1",
       "size": "L",
@@ -725,11 +727,12 @@
         "RC-020"
       ],
       "acceptance": [
-        "Symbol identity, overload, callbacks и JSX имеют опубликованные capabilities.",
-        "Fixtures и реальные tsconfig/dependencies проходят навигационный smoke."
+        "Syntax, scopes, closures и доступная cross-file семантика Python имеют опубликованные capabilities.",
+        "Tree-sitter, native ast/symtable worker или индексатор выбраны по spike; unresolved imports/dynamic attributes остаются явными."
       ],
       "artifacts": [
-        "src/rag_coding/adapters/typescript/"
+        "src/adapters/python/",
+        "docs/capabilities-python.md"
       ]
     },
     {
@@ -748,7 +751,7 @@
         "Compilation references и неизвестные типы отражаются в coverage."
       ],
       "artifacts": [
-        "src/rag_coding/adapters/csharp/"
+        "src/adapters/csharp/"
       ]
     },
     {
@@ -767,7 +770,7 @@
         "Сходство названий полей остаётся только candidate при отсутствии evidence."
       ],
       "artifacts": [
-        "src/rag_coding/analysis/contracts.py"
+        "src/analysis/contracts.ts"
       ]
     },
     {
@@ -805,7 +808,7 @@
         "Исторический пример не выдаётся как текущая реализация."
       ],
       "artifacts": [
-        "src/rag_coding/domain/solution_cases.py"
+        "src/domain/solutionCases.ts"
       ]
     },
     {
@@ -842,7 +845,7 @@
         "Тесты двух областей доступа исключают перенос частного контекста."
       ],
       "artifacts": [
-        "src/rag_coding/security/",
+        "src/security/",
         "tests/access_isolation/"
       ]
     },

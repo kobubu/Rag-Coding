@@ -4,6 +4,8 @@
 
 Состояние на 13 октября 2026 года: подготовлены концепт, технические спецификации, план реализации и диагностический пример дробления. Сервис индексации, поисковый API и интерфейс ещё предстоит разработать. Диагностическая проверка структуры не является измерением качества RAG.
 
+Основной язык продукта — **TypeScript**, среда выполнения — **Node.js 24 LTS**. API планируется на Fastify, интерфейс — на React + TypeScript. Первый индексируемый корпус — TypeScript; Python и C# подключаются отдельными языковыми адаптерами. Для ledger и графа выбран PostgreSQL, для векторного поиска — pgvector; хранилища ещё не запущены. Подробнее — [архитектура](docs/ARCHITECTURE.md).
+
 ## С чего читать
 
 1. [Концепт продукта](CONCEPT.md) — назначение глоссария, ТМ и графа, пример из FlashMT.
@@ -31,17 +33,20 @@ flowchart LR
 
 ## Что можно проверить сейчас
 
-Требуется Python 3.11. Проверки документации используют закреплённую зависимость из `requirements-dev.txt`; диагностический разбор использует стандартную библиотеку.
+Рекомендуется Node.js 24 LTS; документационные инструменты также поддерживают Node.js 22 от 22.17.0. Зависимости закреплены в `package-lock.json`. Python для основных проверок не требуется.
 
 ```bash
-python -m pip install -r requirements-dev.txt
-python scripts/check_docs.py
-python scripts/probe_flashmt_chunking.py --fixture
+npm ci
+npm run verify
 ```
 
-На Windows можно заменить `python` на `py -3.11`. Диагностический сценарий разбирает собственную небольшую fixture: проверяет исходные байты, группы инструкций и привязки вложенной функции. Код fixture не исполняется. Результаты пишутся в игнорируемую папку `.artifacts/`.
+Команды одинаковы на Windows и Linux. `verify` собирает TS-инструменты, проверяет документы, backlog и JSON Schema, запускает регрессии и диагностический CLI. Собственная [TS-fixture](fixtures/batching.ts) проверяется через TypeScript Compiler API: исходные байты, четыре группы тела и три привязки вложенной функции. Код fixture не исполняется. Результаты пишутся в игнорируемую папку `.artifacts/`; собранный JavaScript — в `dist/`.
 
-Для чтения локальных исходников FlashMT предусмотрен дополнительный режим:
+Отдельные команды после `npm run build`: `npm run check`, `npm test`, `npm run probe -- --fixture --output .artifacts/probe.json`. Обновление представления backlog: `npm run backlog`; проверка актуальности: `npm run backlog -- --check`.
+
+В PowerShell для команд с передачей флагов использовать `npm.cmd`, например `npm.cmd run backlog -- --check` и `npm.cmd run probe -- --fixture --output .artifacts/probe.json`. Это сохраняет аргументы подкоманды при использовании Windows npm shim. Основная команда `npm run verify` флагов не требует; CI выполняет команды в Bash на обеих ОС.
+
+Для повторения исследования Python-исходников FlashMT сохранён необязательный отдельный инструмент. Только ему нужны Python 3.11 и локальный checkout:
 
 ```powershell
 py -3.11 scripts/probe_flashmt_chunking.py --source-root 'D:\models\Portal Services'

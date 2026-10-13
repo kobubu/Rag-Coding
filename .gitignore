@@ -1,4 +1,7 @@
 .artifacts/
+node_modules/
+dist/
+*.tsbuildinfo
 .venv/
 __pycache__/
 *.py[cod]
