@@ -6,6 +6,8 @@
 
 Основной язык — **TypeScript**, среда выполнения — **Node.js 24 LTS**. Индексируются TypeScript и JavaScript. Агентская оболочка — DeepSeek Harness с нашим plugin; CM core остаётся независимым. Source/graph пока хранятся в JSON, vectors — в локальной LanceDB. SQLite ledger/graph и PostgreSQL/pgvector team server запланированы. Подробнее — [архитектура](docs/ARCHITECTURE.md) и [локальный продукт](docs/LOCAL-PRODUCT.md).
 
+В 0.4.2 [локальный векторный поиск](docs/VECTOR-SEARCH.md) включён по умолчанию в Harness bundle; `cm-search --mode vector` позволяет отдельно проверить dense ranking без lexical. Local inference и 7 503 rows на 224 файлах Geo Dash проверены через CLI и установленный tarball; новая paid A/B серия не выполнялась.
+
 ## С чего читать
 
 1. [Запуск CM plugin](docs/DEEPSEEK-PLUGIN.md) — индекс, пакет, подключение и четыре инструмента.
@@ -19,6 +21,7 @@
 9. [Второй A/B: local vectors и compact CM](docs/HYBRID-RESULTS.md) — подтверждённая в pilot экономия и все failures.
 10. [Качество оптимизации и варианты дробления](docs/OPTIMIZATION-AB.md) — независимые behavioral/CPU проверки и unit/window/AST projections.
 11. [Итог оптимизационного сравнения](docs/OPTIMIZATION-RESULTS.md) — все 24 runs, токены, target/caller CPU и причины дополнительного расхода.
+12. [Векторный поиск: запуск и проверка](docs/VECTOR-SEARCH.md) — локальная модель, база, CLI и стандартное подключение Harness.
 
 ## Основная схема
 

@@ -12,12 +12,12 @@ import { ToolRuntime } from "@deepseek-ai/dsh-tools";
 import { SystemPrompt } from "@deepseek-ai/dsh-system-prompt";
 import * as plugin from "../src/harness/plugin.js";
 
-test("compact Harness plugin activates with declared services and disposes its registrations", async () => {
+test("Harness plugin defaults to vector context, activates with declared services and disposes its registrations", async () => {
   const ctx = new Context();
   const prompt = await ctx.plugin(SystemPrompt, {});
   const tools = await ctx.plugin(ToolRuntime, {});
   const removeFS = ctx.provide("fs", {});
-  const memory = await ctx.plugin(plugin, { mode: "compact", projectRoot: tmpdir() });
+  const memory = await ctx.plugin(plugin, { projectRoot: tmpdir() });
   try {
     await new Promise((done) => setTimeout(done, 0));
     assert.deepEqual(ctx.tools.schemas().map((tool) => tool.name), ["cm_retrieve_context"]);
@@ -46,6 +46,9 @@ test("local vector projection persists, reuses embeddings, fences snapshot/model
   assert.equal(second.embedded, 0);
   const vectors = new LocalVectors(config, stableEmbeddings);
   try {
+    await assert.rejects(vectors.search(index, ""), /query/);
+    await assert.rejects(vectors.search(index, "reward", 0), /limit/);
+    await assert.rejects(vectors.search(index, "reward", 51), /limit/);
     const hits = await vectors.search(index, "unused daily advertisement quota");
     assert.equal(index.units.find((unit) => unit.id === hits[0]!.id)!.path, "rewards.js");
     const context = await retrieveContext(index, vectors, "rewardsRemaining", 300);

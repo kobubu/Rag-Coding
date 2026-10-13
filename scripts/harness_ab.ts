@@ -211,7 +211,7 @@ export async function bootProfile(options: ABOptions, workspace: string, runId: 
   if (options.projectCheck) inserted.push({ id: "project-checks", name: pathToFileURL(resolve(options.projectCheck.plugin)).href,
     config: { node: options.node, script: options.projectCheck.script, task: options.projectCheck.task, baseline: options.projectCheck.baseline, workspace } });
   if (cm) inserted.push({ id: "code-memory", name: pathToFileURL(join(ROOT, "dist/src/harness/plugin.js")).href,
-    config: { projectRoot: workspace, ...(options.cmMode === "compact" ? { mode: "compact", autoContext: true,
+    config: { projectRoot: workspace, mode: options.cmMode ?? "legacy", ...(options.cmMode === "compact" ? { autoContext: true,
       modelCache: options.modelCache, chunking: options.chunking ?? "unit", ...(options.cmIndexPath ? { indexPath: options.cmIndexPath } : {}), ...(options.cmVectorsPath ? { vectorsPath: options.cmVectorsPath } : {}), maxContextBytes: 6000, diagnosticsPath: join(directory, "retrieval.json") } : {}) } });
   entries.push({ insert: inserted });
   writeFileSync(patch, JSON.stringify(entries));

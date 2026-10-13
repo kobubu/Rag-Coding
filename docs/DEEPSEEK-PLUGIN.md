@@ -1,13 +1,13 @@
 # CM — Code Memory: плагин DeepSeek Harness
 
-Рабочий локальный prototype v0.3: legacy tools и компактный vector/context режим. Он добавляет глоссарий, записи CM, структурные связи и сборку исходного контекста в DeepSeek Harness. Индекс создаётся отдельной CLI-командой на TypeScript Compiler API для TypeScript и JavaScript; код индексируемого проекта не исполняется. Никаких модельных вызовов для индексации не требуется.
+Рабочий локальный prototype v0.4.2: компактный vector/context режим по умолчанию и optional legacy tools. Он добавляет глоссарий, записи CM, структурные связи и сборку исходного контекста в DeepSeek Harness. Primary index создаётся CLI-командой на TypeScript Compiler API для TypeScript и JavaScript, vector projection — локальной embedding-моделью. Код индексируемого проекта не исполняется, внешний LLM API не требуется.
 
 ## Проверенная совместимость
 
 - Node.js 24 LTS; поддерживаемый дополнительный runtime — Node.js 22 от 22.19.0.
-- `@deepseek-ai/dsh-tools` 0.2.0-rc.2 и `@deepseek-ai/cordis` 4.0.4. Версии явно закреплены: `latest` пакета tools сейчас указывает на более старую несовместимую линию.
+- `@deepseek-ai/dsh-tools` 0.2.0-rc.2 и `@deepseek-ai/cordis` 4.0.4. Версии явно закреплены для проверенного runtime API.
 - Локальный backend `code-memory-0.1`: неизменяемые source blobs внутри JSON snapshot. PostgreSQL/pgvector остаются запланированным storage backend.
-- Проверки registry используют настоящие Cordis Context, SystemPrompt и Harness ToolRuntime: schemas, calls, canonical JSON, errors, cancellation и unload. Дополнительно tarball установлен CLI Harness в отдельный профиль: проверены boot Web-профиля и четыре dispatch calls из его реального runtime. Живая модель и пользовательские взаимодействия Web UI проверяются отдельно.
+- Проверки registry используют настоящие Cordis Context, SystemPrompt и Harness ToolRuntime: schemas, calls, canonical JSON, errors, cancellation и unload. Legacy CLI installation проверялась ранее; 0.4.2 извлечён из tarball в отдельный full Web profile с local dependency junctions, actual vector/context dispatch PASS. Это manual offline installation, не проверка one-command pnpm installer. Живая модель измерялась в предыдущих A/B; новые model/UI calls здесь не выполнялись.
 
 ## Сборка и создание CM
 
@@ -38,13 +38,13 @@ npm run cm:index -- --project /absolute/project --out /absolute/project/.code-me
 npm pack --pack-destination .artifacts
 ```
 
-В Harness Plugin Manager установить полученный локальный `dsh-plugin-code-memory-0.4.1.tgz` как bundle и включить его в нужном профиле. Использовать Harness 0.2.0-rc.2. Bundle добавляет entry `code-memory`; существующие model/file tools остаются в профиле.
+В Harness Plugin Manager установить полученный локальный `dsh-plugin-code-memory-0.4.2.tgz` как bundle и включить его в нужном профиле. Использовать Harness 0.2.0-rc.2. Bundle добавляет entry `code-memory` с compact vector mode и auto context; существующие model/file tools остаются в профиле. Для этого режима нужны подготовленные primary index, vectors и локальная модель.
 
 CLI-вариант после установки Harness:
 
 ```bash
 dsh --profile code-memory --from-default-profile web --dump-config
-dsh plugin --profile code-memory add /absolute/dsh-plugin-code-memory-0.4.1.tgz
+dsh plugin --profile code-memory add /absolute/dsh-plugin-code-memory-0.4.2.tgz
 dsh --profile code-memory --no-open
 ```
 
@@ -58,6 +58,9 @@ dsh --profile code-memory --no-open
 |---|---|
 | `projectRoot` | Абсолютный корень индексируемого проекта; по умолчанию `CM_PROJECT_ROOT` или cwd Harness |
 | `indexPath` | Путь JSON index, абсолютный либо относительно projectRoot; по умолчанию `CM_INDEX_PATH` или `.code-memory/index.json` |
+| `mode` | `compact` по умолчанию с 0.4.2; `legacy` явно включает прежние четыре lexical/graph tools |
+| `autoContext` | true по умолчанию в bundle и source plugin; false отключает автоматическую подачу |
+| `vectorsPath` / `modelCache` | По умолчанию `.code-memory/vectors` / `.code-memory/models` относительно projectRoot |
 
 Для source checkout можно подключить собранный entry отдельным patch, задав абсолютный путь к `dist/src/harness/plugin.js`:
 
@@ -72,7 +75,9 @@ dsh --profile code-memory --no-open
 
 Patch используется стандартным `dsh --profile web --patch /absolute/code-memory.patch.yml`. На Windows в YAML допустимы пути `D:/...`; проектные пути задаёт пользователь в конфигурации, модель не выбирает произвольный root/indexPath.
 
-## Инструменты
+## Legacy-инструменты
+
+Эта таблица относится к `config.mode: legacy`; default vector tool — `cm_retrieve_context`, описанный ниже. [Векторный поиск и отдельный CLI](VECTOR-SEARCH.md) включены в актуальный пакет.
 
 | Tool | Вход | Результат |
 |---|---|---|
@@ -99,11 +104,12 @@ Reader повторно проверяет digest JSON и реальные sourc
 
 ## Compact vector/context режим
 
-Для экономии использовать этот режим явно; default остаётся legacy для совместимости. Сначала создать primary CM, затем локальные vectors:
+С 0.4.2 это стандартный режим plugin и installable bundle. Старые four-tool клиенты указывают `mode: legacy` явно. Сначала создать primary CM, затем локальные vectors:
 
 ```powershell
 npm.cmd run cm:index -- --project 'D:/project'
 npm.cmd run cm:vectors -- 'D:/project' 'D:/CM-model-cache'
+npm.cmd run cm:search -- --project 'D:/project' --model-cache 'D:/CM-model-cache' --query 'remaining daily reward allowance' --mode vector
 ```
 
 Первая vector-команда скачивает pinned ONNX model/tokenizer; inference выполняется на CPU. Query работает с local files only. Индекс хранит model/config fingerprint и source snapshot. CLI входит в tarball как `cm-vector-index`. Vector cache/project data исключать из Git.

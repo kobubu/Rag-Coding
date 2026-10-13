@@ -14,6 +14,8 @@
 
 Главная точка входа — [README](../README.md). Полный CM/RAG backend описан как план; уже работающий local prototype и Harness plugin выделены в отдельную инструкцию.
 
+[Векторный поиск](VECTOR-SEARCH.md): learned local embeddings, vector-only CLI и compact/auto default в bundle 0.4.2; historical lexical pilot отделён от последующих vector experiments.
+
 | Документ | Что он определяет |
 |---|---|
 | [CM plugin: запуск](DEEPSEEK-PLUGIN.md) | Установка, четыре tools, local index, версии и фактические пределы |

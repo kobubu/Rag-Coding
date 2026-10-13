@@ -173,7 +173,7 @@ test("changes to analysis configuration invalidate CM even when source bytes are
 test("real Harness registry dispatches four tools, rejects bad arguments and cleans up on unload", async () => {
   const target = join(project, "index.json");
   writeFileSync(target, JSON.stringify(index));
-  const runtime = await mountHarnessPlugin({ projectRoot: project, indexPath: target });
+  const runtime = await mountHarnessPlugin({ projectRoot: project, indexPath: target, mode: "legacy" });
   try {
     assert.equal(runtime.ctx.tools.schemas().length, 4);
     const search = await runtime.call("cm_symbol_search", { query: "flush" });

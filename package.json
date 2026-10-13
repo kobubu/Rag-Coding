@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-code-memory",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": true,
   "description": "CM (Code Memory): read-only repository knowledge plugin for DeepSeek Harness",
   "type": "module",
@@ -18,7 +18,8 @@
     "harness:ab": "node dist/scripts/run_harness_ab.js",
     "harness:optimization": "node dist/scripts/run_optimization_ab.js",
     "verify": "npm run build && npm run check && npm test && npm run probe",
-    "cm:vectors": "node dist/src/code-memory/vector_cli.js"
+    "cm:vectors": "node dist/src/code-memory/vector_cli.js",
+    "cm:search": "node dist/src/code-memory/search_cli.js"
   },
   "main": "./dist/src/harness/plugin.js",
   "types": "./dist/src/harness/plugin.d.ts",
@@ -30,14 +31,16 @@
   },
   "bin": {
     "cm-index": "dist/src/code-memory/cli.js",
-    "cm-vector-index": "dist/src/code-memory/vector_cli.js"
+    "cm-vector-index": "dist/src/code-memory/vector_cli.js",
+    "cm-search": "dist/src/code-memory/search_cli.js"
   },
   "files": [
     "dist/src/",
     "harness/",
     "contracts/cm-local.schema.json",
     "README.md",
-    "docs/DEEPSEEK-PLUGIN.md"
+    "docs/DEEPSEEK-PLUGIN.md",
+    "docs/VECTOR-SEARCH.md"
   ],
   "dsh": {
     "bundle": {

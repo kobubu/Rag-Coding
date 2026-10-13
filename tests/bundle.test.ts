@@ -19,4 +19,5 @@ test("Harness accepts package metadata and actually inserts the CM plugin into a
   assert.equal(entries.length, 1);
   assert.equal(entries[0]?.id, "code-memory");
   assert.equal(entries[0]?.name, manifest.name);
+  assert.deepEqual(entries[0]?.config, { mode: "compact", autoContext: true });
 });

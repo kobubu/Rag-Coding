@@ -1,4 +1,6 @@
 - insert:
     - id: code-memory
       name: dsh-plugin-code-memory
-      config: {}
+      config:
+        mode: compact
+        autoContext: true

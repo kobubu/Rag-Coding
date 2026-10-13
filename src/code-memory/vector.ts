@@ -7,6 +7,7 @@ import { CMError, hash } from "./source.js";
 import type { CMFile, CMIndex, CMUnit } from "./types.js";
 import { chunkingPolicy, projectChunks } from "./chunks.js";
 import type { ChunkingStrategy, CMChunk } from "./chunks.js";
+import { bounded } from "./query.js";
 
 export const EMBEDDING = { model: "Xenova/all-MiniLM-L6-v2", revision: "751bff37182d3f1213fa05d7196b954e230abad9", dtype: "q8", dimensions: 384, projection: "cm-hybrid-1" } as const;
 export type Embedder = (texts: string[], signal?: AbortSignal) => Promise<number[][]>;
@@ -114,6 +115,8 @@ export class LocalVectors {
   }
   async search(index: CMIndex, query: string, limit = 24, signal?: AbortSignal): Promise<{ id: string; score: number }[]> {
     signal?.throwIfAborted();
+    if (!query.trim() || query.length > 16000) throw new CMError("invalid_argument", "query must contain 1..16000 characters");
+    limit = bounded(limit, 24, 50, "limit");
     const manifest = JSON.parse(await readFile(join(this.config.directory, "manifest.json"), "utf8")) as Manifest;
     const chunks = this.chunks(index);
     if (manifest.format !== "cm-vectors-2" || manifest.snapshot_id !== index.snapshot_id || JSON.stringify(manifest.embedding) !== JSON.stringify(EMBEDDING) ||

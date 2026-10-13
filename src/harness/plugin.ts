@@ -39,11 +39,14 @@ export interface Config {
 export function apply(ctx: Context, config: Config = {}): void {
   const root = resolve(config.projectRoot ?? process.env.CM_PROJECT_ROOT ?? process.cwd());
   const store = new CMStore(root, resolve(root, config.indexPath ?? process.env.CM_INDEX_PATH ?? ".code-memory/index.json"));
-  if (config.mode === "compact") {
+  const mode = config.mode ?? "compact";
+  if (mode !== "compact" && mode !== "legacy") throw new CMError("invalid_argument", "mode must be compact or legacy");
+  const autoContext = config.autoContext ?? true;
+  if (mode === "compact") {
     ctx.inject(["tools", "systemPrompt", "fs"], (ctx) => {
     const diagnostics: object[] = [];
     const record = (value: object) => { if (config.diagnosticsPath) { diagnostics.push(value); writeFileSync(config.diagnosticsPath, JSON.stringify(diagnostics)); } };
-    record({ event: "compact_registered" });
+    record({ event: "compact_registered", mode, autoContext });
     const vectors = new LocalVectors({ directory: resolve(root, config.vectorsPath ?? ".code-memory/vectors"),
       modelCache: resolve(root, config.modelCache ?? ".code-memory/models"), chunking: config.chunking ?? "unit" });
     ctx.effect(() => () => vectors.close(), "CM local vector cleanup");
@@ -76,7 +79,7 @@ export function apply(ctx: Context, config: Config = {}): void {
     }));
     ctx.systemPrompt.section({ name: "cm-context-guidance", order: 1350,
       text: "CM source context is already read through this filesystem and version-observed for guarded edit. Apply targeted edits directly when the supplied context suffices; use cm_retrieve_context or read for missing context." });
-    if (config.autoContext) {
+    if (autoContext) {
       ctx.on("agent/pre-step", async (payload, next) => {
         const decision = await next();
         record({ event: "pre_step", agent: payload.agent.id, kind: decision.kind, messages: decision.kind === "enter" ? decision.messages.length : 0 });

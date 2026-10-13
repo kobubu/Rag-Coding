@@ -122,6 +122,18 @@
 
 Ожидаемые материалы: `docs/HYBRID-RESULTS.md`, `evaluation/geo-hybrid-pilot/`, `scripts/summarize_hybrid.ts`.
 
+### RC-061: Включить vector default и проверить semantic CLI/установленный Harness bundle
+
+Статус: **done**. Приоритет: P0. Размер: S. Зависимости: RC-054, RC-055.
+
+Приёмка:
+
+- Default plugin/bundle используют compact learned vector search; legacy явно задаётся и исторический benchmark воспроизводится.
+- Vector-only cm-search без lexical ranking на реальном corpus и actual installed-profile context dispatch проверены без provider API.
+- Query/limit bounds и snapshot/model/policy fences сохранены; manual install и отсутствие нового paid A/B раскрыты.
+
+Ожидаемые материалы: `src/code-memory/search_cli.ts`, `src/harness/plugin.ts`, `harness/bundle.yml`, `docs/VECTOR-SEARCH.md`, `research/evidence/vector-default-smoke-2026-10-13.json`.
+
 ## M00Q: Качество оптимизации и дробление CM
 
 Критерий этапа: Полный comparison unit/window/AST/none на реальной оптимизации; behavior/CPU/scopes/usage измерены отдельно, все failures сохранены.

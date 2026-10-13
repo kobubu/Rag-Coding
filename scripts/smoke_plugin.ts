@@ -8,7 +8,7 @@ import { ROOT, writeJson } from "./lib.js";
 const index = validateIndex(buildIndex(ROOT));
 const target = join(ROOT, ".artifacts/cm-smoke-index.json");
 writeJson(target, index);
-const runtime = await mountHarnessPlugin({ projectRoot: ROOT, indexPath: target });
+const runtime = await mountHarnessPlugin({ projectRoot: ROOT, indexPath: target, mode: "legacy" });
 try {
   const names = runtime.ctx.tools.schemas().map((tool) => tool.name).sort();
   assert.deepEqual(names, ["cm_code_search", "cm_context_get", "cm_graph_expand", "cm_symbol_search"]);

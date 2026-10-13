@@ -1308,6 +1308,30 @@
         "docs/OPTIMIZATION-RESULTS.md",
         "docs/OPTIMIZATION-AB.md"
       ]
+    },
+    {
+      "id": "RC-061",
+      "milestone": "M00V",
+      "title": "Включить vector default и проверить semantic CLI/установленный Harness bundle",
+      "status": "done",
+      "priority": "P0",
+      "size": "S",
+      "depends_on": [
+        "RC-054",
+        "RC-055"
+      ],
+      "acceptance": [
+        "Default plugin/bundle используют compact learned vector search; legacy явно задаётся и исторический benchmark воспроизводится.",
+        "Vector-only cm-search без lexical ranking на реальном corpus и actual installed-profile context dispatch проверены без provider API.",
+        "Query/limit bounds и snapshot/model/policy fences сохранены; manual install и отсутствие нового paid A/B раскрыты."
+      ],
+      "artifacts": [
+        "src/code-memory/search_cli.ts",
+        "src/harness/plugin.ts",
+        "harness/bundle.yml",
+        "docs/VECTOR-SEARCH.md",
+        "research/evidence/vector-default-smoke-2026-10-13.json"
+      ]
     }
   ]
 }
