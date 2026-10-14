@@ -1,6 +1,24 @@
 # CM — Code Memory: плагин DeepSeek Harness
 
-Рабочий локальный prototype v0.6.1: компактный vector/context режим по умолчанию, optional legacy tools, graph/adaptive retrieval и live update. Он добавляет глоссарий, записи CM, структурные связи и сборку исходного контекста в DeepSeek Harness. Primary index создаётся на TypeScript Compiler API для TypeScript и JavaScript, vector projection — локальной embedding-моделью. Код индексируемого проекта не исполняется, внешний LLM API для индексирования не требуется. [Живая CM](LIVE-CM.md), [граф и экономия](GRAPH-BUDGET.md), [полный HNSW A/B](HNSW-MODEL-AB.md).
+Рабочий локальный prototype v0.7.0: компактный context режим по умолчанию, adaptive retrieval, локальные vectors, optional legacy tools и live update. Он добавляет глоссарий, записи CM, структурные связи и сборку исходного контекста в DeepSeek Harness. Primary index создаётся на TypeScript Compiler API для TypeScript и JavaScript, vector projection — локальной embedding-моделью. Код индексируемого проекта не исполняется, внешний LLM API для индексирования не требуется. [Живая CM](LIVE-CM.md), [граф и экономия](GRAPH-BUDGET.md), [скорость и токены](SPEED-TOKENS.md).
+
+## Быстрый запуск на подготовленном Windows-компьютере
+
+В локальном checkout `D:\Rag Coding` уже подготовлены Harness 0.2.0-rc.2, Node.js 24, сборка CM и embedding-модель. Открыть PowerShell и выполнить:
+
+```powershell
+# Сначала скопировать API-ключ в буфер; значение не попадает в команду.
+$env:CM_AB_API_KEY = Get-Clipboard
+powershell -NoProfile -ExecutionPolicy Bypass -File 'D:\Rag Coding\scripts\start_harness.ps1' -ProjectRoot 'D:\Geo Dash' -SourceScope game
+```
+
+Если в этой консоли уже задан `CM_AB_API_KEY` или `OPENAI_API_KEY`, первая строка не нужна. Launcher использует GPT-6 Luna (`gpt-6-luna`) и открывает браузер. При ручном открытии использовать **полную ссылку из строки `dsh web:`**, включая её token: простой адрес с портом не выполняет первоначальную авторизацию. Token не нужно пересылать в чат. Остановить Harness — `Ctrl+C` в консоли запуска.
+
+CM автоматически получает контекст перед модельным вызовом; отдельно вызывать поиск при каждой задаче не требуется. Например: «Изучи `game/src/core/reward-policy.js` и объясни ограничение наград; файлы пока не меняй». Сначала можно проверить работу на такой задаче без правок. Модельные обращения оплачиваются провайдеру; индекс и embedding inference работают локально. Для Geo Dash launcher подхватывает подготовленное поколение Atlas только при совпадении project root hash; CM дополнительно проверяет snapshot, модель и исходники перед повторным использованием. Для другого или изменённого проекта первая индексация может занять несколько минут; последующие запросы используют сохранённую базу и обновляют её после изменений исходников.
+
+[Launcher](../scripts/start_harness.ps1) создаёт отдельный Harness home и каталог CM в `.artifacts/user-harness/` и `.artifacts/user-memory/`; project/scope имеют разные identities. API-ключ не записывается в patch: сохраняется только имя переменной окружения. Настройки, локальная история и выбранные исходные фрагменты имеют обычные границы Harness; при облачной модели контекст отправляется её провайдеру. `SourceScope game` ограничивает CM кодом игры, а workspace Harness — весь выбранный проект.
+
+Для другого проекта поменять `-ProjectRoot`; `-SourceScope` можно опустить. `-NoOpen` отключает автоматическое открытие браузера, `-Port 61333` меняет порт, `-PrepareOnly` только готовит patch без запуска сервера. Это launcher для **уже подготовленной локальной установки**, а не установщик с нуля.
 
 ## Проверенная совместимость
 
@@ -38,13 +56,13 @@ npm run cm:index -- --project /absolute/project --out /absolute/project/.code-me
 npm pack --pack-destination .artifacts
 ```
 
-В Harness Plugin Manager установить полученный локальный `dsh-plugin-code-memory-0.6.1.tgz` как bundle и включить его в нужном профиле. Использовать Harness 0.2.0-rc.2. Bundle добавляет entry `code-memory` с compact vector mode и auto context; существующие model/file tools остаются в профиле. Для этого режима нужны подготовленные primary index, vectors и локальная модель; live builds могут подготовить новый source/vector snapshot при наличии локальной модели.
+В Harness Plugin Manager установить полученный локальный `dsh-plugin-code-memory-0.7.0.tgz` как bundle и включить его в нужном профиле. Использовать Harness 0.2.0-rc.2. Bundle добавляет entry `code-memory` с compact vector mode и auto context; существующие model/file tools остаются в профиле. Для этого режима нужны подготовленные primary index, vectors и локальная модель; live builds могут подготовить новый source/vector snapshot при наличии локальной модели.
 
 CLI-вариант после установки Harness:
 
 ```bash
 dsh --profile code-memory --from-default-profile web --dump-config
-dsh plugin --profile code-memory add /absolute/dsh-plugin-code-memory-0.6.1.tgz
+dsh plugin --profile code-memory add /absolute/dsh-plugin-code-memory-0.7.0.tgz
 dsh --profile code-memory --no-open
 ```
 
@@ -132,10 +150,10 @@ npm.cmd run cm:search -- --project 'D:/project' --model-cache 'D:/CM-model-cache
         maxContextBytes: 6000
 ```
 
-`vectorsPath` по умолчанию `.code-memory/vectors`; paths задаёт владелец профиля. `cm_retrieve_context(query, max_bytes?)` соединяет exact/lexical/dense retrieval, dependencies и dedupe. Auto context вводится в logged producer message до первого model call. Source reads передают штатные observations с CAS version; permissions обычного edit сохраняются. Изменённый primary snapshot/model даёт vectors_outdated и требует rebuild. Add/delete/branch и automatic watcher ещё не реализованы.
+`vectorsPath` по умолчанию `.code-memory/vectors`; paths задаёт владелец профиля. `cm_retrieve_context(query, max_bytes?)` соединяет exact/lexical/dense retrieval, dependencies и dedupe. Auto context вводится в logged producer message до первого model call. Source reads передают штатные observations с CAS version; permissions обычного edit сохраняются. При `autoUpdate: true` актуальное source/vector поколение подготавливается перед следующим indexed query; проверяются изменения, добавление, удаление и переименование исходников. Фоновый watcher включается отдельно через `backgroundUpdate: true`; по умолчанию Harness не строит индекс в фоне. При ручном snapshot изменённый primary snapshot/model требует rebuild.
 
 Для compact fiber объявлены tools/systemPrompt/fs dependencies; basic legacy runtime может работать без FS service. `diagnosticsPath` опционально сохраняет только события, paths и размеры без prompts/code/credentials. Число CM tool calls может быть нулевым при действующем auto context; A/B meter проверяет actual model-visible context отдельно.
 
-Текущий stack: Transformers.js 4.3.1, LanceDB 0.40.0, pinned MiniLM q8, 384 dimensions. Exact cosine search остаётся default. С 0.5.0 optional [IVF_HNSW_SQ](HNSW.md) включается через `searchMode: ann` после построения ANN projection; PostgreSQL, SQLite и FTS ещё не реализованы в этом режиме. Root checkout фиксирует sharp override 0.35.5 для transitive optional image dependency LanceDB; при установке tarball dependency overrides не наследуются: consumer root также должен закрепить этот override. Native installer/updates проверяются отдельной поставкой.
+Текущий stack: pinned MiniLM q8, 384 dimensions, Tokenizers 0.2.0 и ONNX Runtime 1.30.0 для локальной inference, LanceDB 0.40.0. Transformers.js 4.3.1 используется для bootstrap скачивания модели. Exact cosine search остаётся default. С 0.5.0 optional [IVF_HNSW_SQ](HNSW.md) включается через `searchMode: ann` после построения ANN projection; PostgreSQL, SQLite и FTS ещё не реализованы в этом режиме. Root checkout фиксирует sharp override 0.35.5 для transitive optional image dependency LanceDB; при установке tarball dependency overrides не наследуются: consumer root также должен закрепить этот override. Native installer/updates проверяются отдельной поставкой.
 
 [Второй A/B](HYBRID-RESULTS.md) сохраняет все 32 sessions и ограничения: −69,4% tokens, −56,9% расчётной цены; 12/16 против 9/16. Это эффект всей связки, не isolated vector ablation.
