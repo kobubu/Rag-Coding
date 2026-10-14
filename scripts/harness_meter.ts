@@ -9,7 +9,7 @@ export const inject = ["llm"];
 export type MeterConfig = { output: string; model: string; maxCalls?: number; requireCMContext?: boolean };
 
 export function apply(ctx: Context, config: MeterConfig): void {
-  const calls: { call: number; model: string; duration_ms: number; usage: TokenUsage | null; finish: string | null; cm_tools: string[]; cm_context_present: boolean; request_bytes: number; schema_bytes: number; cm_context_occurrences: number }[] = [];
+  const calls: { call: number; model: string; started_at_ms: number; duration_ms: number; usage: TokenUsage | null; finish: string | null; cm_tools: string[]; cm_context_present: boolean; request_bytes: number; schema_bytes: number; cm_context_occurrences: number }[] = [];
   let attempts = 0;
   ctx.on("llm/stream", (options, next) => {
     if (options.model !== config.model) throw new Error("AB experiment refuses a different model");
@@ -22,7 +22,7 @@ export function apply(ctx: Context, config: MeterConfig): void {
     if (call === 1 && config.requireCMContext && (!cmTools.includes("cm_retrieve_context") || !cmContext)) {
       throw new Error("AB refuses a paid call: compact CM tool/context did not activate");
     }
-    const started = performance.now();
+    const started = performance.now(), startedAt = Date.now();
     return (async function* () {
       let usage: TokenUsage | null = null;
       let finish: string | null = null;
@@ -33,7 +33,7 @@ export function apply(ctx: Context, config: MeterConfig): void {
           yield chunk;
         }
       } finally {
-        calls.push({ call, model: String(options.model), duration_ms: performance.now() - started, usage, finish, cm_tools: cmTools, cm_context_present: cmContext,
+        calls.push({ call, model: String(options.model), started_at_ms: startedAt, duration_ms: performance.now() - started, usage, finish, cm_tools: cmTools, cm_context_present: cmContext,
           request_bytes: requestBytes, schema_bytes: schemaBytes, cm_context_occurrences: cmOccurrences });
         writeFileSync(config.output, JSON.stringify({ accounting: "Provider-reported disjoint token usage; no heuristic estimates", attempts, calls }, null, 2));
       }

@@ -4,3 +4,4 @@
       config:
         mode: compact
         autoContext: true
+        autoUpdate: true

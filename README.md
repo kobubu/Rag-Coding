@@ -14,6 +14,8 @@
 
 ## С чего читать
 
+В **0.7.0** [новый A/B на скорости и токенах](docs/SPEED-TOKENS.md), 36 sessions: adaptive 12/12 правильных решений, none 11/12; **-48.1% tokens, -35.1% estimate price, -20.4% Harness time**. Без первого matched triple latency gain 9.7%; быстрее 7/12 paired tasks, не каждая. К прежнему graph CM время -58.6%, tokens +3.1%. Default теперь adaptive: свежий small self-contained file / named graph / dense discovery, lean pinned MiniLM, обновление Harness перед следующим indexed query. Первичная постройка и последующий полный compiler rebuild остаются отдельными затратами; результаты одного проекта не обещают универсального выигрыша.
+
 1. [Запуск CM plugin](docs/DEEPSEEK-PLUGIN.md) — индекс, пакет, подключение и четыре инструмента.
 2. [Концепт продукта](CONCEPT.md) — назначение глоссария, CM и графа, пример из FlashMT.
 3. [Подробный план](plans/ROADMAP.md) — этапы, зависимости и критерии перехода.

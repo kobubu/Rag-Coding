@@ -3,6 +3,7 @@ import { defineTool } from "@deepseek-ai/dsh-tools";
 import { createUserMessage } from "@deepseek-ai/dsh-llm";
 import { resolve } from "node:path";
 import { writeFileSync } from "node:fs";
+import { performance } from "node:perf_hooks";
 import type {} from "@deepseek-ai/dsh-fs";
 import type {} from "@deepseek-ai/dsh-agent";
 import type {} from "@deepseek-ai/dsh-system-prompt";
@@ -16,6 +17,7 @@ import { CMError, hash } from "../code-memory/source.js";
 import { codeSearch, contextGet, graphExpand, symbolSearch } from "../code-memory/query.js";
 import { CMStore } from "../code-memory/store.js";
 import { LiveMemory } from "../code-memory/live.js";
+import { directFileContext } from "../code-memory/direct.js";
 
 export const name = "code-memory";
 export const inject = ["tools"];
@@ -39,6 +41,7 @@ export interface Config {
   searchMode?: "exact" | "ann";
   retrievalPolicy?: RetrievalPolicy;
   autoUpdate?: boolean;
+  backgroundUpdate?: boolean;
   memoryDirectory?: string;
   embeddingCache?: string;
   sourceScope?: string;
@@ -53,7 +56,7 @@ export function apply(ctx: Context, config: Config = {}): void {
   if (mode === "compact") {
     ctx.inject(["tools", "systemPrompt", "fs"], (ctx) => {
     const diagnostics: object[] = [];
-    const record = (value: object) => { if (config.diagnosticsPath) { diagnostics.push(value); writeFileSync(config.diagnosticsPath, JSON.stringify(diagnostics)); } };
+    const record = (value: object) => { if (config.diagnosticsPath) { diagnostics.push({ at_ms: Date.now(), ...value }); writeFileSync(config.diagnosticsPath, JSON.stringify(diagnostics)); } };
     record({ event: "compact_registered", mode, autoContext, search_mode: config.searchMode ?? "exact" });
     const vectors = new LocalVectors({ directory: resolve(root, config.vectorsPath ?? ".code-memory/vectors"),
       modelCache: resolve(root, config.modelCache ?? ".code-memory/models"), chunking: config.chunking ?? "unit", searchMode: config.searchMode ?? "exact" });
@@ -61,8 +64,8 @@ export function apply(ctx: Context, config: Config = {}): void {
     const live = config.autoUpdate ? new LiveMemory({ projectRoot: root, directory: resolve(root, config.memoryDirectory ?? ".code-memory/live"),
       modelCache: vectors.config.modelCache, baseIndex: store.indexPath, baseVectors: vectors.config.directory, chunking: config.chunking ?? "unit", searchMode: config.searchMode ?? "exact",
       ...(config.embeddingCache ? { embeddingCache: config.embeddingCache } : {}), ...(config.sourceScope ? { sourceScope: config.sourceScope } : {}) }) : undefined;
-    if (live) { live.startWatching();ctx.effect(() => () => live.close(), "CM live generation cleanup"); }
-    const observe = async (index: CMIndex, context: RetrievedContext, signal: AbortSignal, actor: object) => {
+    if (live) { if (config.backgroundUpdate) live.startWatching();ctx.effect(() => () => live.close(), "CM live generation cleanup"); }
+    const observe = async (context: RetrievedContext, signal: AbortSignal, actor: object) => {
       for (const path of new Set(context.parts.map((part) => part.path))) {
         const hostPath = resolve(root, path);
         const processPath = ctx.fs.processPathFromHostPath(hostPath);
@@ -72,22 +75,27 @@ export function apply(ctx: Context, config: Config = {}): void {
         if (!before || before.type !== "file") throw new CMError("index_outdated", "CM file is unavailable");
         const actual = await ctx.fs.readText(target, signal);
         const after = await ctx.fs.stat(target, signal);
-        if (before.version !== after?.version || hash(Buffer.from(actual, "utf8")) !== index.files.find((file) => file.path === path)!.sha256) {
+        const versions = new Set(context.parts.filter(part => part.path === path).map(part => part.span.file_version_id));
+        if (before.version !== after?.version || versions.size !== 1 || !versions.has("blob:" + hash(Buffer.from(actual, "utf8")))) {
           throw new CMError("index_outdated", "CM source changed during context observation");
         }
         ctx.emit("fs/observed", target, { kind: "present", version: after.version }, actor);
       }
     };
     const retrieve = async (query: string, budget: number | undefined, signal: AbortSignal, actor: object, detail: RetrievalDetail = "focused") => {
+      if ((config.retrievalPolicy ?? "adaptive") === "adaptive" && detail === "focused") {
+        const direct = await directFileContext(root, query, budget ?? config.maxContextBytes ?? 6000, signal, config.sourceScope);
+        if (direct) { await observe(direct, signal, actor);return direct; }
+      }
       const action = async (index: CMIndex, currentVectors: LocalVectors) => {
-        const context = await retrieveContext(index, currentVectors, query, budget ?? config.maxContextBytes ?? 6000, signal, { policy: config.retrievalPolicy ?? "hybrid", detail });
-        await observe(index, context, signal, actor);return context;
+        const context = await retrieveContext(index, currentVectors, query, budget ?? config.maxContextBytes ?? 6000, signal, { policy: config.retrievalPolicy ?? "adaptive", detail });
+        await observe(context, signal, actor);return context;
       };
       if (live) return live.use(signal, undefined, action);
       return action(await store.load(signal), vectors);
     };
-    ctx.tools.register(defineTool({ name: "cm_retrieve_context", description: "Get compact exact code and dependencies via local hybrid vector search. Files are version-checked and observed for edit. Partial; read more only when needed.",
-      parameters: { query: { type: "string", required: true }, max_bytes: { type: "integer" }, ...(config.retrievalPolicy && config.retrievalPolicy !== "hybrid" ? { detail: { type: "string" as const, enum: ["focused", "expanded"] } } : {}) },
+    ctx.tools.register(defineTool({ name: "cm_retrieve_context", description: "Get current small self-contained named files or compact compiler-bound context. Discovery uses local vector search. Version-checked and observed for edit. Partial; expand or read when needed.",
+      parameters: { query: { type: "string", required: true }, max_bytes: { type: "integer" }, ...((config.retrievalPolicy ?? "adaptive") !== "hybrid" ? { detail: { type: "string" as const, enum: ["focused", "expanded"] } } : {}) },
       output: { schema: { type: "object", additionalProperties: true }, render: (_args: unknown, value: RetrievedContext) => [{ type: "text" as const, text: renderContext(value) }] },
       async execute(args, exec) { return retrieve(args.query, args.max_bytes, exec.signal, exec, args.detail ?? "focused"); },
     }));
@@ -100,9 +108,10 @@ export function apply(ctx: Context, config: Config = {}): void {
         if (decision.kind !== "enter") return decision;
         const query = payload.messages.filter((message) => message.source.kind === "user").flatMap((message) => message.content.filter((part) => part.type === "text").map((part) => part.text)).join("\n");
         if (query.trim()) {
+          const started = performance.now();
           const context = await retrieve(query.slice(0, 16000), undefined, payload.signal, payload);
           const text = renderContext(context);
-          record({ event: "retrieved", agent: payload.agent.id, bytes: context.bytes_used, chunking: config.chunking ?? "unit", search_mode: config.searchMode ?? "exact", context_sha256: hash(Buffer.from(text, "utf8")), paths: [...new Set(context.parts.map((part) => part.path))], omissions: context.omissions, retrieval: context.retrieval });
+          record({ event: "retrieved", duration_ms: performance.now() - started, agent: payload.agent.id, bytes: context.bytes_used, chunking: config.chunking ?? "unit", search_mode: config.searchMode ?? "exact", context_sha256: hash(Buffer.from(text, "utf8")), paths: [...new Set(context.parts.map((part) => part.path))], omissions: context.omissions, retrieval: context.retrieval });
           return { ...decision, messages: [...decision.messages, createUserMessage({ content: [{ type: "text", text }],
             source: { kind: "code-memory", snapshot_id: context.snapshot_id, form: "snapshot", sections: [{ name: "cm-source-context", text }] } })] };
         }

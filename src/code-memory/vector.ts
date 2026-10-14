@@ -22,6 +22,7 @@ export function localEmbedder(cache: string, allowDownload = false): Embedder {
   const key = resolve(cache) + ":" + allowDownload;
   return async (texts, signal) => {
     signal?.throwIfAborted();
+    if (!allowDownload) { const { miniLMEmbedder } = await import("./minilm.js");return miniLMEmbedder(cache)(texts, signal); }
     let model = models.get(key);
     if (!model) {
       const { pipeline } = await import("@huggingface/transformers");

@@ -1,6 +1,6 @@
 # Локальный векторный поиск CM
 
-Векторный backend реализован с 0.3: Transformers.js вычисляет learned MiniLM embeddings на CPU, LanceDB хранит vectors локально и выполняет cosine search. Первое [лексическое A/B](AB-RESULTS.md) этого backend не имело; [последующие серии](HYBRID-RESULTS.md) и [оптимизационный эксперимент](OPTIMIZATION-RESULTS.md) уже использовали его.
+Векторный backend реализован с 0.3: learned MiniLM embeddings на CPU, LanceDB хранит vectors локально и выполняет cosine search. В 0.7.0 cached inference запускает тот же pinned ONNX через ONNX Runtime Node и официальный Tokenizers.js; Transformers.js используется при explicit bootstrap. [Сверка и маршруты](SPEED-TOKENS.md) раскрывают точность и границы. Первое [лексическое A/B](AB-RESULTS.md) этого backend не имело; [последующие серии](HYBRID-RESULTS.md) и [оптимизационный эксперимент](OPTIMIZATION-RESULTS.md) уже использовали его.
 
 В **0.4.2** устранён разрыв подключения: installable Harness bundle включает `mode: compact` и `autoContext: true`; source plugin без явно указанного mode тоже использует compact. Прежние четыре lexical/graph tools доступны при `mode: legacy`. Vector ошибки не скрываются переходом к lexical-only.
 
@@ -20,7 +20,7 @@ Primary index — `.code-memory/index.json`; vectors — `.code-memory/vectors`.
 
 `cm-search` входит в tarball как bin. `--mode vector` вызывает только dense ranking и выводит snapshot, path/name/span и cosine similarity. `--mode hybrid` (default) собирает exact/lexical/dense context с required declarations, signature/dedupe и source budget. `--limit 1..50` относится к vector results; `--max-bytes 1..32000` — к hybrid source. Query должен содержать 1..16000 characters.
 
-Для внешних artifacts можно указать `--index`, `--vectors`, `--model-cache` абсолютными путями; относительные пути считаются от `--project`. `--chunking unit|window|ast` должен совпадать с projection. Source/model/policy mismatch требует rebuild; после edits/add/delete/branch change обновлять CM вручную. Watcher пока запланирован.
+Для внешних artifacts можно указать `--index`, `--vectors`, `--model-cache` абсолютными путями; относительные пути считаются от `--project`. `--chunking unit|window|ast` должен совпадать с projection. Source/model/policy mismatch требует rebuild; CLI snapshots обновляют вручную, живой режим поддерживает [атомарные поколения](LIVE-CM.md).
 
 ## Harness
 

@@ -815,3 +815,27 @@
 - Новые22 neighbor queries фиксируют recall/misses/native latency; identical contexts и отсутствие session speedup не выдаются за причинную ANN token экономию; exact default сохранён.
 
 Ожидаемые материалы: `scripts/ann_ab.ts`, `scripts/run_ann_ab.ts`, `scripts/summarize_ann_ab.ts`, `tests/benchmark.test.ts`, `docs/HNSW-MODEL-AB.md`, `evaluation/hnsw-model/`.
+
+### RC-067: Сделать CM полезным по полной скорости, токенам и проверенному качеству
+
+Статус: **done**. Приоритет: P0. Размер: M. Зависимости: RC-064, RC-065, RC-066.
+
+Приёмка:
+
+- Conservative fresh-file/graph/vector routing, pinned lightweight inference и on-demand Harness updates сохраняют fences и раскрывают стоимость следующих rebuilds.
+- 36 sessions на шести новых task specs, включая CPU optimization: полные costs/failures, independent scopes/behavior, frozen inputs и secondary first-triple sensitivity.
+- Measured time/tokens к none снижены при 12/12 quality против 11/12; 7/12 time wins, +3.1% tokens к old CM и cold preprocessing disclosed. Post-study Unicode/scope guard имеет отдельный native proof.
+
+Ожидаемые материалы: `src/code-memory/direct.ts`, `src/code-memory/minilm.ts`, `src/harness/plugin.ts`, `scripts/speed_ab.ts`, `scripts/speed_checks.ts`, `scripts/run_speed_ab.ts`, `scripts/summarize_speed_ab.ts`, `docs/SPEED-TOKENS.md`, `evaluation/speed-tokens/`.
+
+### RC-068: Уменьшить changed-source rebuild и блокировку интерактивного model loop
+
+Статус: **planned**. Приоритет: P0. Размер: L. Зависимости: RC-065, RC-067.
+
+Приёмка:
+
+- Worker/incremental compiler сохраняет compiler bindings, source/config/branch fences и atomic immutable generations; неполные reused graph facts не объявляются актуальными.
+- Repeated edit -> indexed retrieval trace измеряет полную latency, event-loop delay, CPU, disk и refresh costs с independent quality.
+- Fresh-file shortcut не подменяет measurement на импортированных/многофайловых изменениях; cold/warm и amortization опубликованы отдельно.
+
+Ожидаемые материалы: `src/code-memory/live.ts`, `docs/LIVE-CM.md`, `docs/SPEED-TOKENS.md`.

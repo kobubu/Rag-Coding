@@ -75,6 +75,8 @@ Green test не доказывает улучшения retrieval. Для так
 
 ## Роли и объём
 
+RC-067 /0.7.0 проверил одновременную пользу скорости и tokens на 36 новых sessions: 12/12 quality, -48.1% tokens, -35.1% estimate price, -20.4% Harness time к none; secondary warm-block gain 9.7%. Точное объяснение 7/12 time wins, cold preparation и tradeoff +3.1% tokens к old graph — в [SPEED-TOKENS](../docs/SPEED-TOKENS.md). RC-068 остаётся P0: worker/incremental compiler и trace повторных edits перед indexed retrieval. Installer/entitlement и полный game performance gate не закрыты этим pilot.
+
 Нужны роли core/backend, language analysis, retrieval/evaluation и interface. Один разработчик может выполнять их последовательно. Размеры S/M/L в backlog отражают относительную сложность, не обещают срок. Календарная оценка делается после M01 и spikes с учётом доступного состава и корпуса.
 
 Провайдер для pilot уже выбран и проверен: GPT-6 Luna, одинаковый в обеих группах. Новый benchmark получает собственный protocol/holdout и учитывает retrieval/enrichment расходы. Hosted deployment, лицензия, платежи и team delivery решаются на своих этапах.

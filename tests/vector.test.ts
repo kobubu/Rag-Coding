@@ -11,21 +11,27 @@ import { Context } from "@deepseek-ai/cordis";
 import { ToolRuntime } from "@deepseek-ai/dsh-tools";
 import { SystemPrompt } from "@deepseek-ai/dsh-system-prompt";
 import * as plugin from "../src/harness/plugin.js";
+import { LiveMemory } from "../src/code-memory/live.js";
 
-test("Harness plugin defaults to vector context, activates with declared services and disposes its registrations", async () => {
+test("Harness plugin exposes adaptive expansion, uses on-demand live updates and disposes its registrations", async () => {
   const ctx = new Context();
   const prompt = await ctx.plugin(SystemPrompt, {});
   const tools = await ctx.plugin(ToolRuntime, {});
   const removeFS = ctx.provide("fs", {});
-  const memory = await ctx.plugin(plugin, { projectRoot: tmpdir() });
+  const watch = LiveMemory.prototype.startWatching;let watching=0;
+  LiveMemory.prototype.startWatching=function(){watching++;};
+  const memory = await ctx.plugin(plugin, { projectRoot: tmpdir(), autoUpdate: true });
   try {
     await new Promise((done) => setTimeout(done, 0));
     assert.deepEqual(ctx.tools.schemas().map((tool) => tool.name), ["cm_retrieve_context"]);
+    assert(JSON.stringify(ctx.tools.schemas()).includes("expanded"));assert.equal(watching,0);
     const assembly = await ctx.systemPrompt.assemble();
     assert(assembly.sections.some((section) => section.text.includes("version-observed")));
     await memory.dispose();
     assert.equal(ctx.tools.schemas().length, 0);
-  } finally { await memory.dispose(); await removeFS(); await tools.dispose(); await prompt.dispose(); }
+    const background=await ctx.plugin(plugin,{projectRoot:tmpdir(),autoUpdate:true,backgroundUpdate:true});
+    try{await new Promise(done=>setTimeout(done,0));assert.equal(watching,1);}finally{await background.dispose();}
+  } finally { LiveMemory.prototype.startWatching=watch;await memory.dispose(); await removeFS(); await tools.dispose(); await prompt.dispose(); }
 });
 
 const stableEmbeddings: Embedder = async (texts) => texts.map((text) => {

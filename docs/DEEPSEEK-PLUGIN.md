@@ -60,8 +60,9 @@ dsh --profile code-memory --no-open
 | `indexPath` | Путь JSON index, абсолютный либо относительно projectRoot; по умолчанию `CM_INDEX_PATH` или `.code-memory/index.json` |
 | `mode` | `compact` по умолчанию с 0.4.2; `legacy` явно включает прежние четыре lexical/graph tools |
 | `autoContext` | true по умолчанию в bundle и source plugin; false отключает автоматическую подачу |
-| `retrievalPolicy` | `hybrid` default; `graph` / `adaptive` добавляют compiler-neighbour ranking и bounded dependency closure |
-| `autoUpdate` | false default; true обновляет сохранённые TS/JS source, graph и vectors через атомарные поколения |
+| `retrievalPolicy` | С 0.7.0 `adaptive` default: маленький самостоятельный named file читается прямо; прочие anchors используют graph, discovery — local vectors. `hybrid` / `graph` включаются явно |
+| `autoUpdate` | true в bundle с 0.7.0; source API default false. Обновляет сохранённые TS/JS source, graph и vectors перед следующим обращением через атомарные поколения |
+| `backgroundUpdate` | false в Harness по умолчанию; true включает прежний секундный watcher. Atlas/local-agent сохраняет собственный фоновый watcher |
 | `memoryDirectory` / `embeddingCache` | Live generations и необязательный reusable embedding cache; default `.code-memory/live` |
 | `sourceScope` | Необязательное относительное дерево live source, например `game`; пути вне projectRoot запрещены |
 | `searchMode` | `exact` по умолчанию; `ann` требует HNSW projection и сохраняет source/model/policy fences |
