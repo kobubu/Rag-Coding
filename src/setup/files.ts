@@ -8,10 +8,12 @@ export async function text(path: string): Promise<string | undefined> {
   catch (error) { if ((error as NodeJS.ErrnoException).code === "ENOENT") return; throw error; }
 }
 export async function safeTarget(root: string, path: string): Promise<void> {
-  root = await realpath(root); path = resolve(path);
+  root = resolve(root); path = resolve(path);
   if (!inside(root, path) || root === path) throw new CMError("invalid_argument", "Setup target must stay inside its selected directory");
+  const suffix = relative(root, path);
+  root = await realpath(root);
   let current = root;
-  for (const piece of relative(root, path).split(sep)) {
+  for (const piece of suffix.split(sep)) {
     current = join(current, piece);
     try { if ((await lstat(current)).isSymbolicLink()) throw new CMError("invalid_argument", "Setup does not overwrite symlink/junction targets"); }
     catch (error) { if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error; }

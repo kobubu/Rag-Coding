@@ -50,6 +50,15 @@ test("setup refuses egress and a junction/symlink in a managed config directory"
   await assert.rejects(safeTarget(root, join(root, ".codex/config.toml")), /symlink\/junction/);
   await assert.rejects(safeTarget(root, join(outside, "config.toml")), /inside/);
 });
+test("setup supports an explicitly selected root alias without permitting child link escape", async () => {
+  const container = await mkdtemp(join(tmpdir(), "cm-root-alias-")), actual = join(container, "actual"), alias = join(container, "alias");
+  await mkdir(actual); await symlink(actual, alias, process.platform === "win32" ? "junction" : "dir");
+  const path = join(alias, "config.toml");
+  await transaction([{ root: alias, path, before: undefined, after: "preserved alias" }]);
+  assert.equal(await readFile(join(actual, "config.toml"), "utf8"), "preserved alias");
+  await symlink(container, join(actual, "escape"), process.platform === "win32" ? "junction" : "dir");
+  await assert.rejects(safeTarget(alias, join(alias, "escape/outside.toml")), /symlink\/junction/);
+});
 test("MCP adaptive current-file route works without an index and rejects stale file snapshots", async () => {
   const root = await mkdtemp(join(tmpdir(), "cm-direct-mcp-")); await mkdir(join(root, "src"));
   const path = join(root, "src/камера.ts"); await writeFile(path, "export function camera(){return 1;}\n");

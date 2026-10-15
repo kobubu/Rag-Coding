@@ -14,10 +14,12 @@ Geo Dash: 226 source files, 7 599 learned vectors, adaptive retrieval и exact s
 
 Повтор полного PowerShell bootstrap для Geo Dash переиспользовал dependencies. Изолированный lifecycle install/repeat/remove сохранил клиентские config bytes, посторонние настройки и source; после отключения сохранены шесть файлов поколения и модели. Изменённая вручную managed TOML section отклонена, Unicode/BOM сохранён; rollback при конфликте проверен unit test. Хеши 237 файлов исходного Geo Dash и его существующей рабочей правки совпали. В Geo Dash добавлены только клиентские `.codex/config.toml` и две project skills; его product changes не коммитились.
 
-Build core/viewer, 51 тест, docs/contracts/backlog, portable fixture probe, native Harness registry smoke и разбор четырёх PowerShell scripts прошли. Все клиентские проверки выполнены без LLM API calls. Приватные исходники, embeddings, настройки других серверов, auth URL и ключи в публичное доказательство не включены.
+Build core/viewer, 52 тест, docs/contracts/backlog, portable fixture probe, native Harness registry smoke и разбор четырёх PowerShell scripts прошли. Все клиентские проверки выполнены без LLM API calls. Приватные исходники, embeddings, настройки других серверов, auth URL и ключи в публичное доказательство не включены.
 
 ## Почему exact остаётся по умолчанию
 
 В [предыдущем HNSW model A/B](HNSW-MODEL-AB.md) ANN занял 448,94 s против 437,00 s у exact: **+2,73%**. Tokens: 296 321 против 327 926, **−9,64%**. Все 12 начальных contexts совпали; разница расхода относится к разным model trajectories и не доказывает причинную экономию от HNSW. Native vector search был быстрее, полная модельная задача — дольше. Новый installer этого сравнения не повторяет.
 
 Для Codex/Claude пока проверено подключение MCP, а не полная задача с моделью и не перенос Harness auto-context lifecycle hooks. Windows-only bootstrap, полный release rollback/export, macOS/Linux, cloud account и подписка остаются отдельными задачами. [Backlog](../plans/BACKLOG.md): RC-069 завершена, RC-051 сохраняет оставшийся scope.
+
+Первый CI прогон выявил Windows short-path alias (RUNNER~1) в двух новых setup tests. Исправлен перенос относительного пути от выбранного корня к его realpath; тест root alias сохраняет запрет на вложенные junction/symlink escapes. После исправления локально прошли 52 теста.

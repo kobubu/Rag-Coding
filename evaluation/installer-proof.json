@@ -8,11 +8,11 @@
   "package": {
     "name": "dsh-plugin-code-memory",
     "version": "0.8.0",
-    "archive_sha256": "06852124e23e6db784959798dd9ce67ae26311728dfb6e6f1a67831cf48e91c7",
-    "zip_sha256": "fe022ebe087611ec76a6c50ad5b9cf7ace4e2fb3522b3b9a2ec227fa4f4c2df2",
+    "archive_sha256": "a4a3027899604097baf7f351060120177903201caa1f431a67633f4a18b196c2",
+    "zip_sha256": "e0f76a880525861e75fec4c534bced901262e163f641688440c91f7c746c97ed",
     "entries": 94,
-    "archive_bytes": 226210,
-    "zip_bytes": 232473,
+    "archive_bytes": 226228,
+    "zip_bytes": 232502,
     "native_dependencies": "fresh normal npm install, 716 packages; no junction to checkout"
   },
   "project": {
@@ -52,12 +52,13 @@
     }
   ],
   "checks": {
-    "tests_passed": 51,
+    "tests_passed": 52,
     "typescript_and_viewer_build": "PASS",
     "documentation_contracts_backlog": "PASS",
     "structural_probe": "PASS",
     "real_harness_registry_smoke": "PASS",
     "powershell_scripts_parsed": 4,
+    "windows_root_alias_regression": "PASS",
     "production_bootstrap_repeat": "PASS; dependency install reused",
     "lifecycle": {
       "status": "PASS",
