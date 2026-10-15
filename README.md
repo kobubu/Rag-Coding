@@ -16,6 +16,8 @@
 
 ## С чего читать
 
+После 0.8.1 [изменены поиск и выдача контекста CM](docs/EFFICIENCY-AB.md): запрос очищается от общих инструкций агента, короткие файлы отдаются целиком, в контексте есть места вызова, а повторный `read` уже показанного файла не дублирует его. Серия 1 (36 sessions GPT-6 Luna, Geo Dash): к без CM **−40,0% tokens, −26,8% расчётной цены**, к 0.8.1 −13,4% tokens и −5,0% времени; качество 11/12 против 12/12 без CM, время к без CM +2,2%. Все прогоны и неудачи сохранены.
+
 В **0.7.0** [новый A/B на скорости и токенах](docs/SPEED-TOKENS.md), 36 sessions: adaptive 12/12 правильных решений, none 11/12; **-48.1% tokens, -35.1% estimate price, -20.4% Harness time**. Без первого matched triple latency gain 9.7%; быстрее 7/12 paired tasks, не каждая. К прежнему graph CM время -58.6%, tokens +3.1%. Default теперь adaptive: свежий small self-contained file / named graph / dense discovery, lean pinned MiniLM, обновление Harness перед следующим indexed query. Первичная постройка и последующий полный compiler rebuild остаются отдельными затратами; результаты одного проекта не обещают универсального выигрыша.
 
 1. [Установка CM в три клиента](docs/INSTALL.md) — самостоятельная Windows-установка и проверка; [ручной запуск Harness](docs/DEEPSEEK-PLUGIN.md).
