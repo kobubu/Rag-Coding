@@ -36,7 +36,7 @@
 | `cm_project_status` | Нет | Snapshot, числа сущностей, модель и готовность vector projection |
 | Resource `cm://project/status` | URI | То же состояние для resource-capable клиента |
 
-Тело кода включено один раз в `content`; `structuredContent` содержит метаданные и до 64 references без дублирования тела. Полный сериализованный retrieve result ограничен 64000 UTF-8 bytes. При сокращении возвращаются omissions и `partial`; это не обещание полной программы в одном ответе. `max_bytes` — бюджет исходного контекста, не точное число LLM tokens.
+С 0.8.1 код доступен и в текстовом `content`, и в `structuredContent.source_context`; текст этих представлений совпадает. Структурированный ответ также сохраняет snapshot и до 64 references. Это необходимо клиентам, которые передают модели именно structuredContent: в 0.8.0 native Claude получал только метаданные без исходника. Полный сериализованный retrieve result, включая оба представления, ограничен 64000 UTF-8 bytes. При сокращении оба представления обновляются, возвращаются omissions и `partial`; это не обещание полной программы в одном ответе. `max_bytes` — бюджет исходного контекста, не точное число LLM tokens. Новое представление само по себе не доказывает экономию токенов; проверяются реальные native sessions.
 
 Root задаёт владелец через CLI. Tool arguments не позволяют поменять его или прочитать произвольный путь. Неверный snapshot, изменённый исходник, отсутствующие weights и несовместимая projection возвращают ошибку. Cancellation проходит к core/embedding boundary; начатая native CPU операция завершается до следующей проверки сигнала. Stdout содержит только MCP JSON-RPC, диагностика идёт в stderr.
 
@@ -65,7 +65,7 @@ MCP-сервер читает код и не делает patch. Правами 
 
 Здесь используются default index/vectors/model paths внутри выбранного проекта. Для внешних projections добавьте те же `--index`, `--vectors`, `--model-cache`, что в JSON-примере. Запуск: `dsh --profile web --patch ./cm-mcp.yml --no-open`. Model-facing имена: `mcp__cm__cm_retrieve_context` и `mcp__cm__cm_project_status`.
 
-На Geo Dash проверены официальный stdio client, installed Harness SDK v2 и полный Web profile: статус, learned CPU retrieval, native HNSW и dispatch ToolRuntime. Отмена, scope, UTF-8 bounds, resource и отсутствие повторного тела проверены официальным in-memory client в [boundary tests](../tests/local_agent.test.ts). Без платной модели; интерфейс конкретного стороннего desktop-клиента не проверялся. Безопасные результаты — [evidence](../research/evidence/local-cm-mcp-atlas-2026-10-13.json).
+Проверка 13 октября на Geo Dash охватывала официальный stdio client, installed Harness SDK v2 и полный Web profile: статус, learned CPU retrieval, native HNSW и dispatch ToolRuntime. Тогда native model sessions Codex/Claude ещё не измерялись; исходные результаты — [evidence](../research/evidence/local-cm-mcp-atlas-2026-10-13.json). Текущие [boundary tests](../tests/local_agent.test.ts) проверяют отмену, scope, UTF-8, ресурс и наличие того же исходника в text/structured результатах с общим wire cap. Отдельное [нативное модельное исследование](CLIENTS-AB.md) раскрывает фактическую доставку кода, использование CM, качество, время и токены.
 
 ## Живая CM в 0.6.0
 

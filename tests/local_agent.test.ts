@@ -72,7 +72,7 @@ test("loopback viewer rejects foreign origins/hosts, writes and arbitrary paths 
   } finally { await viewer.close(); service.close(); }
 });
 
-test("MCP handshake, scoped tool/resource calls, cancellation and bounded nonduplicated source work through the official client", async () => {
+test("MCP handshake preserves bounded source in text and structured replies through the official client", async () => {
   const data = await fixture();
   let notifyStart!: () => void, cancelled = false;
   const started = new Promise<void>(resolve => { notifyStart = resolve; });
@@ -92,7 +92,10 @@ test("MCP handshake, scoped tool/resource calls, cancellation and bounded nondup
     const resource = await client.readResource({ uri: "cm://project/status" }), content = resource.contents[0]!; assert("text" in content); assert.equal(JSON.parse(content.text).scope, "one-configured-project");
     const result = CallToolResultSchema.parse(await client.callTool({ name: "cm_retrieve_context", arguments: { query: "allowance", max_bytes: 300 } }));
     assert.equal(result.isError, undefined); assert(result.content.some(content => content.type === "text" && content.text.includes("LIMIT")));
-    assert((result.structuredContent?.bytes_used as number) <= 300); assert(!JSON.stringify(result.structuredContent).includes("Math.max"));
+    assert((result.structuredContent?.bytes_used as number) <= 300);
+    const text = result.content.filter(c => c.type === "text").map(c => c.text).join("\n");
+    assert.equal(result.structuredContent?.source_context, text);
+    assert((result.structuredContent?.source_context as string).includes("Math.max"), "Structured-only clients must receive actual source");
     const stale = await client.callTool({ name: "cm_retrieve_context", arguments: { query: "allowance", snapshot_id: "old" } }); assert.equal(stale.isError, true);
     const abort = new AbortController(); const call = client.callTool({ name: "cm_retrieve_context", arguments: { query: "wait-for-cancel" } }, undefined, { signal: abort.signal });
     await started; abort.abort(Error("cancel-probe")); await assert.rejects(call, /cancel/);
@@ -101,5 +104,7 @@ test("MCP handshake, scoped tool/resource calls, cancellation and bounded nondup
     const span = data.index.units[0]!.span;
     const bounded = contextReply({ snapshot_id: data.index.snapshot_id, channels: [], bytes_used: 100000, parts: [{ path: "a".repeat(50000), span, reason: "match", text: "code".repeat(20000) }], omissions: 0, complete: false });
     assert(Buffer.byteLength(JSON.stringify(bounded)) <= 64000); assert(bounded.structuredContent.omissions > 0);
+    assert.equal(bounded.structuredContent.source_context, bounded.content[0]!.text);
+    assert(!bounded.structuredContent.source_context.includes("codecode"), "Trimming must update both representations");
   } finally { await client.close(); await server.close(); service.close(); }
 });

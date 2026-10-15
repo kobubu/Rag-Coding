@@ -851,3 +851,51 @@
 - Повтор и отключение сохраняют source/index и чужие настройки; managed config conflicts, Unicode, rollback и source snapshots проверены. Windows-only bootstrap и отсутствие hooks в MCP clients раскрыты.
 
 Ожидаемые материалы: `scripts/install_cm.ps1`, `src/setup/`, `tests/setup.test.ts`, `docs/INSTALL.md`, `evaluation/installer-proof.json`.
+
+### RC-070: Нативный model A/B CM в Codex и Claude Code на Geo Dash
+
+Статус: **done**. Приоритет: P0. Размер: M. Зависимости: RC-069.
+
+Приёмка:
+
+- 96 native sessions:48 default0.8.0 +24conditional CM-first0.8.0 +24separate post-fix0.8.1; frozen models/source, balanced fresh pairs, actual edit/CM preflights.
+- Independent behavior/export/scope checks,33 regressions и CPU gates; все failures/costs, adoption, cache categories, CLI timing и setup failures сохранены.
+- Results отдельно по клиентам/процедурам; protocol integration и отдельный retrieve не выдаются за speed/token savings.
+
+Ожидаемые материалы: `scripts/client_ab.ts`, `scripts/client_gateway.ts`, `scripts/client_checks.ts`, `scripts/summarize_client_ab.ts`, `tests/client_ab.test.ts`, `evaluation/clients/`, `docs/CLIENTS-AB.md`.
+
+### RC-071: Полезный выбор CM и повторное использование контекста в native клиентах
+
+Статус: **planned**. Приоритет: P0. Размер: L. Зависимости: RC-070.
+
+Приёмка:
+
+- Разделить unit/file/dependency coverage и edit freshness: partial graph не должен заставлять перечитывать полный уже достаточный source; исходные fences и проверки редактора сохраняются.
+- Сравнить selective routing, explicit skill и поддерживаемые native prompt hooks; не заставлять CM на каждой задаче с известным малым файлом. Измерить schemas, retrieval, дополнительные reads/turns и warm-session amortization.
+- Новый held-out multi-project A/B показывает снижение полного времени/токенов без ухудшения независимого качества; если выигрыш не подтверждён, сохранить отрицательный результат и прежние серии.
+
+Ожидаемые материалы: `docs/CLIENTS-AB.md`, `docs/EVALUATION.md`, `src/setup/config.ts`, `src/mcp/server.ts`.
+
+### RC-072: Совместимый переход от file snapshot к expanded CM context
+
+Статус: **planned**. Приоритет: P1. Размер: M. Зависимости: RC-069, RC-070.
+
+Приёмка:
+
+- Воспроизвести file snapshot -> expanded snapshot_mismatch и различить file/source/project fences без отключения freshness checks.
+- Явный compatible follow-up или actionable next request исключает бесполезное повторение; stale-file/config/branch ошибки остаются защищёнными.
+- Новые contract tests и реальный native model trace проверяют корректность и полный дополнительный расход.
+
+Ожидаемые материалы: `docs/CLIENTS-AB.md`, `src/mcp/server.ts`, `src/local-agent/service.ts`.
+
+### RC-073: Передавать реальный код structured-only MCP клиентам
+
+Статус: **done**. Приоритет: P0. Размер: S. Зависимости: RC-069, RC-070.
+
+Приёмка:
+
+- CM0.8.1 structuredContent.source_context содержит тот же текущий ограниченный source, что text; snapshot/references и общий64000-byte cap сохранены.
+- Native Claude с обычными file tools отключёнными не мог воспроизвести случайный маркер0.8.0 и воспроизводит0.8.1; официальный SDK подтверждает наличие кода в обоих представлениях.
+- 54 локальных tests, реальная отдельная установка/doctor0.8.1 и новый24-run A/B раскрыты отдельно от старых результатов; доставка кода не объявляется доказанной общей экономией.
+
+Ожидаемые материалы: `src/mcp/server.ts`, `tests/local_agent.test.ts`, `src/version.ts`, `scripts/install_cm.ps1`, `docs/MCP-SETUP.md`, `evaluation/clients/fixed/`.

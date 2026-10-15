@@ -8,6 +8,8 @@
 
 [Harness A/B pilot](HARNESS-AB.md) описывает запуск живой модели, token accounting, независимые проверки и ограничения сравнения.
 
+[Нативные Codex / Claude Code](CLIENTS-AB.md): 96 реальных сессий, качество/CPU/токены/время, adoption и исправление structured source в0.8.1. Подключение сервера и реальная экономия рассматриваются отдельно; цель native speed/token savings без потери качества пока не подтверждена.
+
 [Первый pilot](AB-RESULTS.md): CM 14/14 против 13/14; экономия не подтвердилась.
 
 [Второй pilot с local vectors/compact context](HYBRID-RESULTS.md): −69,4% tokens, −56,9% расчётной цены, 12/16 против 9/16; latency и failures раскрыты.
@@ -27,6 +29,7 @@
 | Документ | Что он определяет |
 |---|---|
 | [Установка CM](INSTALL.md) | Windows bootstrap, три клиента, doctor, повторная установка и отключение |
+| [Нативный A/B](CLIENTS-AB.md) | Три сохранённые серии, реальные CLI, независимые проверки и source-delivery fix0.8.1 |
 | [CM plugin: запуск](DEEPSEEK-PLUGIN.md) | Установка, четыре tools, local index, версии и фактические пределы |
 | [Требования](PRODUCT.md) | Задачи пользователя, границы MVP и обязательное поведение |
 | [Архитектура](ARCHITECTURE.md) | Компоненты, поток данных и адаптеры языков |

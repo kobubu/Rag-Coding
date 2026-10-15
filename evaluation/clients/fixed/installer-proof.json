@@ -1,0 +1,15 @@
+{
+  "version": "0.8.1",
+  "artifact": "CM-0.8.1-Windows.zip",
+  "sha256": "3c91b715960067f383dbba752ea25b6bd586533b8fd1a597351b6919e21bbb9b",
+  "tarball_sha256": "92939a782215057c27a229e74fdee6cfe0dc308265e528f8458d86da64136f0a",
+  "extracted_install_passed": true,
+  "installed_release": "92939a782215057c-h",
+  "clients": [
+    "harness",
+    "codex",
+    "claude"
+  ],
+  "old_release_preserved": true,
+  "source_files_unchanged": 502
+}

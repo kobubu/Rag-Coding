@@ -1,0 +1,39 @@
+{
+  "stage": "fixed",
+  "exit": 0,
+  "server_version": "0.8.1",
+  "model_reproduced_unseen_marker": true,
+  "message_content_contains_marker": true,
+  "raw_tool_result_contains_marker": true,
+  "tools": [
+    "mcp__cm_probe__cm_retrieve_context"
+  ],
+  "ordinary_file_tools_used": false,
+  "marker_sha256": "79cad3e005e296d16a15f74fc475ff589d84c520dfd89c74557c20c9374e5fb1",
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2711,
+    "cache_read_input_tokens": 4404,
+    "output_tokens": 222,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2711,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "global",
+    "iterations": [],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "cost": 0.0139528,
+  "subtype": "success",
+  "official_mcp_text_contains_marker": true,
+  "official_mcp_structured_contains_marker": true
+}

@@ -1,6 +1,6 @@
 # Установщик CM для Harness, Codex и Claude Code
 
-CM 0.8.0 устанавливается без прав администратора в выбранный каталог. Windows PowerShell 5.1 bootstrap получает совместимый private Node.js при необходимости, проверяет SHA-256 официального архива, собирает локальный пакет и устанавливает runtime dependencies через npm. Нативные зависимости устанавливаются обычно, без junction к checkout. Код проекта не исполняется.
+CM 0.8.1 устанавливается без прав администратора в выбранный каталог. Windows PowerShell 5.1 bootstrap получает совместимый private Node.js при необходимости, проверяет SHA-256 официального архива, собирает локальный пакет и устанавливает runtime dependencies через npm. Нативные зависимости устанавливаются обычно, без junction к checkout. Код проекта не исполняется.
 
 ## Одна команда из checkout
 
@@ -35,6 +35,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File 'D:\Rag Coding\scripts\insta
 `doctor` устанавливает настоящий stdio MCP connection и вызывает project status. Это проверка сервера; отдельная проверка конкретного клиента требуется дополнительно. Harness использует native adapter из установленного пакета и auto context; отдельный profile импортирует dist entry по file URI. Codex/Claude используют MCP tools и project skill; автоматическая injection через lifecycle hooks этим установщиком не добавляется. Для MCP выбран adaptive/exact, live update перед indexed query и `backgroundUpdate: false`. Для маленького самостоятельного named file доступен быстрый путь без index/embedding.
 
 `cm-setup remove --root ... --project ...` отключает project MCP connections и созданные неизменённые skills. Пакеты, модели и знания сохраняются; исходники проекта не удаляются. Конфликт с чужой/изменённой настройкой даёт ошибку, транзакция возвращает уже записанные config files. Это Windows installer; Node CLI и config generators переносимы, а bootstrap/launch scripts предназначены для Windows.
+
+В0.8.1 `structuredContent.source_context` сохраняет исходник для клиента, выбирающего структурированный MCP-ответ. Реальный random-marker test подтвердил исправление native Claude; в контрольном запросе Codex маркер передан модели один раз и до, и после изменения. Отдельный [96-session A/B](CLIENTS-AB.md) измеряет полезность: исправленная доставка не означает автоматически меньше токенов, быстрее решение или более высокое качество. Открытые клиенты после обновления надо перезапустить.
 
 Повтор той же команды переиспользует установленный release и данные. Новый package hash создаёт соседний release и переключает только управляемые настройки. Полный менеджер обновлений, автоматический rollback release и macOS/Linux bootstrap ещё не реализованы. Для переключения Claude с local на project сначала отключить существующее подключение. Генерируемые `.ps1` сохраняются с UTF-8 BOM для кириллицы в Windows PowerShell 5.1.
 

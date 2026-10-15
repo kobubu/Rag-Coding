@@ -1,0 +1,26 @@
+[
+  {
+    "id": "stats-linear", "category": "cpu-optimization", "allowed": ["game/src/metrics/statistics.js"],
+    "prompt": "Optimize sequenceStats in game/src/metrics/statistics.js. Its per-distinct-value filter makes counting quadratic. Preserve the full returned structure, original key/order and first-tie semantics, entropy, longest run, other exports, and input nonmutation, including mixed primitive values and NaN. Make the full function at least 25% faster on long arrays with many distinct string labels."
+  },
+  {
+    "id": "wallet-deduplicate", "category": "semantic-discovery-bug", "allowed": ["game/src/core/reward-wallet.js"],
+    "prompt": "Repair legacy video10 wallet synchronization: duplicate receipt IDs must not mint coins twice, non-string receipts and non-array receipt data must be ignored safely, and the applied receipt counter must never decrease when a temporarily incomplete save is synchronized. Only distinct nonempty video10:ID strings are eligible; other reward types are ignored. Normalize wallet.coins and wallet.videoRewards to finite nonnegative floored numbers (nonfinite values become zero). Add 10 coins only for previously unapplied eligible IDs, keep a repeated sync idempotent, and do not mutate either input. Preserve the existing exported API."
+  },
+  {
+    "id": "quota-validation", "category": "two-module-contract", "allowed": ["game/src/core/reward-policy.js", "game/src/core/progression.js"],
+    "prompt": "Harden daily ad allowance and creditAdReward against malformed saved data. A valid recorded day is a real YYYY-MM-DD calendar day. For a valid recorded day at or after today, normalize count to a finite floored integer in [0,DAILY_REWARDED_LIMIT]; nonfinite/negative counts become zero. Count only today's exact ad slot keys /ad/0, /ad/1, /ad/2 whose amount is exactly REWARDED_COINS. Used is the larger normalized counter and valid slot count; a valid future recorded day remains the returned day so clock rollback does not reset quota. creditAdReward must reject fractional amounts like 20.5 instead of flooring them to 20, retain the existing acceptance of a numeric string equal to the reward, reject invalid/duplicate receipts without changing the save, and preserve other progression APIs."
+  },
+  {
+    "id": "motion-extrema", "category": "geometry-correctness", "allowed": ["game/src/core/geometry.js"],
+    "prompt": "Fix sweptHazardBounds in game/src/core/geometry.js: endpoint/midpoint sampling misses sinusoidal motion peaks. For valid finite fromTime/toTime in either order and a positive finite motion period, return the tight axis-aligned bounds over the entire closed interval, including interior extrema for signed dx/dy, phase, rectangle width/height or circle radius. Use an analytical solution, not fixed sampling. Stationary hazards and all unrelated geometry exports must keep their behavior, and inputs must not change."
+  },
+  {
+    "id": "own-city-grants", "category": "semantic-security-bug", "allowed": ["game/src/core/economy-ledger.js"],
+    "prompt": "Completion rewards and record bonuses must accept only configured own city IDs. Inherited object names such as toString, constructor and __proto__ must never be accepted as cities in claimCompletion, normalizeGrants or normalizeBonuses. Locate and repair these validation points, reject invalid city/run without mutating a save, and preserve all valid city grants, login/ad grant formats and existing APIs."
+  },
+  {
+    "id": "compiled-input", "category": "feature-and-cpu", "allowed": ["game/src/core/input.js"],
+    "prompt": "Add export compileAuthoredInput(level, variant='perfect') to game/src/core/input.js for fast route audits. Return a function time=>boolean equivalent to authoredInput for any finite time on the compiled snapshot, including overlapping, unsorted and zero/negative-length actions and nonmonotonic queries. Preserve half-open action intervals and the exact existing perfect/early/late shifts, reject any other variant, do not mutate level, and ignore later changes to level/actions after compilation. Keep authoredInput and variants behavior intact for valid variants. After compilation, many queries over thousands of actions must be at least 25% faster than calling authoredInput repeatedly; include construction separately from query cost."
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "format": "cm-native-guidance-follow-up-1",
+  "registered_at": "2026-10-15T13:04:37.528Z",
+  "motivation": "During the first primary Claude pass, the connected CM server and discovered skill were not used. Evaluate actual retrieval in a distinct follow-up without replacing primary outcomes.",
+  "planned_runs": 24,
+  "tasks": 6,
+  "repetitions": 1,
+  "clients": [
+    "claude",
+    "codex"
+  ],
+  "arms": [
+    "cm",
+    "none"
+  ],
+  "change": "Same conditional CM-first instruction in both arms: if CM available, first retrieve focused task context around 6000 source bytes; otherwise use ordinary repository tools.",
+  "frozen_product": "Installed CM 0.8.0, adaptive/exact, same source/grader/tasks/models/ordinary tool permissions as primary.",
+  "reporting": "Separate experiment, balanced fresh pairs, all failures included. Does not count as unseen held-out tasks; primary 48 runs remain intact."
+}

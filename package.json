@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-code-memory",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "private": true,
   "description": "Local Code Memory for DeepSeek Harness, Codex and Claude Code",
   "type": "module",

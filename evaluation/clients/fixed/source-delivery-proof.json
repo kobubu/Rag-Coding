@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "cm_version": "0.8.1",
+  "native_claude_model_visible_source": true,
+  "native_claude_retrieve_calls": 1,
+  "native_codex_retrieve_calls": 1,
+  "no_raw_code_published": true
+}
