@@ -1,0 +1,210 @@
+{
+  "source": "series2-results.json",
+  "runs": 36,
+  "estimated_cost_usd": 0.03681984,
+  "arms": {
+    "none": {
+      "runs": 12,
+      "successes": 12,
+      "total_tokens": 412705,
+      "usd_estimate": 0.016383195,
+      "model_calls": 86,
+      "read_grep_glob_calls": 34,
+      "harness_seconds": 326.11849796099995,
+      "median_session_seconds": 18.23281245249996,
+      "median_session_tokens": 31810,
+      "all_accounted": true
+    },
+    "cm_base": {
+      "runs": 12,
+      "successes": 12,
+      "total_tokens": 222441,
+      "usd_estimate": 0.011688305,
+      "model_calls": 57,
+      "read_grep_glob_calls": 12,
+      "harness_seconds": 265.256146396,
+      "median_session_seconds": 17.65182882950001,
+      "median_session_tokens": 16756.5,
+      "all_accounted": true
+    },
+    "cm_next": {
+      "runs": 12,
+      "successes": 12,
+      "total_tokens": 142349,
+      "usd_estimate": 0.008748339999999999,
+      "model_calls": 45,
+      "read_grep_glob_calls": 0,
+      "harness_seconds": 204.74209443699993,
+      "median_session_seconds": 15.853156427499949,
+      "median_session_tokens": 10927.5,
+      "all_accounted": true
+    }
+  },
+  "comparisons": [
+    {
+      "candidate": "cm_base",
+      "reference": "none",
+      "tokens_pct": -46.1,
+      "price_pct": -28.7,
+      "harness_time_pct": -18.7,
+      "model_calls_pct": -33.7,
+      "pairs": 12,
+      "fewer_tokens": 10,
+      "faster": 8,
+      "cheaper": 8
+    },
+    {
+      "candidate": "cm_next",
+      "reference": "none",
+      "tokens_pct": -65.5,
+      "price_pct": -46.6,
+      "harness_time_pct": -37.2,
+      "model_calls_pct": -47.7,
+      "pairs": 12,
+      "fewer_tokens": 12,
+      "faster": 11,
+      "cheaper": 12
+    },
+    {
+      "candidate": "cm_next",
+      "reference": "cm_base",
+      "tokens_pct": -36,
+      "price_pct": -25.2,
+      "harness_time_pct": -22.8,
+      "model_calls_pct": -21.1,
+      "pairs": 12,
+      "fewer_tokens": 8,
+      "faster": 7,
+      "cheaper": 9
+    }
+  ],
+  "by_task": [
+    {
+      "task": "circle-contact",
+      "none": {
+        "successes": "2/2",
+        "tokens": 21116,
+        "calls": 8,
+        "seconds": 29.5
+      },
+      "cm_base": {
+        "successes": "2/2",
+        "tokens": 23081,
+        "calls": 8,
+        "seconds": 23
+      },
+      "cm_next": {
+        "successes": "2/2",
+        "tokens": 17484,
+        "calls": 6,
+        "seconds": 23.9
+      }
+    },
+    {
+      "task": "camera-time",
+      "none": {
+        "successes": "2/2",
+        "tokens": 25161,
+        "calls": 8,
+        "seconds": 26.3
+      },
+      "cm_base": {
+        "successes": "2/2",
+        "tokens": 16609,
+        "calls": 5,
+        "seconds": 16.6
+      },
+      "cm_next": {
+        "successes": "2/2",
+        "tokens": 16741,
+        "calls": 5,
+        "seconds": 16.6
+      }
+    },
+    {
+      "task": "wallet-delta",
+      "none": {
+        "successes": "2/2",
+        "tokens": 90957,
+        "calls": 19,
+        "seconds": 124.4
+      },
+      "cm_base": {
+        "successes": "2/2",
+        "tokens": 60480,
+        "calls": 17,
+        "seconds": 105.8
+      },
+      "cm_next": {
+        "successes": "2/2",
+        "tokens": 29211,
+        "calls": 10,
+        "seconds": 42.4
+      }
+    },
+    {
+      "task": "motion-envelope",
+      "none": {
+        "successes": "2/2",
+        "tokens": 120794,
+        "calls": 16,
+        "seconds": 30.1
+      },
+      "cm_base": {
+        "successes": "2/2",
+        "tokens": 37297,
+        "calls": 9,
+        "seconds": 41.9
+      },
+      "cm_next": {
+        "successes": "2/2",
+        "tokens": 16979,
+        "calls": 6,
+        "seconds": 24.7
+      }
+    },
+    {
+      "task": "quota-receipts",
+      "none": {
+        "successes": "2/2",
+        "tokens": 63620,
+        "calls": 13,
+        "seconds": 37.5
+      },
+      "cm_base": {
+        "successes": "2/2",
+        "tokens": 52608,
+        "calls": 10,
+        "seconds": 43.1
+      },
+      "cm_next": {
+        "successes": "2/2",
+        "tokens": 27365,
+        "calls": 9,
+        "seconds": 37.9
+      }
+    },
+    {
+      "task": "statistics-linear",
+      "none": {
+        "successes": "2/2",
+        "tokens": 91057,
+        "calls": 22,
+        "seconds": 78.2
+      },
+      "cm_base": {
+        "successes": "2/2",
+        "tokens": 32366,
+        "calls": 8,
+        "seconds": 34.9
+      },
+      "cm_next": {
+        "successes": "2/2",
+        "tokens": 34569,
+        "calls": 9,
+        "seconds": 59.4
+      }
+    }
+  ],
+  "failures": []
+}
