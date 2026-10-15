@@ -4,6 +4,7 @@ import { LiveMemory } from "../code-memory/live.js";
 import { EMBEDDING, LocalVectors, sourceSlice } from "../code-memory/vector.js";
 import type { Embedder, VectorConfig } from "../code-memory/vector.js";
 import { retrieveContext } from "../code-memory/retrieve.js";
+import { directFileContext } from "../code-memory/direct.js";
 import { bounded, graphExpand } from "../code-memory/query.js";
 import { CMError } from "../code-memory/source.js";
 import type { CMIndex, CMUnit, CMSymbol } from "../code-memory/types.js";
@@ -13,7 +14,7 @@ import { mapProjection } from "./map.js";
 import type { MapData, NodeInfo, SourceView, RelatedGraph, SymbolPage, Similarity } from "./models.js";
 
 export type AgentConfig = { projectRoot: string; indexPath?: string; vectorsPath?: string; modelCache?: string; chunking?: ChunkingStrategy; searchMode?: "exact" | "ann"; retrievalPolicy?: RetrievalPolicy;
-  autoUpdate?: boolean; memoryDirectory?: string; embeddingCache?: string; sourceScope?: string };
+  autoUpdate?: boolean; backgroundUpdate?: boolean; memoryDirectory?: string; embeddingCache?: string; sourceScope?: string };
 export class LocalCM {
   readonly store: CMStore;
   private readonly baseVectors: LocalVectors;
@@ -29,7 +30,7 @@ export class LocalCM {
     this.live = config.autoUpdate ? new LiveMemory({ projectRoot: root, directory: resolve(root, config.memoryDirectory ?? ".code-memory/live"), modelCache: vectorConfig.modelCache,
       baseIndex: this.store.indexPath, baseVectors: vectorConfig.directory, chunking: config.chunking ?? "unit", searchMode: config.searchMode ?? "exact",
       ...(config.embeddingCache ? { embeddingCache: config.embeddingCache } : {}), ...(config.sourceScope ? { sourceScope: config.sourceScope } : {}) }, embed) : undefined;
-    this.live?.startWatching();
+    if (config.backgroundUpdate !== false) this.live?.startWatching();
   }
   private async load(signal: AbortSignal, snapshot?: string) { return this.live ? (await this.live.ready(signal, snapshot)).index : this.store.load(signal, snapshot); }
   async status(signal: AbortSignal) {
@@ -42,6 +43,14 @@ export class LocalCM {
       live_update: this.live ? { ...this.live.watchStatus(), generation: this.live.metadata() } : null, read_only: true, scope: "one-configured-project" };
   }
   async retrieve(query: string, maxBytes: number, signal: AbortSignal, snapshot?: string, detail: RetrievalDetail = "focused") {
+    if (this.config.retrievalPolicy === "adaptive" && detail === "focused" && (!snapshot || snapshot.startsWith("file:"))) {
+      const direct = await directFileContext(this.store.projectRoot, query, maxBytes, signal, this.config.sourceScope);
+      if (direct) {
+        if (snapshot && snapshot !== direct.snapshot_id) throw new CMError("snapshot_mismatch", "Saved file changed since the requested context");
+        return direct;
+      }
+      if (snapshot?.startsWith("file:")) throw new CMError("snapshot_mismatch", "Requested file context is no longer available; retrieve fresh context");
+    }
     const action = (index: CMIndex, vectors: LocalVectors) => retrieveContext(index, vectors, query, maxBytes, signal, { policy: this.config.retrievalPolicy ?? "hybrid", detail });
     return this.live ? this.live.use(signal, snapshot, action) : action(await this.load(signal, snapshot), this.vectors);
   }

@@ -2,7 +2,7 @@
 
 База знаний для разработки: **сущности — в глоссарии, код — в CM (Code Memory), зависимости — в графе**. CM хранит точные версии исходников и записи функций/блоков. Поиск собирает контекст нужной детализации и привязывает его к snapshot проекта.
 
-Состояние на 14 октября 2026 года: работают TS/JS CM, локальные learned embeddings/LanceDB, **DeepSeek Harness plugin**, **MCP stdio** и **CM Atlas** — локальная карта модулей, символов и связей. В 0.6.0 добавлены opt-in [живое обновление CM](docs/LIVE-CM.md) и [graph/adaptive context routing](docs/GRAPH-BUDGET.md). На Geo Dash copy saved edit/add/rename/delete, реальные MCP/Chrome и incremental embedding reuse проверены; полный compiler rebind пока остаётся. В 0.5.0 optional [HNSW](docs/HNSW.md) ускорил native vector stage на 7503 rows в 3,12–3,37× при recall@24 100% и 99,91% в двух построениях48queries; exact остаётся default. Installer, cloud account и подписка запланированы.
+Состояние на 15 октября 2026 года: работают TS/JS CM, локальные learned embeddings/LanceDB, **DeepSeek Harness plugin**, **MCP stdio** и **CM Atlas** — локальная карта модулей, символов и связей. В **0.8.0** добавлен [Windows-установщик для Harness, Codex и Claude Code](docs/INSTALL.md): отдельный runtime, модели и индексы, настройки клиентов и безопасное отключение. В 0.6.0 добавлены opt-in [живое обновление CM](docs/LIVE-CM.md) и [graph/adaptive context routing](docs/GRAPH-BUDGET.md). На Geo Dash copy saved edit/add/rename/delete, реальные MCP/Chrome и incremental embedding reuse проверены; полный compiler rebind пока остаётся. В 0.5.0 optional [HNSW](docs/HNSW.md) ускорил native vector stage на 7503 rows в 3,12–3,37× при recall@24 100% и 99,91% в двух построениях48queries; exact остаётся default. Cloud account, подписка и кроссплатформенный update/restore остаются планом.
 
 [Pilot на исправлениях](docs/HYBRID-RESULTS.md), 32 sessions: −69,4% tokens, −56,9% расчётной цены, 12/16 правильных правок против 9/16; latency выросла, failures сохранены. [Pilot оптимизации](docs/OPTIMIZATION-RESULTS.md), 24 sessions: экономия и прирост числа полезных решений не подтвердились; actual caller почти не ускорился. Эти разные результаты сохранены без обещания универсальной экономии.
 
@@ -16,7 +16,7 @@
 
 В **0.7.0** [новый A/B на скорости и токенах](docs/SPEED-TOKENS.md), 36 sessions: adaptive 12/12 правильных решений, none 11/12; **-48.1% tokens, -35.1% estimate price, -20.4% Harness time**. Без первого matched triple latency gain 9.7%; быстрее 7/12 paired tasks, не каждая. К прежнему graph CM время -58.6%, tokens +3.1%. Default теперь adaptive: свежий small self-contained file / named graph / dense discovery, lean pinned MiniLM, обновление Harness перед следующим indexed query. Первичная постройка и последующий полный compiler rebuild остаются отдельными затратами; результаты одного проекта не обещают универсального выигрыша.
 
-1. [Запуск CM plugin](docs/DEEPSEEK-PLUGIN.md) — одна PowerShell-команда для подготовленной локальной установки, индекс, пакет и подключение.
+1. [Установка CM в три клиента](docs/INSTALL.md) — самостоятельная Windows-установка и проверка; [ручной запуск Harness](docs/DEEPSEEK-PLUGIN.md).
 2. [Концепт продукта](CONCEPT.md) — назначение глоссария, CM и графа, пример из FlashMT.
 3. [Подробный план](plans/ROADMAP.md) — этапы, зависимости и критерии перехода.
 4. [Первая итерация](plans/FIRST-ITERATION.md) — развитие prototype и проверка качества.

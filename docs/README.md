@@ -18,7 +18,7 @@
 
 [Локальный продукт](LOCAL-PRODUCT.md): index на компьютере пользователя, MCP, подписка и карта концептов.
 
-С0.5.0 доступны [MCP stdio](MCP-SETUP.md), [CM Atlas](LOCAL-ATLAS.md) и optional [HNSW](HNSW.md); с0.6.0 opt-in saved-source refresh работает. Account, billing и installer остаются планом. Native ANN timing и model-quality/cost A/B измеряются отдельно.
+С0.5.0 доступны [MCP stdio](MCP-SETUP.md), [CM Atlas](LOCAL-ATLAS.md) и optional [HNSW](HNSW.md); с0.6.0 opt-in saved-source refresh работает. В0.8.0 добавлен [Windows-установщик](INSTALL.md) для Harness, Codex и Claude Code. Account, billing и полный cross-platform update/restore остаются планом. Native ANN timing и model-quality/cost A/B измеряются отдельно.
 
 Главная точка входа — [README](../README.md). Полный CM/RAG backend описан как план; уже работающий local prototype и Harness plugin выделены в отдельную инструкцию.
 
@@ -26,6 +26,7 @@
 
 | Документ | Что он определяет |
 |---|---|
+| [Установка CM](INSTALL.md) | Windows bootstrap, три клиента, doctor, повторная установка и отключение |
 | [CM plugin: запуск](DEEPSEEK-PLUGIN.md) | Установка, четыре tools, local index, версии и фактические пределы |
 | [Требования](PRODUCT.md) | Задачи пользователя, границы MVP и обязательное поведение |
 | [Архитектура](ARCHITECTURE.md) | Компоненты, поток данных и адаптеры языков |

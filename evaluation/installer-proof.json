@@ -1,0 +1,104 @@
+{
+  "format": "cm-installer-proof-1",
+  "date": "2026-10-15",
+  "version": "0.8.0",
+  "os": "Windows 11 x64",
+  "node": "24.21.0",
+  "installer": "scripts/install_cm.ps1",
+  "package": {
+    "name": "dsh-plugin-code-memory",
+    "version": "0.8.0",
+    "archive_sha256": "06852124e23e6db784959798dd9ce67ae26311728dfb6e6f1a67831cf48e91c7",
+    "zip_sha256": "fe022ebe087611ec76a6c50ad5b9cf7ace4e2fb3522b3b9a2ec227fa4f4c2df2",
+    "entries": 94,
+    "archive_bytes": 226210,
+    "zip_bytes": 232473,
+    "native_dependencies": "fresh normal npm install, 716 packages; no junction to checkout"
+  },
+  "project": {
+    "name": "Geo Dash",
+    "files": 226,
+    "vector_rows": 7599,
+    "retrieval_policy": "adaptive",
+    "search_mode": "exact",
+    "background_watcher": false,
+    "seed": "validated independent copy of prebuilt Atlas source/vector generation",
+    "full_geo_cold_reindex_measured": false
+  },
+  "clients": [
+    {
+      "name": "DeepSeek Harness",
+      "version": "0.2.0-rc.2",
+      "status": "PASS",
+      "boundary": "actual installed full Web standard-preset Agent; native cm_retrieve_context returns expected symbol",
+      "http_status": 200
+    },
+    {
+      "name": "Codex",
+      "version": "0.130.0-alpha.5",
+      "status": "PASS",
+      "boundary": "actual app-server discovers project tools and reads cm://project/status; isolated client trust configuration",
+      "tools": [
+        "cm_retrieve_context",
+        "cm_project_status"
+      ]
+    },
+    {
+      "name": "Claude Code",
+      "version": "2.1.288",
+      "status": "PASS",
+      "boundary": "native mcp get reports Connected for installed project-local server",
+      "scope": "local"
+    }
+  ],
+  "checks": {
+    "tests_passed": 51,
+    "typescript_and_viewer_build": "PASS",
+    "documentation_contracts_backlog": "PASS",
+    "structural_probe": "PASS",
+    "real_harness_registry_smoke": "PASS",
+    "powershell_scripts_parsed": 4,
+    "production_bootstrap_repeat": "PASS; dependency install reused",
+    "lifecycle": {
+      "status": "PASS",
+      "version": "0.8.0",
+      "fresh_installed_package": true,
+      "repeat_config_bytes_identical": true,
+      "edited_managed_block_refused": true,
+      "rollback_unit_test": true,
+      "native_claude_scope": "isolated local",
+      "disconnect_preserves_unrelated_configs": true,
+      "unicode_bom_preserved": true,
+      "source_preserved": true,
+      "index_files_preserved": 6,
+      "model_api_calls": 0
+    },
+    "model_download": {
+      "status": "PASS",
+      "downloaded": true,
+      "pinned_revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+      "hashes_validated_by_lean_runtime": true,
+      "dimensions": 384,
+      "model_api_calls": 0
+    },
+    "source_preservation": {
+      "status": "PASS",
+      "protected_file_count": 237,
+      "source_changed": false,
+      "existing_game_wip_preserved": true,
+      "client_config_files_added": [
+        ".codex/config.toml",
+        ".agents/skills/code-memory/SKILL.md",
+        ".claude/skills/code-memory/SKILL.md"
+      ]
+    }
+  },
+  "model_api_calls": 0,
+  "limits": [
+    "Connection and tool plumbing checks are not model-session quality/token benchmarks.",
+    "Codex and Claude Code use MCP and project skills; Harness auto-context hooks are not ported.",
+    "Windows bootstrap tested; macOS/Linux installers, full release rollback/export, account and billing remain planned.",
+    "Initial dependency downloads and source indexing can take minutes; Geo Dash reused a validated prebuilt source/vector generation.",
+    "HNSW remains optional; exact is default."
+  ]
+}

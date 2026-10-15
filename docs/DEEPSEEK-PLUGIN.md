@@ -1,6 +1,8 @@
 # CM — Code Memory: плагин DeepSeek Harness
 
-Рабочий локальный prototype v0.7.0: компактный context режим по умолчанию, adaptive retrieval, локальные vectors, optional legacy tools и live update. Он добавляет глоссарий, записи CM, структурные связи и сборку исходного контекста в DeepSeek Harness. Primary index создаётся на TypeScript Compiler API для TypeScript и JavaScript, vector projection — локальной embedding-моделью. Код индексируемого проекта не исполняется, внешний LLM API для индексирования не требуется. [Живая CM](LIVE-CM.md), [граф и экономия](GRAPH-BUDGET.md), [скорость и токены](SPEED-TOKENS.md).
+Рабочий локальный prototype v0.8.0: компактный context режим по умолчанию, adaptive retrieval, локальные vectors, optional legacy tools и live update. Он добавляет глоссарий, записи CM, структурные связи и сборку исходного контекста в DeepSeek Harness. Primary index создаётся на TypeScript Compiler API для TypeScript и JavaScript, vector projection — локальной embedding-моделью. Код индексируемого проекта не исполняется, внешний LLM API для индексирования не требуется. [Живая CM](LIVE-CM.md), [граф и экономия](GRAPH-BUDGET.md), [скорость и токены](SPEED-TOKENS.md).
+
+Для новой установки использовать [установщик Harness, Codex и Claude Code](INSTALL.md). Он создаёт независимую от checkout установку с private Node.js при необходимости; прежний запуск из подготовленного checkout описан ниже.
 
 ## Быстрый запуск на подготовленном Windows-компьютере
 

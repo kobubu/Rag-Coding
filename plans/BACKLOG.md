@@ -711,11 +711,11 @@
 
 ### RC-051: Упаковать локальный агент и проверить update/restore
 
-Статус: **planned**. Приоритет: P1. Размер: L. Зависимости: RC-049, RC-050.
+Статус: **planned**. Приоритет: P1. Размер: L. Зависимости: RC-049, RC-050, RC-069.
 
 Приёмка:
 
-- Чистая установка Windows, native dependencies и запуск MCP/map проходят на поддерживаемом runtime.
+- Чистая установка Windows, native dependencies и запуск MCP/map проходят на поддерживаемом runtime; три client adapters выделены в RC-069.
 - Update, rollback и export сохраняют source, user indexes и настройки; macOS/Linux проверены перед заявлением поддержки.
 
 Ожидаемые материалы: `packaging/local-agent/`, `docs/runbooks/`, `evaluation/installer-proof.json`.
@@ -839,3 +839,15 @@
 - Fresh-file shortcut не подменяет measurement на импортированных/многофайловых изменениях; cold/warm и amortization опубликованы отдельно.
 
 Ожидаемые материалы: `src/code-memory/live.ts`, `docs/LIVE-CM.md`, `docs/SPEED-TOKENS.md`.
+
+### RC-069: Установщик CM для Windows: Harness, Codex и Claude Code
+
+Статус: **done**. Приоритет: P0. Размер: M. Зависимости: RC-049, RC-067.
+
+Приёмка:
+
+- Чистый install в отдельный каталог: совместимый Node с проверкой SHA, обычная установка native dependencies, локальные embeddings/index и отсутствие runtime junction к checkout.
+- Реальные Harness native tool dispatch, Codex app-server discovery/resource и Claude CLI Connected; граница проверки раскрыта отдельно от model quality/token A/B.
+- Повтор и отключение сохраняют source/index и чужие настройки; managed config conflicts, Unicode, rollback и source snapshots проверены. Windows-only bootstrap и отсутствие hooks в MCP clients раскрыты.
+
+Ожидаемые материалы: `scripts/install_cm.ps1`, `src/setup/`, `tests/setup.test.ts`, `docs/INSTALL.md`, `evaluation/installer-proof.json`.

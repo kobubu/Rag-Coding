@@ -1,8 +1,8 @@
 {
   "name": "dsh-plugin-code-memory",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
-  "description": "CM (Code Memory): read-only repository knowledge plugin for DeepSeek Harness",
+  "description": "Local Code Memory for DeepSeek Harness, Codex and Claude Code",
   "type": "module",
   "engines": {
     "node": "^22.19.0 || ^24.0.0"
@@ -28,7 +28,8 @@
     "viewer:build": "vite build --config apps/local-viewer/vite.config.ts",
     "cm:agent": "node dist/src/local-agent/cli.js",
     "cm:mcp": "node dist/src/mcp/cli.js",
-    "cm:ann": "node dist/src/code-memory/ann_cli.js"
+    "cm:ann": "node dist/src/code-memory/ann_cli.js",
+    "cm:setup": "node dist/src/setup/cli.js"
   },
   "main": "./dist/src/harness/plugin.js",
   "types": "./dist/src/harness/plugin.d.ts",
@@ -44,7 +45,8 @@
     "cm-search": "dist/src/code-memory/search_cli.js",
     "cm-agent": "dist/src/local-agent/cli.js",
     "cm-mcp": "dist/src/mcp/cli.js",
-    "cm-ann-index": "dist/src/code-memory/ann_cli.js"
+    "cm-ann-index": "dist/src/code-memory/ann_cli.js",
+    "cm-setup": "dist/src/setup/cli.js"
   },
   "files": [
     "dist/src/",
@@ -61,6 +63,8 @@
     "docs/GRAPH-BUDGET.md",
     "docs/HNSW-MODEL-AB.md",
     "docs/SPEED-TOKENS.md",
+    "docs/INSTALL.md",
+    "scripts/install_cm.ps1",
     "evaluation/graph-budget/",
     "evaluation/hnsw-model/",
     "evaluation/speed-tokens/",
@@ -85,6 +89,7 @@
     "onnxruntime-node": "1.30.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
+    "smol-toml": "1.9.1",
     "typescript": "6.0.3",
     "zod": "4.6.7"
   },
