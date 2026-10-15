@@ -1,0 +1,1447 @@
+{
+  "protocol": {
+    "format": "cm-efficiency-1",
+    "created_at": "2026-10-15T22:02:41.189Z",
+    "model": "gpt-6-luna",
+    "reasoning_effort": "low",
+    "arms": [
+      "cm_base",
+      "cm_next"
+    ],
+    "repetitions": 5,
+    "cases_hash": "82c0e5a5d9d890fdada831f43dda38937e3a4e32554207b69be5813ede9b8aa9",
+    "corpus_hash": "430d2380f6bb073436b52df5be264c8ceefe4ebb2ec81b857b55980f3c072261",
+    "source_revision": "17007329bd381384f494278f2206a70727f0e723",
+    "implementation": [
+      {
+        "path": "scripts/efficiency_ab.ts",
+        "sha256": "92c08a92f0de4687769b7f3bcd5c264c245d5c0c81f315c7822f7e4bc9f4115c"
+      },
+      {
+        "path": "dist/scripts/efficiency_ab.js",
+        "sha256": "58b7cbd32a1713bd110f4ec3976188252ed617c867afc71d243bd81454749fd2"
+      },
+      {
+        "path": "scripts/harness_ab.ts",
+        "sha256": "935ef65763fef5fbdaaea75c26fd306c1339123ab4e253c074a4b2b5d83935b0"
+      },
+      {
+        "path": "dist/scripts/harness_ab.js",
+        "sha256": "06395aa2ffb5b6afd8670fffb478bd379785a288b3ebebb5eee181a3666c02f9"
+      },
+      {
+        "path": "scripts/harness_meter.ts",
+        "sha256": "09f1dabfe3d79af3bff9b0266d3c8cec2af84c1de1befaf50878b5ae816825a5"
+      },
+      {
+        "path": "dist/scripts/harness_meter.js",
+        "sha256": "7eab9f5fc02c5745bd59a0e2aca5109a400b5580fd546dbe940011c3d4d86038"
+      },
+      {
+        "path": "scripts/lib.ts",
+        "sha256": "2c08b0809a3a0e1a06b44166429b35b51fb76c135d3af982c6a2785dcf34acd9"
+      },
+      {
+        "path": "dist/scripts/lib.js",
+        "sha256": "a7be953e3b1cf6a812e3b8185813548f92877b8fadb28bdb0a04d7e2231ac4e9"
+      },
+      {
+        "path": "scripts/project_checks_plugin.ts",
+        "sha256": "1728a4a14bc0a96c299b7821b6b6027301be72a3287429a25d085d8cce232e0c"
+      },
+      {
+        "path": "dist/scripts/project_checks_plugin.js",
+        "sha256": "9c6f221058aa1236184201a7f9873299bf5ab45fe29e5e4aa2e8aa06d0a0da22"
+      },
+      {
+        "path": "scripts/speed_checks.ts",
+        "sha256": "db00900dd8e53a09a345811f2e0ddf4ad581ea92682d54e6a55ab79085f15345"
+      },
+      {
+        "path": "dist/scripts/speed_checks.js",
+        "sha256": "8268f0e2e52a5ff258d0ead7a5ec9d544f24d80a414021cf1069b8b179d2e8c5"
+      },
+      {
+        "path": "src/code-memory/ann_cli.ts",
+        "sha256": "ec832ee3379eec2d3da3fe630574e4c921017e42f53f836e26ed9905ee782b11"
+      },
+      {
+        "path": "dist/src/code-memory/ann_cli.js",
+        "sha256": "8908efa202deee2339092015d4efd2d24d8ff5fabf1dfc80611eebf205fe845a"
+      },
+      {
+        "path": "src/code-memory/chunks.ts",
+        "sha256": "1661142e32222431c32de0d62b38e27df4c4094c5b3db297d543a208d596f1f0"
+      },
+      {
+        "path": "dist/src/code-memory/chunks.js",
+        "sha256": "82ae9666336b41b9f1c3c148eca28fc1b89dd9f3392b985f3fb43cbadc4e159c"
+      },
+      {
+        "path": "src/code-memory/cli.ts",
+        "sha256": "1e21966c1127fe3bdfa47926dbad922bf3dab9d822c44ecd9772a09a040708dd"
+      },
+      {
+        "path": "dist/src/code-memory/cli.js",
+        "sha256": "41ed2c37fb738f2010be9fece7e0d987f607d177ded0fb69d513e7af6bf25ab8"
+      },
+      {
+        "path": "src/code-memory/direct.ts",
+        "sha256": "cd37711fd83e7a0624cd0dffdd46b84bc67d9786297a2ed56f204124430b6a17"
+      },
+      {
+        "path": "dist/src/code-memory/direct.js",
+        "sha256": "0ae196827b575d4f0e4cc480f2e1260d357684ab3a59d604fdc6c2f6f84d8407"
+      },
+      {
+        "path": "src/code-memory/focus.ts",
+        "sha256": "d1a824ef2aa5036ccb9dc1a5b2728f3b6a55e71ecc14251f38aeadbbc596b7d0"
+      },
+      {
+        "path": "dist/src/code-memory/focus.js",
+        "sha256": "4c558978b9edd227f8f3e8e8b8b54a4e175526c32a5d7fdd91b878292a8be7a2"
+      },
+      {
+        "path": "src/code-memory/graph_retrieve.ts",
+        "sha256": "00b7a0eba33c45a325603d9dc0f378910d3284e92f775bec4137b329a64199d8"
+      },
+      {
+        "path": "dist/src/code-memory/graph_retrieve.js",
+        "sha256": "07f75183270e500eb3c1efb641530c54d5980dfb1c0e44e15ca7d01776145bad"
+      },
+      {
+        "path": "src/code-memory/indexer.ts",
+        "sha256": "5a96ec81e955c03a399ebb6b2862a203cf2c1100d0f0b4ee3d3bbd937aa95382"
+      },
+      {
+        "path": "dist/src/code-memory/indexer.js",
+        "sha256": "952817eb5f00d5cf1c5b9159184d4a8fe433bef68284688ae5ab33ae33192a0a"
+      },
+      {
+        "path": "src/code-memory/knowledge.ts",
+        "sha256": "88ae9543ec08c9e3ca299f09aa4e416fcb5c3f01e0878095ba20c744dbe6903c"
+      },
+      {
+        "path": "dist/src/code-memory/knowledge.js",
+        "sha256": "7fff92a925752025bcfc9e46af851c6cfe0aeadb6e3a55663ed09124bae4aee8"
+      },
+      {
+        "path": "src/code-memory/live.ts",
+        "sha256": "df19b51ede03cc723008ed1bb7767959b08720c714466a3946aaea43ac4df717"
+      },
+      {
+        "path": "dist/src/code-memory/live.js",
+        "sha256": "0a6f5142c26d8908089bca15fb253d6a73ae8e07f9490aeb23da93339daa7372"
+      },
+      {
+        "path": "src/code-memory/minilm.ts",
+        "sha256": "0fe815aadfa2ce5a1b1856ff9ce54ea374f767b332733d617955115bd2c5f050"
+      },
+      {
+        "path": "dist/src/code-memory/minilm.js",
+        "sha256": "864594193f0246fd6564712907b6c3e73f81efcb06161b3b23e2950dea0a0b9f"
+      },
+      {
+        "path": "src/code-memory/query.ts",
+        "sha256": "380478b4914fc633ee58193d428a91509d566da52e9889640d91b07662d01bc3"
+      },
+      {
+        "path": "dist/src/code-memory/query.js",
+        "sha256": "177fd3e99389992e248df7dccf44ef1b8c52538ccf918f2fb4ed0866b27c51cb"
+      },
+      {
+        "path": "src/code-memory/retrieve.ts",
+        "sha256": "7915254c3d0e229d54069059464ef6d937a64285d1dc479877f888637522c40a"
+      },
+      {
+        "path": "dist/src/code-memory/retrieve.js",
+        "sha256": "8ada3e936954fff6b30b4437c998ccc532fe1c9e25210c44fa0431b6afe8d059"
+      },
+      {
+        "path": "src/code-memory/search_cli.ts",
+        "sha256": "feb51a21b7eae020f4784d3b3ab92950c619a69ec9070d38101f6aeab95ddedf"
+      },
+      {
+        "path": "dist/src/code-memory/search_cli.js",
+        "sha256": "c37522858ec00cda295127758a2a43bebfab038de7934e60f0df72787fa0981d"
+      },
+      {
+        "path": "src/code-memory/source.ts",
+        "sha256": "23b1343692dc7f1bd943cf30a763919bbd16018dcb046c8c468d7a74184e7264"
+      },
+      {
+        "path": "dist/src/code-memory/source.js",
+        "sha256": "b26f7612786b94be200404021239585e5180b71505a9ee858465c47db4eb0799"
+      },
+      {
+        "path": "src/code-memory/store.ts",
+        "sha256": "cc1dae4e0a793b13614bbde32e380e16f761aa3664a9bd99f26a5e03525d4ffd"
+      },
+      {
+        "path": "dist/src/code-memory/store.js",
+        "sha256": "4e2db3116e9efec8775ffe14fd06e167d9183df84b20fa3ead61b3a7380cd601"
+      },
+      {
+        "path": "src/code-memory/types.ts",
+        "sha256": "ad337bc6337850714843fda6ea2044683a48feb3465e4c0bdaad08d39617bc86"
+      },
+      {
+        "path": "dist/src/code-memory/types.js",
+        "sha256": "05c41b0ce4ba21f6ec0f485502ef2cd15de86b3c992e97965ce907b453a1baa6"
+      },
+      {
+        "path": "src/code-memory/vector.ts",
+        "sha256": "b9dad116c7abb8d27cf8195aff68f6bc17c0cb41244ef141617d056e7c4b5d82"
+      },
+      {
+        "path": "dist/src/code-memory/vector.js",
+        "sha256": "b1824b10f1269bf19263ba6ad434d199067ae15c1603e3a4bada7b0477aa5e76"
+      },
+      {
+        "path": "src/code-memory/vector_cli.ts",
+        "sha256": "a9bc4345eaab4606a90c379829578ccf2ab6dc3e19ca9f346d8e29ec445a97fb"
+      },
+      {
+        "path": "dist/src/code-memory/vector_cli.js",
+        "sha256": "50fe2e32e92f528265c4997fb0692b1948165fdaee071e1483f7e8a193824c33"
+      },
+      {
+        "path": "src/harness/plugin.ts",
+        "sha256": "fbe407ddcdafb451b3d7dc042bb00de6137ce4b6a509ac8794d16d136b01c03a"
+      },
+      {
+        "path": "dist/src/harness/plugin.js",
+        "sha256": "811184be63a228cf9e19881ea8852d7f2e531b5df8252896c2c5404740ec6d67"
+      },
+      {
+        "path": "src/local-agent/cli.ts",
+        "sha256": "d32e478b42556fdd47551579107a7a965b5419e555912acf9d396084c682267a"
+      },
+      {
+        "path": "dist/src/local-agent/cli.js",
+        "sha256": "cbe628816478a47292ccba5cc0a59cc1817135878bc18dd3fb617842cf53bfc3"
+      },
+      {
+        "path": "src/local-agent/config.ts",
+        "sha256": "1a3d5fd94f5be46280957c1dce12384442ad3df997c323f534a342560a8d3c0b"
+      },
+      {
+        "path": "dist/src/local-agent/config.js",
+        "sha256": "503f5b7b88cf844f951ef8510b0f270a1c4e1eb77425f4a4c94bb3eea248bd2c"
+      },
+      {
+        "path": "src/local-agent/http.ts",
+        "sha256": "7493fa9366c9eef60f2bb71f1181a152ad62c3a51dd5d45b666899e412f5aab5"
+      },
+      {
+        "path": "dist/src/local-agent/http.js",
+        "sha256": "d6ef6cbf2e7d7dd9216c35401e27d8400f2dc899491d7f06a7c53478519571df"
+      },
+      {
+        "path": "src/local-agent/map.ts",
+        "sha256": "82e9b7b6139e93ff3739dd97c62935ee067dfe7c3ab5c5fb510f7b61168a3d86"
+      },
+      {
+        "path": "dist/src/local-agent/map.js",
+        "sha256": "fc10d41dc66d1ea94f15f3fe74a354c3d75e77882e1b487f9aa671492b3fcb2b"
+      },
+      {
+        "path": "src/local-agent/models.ts",
+        "sha256": "01ad788a233ae5cdcf1b72a2ce5b70cbd39d8076818ed58e09c1aedf17a5a33f"
+      },
+      {
+        "path": "dist/src/local-agent/models.js",
+        "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      {
+        "path": "src/local-agent/service.ts",
+        "sha256": "5b4940374e90de41b09cd3680266325d3ffca980146d6c61d16a8230263ad900"
+      },
+      {
+        "path": "dist/src/local-agent/service.js",
+        "sha256": "4cfed3f33c63e776b5324e535f6ba480a404ae230858a06f8b5a53bf637fe5fa"
+      },
+      {
+        "path": "src/mcp/cli.ts",
+        "sha256": "fedb7f353ff0b1bba7e8fa3a62f69fb12f761e363de0d6452d99505ef5b9d71a"
+      },
+      {
+        "path": "dist/src/mcp/cli.js",
+        "sha256": "7ec9663e90d36962c57590fd294e45b274ecab1086d45fc54e4943b165d327c6"
+      },
+      {
+        "path": "src/mcp/server.ts",
+        "sha256": "0d746f39c15c822cb88019ac74d1f5a09b73c9cebf2c156c4580bb45cfd0c240"
+      },
+      {
+        "path": "dist/src/mcp/server.js",
+        "sha256": "d44218ba3e2b1374c0d3fdf7690c2639a98a81c987a9d4baca80e081f3e8a845"
+      },
+      {
+        "path": "src/setup/claude.ts",
+        "sha256": "c0b2b832ba823290e70e17dd7f5455ffc44fe13d32975ef3b88fbe0f7aca7ecc"
+      },
+      {
+        "path": "dist/src/setup/claude.js",
+        "sha256": "297fcffbb391421557d7f1ac85caa2df28f48432acfc7cb18ad500d607ab9db0"
+      },
+      {
+        "path": "src/setup/cli.ts",
+        "sha256": "6331feb2d2ea56c58af985c4d667eb2c80a84b396cf182afaa8b06f4e73df29f"
+      },
+      {
+        "path": "dist/src/setup/cli.js",
+        "sha256": "345921d8a24cf5695ec4ec9f227d4398ded300350462d3f4f6475c7687057501"
+      },
+      {
+        "path": "src/setup/config.ts",
+        "sha256": "2f962ae025c5896235ed3ba580f524726119c5ef335e0c608155a102e4e932df"
+      },
+      {
+        "path": "dist/src/setup/config.js",
+        "sha256": "f38c59a9dedf4c2baae577181111616be5fc46a1d38d45b8b9766198e02d6a2a"
+      },
+      {
+        "path": "src/setup/files.ts",
+        "sha256": "184ced0192f36df23f15a41c7999c96ee3ce7a676ca3dff88bb56ed16033a99d"
+      },
+      {
+        "path": "dist/src/setup/files.js",
+        "sha256": "ee4283af8d51f199e9bd2435cdc36f365e7a9d65d08c580d6b034a2945e650df"
+      },
+      {
+        "path": "src/setup/install.ts",
+        "sha256": "7a116bd62637748330a5892d689637cbb09f8e5426fc57d91e9fe47ae4ec9ae7"
+      },
+      {
+        "path": "dist/src/setup/install.js",
+        "sha256": "73e565a1d45b943d87620148c6afcff7c6fa32de9c672fc025699b6f2aa41743"
+      },
+      {
+        "path": "src/version.ts",
+        "sha256": "a84fdcc97f67f7ce5da3ba27e03ffc0ce0e1dad06081d7f5f68a51dfb8f7f07b"
+      },
+      {
+        "path": "dist/src/version.js",
+        "sha256": "a84fdcc97f67f7ce5da3ba27e03ffc0ce0e1dad06081d7f5f68a51dfb8f7f07b"
+      }
+    ],
+    "base_plugin_sha256": "3e549ac629aa7ed309ab5a2505c917c6fbc0e3f09f191fec7641b4572c5bbef5",
+    "runtime": {
+      "node": "v22.22.0",
+      "harness_entry_sha256": "1a03dee18683483ff6a1b27b2a1e650230da6bcca9a0f55f7d81b3308c3f307f"
+    },
+    "preparation_sha256": "dcdff6060b72331210c27ac2529c225a94cb8f53c4c63f9488c8ff9008ef494e",
+    "max_model_calls": 12,
+    "max_run_seconds": 240,
+    "max_estimated_usd": 2,
+    "context_source_bytes": 6000,
+    "prompt_suffix": " Apply the change only in this isolated workspace. Preserve unrelated behavior and interfaces. Use supplied source when sufficient; otherwise inspect code. The same project_checks smoke is available to all variants; separate independent final checks evaluate your patch. Finish with a brief summary.",
+    "arms_config": {
+      "none": "No CM",
+      "cm_base": "Frozen CM 0.8.1 build, adaptive/exact, autoUpdate on demand",
+      "cm_next": "Current CM build, same configuration"
+    },
+    "price": {
+      "input": 0.1,
+      "cache_read": 0.01,
+      "cache_write": 0.125,
+      "output": 0.5,
+      "per": 1000000,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-luna"
+    }
+  },
+  "estimated_cost_usd": 0.01246805,
+  "results": [
+    {
+      "run_id": "run-7bda19d7bb574a15",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 1,
+      "arm": "cm_base",
+      "duration_ms": 29508.394147,
+      "copy_ms": 36.72476400000005,
+      "independent_check_ms": 3522.992726999997,
+      "end_to_end_ms": 33087.148150999994,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 193.22368300000005,
+          "candidate_ms": 6.143607499999916,
+          "speedup": 31.45117636502701,
+          "samples": [
+            {
+              "baseline_ms": 238.72395800000004,
+              "candidate_ms": 10.22874900000005
+            },
+            {
+              "baseline_ms": 193.26157150000006,
+              "candidate_ms": 6.143607499999916
+            },
+            {
+              "baseline_ms": 193.22368300000005,
+              "candidate_ms": 7.375985499999956
+            },
+            {
+              "baseline_ms": 212.5995825,
+              "candidate_ms": 6.15643050000017
+            },
+            {
+              "baseline_ms": 188.17797250000012,
+              "candidate_ms": 5.259952999999996
+            },
+            {
+              "baseline_ms": 188.98029350000002,
+              "candidate_ms": 5.173173500000075
+            },
+            {
+              "baseline_ms": 192.96261649999997,
+              "candidate_ms": 5.4363610000000335
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 5,
+      "attempts": 5,
+      "usage": {
+        "uncached_input": 15,
+        "cache_read": 13806,
+        "cache_write": 4118,
+        "output": 922,
+        "total_input": 17939,
+        "total_tokens": 18861,
+        "missing_usage": 0,
+        "usd_estimate": 0.00111531
+      },
+      "accounting_complete": true,
+      "mode_verified": true,
+      "cm_active": true,
+      "provider_ms": 13973.157691000008,
+      "request_bytes": [
+        14066,
+        16795,
+        18102,
+        23314,
+        24643
+      ],
+      "tool_calls": {
+        "edit": 2,
+        "project_checks": 2
+      },
+      "initial_retrieval": {
+        "at_ms": 1792101775596,
+        "event": "retrieved",
+        "duration_ms": 36.56609500000013,
+        "agent": "session-8cd7aabe-b728-4bd0-ac5f-190ba9f0217d",
+        "bytes": 2887,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "5faa387514aeeb05cbd955079ecd425100474a407db28f5d07f29e0e79f80d95",
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "adaptive",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 0,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": false
+        }
+      }
+    },
+    {
+      "run_id": "run-0a69dc1162c933b6",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 1,
+      "arm": "cm_next",
+      "duration_ms": 15637.929848000007,
+      "copy_ms": 18.55394100000558,
+      "independent_check_ms": 3561.607296000002,
+      "end_to_end_ms": 19241.035955,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 202.1815345,
+          "candidate_ms": 6.441846499999997,
+          "speedup": 31.385649207878533,
+          "samples": [
+            {
+              "baseline_ms": 194.56255400000003,
+              "candidate_ms": 7.564309499999922
+            },
+            {
+              "baseline_ms": 214.28335649999997,
+              "candidate_ms": 14.709289500000068
+            },
+            {
+              "baseline_ms": 202.1815345,
+              "candidate_ms": 6.441846499999997
+            },
+            {
+              "baseline_ms": 216.2422029999999,
+              "candidate_ms": 6.607154499999979
+            },
+            {
+              "baseline_ms": 197.89469250000002,
+              "candidate_ms": 5.879285499999924
+            },
+            {
+              "baseline_ms": 211.2876769999998,
+              "candidate_ms": 5.928148500000134
+            },
+            {
+              "baseline_ms": 184.96507999999994,
+              "candidate_ms": 5.117531500000041
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 5,
+      "attempts": 5,
+      "usage": {
+        "uncached_input": 15,
+        "cache_read": 13868,
+        "cache_write": 4164,
+        "output": 934,
+        "total_input": 18047,
+        "total_tokens": 18981,
+        "missing_usage": 0,
+        "usd_estimate": 0.00112768
+      },
+      "accounting_complete": true,
+      "mode_verified": true,
+      "cm_active": true,
+      "provider_ms": 12021.281953999996,
+      "request_bytes": [
+        14159,
+        16797,
+        18104,
+        23684,
+        24991
+      ],
+      "tool_calls": {
+        "edit": 2,
+        "project_checks": 2
+      },
+      "initial_retrieval": {
+        "at_ms": 1792101796995,
+        "event": "retrieved",
+        "duration_ms": 23.230385999999953,
+        "agent": "session-3c0009ae-65cb-434e-bcd7-402124cdfb1d",
+        "bytes": 2887,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "5faa387514aeeb05cbd955079ecd425100474a407db28f5d07f29e0e79f80d95",
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "adaptive",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 0,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": false
+        }
+      }
+    },
+    {
+      "run_id": "run-53c24e4f8707e2ae",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 2,
+      "arm": "cm_base",
+      "duration_ms": 25729.721652999993,
+      "copy_ms": 31.588227000000188,
+      "independent_check_ms": 3430.6633160000056,
+      "end_to_end_ms": 29208.398529,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 199.67708699999997,
+          "candidate_ms": 6.411078000000089,
+          "speedup": 31.145633698419704,
+          "samples": [
+            {
+              "baseline_ms": 199.67708699999997,
+              "candidate_ms": 7.87067849999994
+            },
+            {
+              "baseline_ms": 188.20982600000008,
+              "candidate_ms": 6.588572999999883
+            },
+            {
+              "baseline_ms": 185.38250700000003,
+              "candidate_ms": 6.168842000000041
+            },
+            {
+              "baseline_ms": 199.57469649999996,
+              "candidate_ms": 6.411078000000089
+            },
+            {
+              "baseline_ms": 206.84773849999988,
+              "candidate_ms": 8.088711499999818
+            },
+            {
+              "baseline_ms": 221.43407749999983,
+              "candidate_ms": 5.300218000000086
+            },
+            {
+              "baseline_ms": 200.90042500000004,
+              "candidate_ms": 5.223224500000242
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 9,
+      "attempts": 9,
+      "usage": {
+        "uncached_input": 27,
+        "cache_read": 30562,
+        "cache_write": 4730,
+        "output": 1417,
+        "total_input": 35319,
+        "total_tokens": 36736,
+        "missing_usage": 0,
+        "usd_estimate": 0.0016080699999999999
+      },
+      "accounting_complete": true,
+      "mode_verified": true,
+      "cm_active": true,
+      "provider_ms": 22134.356482,
+      "request_bytes": [
+        14066,
+        15251,
+        17757,
+        22169,
+        23356,
+        24663,
+        30098,
+        31427,
+        32612
+      ],
+      "tool_calls": {
+        "todo_write": 3,
+        "edit": 3,
+        "project_checks": 2
+      },
+      "initial_retrieval": {
+        "at_ms": 1792101816224,
+        "event": "retrieved",
+        "duration_ms": 20.631017000000156,
+        "agent": "session-117a1513-ac91-49f7-9564-163035db825b",
+        "bytes": 2887,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "5faa387514aeeb05cbd955079ecd425100474a407db28f5d07f29e0e79f80d95",
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "adaptive",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 0,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": false
+        }
+      }
+    },
+    {
+      "run_id": "run-55afe001ce3027be",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 2,
+      "arm": "cm_next",
+      "duration_ms": 12777.803327999995,
+      "copy_ms": 21.38287400000263,
+      "independent_check_ms": 3315.550396999999,
+      "end_to_end_ms": 16130.995435000004,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 185.9449810000001,
+          "candidate_ms": 5.943567499999972,
+          "speedup": 31.285079373625518,
+          "samples": [
+            {
+              "baseline_ms": 212.43841249999997,
+              "candidate_ms": 10.213257499999997
+            },
+            {
+              "baseline_ms": 208.22217450000005,
+              "candidate_ms": 7.2510164999999915
+            },
+            {
+              "baseline_ms": 182.86612300000002,
+              "candidate_ms": 6.740274999999997
+            },
+            {
+              "baseline_ms": 185.9449810000001,
+              "candidate_ms": 5.943567499999972
+            },
+            {
+              "baseline_ms": 185.52312050000023,
+              "candidate_ms": 5.108136500000228
+            },
+            {
+              "baseline_ms": 182.11248850000038,
+              "candidate_ms": 5.0884164999997665
+            },
+            {
+              "baseline_ms": 186.37078599999995,
+              "candidate_ms": 4.924899000000096
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 5,
+      "attempts": 5,
+      "usage": {
+        "uncached_input": 15,
+        "cache_read": 13240,
+        "cache_write": 3877,
+        "output": 667,
+        "total_input": 17132,
+        "total_tokens": 17799,
+        "missing_usage": 0,
+        "usd_estimate": 0.000952025
+      },
+      "accounting_complete": true,
+      "mode_verified": true,
+      "cm_active": true,
+      "provider_ms": 9145.242665999998,
+      "request_bytes": [
+        14159,
+        16180,
+        17487,
+        23201,
+        24525
+      ],
+      "tool_calls": {
+        "edit": 2,
+        "project_checks": 2
+      },
+      "initial_retrieval": {
+        "at_ms": 1792101845514,
+        "event": "retrieved",
+        "duration_ms": 23.018826999999874,
+        "agent": "session-cd607106-91e1-4c72-9127-4f8e45609805",
+        "bytes": 2887,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "5faa387514aeeb05cbd955079ecd425100474a407db28f5d07f29e0e79f80d95",
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "adaptive",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 0,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": false
+        }
+      }
+    },
+    {
+      "run_id": "run-c6efc739ea0d7159",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 3,
+      "arm": "cm_base",
+      "duration_ms": 18440.864124,
+      "copy_ms": 20.6323010000051,
+      "independent_check_ms": 3406.006570999991,
+      "end_to_end_ms": 21887.196632000007,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 188.5090745,
+          "candidate_ms": 5.801564999999982,
+          "speedup": 32.49279711595071,
+          "samples": [
+            {
+              "baseline_ms": 238.69793100000004,
+              "candidate_ms": 10.307912999999985
+            },
+            {
+              "baseline_ms": 201.9748095000001,
+              "candidate_ms": 5.801564999999982
+            },
+            {
+              "baseline_ms": 188.8547359999999,
+              "candidate_ms": 7.295276499999886
+            },
+            {
+              "baseline_ms": 188.5090745,
+              "candidate_ms": 5.97685899999999
+            },
+            {
+              "baseline_ms": 181.65101600000003,
+              "candidate_ms": 5.340423500000043
+            },
+            {
+              "baseline_ms": 186.80432900000005,
+              "candidate_ms": 5.6100269999999455
+            },
+            {
+              "baseline_ms": 188.41061299999978,
+              "candidate_ms": 5.610718499999848
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 7,
+      "attempts": 7,
+      "usage": {
+        "uncached_input": 21,
+        "cache_read": 22116,
+        "cache_write": 4392,
+        "output": 1028,
+        "total_input": 26529,
+        "total_tokens": 27557,
+        "missing_usage": 0,
+        "usd_estimate": 0.00128626
+      },
+      "accounting_complete": true,
+      "mode_verified": true,
+      "cm_active": true,
+      "provider_ms": 14734.265163999999,
+      "request_bytes": [
+        14066,
+        16705,
+        18052,
+        24018,
+        25172,
+        29205,
+        30534
+      ],
+      "tool_calls": {
+        "edit": 3,
+        "project_checks": 3
+      },
+      "initial_retrieval": {
+        "at_ms": 1792101861665,
+        "event": "retrieved",
+        "duration_ms": 21.42430800000011,
+        "agent": "session-7d7b98d3-c63f-4223-ab67-e91e823a2245",
+        "bytes": 2887,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "5faa387514aeeb05cbd955079ecd425100474a407db28f5d07f29e0e79f80d95",
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "adaptive",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 0,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": false
+        }
+      }
+    },
+    {
+      "run_id": "run-857ca2771f91fbae",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 3,
+      "arm": "cm_next",
+      "duration_ms": 17850.45581899998,
+      "copy_ms": 16.504856999992626,
+      "independent_check_ms": 3394.178774,
+      "end_to_end_ms": 21277.776689999984,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 195.76385399999992,
+          "candidate_ms": 6.266818499999999,
+          "speedup": 31.23815601169875,
+          "samples": [
+            {
+              "baseline_ms": 190.24667850000003,
+              "candidate_ms": 7.932350500000041
+            },
+            {
+              "baseline_ms": 198.23927550000008,
+              "candidate_ms": 6.407135499999924
+            },
+            {
+              "baseline_ms": 195.76385399999992,
+              "candidate_ms": 6.266818499999999
+            },
+            {
+              "baseline_ms": 186.09101899999996,
+              "candidate_ms": 5.619258000000059
+            },
+            {
+              "baseline_ms": 202.7564625,
+              "candidate_ms": 6.381346000000121
+            },
+            {
+              "baseline_ms": 187.9197075000002,
+              "candidate_ms": 5.573098500000015
+            },
+            {
+              "baseline_ms": 203.8263139999999,
+              "candidate_ms": 5.116265000000112
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 6,
+      "attempts": 6,
+      "usage": {
+        "uncached_input": 18,
+        "cache_read": 18267,
+        "cache_write": 4401,
+        "output": 1138,
+        "total_input": 22686,
+        "total_tokens": 23824,
+        "missing_usage": 0,
+        "usd_estimate": 0.001303595
+      },
+      "accounting_complete": true,
+      "mode_verified": true,
+      "cm_active": true,
+      "provider_ms": 14167.165073,
+      "request_bytes": [
+        14159,
+        16865,
+        18212,
+        27084,
+        28392,
+        29713
+      ],
+      "tool_calls": {
+        "edit": 3,
+        "project_checks": 2
+      },
+      "initial_retrieval": {
+        "at_ms": 1792101883583,
+        "event": "retrieved",
+        "duration_ms": 22.22758500000009,
+        "agent": "session-8ccd1bd5-05c7-465b-b838-77d491849579",
+        "bytes": 2887,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "5faa387514aeeb05cbd955079ecd425100474a407db28f5d07f29e0e79f80d95",
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "adaptive",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 0,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": false
+        }
+      }
+    },
+    {
+      "run_id": "run-82c7842b4c7fa0b6",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 4,
+      "arm": "cm_base",
+      "duration_ms": 21110.168192000012,
+      "copy_ms": 18.277097999991383,
+      "independent_check_ms": 3415.2611500000057,
+      "end_to_end_ms": 24561.594572,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 197.11061800000004,
+          "candidate_ms": 6.306055499999957,
+          "speedup": 31.25735541020871,
+          "samples": [
+            {
+              "baseline_ms": 211.91481599999997,
+              "candidate_ms": 7.2022269999999935
+            },
+            {
+              "baseline_ms": 190.48683699999992,
+              "candidate_ms": 6.306055499999957
+            },
+            {
+              "baseline_ms": 197.11061800000004,
+              "candidate_ms": 6.538330500000029
+            },
+            {
+              "baseline_ms": 188.85562099999993,
+              "candidate_ms": 6.502106499999968
+            },
+            {
+              "baseline_ms": 183.48926699999993,
+              "candidate_ms": 5.25608450000027
+            },
+            {
+              "baseline_ms": 199.9343759999997,
+              "candidate_ms": 4.910378000000037
+            },
+            {
+              "baseline_ms": 227.5975185000002,
+              "candidate_ms": 4.879150000000209
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 8,
+      "attempts": 8,
+      "usage": {
+        "uncached_input": 24,
+        "cache_read": 28165,
+        "cache_write": 4969,
+        "output": 1582,
+        "total_input": 33158,
+        "total_tokens": 34740,
+        "missing_usage": 0,
+        "usd_estimate": 0.0016961749999999999
+      },
+      "accounting_complete": true,
+      "mode_verified": true,
+      "cm_active": true,
+      "provider_ms": 17458.787370000005,
+      "request_bytes": [
+        14066,
+        16708,
+        19416,
+        20763,
+        26486,
+        27640,
+        32421,
+        33752
+      ],
+      "tool_calls": {
+        "edit": 4,
+        "project_checks": 3
+      },
+      "initial_retrieval": {
+        "at_ms": 1792101904841,
+        "event": "retrieved",
+        "duration_ms": 24.089629999999943,
+        "agent": "session-76675c3f-eb0c-4981-8147-15c3745ad56e",
+        "bytes": 2887,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "5faa387514aeeb05cbd955079ecd425100474a407db28f5d07f29e0e79f80d95",
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "adaptive",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 0,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": false
+        }
+      }
+    },
+    {
+      "run_id": "run-4d74d9fefce7dd20",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 4,
+      "arm": "cm_next",
+      "duration_ms": 13781.89961600001,
+      "copy_ms": 19.406649000011384,
+      "independent_check_ms": 3656.609690000012,
+      "end_to_end_ms": 17474.691974999994,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 208.69615099999987,
+          "candidate_ms": 6.3481985000000805,
+          "speedup": 32.874862214846814,
+          "samples": [
+            {
+              "baseline_ms": 209.127437,
+              "candidate_ms": 7.658741999999961
+            },
+            {
+              "baseline_ms": 206.30092250000007,
+              "candidate_ms": 6.804354500000045
+            },
+            {
+              "baseline_ms": 204.35420550000003,
+              "candidate_ms": 6.3481985000000805
+            },
+            {
+              "baseline_ms": 237.2085185000002,
+              "candidate_ms": 6.349570999999969
+            },
+            {
+              "baseline_ms": 207.31225499999982,
+              "candidate_ms": 5.426856000000043
+            },
+            {
+              "baseline_ms": 217.37749150000013,
+              "candidate_ms": 5.242685000000165
+            },
+            {
+              "baseline_ms": 208.69615099999987,
+              "candidate_ms": 5.149614000000156
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 5,
+      "attempts": 5,
+      "usage": {
+        "uncached_input": 15,
+        "cache_read": 13278,
+        "cache_write": 3887,
+        "output": 662,
+        "total_input": 17180,
+        "total_tokens": 17842,
+        "missing_usage": 0,
+        "usd_estimate": 0.000951155
+      },
+      "accounting_complete": true,
+      "mode_verified": true,
+      "cm_active": true,
+      "provider_ms": 9971.710534,
+      "request_bytes": [
+        14159,
+        16170,
+        17477,
+        23709,
+        25025
+      ],
+      "tool_calls": {
+        "edit": 2,
+        "project_checks": 2
+      },
+      "initial_retrieval": {
+        "at_ms": 1792101929286,
+        "event": "retrieved",
+        "duration_ms": 24.524216000000024,
+        "agent": "session-c6fce7fd-9115-4266-93f5-2597ffcf6fea",
+        "bytes": 2887,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "5faa387514aeeb05cbd955079ecd425100474a407db28f5d07f29e0e79f80d95",
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "adaptive",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 0,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": false
+        }
+      }
+    },
+    {
+      "run_id": "run-3130482f7db6bb1a",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 5,
+      "arm": "cm_base",
+      "duration_ms": 15527.633681000007,
+      "copy_ms": 22.982690000004368,
+      "independent_check_ms": 3539.879400999984,
+      "end_to_end_ms": 19110.209686000017,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 196.87115849999998,
+          "candidate_ms": 6.051304500000015,
+          "speedup": 32.533672450295555,
+          "samples": [
+            {
+              "baseline_ms": 246.90393550000005,
+              "candidate_ms": 7.907999000000018
+            },
+            {
+              "baseline_ms": 210.467853,
+              "candidate_ms": 8.145975000000135
+            },
+            {
+              "baseline_ms": 193.5215045,
+              "candidate_ms": 5.519159500000001
+            },
+            {
+              "baseline_ms": 196.87115849999998,
+              "candidate_ms": 5.510099500000024
+            },
+            {
+              "baseline_ms": 218.19998699999996,
+              "candidate_ms": 6.552719000000025
+            },
+            {
+              "baseline_ms": 193.68197450000002,
+              "candidate_ms": 6.051304500000015
+            },
+            {
+              "baseline_ms": 194.10543200000006,
+              "candidate_ms": 5.808762500000057
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 4,
+      "attempts": 4,
+      "usage": {
+        "uncached_input": 12,
+        "cache_read": 10760,
+        "cache_write": 4262,
+        "output": 1229,
+        "total_input": 15034,
+        "total_tokens": 16263,
+        "missing_usage": 0,
+        "usd_estimate": 0.0012560499999999999
+      },
+      "accounting_complete": true,
+      "mode_verified": true,
+      "cm_active": true,
+      "provider_ms": 12000.486993,
+      "request_bytes": [
+        14066,
+        24283,
+        29714,
+        31044
+      ],
+      "tool_calls": {
+        "edit": 2,
+        "project_checks": 1
+      },
+      "initial_retrieval": {
+        "at_ms": 1792101946844,
+        "event": "retrieved",
+        "duration_ms": 24.7263989999999,
+        "agent": "session-c600c9ad-bc2b-46b5-8409-440b2217c712",
+        "bytes": 2887,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "5faa387514aeeb05cbd955079ecd425100474a407db28f5d07f29e0e79f80d95",
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "adaptive",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 0,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": false
+        }
+      }
+    },
+    {
+      "run_id": "run-d8e5789e55d2148d",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 5,
+      "arm": "cm_next",
+      "duration_ms": 14953.974787999992,
+      "copy_ms": 24.44703500001924,
+      "independent_check_ms": 3384.222647000017,
+      "end_to_end_ms": 18381.564935000002,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 190.37627799999996,
+          "candidate_ms": 6.084980499999915,
+          "speedup": 31.286259339697573,
+          "samples": [
+            {
+              "baseline_ms": 186.87173249999995,
+              "candidate_ms": 7.093708500000048
+            },
+            {
+              "baseline_ms": 184.08608950000013,
+              "candidate_ms": 6.084980499999915
+            },
+            {
+              "baseline_ms": 190.37627799999996,
+              "candidate_ms": 5.829111000000012
+            },
+            {
+              "baseline_ms": 202.04101049999986,
+              "candidate_ms": 6.039355000000114
+            },
+            {
+              "baseline_ms": 185.14635099999987,
+              "candidate_ms": 5.759187500000053
+            },
+            {
+              "baseline_ms": 200.75387299999988,
+              "candidate_ms": 7.236801999999898
+            },
+            {
+              "baseline_ms": 206.56369300000006,
+              "candidate_ms": 6.173303999999916
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 5,
+      "attempts": 5,
+      "usage": {
+        "uncached_input": 15,
+        "cache_read": 13748,
+        "cache_write": 4238,
+        "output": 1006,
+        "total_input": 18001,
+        "total_tokens": 19007,
+        "missing_usage": 0,
+        "usd_estimate": 0.00117173
+      },
+      "accounting_complete": true,
+      "mode_verified": true,
+      "cm_active": true,
+      "provider_ms": 11310.353217999998,
+      "request_bytes": [
+        14159,
+        16429,
+        17776,
+        26064,
+        27393
+      ],
+      "tool_calls": {
+        "edit": 2,
+        "project_checks": 2
+      },
+      "initial_retrieval": {
+        "at_ms": 1792101966072,
+        "event": "retrieved",
+        "duration_ms": 22.62109099999998,
+        "agent": "session-8c7f61b4-7830-49f5-ad96-06ea0c14181e",
+        "bytes": 2887,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "5faa387514aeeb05cbd955079ecd425100474a407db28f5d07f29e0e79f80d95",
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "adaptive",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 0,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": false
+        }
+      }
+    }
+  ]
+}
