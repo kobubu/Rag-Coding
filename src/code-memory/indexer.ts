@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, readdirSync, realpathSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
-import ts from "typescript";
+import type TS from "typescript";
+import { ts } from "./ts.js";
 import { ANALYSIS_FILES, byteOffsets, CMError, hash, inside, isSourcePath, snapshotId, utf8 } from "./source.js";
 import type { CMFile, CMIndex, CMRelation, CMSymbol, CMUnit, Predicate, SourceSpan } from "./types.js";
 
@@ -36,20 +37,20 @@ export function analysisInputs(projectRoot: string) {
   return [...files].sort().map(path => ({ path: relative(root, path).split(sep).join("/"), sha256: hash(readFileSync(path)) }));
 }
 
-function callable(node: ts.Node): node is ts.FunctionLikeDeclaration {
+function callable(node: TS.Node): node is TS.FunctionLikeDeclaration {
   return ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node) || ts.isFunctionExpression(node) ||
     ts.isArrowFunction(node) || ts.isConstructorDeclaration(node) || ts.isGetAccessorDeclaration(node) || ts.isSetAccessorDeclaration(node);
 }
 
-function isCompound(node: ts.Statement): boolean {
+function isCompound(node: TS.Statement): boolean {
   return ts.isFunctionDeclaration(node) || ts.isClassDeclaration(node) || ts.isBlock(node) || ts.isIfStatement(node) ||
     ts.isForStatement(node) || ts.isForInStatement(node) || ts.isForOfStatement(node) || ts.isWhileStatement(node) ||
     ts.isDoStatement(node) || ts.isTryStatement(node) || ts.isSwitchStatement(node);
 }
 
-function groups(statements: ts.NodeArray<ts.Statement>): ts.Statement[][] {
-  const result: ts.Statement[][] = [];
-  let adjacent: ts.Statement[] = [];
+function groups(statements: TS.NodeArray<TS.Statement>): TS.Statement[][] {
+  const result: TS.Statement[][] = [];
+  let adjacent: TS.Statement[] = [];
   for (const statement of statements) {
     if (isCompound(statement)) {
       if (adjacent.length) result.push(adjacent);
@@ -61,7 +62,7 @@ function groups(statements: ts.NodeArray<ts.Statement>): ts.Statement[][] {
   return result;
 }
 
-function declarationName(node: ts.Node): ts.Identifier | undefined {
+function declarationName(node: TS.Node): TS.Identifier | undefined {
   if (!(ts.isVariableDeclaration(node) || ts.isParameter(node) || ts.isBindingElement(node) ||
     ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isMethodDeclaration(node) ||
     ts.isClassDeclaration(node) || ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node) ||
@@ -88,7 +89,7 @@ export function buildIndex(projectRoot: string, paths?: string[]): CMIndex {
     rawByName.set(filename, raw);
     files.push({ path: relative(root, filename).split(sep).join("/"), sha256: hash(raw), source: utf8(raw) });
   }
-  const defaults: ts.CompilerOptions = { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.NodeNext,
+  const defaults: TS.CompilerOptions = { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.NodeNext,
     moduleResolution: ts.ModuleResolutionKind.NodeNext, noEmit: true, skipLibCheck: true, types: [], allowJs: true, checkJs: false };
   const configPath = ts.findConfigFile(root, ts.sys.fileExists) ?? ts.findConfigFile(root, ts.sys.fileExists, "jsconfig.json");
   let options = defaults;
@@ -112,12 +113,12 @@ export function buildIndex(projectRoot: string, paths?: string[]): CMIndex {
   const relations: CMRelation[] = [];
   const diagnostics: CMIndex["diagnostics"] = [];
   let incompleteSyntax = false;
-  const unitNodes = new Map<ts.Node, CMUnit>();
-  const symbolByCompiler = new Map<ts.Symbol, CMSymbol>();
-  const declarationNames = new Set<ts.Node>();
+  const unitNodes = new Map<TS.Node, CMUnit>();
+  const symbolByCompiler = new Map<TS.Symbol, CMSymbol>();
+  const declarationNames = new Set<TS.Node>();
   const fileRecords = new Map(files.map((file) => [resolve(root, file.path), file]));
   const coordinates = new Map(files.map((file) => [file.path, byteOffsets(file.source)]));
-  const span = (file: ts.SourceFile, start: number, end: number): SourceSpan => {
+  const span = (file: TS.SourceFile, start: number, end: number): SourceSpan => {
     const record = fileRecords.get(resolve(file.fileName))!;
     const offsets = coordinates.get(record.path)!;
     if (offsets[start] === undefined || offsets[end] === undefined || offsets[start] === -1 || offsets[end] === -1) {
@@ -127,7 +128,7 @@ export function buildIndex(projectRoot: string, paths?: string[]): CMIndex {
       end_byte: offsets[end], line_start: file.getLineAndCharacterOfPosition(start).line + 1,
       line_end: file.getLineAndCharacterOfPosition(Math.max(start, end - 1)).line + 1 };
   };
-  const unitFor = (node: ts.Node | undefined): CMUnit | undefined => {
+  const unitFor = (node: TS.Node | undefined): CMUnit | undefined => {
     while (node) { const unit = unitNodes.get(node); if (unit) return unit; node = node.parent; }
     return undefined;
   };
@@ -147,12 +148,12 @@ export function buildIndex(projectRoot: string, paths?: string[]): CMIndex {
     units.push(rootUnit);
     unitNodes.set(file, rootUnit);
     if (syntax.length) { incompleteSyntax = true;continue; }
-    function visit(node: ts.Node): void {
+    function visit(node: TS.Node): void {
       const isType = ts.isClassDeclaration(node) || ts.isInterfaceDeclaration(node) || ts.isEnumDeclaration(node);
       if (callable(node) || isType) {
         const start = node.getStart(file);
         const owner = unitFor(node.parent)!;
-        const declared = "name" in node ? (node.name as ts.Node | undefined)?.getText(file) : undefined;
+        const declared = "name" in node ? (node.name as TS.Node | undefined)?.getText(file) : undefined;
         const assigned = ts.isVariableDeclaration(node.parent) ? node.parent.name.getText(file) : undefined;
         const unit: CMUnit = { id: "unit:" + hash(`${record.path}:${start}:${node.end}`).slice(0, 24), path: record.path,
           name: declared ?? assigned ?? `anonymous@${file.getLineAndCharacterOfPosition(start).line + 1}`,
@@ -182,7 +183,7 @@ export function buildIndex(projectRoot: string, paths?: string[]): CMIndex {
         const compilerSymbol = checker.getSymbolAtLocation(name);
         const owner = unitFor(node)!;
         const nameSpan = span(file, name.getStart(file), name.end);
-        let declaration: ts.Node = node;
+        let declaration: TS.Node = node;
         if (ts.isVariableDeclaration(node) && ts.isVariableDeclarationList(node.parent)) declaration = node.parent.parent;
         const symbol: CMSymbol = { id: "symbol:" + hash(`${record.path}:${nameSpan.start_byte}:${name.text}`).slice(0, 24),
           name: name.text, qualified_name: `${record.path}::${owner.name}::${name.text}`, path: record.path,
@@ -209,7 +210,7 @@ export function buildIndex(projectRoot: string, paths?: string[]): CMIndex {
   for (const filename of names) {
     const file = program.getSourceFile(filename)!;
     if (program.getSyntacticDiagnostics(file).length) continue;
-    function visit(node: ts.Node): void {
+    function visit(node: TS.Node): void {
       if (ts.isIdentifier(node) && !declarationNames.has(node)) {
         let compilerSymbol = checker.getSymbolAtLocation(node);
         if (compilerSymbol && compilerSymbol.flags & ts.SymbolFlags.Alias) {

@@ -131,7 +131,7 @@ export function apply(ctx: Context, config: Config = {}): void {
       async execute(args, exec) { const context = await retrieve(args.query, args.max_bytes, exec.signal, exec, args.detail ?? "focused");remember(context);return context; },
     }));
     ctx.systemPrompt.section({ name: "cm-context-guidance", order: 1350,
-      text: "CM source context is already read through this filesystem and version-observed for guarded edit. Files marked (whole file) are complete: do not re-read them. Listed call sites come from the compiler graph, so a call-site search is unnecessary. When the fix touches one or two places in shown code, edit directly without a separate plan; use cm_retrieve_context or read only for code that is not shown." });
+      text: "CM source context is already read through this filesystem and version-observed for guarded edit. Files marked (whole file) are complete: do not re-read them. Listed call sites come from the compiler graph, so a call-site search is unnecessary. When the fix touches one or two places in shown code, edit directly without a separate plan, but first reason through the behavior the shown code must keep (edge cases, ordering, ties, return shape); use cm_retrieve_context or read only for code that is not shown." });
     if (autoContext) {
       ctx.on("agent/pre-step", async (payload, next) => {
         const decision = await next();

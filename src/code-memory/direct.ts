@@ -2,7 +2,8 @@ import { open, realpath } from "node:fs/promises";
 import { resolve } from "node:path";
 import { CMError, hash, inside, utf8 } from "./source.js";
 import type { RetrievedContext } from "./retrieve.js";
-import ts from "typescript";
+import type TS from "typescript";
+import { ts } from "./ts.js";
 
 export async function directFileContext(root: string, query: string, budget: number, signal?: AbortSignal, scope?: string): Promise<RetrievedContext | undefined> {
   signal?.throwIfAborted();
@@ -24,7 +25,7 @@ export async function directFileContext(root: string, query: string, budget: num
     if (before.size !== after.size || before.mtimeNs !== after.mtimeNs || before.ctimeNs !== after.ctimeNs || BigInt(bytesRead) !== after.size || await realpath(resolve(root,path)) !== actual) throw new CMError("index_outdated","File changed during direct CM read; retry");
     const raw = buffer.subarray(0,bytesRead),source = utf8(raw),digest = hash(raw);
     const syntax = ts.createSourceFile(path,source,ts.ScriptTarget.Latest,true);let external = false;
-    const visit = (node: ts.Node) => {
+    const visit = (node: TS.Node) => {
       if (ts.isImportDeclaration(node) || ts.isImportEqualsDeclaration(node) || ts.isExportDeclaration(node) && node.moduleSpecifier ||
         ts.isCallExpression(node) && (node.expression.kind === ts.SyntaxKind.ImportKeyword || ts.isIdentifier(node.expression) && node.expression.text === "require")) external = true;
       ts.forEachChild(node,visit);

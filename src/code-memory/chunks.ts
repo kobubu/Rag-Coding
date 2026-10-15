@@ -1,4 +1,5 @@
-import ts from "typescript";
+import type TS from "typescript";
+import { ts } from "./ts.js";
 import { byteOffsets, CMError, hash } from "./source.js";
 import type { CMIndex, CMUnit, SourceSpan } from "./types.js";
 
@@ -49,7 +50,7 @@ export function projectChunks(index: CMIndex, strategy: ChunkingStrategy = "unit
     const offsets = byteOffsets(file.source);
     const source = ts.createSourceFile(file.path, file.source, ts.ScriptTarget.ES2022, true);
     const byRange = new Map((byFile.get(file.path) ?? []).map(unit => [`${unit.span.start_byte}:${unit.span.end_byte}`, unit]));
-    const visit = (node: ts.Node) => {
+    const visit = (node: TS.Node) => {
       if (ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isArrowFunction(node) ||
           ts.isMethodDeclaration(node) || ts.isConstructorDeclaration(node) || ts.isGetAccessorDeclaration(node) || ts.isSetAccessorDeclaration(node)) {
         const unit = byRange.get(`${offsets[node.getStart(source)]}:${offsets[node.end]}`);
