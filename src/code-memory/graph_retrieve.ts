@@ -2,17 +2,20 @@ import { bounded } from "./query.js";
 import { CMError } from "./source.js";
 import { LocalVectors, sourceSlice, words } from "./vector.js";
 import { knowledge } from "./knowledge.js";
+import { focusQuery } from "./focus.js";
 import type { CMIndex, CMUnit, SourceSpan } from "./types.js";
 import type { RetrievedContext } from "./retrieve.js";
 
 export type RetrievalPolicy = "hybrid" | "graph" | "adaptive";
 export type RetrievalDetail = "focused" | "expanded";
 const STOP = new Set(words("the and for from with that this code function project preserve unrelated behavior interfaces repair apply restore correctly existing when into must return locate supplied source available checks results"));
-const escaped = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const WHOLE_FILE_BYTES = 3000;
+const escaped =(text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 export async function retrieveGraph(index: CMIndex, vectors: LocalVectors, query: string, maxBytes = 6000, signal?: AbortSignal,
   policy: "graph" | "adaptive" = "adaptive", detail: RetrievalDetail = "focused"): Promise<RetrievedContext> {
   if (!query.trim() || query.length > 16000) throw new CMError("invalid_argument", "query must contain 1..16000 characters");
+  query = focusQuery(query);
   const budget = bounded(maxBytes, 6000, 32000, "max_bytes"), kb = knowledge(index);
   const pathHints = [...query.matchAll(/[\w./-]+\.(?:[cm]?[jt]sx?)/g)].map(match => match[0]);
   const matchesPath = (unit: CMUnit) => pathHints.some(path => unit.path === path || unit.path.endsWith("/" + path));
@@ -76,6 +79,18 @@ export async function retrieveGraph(index: CMIndex, vectors: LocalVectors, query
         shown.add(id);const target = kb.owner(id);if (target && depth < (detail === "expanded" ? 2 : 1)) queue.push({ unit: target, depth: depth + 1 });
       } else { missing.add(id);omissions++;add(symbol.path, prefix(symbol.path, symbol.declaration_span), "signature"); }
     }
+  }
+  // A fragment of a short module invites a confirming read of the whole file; show such files whole while the budget allows.
+  for (const path of [...new Set(parts.map(part => part.path))]) {
+    const raw = Buffer.from(index.files.find(file => file.path === path)!.source, "utf8"), current = parts.filter(part => part.path === path);
+    const shownBytes = current.reduce((sum, part) => sum + part.span.end_byte - part.span.start_byte, 0);
+    if (raw.length > WHOLE_FILE_BYTES || shownBytes === raw.length || bytes - shownBytes + raw.length > budget) continue;
+    const whole = { path, whole: true as const, reason: current.some(part => part.reason === "match") ? "match" as const : "dependency" as const, text: raw.toString("utf8"),
+      span: { ...current[0]!.span, start_byte: 0, end_byte: raw.length, line_start: 1, line_end: raw.subarray(0, Math.max(0, raw.length - 1)).toString("utf8").split("\n").length } };
+    parts.splice(parts.indexOf(current[0]!), 1, whole);
+    for (const part of current.slice(1)) parts.splice(parts.indexOf(part), 1);
+    bytes += raw.length - shownBytes;
+    for (const id of [...missing]) if (kb.symbols.get(id)!.path === path) { missing.delete(id);shown.add(id);omissions--; }
   }
   signal?.throwIfAborted();
   const unvisited = new Set(queue.filter(item => !visited.has(item.unit.id)).map(item => item.unit.id)).size;

@@ -21,6 +21,7 @@
     "harness:graph": "node dist/scripts/run_graph_ab.js",
     "harness:ann": "node dist/scripts/run_ann_ab.js",
     "harness:speed": "node dist/scripts/run_speed_ab.js",
+    "harness:efficiency": "node dist/scripts/run_efficiency_ab.js",
     "verify": "npm run build && npm run check && npm test && npm run probe",
     "cm:vectors": "node dist/src/code-memory/vector_cli.js",
     "cm:search": "node dist/src/code-memory/search_cli.js",

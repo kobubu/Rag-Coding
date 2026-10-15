@@ -6,7 +6,7 @@ import type { CMChunk } from "./chunks.js";
 import { retrieveGraph } from "./graph_retrieve.js";
 import type { RetrievalDetail, RetrievalPolicy } from "./graph_retrieve.js";
 
-type ContextPart = { path: string; span: SourceSpan; text: string; reason: "match" | "dependency" | "signature" };
+type ContextPart = { path: string; span: SourceSpan; text: string; reason: "match" | "dependency" | "signature"; whole?: true };
 export type RetrievedContext = { snapshot_id: string; channels: string[]; bytes_used: number; parts: ContextPart[]; omissions: number; complete: false;
   retrieval?: { policy: RetrievalPolicy; route: "named" | "discovery"; detail: RetrievalDetail; roots: number; graph_nodes: number; bindings_shown: number; bindings_omitted: number; dense_search: boolean }; notes?: string[] };
 const STOP = new Set(words("a an the of to in for from with and or is are be should must when then this that fix bug regression ensure preserve behavior existing code apply use please task change project"));
@@ -77,7 +77,9 @@ export async function retrieveContext(index: CMIndex, vectors: LocalVectors, que
 }
 
 export function renderContext(context: RetrievedContext): string {
-  return "CM context (partial; source version checked):\n" + (context.retrieval ? `Route: ${context.retrieval.policy}/${context.retrieval.route}; bindings shown ${context.retrieval.bindings_shown}, omitted ${context.retrieval.bindings_omitted}.\n` : "") + context.parts.map((part) => `${part.path}:${part.span.line_start}-${part.span.line_end}\n${part.text}`).join("\n\n") +
+  // Say exactly what is shown: a vague "partial, read if necessary" makes models re-read files they already have.
+  return "CM context (current saved source, version checked and registered as read for edit):\n" + (context.retrieval ? `Route: ${context.retrieval.policy}/${context.retrieval.route}; bindings shown ${context.retrieval.bindings_shown}, omitted ${context.retrieval.bindings_omitted}.\n` : "") +
+    context.parts.map((part) => `${part.path}:${part.span.line_start}-${part.span.line_end}${part.whole ? " (whole file)" : ""}\n${part.text}`).join("\n\n") +
     (context.notes?.length ? "\n" + context.notes.join("\n") : "") +
-    `\n${context.omissions} additional spans omitted. Request more context or read if necessary.`;
+    (context.omissions ? `\n${context.omissions} additional spans omitted. Request more context or read if necessary.` : "\nNo resolved bindings of the shown definitions were omitted; other code is not shown.");
 }

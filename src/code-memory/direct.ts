@@ -31,7 +31,7 @@ export async function directFileContext(root: string, query: string, budget: num
     };
     visit(syntax);if (external) return;
     return {snapshot_id:"file:"+digest,channels:["current-saved-file"],bytes_used:raw.length,
-      parts:[{path,reason:"match",span:{file_version_id:"blob:"+digest,start_byte:0,end_byte:raw.length,line_start:1,line_end:source.slice(0,-1).split("\n").length},text:source}],
+      parts:[{path,whole:true,reason:"match",span:{file_version_id:"blob:"+digest,start_byte:0,end_byte:raw.length,line_start:1,line_end:source.slice(0,-1).split("\n").length},text:source}],
       omissions:0,complete:false,retrieval:{policy:"adaptive",route:"named",detail:"focused",roots:1,graph_nodes:0,bindings_shown:0,bindings_omitted:0,dense_search:false},
       notes:["Current saved file, including local definitions. External compiler dependencies are not expanded; use expanded context when needed."]};
   } finally {await file.close();}

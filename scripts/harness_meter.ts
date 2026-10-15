@@ -16,9 +16,9 @@ export function apply(ctx: Context, config: MeterConfig): void {
     const call = ++attempts;
     if (call > (config.maxCalls ?? 12)) throw new Error("AB model-call limit reached");
     const cmTools = (options.tools ?? []).filter((tool) => tool.name.startsWith("cm_")).map((tool) => tool.name);
-    const cmContext = JSON.stringify(options.messages).includes("CM context (partial; source version checked)");
+    const cmContext = /CM context \((?:partial; source version checked|current saved source, version checked and registered as read for edit)\)/.test(JSON.stringify(options.messages));
     const messages = JSON.stringify(options.messages), requestBytes = Buffer.byteLength(messages, "utf8"), schemaBytes = Buffer.byteLength(JSON.stringify(options.tools ?? []), "utf8");
-    const cmOccurrences = [...messages.matchAll(/CM context \(partial; source version checked\)/g)].length;
+    const cmOccurrences = [...messages.matchAll(/CM context \((?:partial; source version checked|current saved source, version checked and registered as read for edit)\)/g)].length;
     if (call === 1 && config.requireCMContext && (!cmTools.includes("cm_retrieve_context") || !cmContext)) {
       throw new Error("AB refuses a paid call: compact CM tool/context did not activate");
     }
