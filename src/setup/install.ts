@@ -108,7 +108,9 @@ export async function install(options: SetupOptions) {
     const patches: object[] = [{ insert: [{ id: "code-memory", name: pathToFileURL(join(PACKAGE_ROOT, "dist/src/harness/plugin.js")).href,
       config: { ...config, mode: "compact", autoContext: true, maxContextBytes: 6000 } }] }];
     if (options.harnessModel) {
-      patches.push({ id: "llm-pi-ai", config: { providers: { "cm-openai": { apiKeyEnv: "OPENAI_API_KEY", api: "openai-responses", baseURL: "https://api.openai.com/v1",
+      // Harness keys the OpenAI prompt cache by session id, so every new session re-writes the same system/tool prefix.
+      // Without a key the provider routes by prefix, and later sessions in the same project read it from cache.
+      patches.push({ id: "llm-pi-ai", config: { providers: { "cm-openai": { apiKeyEnv: "OPENAI_API_KEY", api: "openai-responses", baseURL: "https://api.openai.com/v1", cacheRetention: "none",
         models: [{ id: options.harnessModel, name: options.harnessModel, contextWindow: 1050000, maxTokens: 8192, input: ["text"], reasoningEfforts: { low: "low" } }] } } } },
       { id: "agent-default-model", config: { provider: "cm-openai", model: options.harnessModel, reasoningEffort: "low" } });
     }

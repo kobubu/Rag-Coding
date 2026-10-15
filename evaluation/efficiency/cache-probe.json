@@ -1,0 +1,85 @@
+{
+  "date": "2026-10-15",
+  "model": "gpt-6-luna",
+  "question": "Does the first call of a new Harness session reuse the provider prompt cache?",
+  "direct_api": [
+    {
+      "call": "A1 key=a",
+      "cached": 0
+    },
+    {
+      "call": "A2 same key, same workdir",
+      "cached": 1115,
+      "input": 1200
+    },
+    {
+      "call": "B1 new key, same prefix",
+      "cached": 0
+    },
+    {
+      "call": "C2 shared key, only workdir differs",
+      "cached": 0
+    },
+    {
+      "call": "C3 shared key, same workdir",
+      "cached": 1115
+    },
+    {
+      "call": "N2 no key, same prefix, new session",
+      "cached": 1116,
+      "input": 1198
+    },
+    {
+      "call": "S2 no key, second call within session",
+      "cached": 2085,
+      "input": 2174
+    }
+  ],
+  "harness_sessions_same_project_dir": [
+    {
+      "session": "def1",
+      "cache_key": "harness session id (default)",
+      "calls": 3,
+      "call1": {
+        "cache_read": 0,
+        "cache_write": 2690
+      },
+      "session_cache_write": 2884,
+      "session_total_tokens": 8595
+    },
+    {
+      "session": "def2",
+      "cache_key": "harness session id (default)",
+      "calls": 2,
+      "call1": {
+        "cache_read": 0,
+        "cache_write": 2690
+      },
+      "session_cache_write": 2835,
+      "session_total_tokens": 5682
+    },
+    {
+      "session": "none1",
+      "cache_key": "none (cacheRetention: none)",
+      "calls": 2,
+      "call1": {
+        "cache_read": 0,
+        "cache_write": 2690
+      },
+      "session_cache_write": 2838,
+      "session_total_tokens": 5688
+    },
+    {
+      "session": "none2",
+      "cache_key": "none (cacheRetention: none)",
+      "calls": 2,
+      "call1": {
+        "cache_read": 2690,
+        "cache_write": 0
+      },
+      "session_cache_write": 148,
+      "session_total_tokens": 5691
+    }
+  ],
+  "finding": "Harness passes the session id as OpenAI prompt_cache_key and puts the working directory in the system prompt; either one prevents cross-session reuse. With cacheRetention none and a fixed project directory a new session read 2690 of 2693 first-call tokens from cache."
+}

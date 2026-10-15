@@ -78,7 +78,7 @@ if (Test-Path -LiteralPath $cmSeedPointer -PathType Leaf) {
 $cmEntries = @(
     @{ id = 'session-title-llm'; disabled = $true },
     @{ id = 'llm-pi-ai'; config = @{ providers = @{ 'cm-user-openai' = @{
-        apiKeyEnv = 'CM_AB_API_KEY'; api = 'openai-responses'; baseURL = 'https://api.openai.com/v1'
+        apiKeyEnv = 'CM_AB_API_KEY'; api = 'openai-responses'; baseURL = 'https://api.openai.com/v1'; cacheRetention = 'none'
         models = @(@{ id = $Model; name = $Model; contextWindow = 1050000; maxTokens = 8192; input = @('text'); reasoningEfforts = @{ low = 'low' } })
     } } } },
     @{ id = 'agent-default-model'; config = @{ provider = 'cm-user-openai'; model = $Model; reasoningEffort = 'low' } },
