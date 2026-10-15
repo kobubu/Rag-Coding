@@ -7,6 +7,7 @@ import { buildIndex } from "../src/code-memory/indexer.js";
 import { LocalVectors } from "../src/code-memory/vector.js";
 import { retrieveContext, renderContext } from "../src/code-memory/retrieve.js";
 import { focusQuery } from "../src/code-memory/focus.js";
+import { rereadPointer } from "../src/harness/plugin.js";
 import { knowledge } from "../src/code-memory/knowledge.js";
 
 test("adaptive exact route resolves duplicate names by path and compiler-bound dependencies without embeddings", async () => {
@@ -45,4 +46,21 @@ test("retrieval ignores generic agent instructions and shows small files whole",
   assert(renderContext(small).includes("No resolved bindings"));
   const large = await retrieveContext(index, vectors, "Change `quota2` in `large.js`", 6000, undefined, { policy: "adaptive" });
   assert(large.parts.every(part => !part.whole));assert(!large.parts.some(part => part.text.includes("x".repeat(100))));
+});
+
+test("callers come from the compiler graph and an unchanged whole file is not re-sent on its first re-read", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cm-graph-"));
+  writeFileSync(join(root, "wallet.js"), "export function sync(w){return w+1;}\n");
+  writeFileSync(join(root, "main.js"), "import {sync} from './wallet.js';\nexport function boot(){return sync(1);}\n");
+  const index = buildIndex(root), vectors = new LocalVectors({ directory: root, modelCache: root }, async () => { throw Error("Unexpected embedding call"); });
+  const context = await retrieveContext(index, vectors, "Fix `sync` in `wallet.js`", 3000, undefined, { policy: "adaptive" });
+  assert(context.notes!.some(note => note === "Call sites of sync: boot (main.js:2)."));
+  const part = context.parts.find(item => item.path === "wallet.js")!;assert.equal(part.whole, true);
+  const delivered = new Map([[join(root, "wallet.js"), { path: "wallet.js", version: part.span.file_version_id, lines: part.span.line_end }]]);
+  assert.equal(await rereadPointer(delivered, root, "grep", { file_path: "wallet.js" }), undefined);
+  assert.match((await rereadPointer(delivered, root, "read", { file_path: "wallet.js", offset: 1 }))!.text, /unchanged since the CM context/);
+  assert.equal(await rereadPointer(delivered, root, "read", { file_path: "wallet.js" }), undefined);
+  const changed = new Map([[join(root, "wallet.js"), { path: "wallet.js", version: part.span.file_version_id, lines: 1 }]]);
+  writeFileSync(join(root, "wallet.js"), "export function sync(w){return w+2;}\n");
+  assert.equal(await rereadPointer(changed, root, "read", { file_path: "wallet.js" }), undefined);
 });

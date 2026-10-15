@@ -9,7 +9,7 @@ import type { RetrievedContext } from "./retrieve.js";
 export type RetrievalPolicy = "hybrid" | "graph" | "adaptive";
 export type RetrievalDetail = "focused" | "expanded";
 const STOP = new Set(words("the and for from with that this code function project preserve unrelated behavior interfaces repair apply restore correctly existing when into must return locate supplied source available checks results"));
-const WHOLE_FILE_BYTES = 3000;
+const WHOLE_FILE_BYTES = 3000, MAX_CALLERS = 6;
 const escaped =(text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 export async function retrieveGraph(index: CMIndex, vectors: LocalVectors, query: string, maxBytes = 6000, signal?: AbortSignal,
@@ -92,10 +92,23 @@ export async function retrieveGraph(index: CMIndex, vectors: LocalVectors, query
     bytes += raw.length - shownBytes;
     for (const id of [...missing]) if (kb.symbols.get(id)!.path === path) { missing.delete(id);shown.add(id);omissions--; }
   }
+  // Agents grep for call sites right after reading a definition; the compiler graph already knows them.
+  // Raw call relations keep module-level call sites that the function-level graph drops.
+  const callers = selected.filter(unit => !unit.name.startsWith("anonymous@")).map(unit => {
+    const targets = new Set([unit.id, ...index.symbols.filter(symbol => symbol.path === unit.path && symbol.name === unit.name).map(symbol => symbol.id)]), sites = new Map<string, string>();
+    for (const relation of index.relations) {
+      if (relation.predicate !== "calls" || !targets.has(relation.to_id)) continue;
+      const path = kb.units.get(relation.from_id)?.path ?? kb.symbols.get(relation.from_id)?.path;if (!path) continue;
+      const where = `${path}:${relation.evidence.line_start}`, named = kb.owner(relation.from_id);
+      sites.set(where, named && !named.name.startsWith("anonymous@") && named.id !== unit.id ? `${named.name} (${where})` : where);
+    }
+    const listed = [...sites].sort(([a], [b]) => a.localeCompare(b, "en", { numeric: true })).map(([, text]) => text);
+    return `Call sites of ${unit.name}: ${listed.length ? listed.slice(0, MAX_CALLERS).join(", ") + (listed.length > MAX_CALLERS ? `, +${listed.length - MAX_CALLERS} more` : "") : "none in indexed source"}.`;
+  });
   signal?.throwIfAborted();
   const unvisited = new Set(queue.filter(item => !visited.has(item.unit.id)).map(item => item.unit.id)).size;
   omissions += unvisited;
   return { snapshot_id: index.snapshot_id, channels: ["compiler-knowledge", exact ? "named-anchor" : "lexical-idf", ...(useDense ? ["local-dense-vector"] : []), "bounded-dependency-closure"], bytes_used: bytes, parts, omissions, complete: false,
     retrieval: { policy, route: exact ? "named" : "discovery", detail, roots: selected.length, graph_nodes: visited.size, bindings_shown: shown.size, bindings_omitted: missing.size, dense_search: useDense },
-    notes: [...(missing.size ? ["Some bindings have only source prefixes; expand context or read their declarations when their values matter."] : []), ...(unvisited ? ["Dependency traversal stopped at its node budget; transitive completeness is not established."] : [])] };
+    notes: [...callers, ...(missing.size ? ["Some bindings have only source prefixes; expand context or read their declarations when their values matter."] : []), ...(unvisited ? ["Dependency traversal stopped at its node budget; transitive completeness is not established."] : [])] };
 }

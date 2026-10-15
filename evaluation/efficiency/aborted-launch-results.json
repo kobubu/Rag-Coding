@@ -1,0 +1,469 @@
+{
+  "protocol": {
+    "format": "cm-efficiency-1",
+    "created_at": "2026-10-15T18:43:20.589Z",
+    "model": "gpt-6-luna",
+    "reasoning_effort": "low",
+    "arms": [
+      "none",
+      "cm_base",
+      "cm_next"
+    ],
+    "repetitions": 2,
+    "cases_hash": "a0b2c864597d1d09ea20967c0e08be2bd75b643ba759bfcbddc812252dc1de3a",
+    "corpus_hash": "430d2380f6bb073436b52df5be264c8ceefe4ebb2ec81b857b55980f3c072261",
+    "source_revision": "17007329bd381384f494278f2206a70727f0e723",
+    "implementation": [
+      {
+        "path": "scripts/efficiency_ab.ts",
+        "sha256": "92c08a92f0de4687769b7f3bcd5c264c245d5c0c81f315c7822f7e4bc9f4115c"
+      },
+      {
+        "path": "dist/scripts/efficiency_ab.js",
+        "sha256": "58b7cbd32a1713bd110f4ec3976188252ed617c867afc71d243bd81454749fd2"
+      },
+      {
+        "path": "scripts/harness_ab.ts",
+        "sha256": "935ef65763fef5fbdaaea75c26fd306c1339123ab4e253c074a4b2b5d83935b0"
+      },
+      {
+        "path": "dist/scripts/harness_ab.js",
+        "sha256": "06395aa2ffb5b6afd8670fffb478bd379785a288b3ebebb5eee181a3666c02f9"
+      },
+      {
+        "path": "scripts/harness_meter.ts",
+        "sha256": "69e671cbca114f58dcf4160965120f736c48019340428da12d4ea32a0d3c96fa"
+      },
+      {
+        "path": "dist/scripts/harness_meter.js",
+        "sha256": "55aca11ccba01fba36202ad5a37c420246d8a519d8dc261a030ae14a3c23679a"
+      },
+      {
+        "path": "scripts/lib.ts",
+        "sha256": "2c08b0809a3a0e1a06b44166429b35b51fb76c135d3af982c6a2785dcf34acd9"
+      },
+      {
+        "path": "dist/scripts/lib.js",
+        "sha256": "a7be953e3b1cf6a812e3b8185813548f92877b8fadb28bdb0a04d7e2231ac4e9"
+      },
+      {
+        "path": "scripts/project_checks_plugin.ts",
+        "sha256": "1728a4a14bc0a96c299b7821b6b6027301be72a3287429a25d085d8cce232e0c"
+      },
+      {
+        "path": "dist/scripts/project_checks_plugin.js",
+        "sha256": "9c6f221058aa1236184201a7f9873299bf5ab45fe29e5e4aa2e8aa06d0a0da22"
+      },
+      {
+        "path": "scripts/speed_checks.ts",
+        "sha256": "db00900dd8e53a09a345811f2e0ddf4ad581ea92682d54e6a55ab79085f15345"
+      },
+      {
+        "path": "dist/scripts/speed_checks.js",
+        "sha256": "8268f0e2e52a5ff258d0ead7a5ec9d544f24d80a414021cf1069b8b179d2e8c5"
+      },
+      {
+        "path": "src/code-memory/ann_cli.ts",
+        "sha256": "ec832ee3379eec2d3da3fe630574e4c921017e42f53f836e26ed9905ee782b11"
+      },
+      {
+        "path": "dist/src/code-memory/ann_cli.js",
+        "sha256": "8908efa202deee2339092015d4efd2d24d8ff5fabf1dfc80611eebf205fe845a"
+      },
+      {
+        "path": "src/code-memory/chunks.ts",
+        "sha256": "1661142e32222431c32de0d62b38e27df4c4094c5b3db297d543a208d596f1f0"
+      },
+      {
+        "path": "dist/src/code-memory/chunks.js",
+        "sha256": "82ae9666336b41b9f1c3c148eca28fc1b89dd9f3392b985f3fb43cbadc4e159c"
+      },
+      {
+        "path": "src/code-memory/cli.ts",
+        "sha256": "1e21966c1127fe3bdfa47926dbad922bf3dab9d822c44ecd9772a09a040708dd"
+      },
+      {
+        "path": "dist/src/code-memory/cli.js",
+        "sha256": "41ed2c37fb738f2010be9fece7e0d987f607d177ded0fb69d513e7af6bf25ab8"
+      },
+      {
+        "path": "src/code-memory/direct.ts",
+        "sha256": "cd37711fd83e7a0624cd0dffdd46b84bc67d9786297a2ed56f204124430b6a17"
+      },
+      {
+        "path": "dist/src/code-memory/direct.js",
+        "sha256": "0ae196827b575d4f0e4cc480f2e1260d357684ab3a59d604fdc6c2f6f84d8407"
+      },
+      {
+        "path": "src/code-memory/focus.ts",
+        "sha256": "d1a824ef2aa5036ccb9dc1a5b2728f3b6a55e71ecc14251f38aeadbbc596b7d0"
+      },
+      {
+        "path": "dist/src/code-memory/focus.js",
+        "sha256": "4c558978b9edd227f8f3e8e8b8b54a4e175526c32a5d7fdd91b878292a8be7a2"
+      },
+      {
+        "path": "src/code-memory/graph_retrieve.ts",
+        "sha256": "940484cdddb0583fc0b53e6a645d226c3dc20189e7dacb6a200016f7674802e4"
+      },
+      {
+        "path": "dist/src/code-memory/graph_retrieve.js",
+        "sha256": "07e8889659105465042dab91d768841c8caec169f74baacf8f3ecc55a63b1f8e"
+      },
+      {
+        "path": "src/code-memory/indexer.ts",
+        "sha256": "5a96ec81e955c03a399ebb6b2862a203cf2c1100d0f0b4ee3d3bbd937aa95382"
+      },
+      {
+        "path": "dist/src/code-memory/indexer.js",
+        "sha256": "952817eb5f00d5cf1c5b9159184d4a8fe433bef68284688ae5ab33ae33192a0a"
+      },
+      {
+        "path": "src/code-memory/knowledge.ts",
+        "sha256": "88ae9543ec08c9e3ca299f09aa4e416fcb5c3f01e0878095ba20c744dbe6903c"
+      },
+      {
+        "path": "dist/src/code-memory/knowledge.js",
+        "sha256": "7fff92a925752025bcfc9e46af851c6cfe0aeadb6e3a55663ed09124bae4aee8"
+      },
+      {
+        "path": "src/code-memory/live.ts",
+        "sha256": "df19b51ede03cc723008ed1bb7767959b08720c714466a3946aaea43ac4df717"
+      },
+      {
+        "path": "dist/src/code-memory/live.js",
+        "sha256": "0a6f5142c26d8908089bca15fb253d6a73ae8e07f9490aeb23da93339daa7372"
+      },
+      {
+        "path": "src/code-memory/minilm.ts",
+        "sha256": "0fe815aadfa2ce5a1b1856ff9ce54ea374f767b332733d617955115bd2c5f050"
+      },
+      {
+        "path": "dist/src/code-memory/minilm.js",
+        "sha256": "864594193f0246fd6564712907b6c3e73f81efcb06161b3b23e2950dea0a0b9f"
+      },
+      {
+        "path": "src/code-memory/query.ts",
+        "sha256": "380478b4914fc633ee58193d428a91509d566da52e9889640d91b07662d01bc3"
+      },
+      {
+        "path": "dist/src/code-memory/query.js",
+        "sha256": "177fd3e99389992e248df7dccf44ef1b8c52538ccf918f2fb4ed0866b27c51cb"
+      },
+      {
+        "path": "src/code-memory/retrieve.ts",
+        "sha256": "7915254c3d0e229d54069059464ef6d937a64285d1dc479877f888637522c40a"
+      },
+      {
+        "path": "dist/src/code-memory/retrieve.js",
+        "sha256": "8ada3e936954fff6b30b4437c998ccc532fe1c9e25210c44fa0431b6afe8d059"
+      },
+      {
+        "path": "src/code-memory/search_cli.ts",
+        "sha256": "feb51a21b7eae020f4784d3b3ab92950c619a69ec9070d38101f6aeab95ddedf"
+      },
+      {
+        "path": "dist/src/code-memory/search_cli.js",
+        "sha256": "c37522858ec00cda295127758a2a43bebfab038de7934e60f0df72787fa0981d"
+      },
+      {
+        "path": "src/code-memory/source.ts",
+        "sha256": "b4be9f879f9c5722b1a7ba875e0dbb01f44c6a1bc72fd179453d2ab6f900a524"
+      },
+      {
+        "path": "dist/src/code-memory/source.js",
+        "sha256": "b93367934c21b616e5a4e16a58812f90b9d85652083666a6b4804c197eb9da6c"
+      },
+      {
+        "path": "src/code-memory/store.ts",
+        "sha256": "552c6d3ea209a5cdbbfd41d5a14fcd41866728d838f62ae126e1f8f66015e396"
+      },
+      {
+        "path": "dist/src/code-memory/store.js",
+        "sha256": "a8d307eea60724fb0307471062f86b117be1c40468fb1c8414916e78e8328a58"
+      },
+      {
+        "path": "src/code-memory/types.ts",
+        "sha256": "ad337bc6337850714843fda6ea2044683a48feb3465e4c0bdaad08d39617bc86"
+      },
+      {
+        "path": "dist/src/code-memory/types.js",
+        "sha256": "05c41b0ce4ba21f6ec0f485502ef2cd15de86b3c992e97965ce907b453a1baa6"
+      },
+      {
+        "path": "src/code-memory/vector.ts",
+        "sha256": "b9dad116c7abb8d27cf8195aff68f6bc17c0cb41244ef141617d056e7c4b5d82"
+      },
+      {
+        "path": "dist/src/code-memory/vector.js",
+        "sha256": "b1824b10f1269bf19263ba6ad434d199067ae15c1603e3a4bada7b0477aa5e76"
+      },
+      {
+        "path": "src/code-memory/vector_cli.ts",
+        "sha256": "a9bc4345eaab4606a90c379829578ccf2ab6dc3e19ca9f346d8e29ec445a97fb"
+      },
+      {
+        "path": "dist/src/code-memory/vector_cli.js",
+        "sha256": "50fe2e32e92f528265c4997fb0692b1948165fdaee071e1483f7e8a193824c33"
+      },
+      {
+        "path": "src/harness/plugin.ts",
+        "sha256": "82e6dc1efd1966b36f03ad377e34c8b0d55112331d3af82781881f3887cfe678"
+      },
+      {
+        "path": "dist/src/harness/plugin.js",
+        "sha256": "96ca742529de3c38b83bbc2ebd496eb7f57ee9a215d5abeddb6b8d1e829ab8e8"
+      },
+      {
+        "path": "src/local-agent/cli.ts",
+        "sha256": "d32e478b42556fdd47551579107a7a965b5419e555912acf9d396084c682267a"
+      },
+      {
+        "path": "dist/src/local-agent/cli.js",
+        "sha256": "cbe628816478a47292ccba5cc0a59cc1817135878bc18dd3fb617842cf53bfc3"
+      },
+      {
+        "path": "src/local-agent/config.ts",
+        "sha256": "1a3d5fd94f5be46280957c1dce12384442ad3df997c323f534a342560a8d3c0b"
+      },
+      {
+        "path": "dist/src/local-agent/config.js",
+        "sha256": "503f5b7b88cf844f951ef8510b0f270a1c4e1eb77425f4a4c94bb3eea248bd2c"
+      },
+      {
+        "path": "src/local-agent/http.ts",
+        "sha256": "7493fa9366c9eef60f2bb71f1181a152ad62c3a51dd5d45b666899e412f5aab5"
+      },
+      {
+        "path": "dist/src/local-agent/http.js",
+        "sha256": "d6ef6cbf2e7d7dd9216c35401e27d8400f2dc899491d7f06a7c53478519571df"
+      },
+      {
+        "path": "src/local-agent/map.ts",
+        "sha256": "82e9b7b6139e93ff3739dd97c62935ee067dfe7c3ab5c5fb510f7b61168a3d86"
+      },
+      {
+        "path": "dist/src/local-agent/map.js",
+        "sha256": "fc10d41dc66d1ea94f15f3fe74a354c3d75e77882e1b487f9aa671492b3fcb2b"
+      },
+      {
+        "path": "src/local-agent/models.ts",
+        "sha256": "01ad788a233ae5cdcf1b72a2ce5b70cbd39d8076818ed58e09c1aedf17a5a33f"
+      },
+      {
+        "path": "dist/src/local-agent/models.js",
+        "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      {
+        "path": "src/local-agent/service.ts",
+        "sha256": "5b4940374e90de41b09cd3680266325d3ffca980146d6c61d16a8230263ad900"
+      },
+      {
+        "path": "dist/src/local-agent/service.js",
+        "sha256": "4cfed3f33c63e776b5324e535f6ba480a404ae230858a06f8b5a53bf637fe5fa"
+      },
+      {
+        "path": "src/mcp/cli.ts",
+        "sha256": "fedb7f353ff0b1bba7e8fa3a62f69fb12f761e363de0d6452d99505ef5b9d71a"
+      },
+      {
+        "path": "dist/src/mcp/cli.js",
+        "sha256": "7ec9663e90d36962c57590fd294e45b274ecab1086d45fc54e4943b165d327c6"
+      },
+      {
+        "path": "src/mcp/server.ts",
+        "sha256": "0d746f39c15c822cb88019ac74d1f5a09b73c9cebf2c156c4580bb45cfd0c240"
+      },
+      {
+        "path": "dist/src/mcp/server.js",
+        "sha256": "d44218ba3e2b1374c0d3fdf7690c2639a98a81c987a9d4baca80e081f3e8a845"
+      },
+      {
+        "path": "src/setup/claude.ts",
+        "sha256": "c0b2b832ba823290e70e17dd7f5455ffc44fe13d32975ef3b88fbe0f7aca7ecc"
+      },
+      {
+        "path": "dist/src/setup/claude.js",
+        "sha256": "297fcffbb391421557d7f1ac85caa2df28f48432acfc7cb18ad500d607ab9db0"
+      },
+      {
+        "path": "src/setup/cli.ts",
+        "sha256": "6331feb2d2ea56c58af985c4d667eb2c80a84b396cf182afaa8b06f4e73df29f"
+      },
+      {
+        "path": "dist/src/setup/cli.js",
+        "sha256": "345921d8a24cf5695ec4ec9f227d4398ded300350462d3f4f6475c7687057501"
+      },
+      {
+        "path": "src/setup/config.ts",
+        "sha256": "2f962ae025c5896235ed3ba580f524726119c5ef335e0c608155a102e4e932df"
+      },
+      {
+        "path": "dist/src/setup/config.js",
+        "sha256": "f38c59a9dedf4c2baae577181111616be5fc46a1d38d45b8b9766198e02d6a2a"
+      },
+      {
+        "path": "src/setup/files.ts",
+        "sha256": "184ced0192f36df23f15a41c7999c96ee3ce7a676ca3dff88bb56ed16033a99d"
+      },
+      {
+        "path": "dist/src/setup/files.js",
+        "sha256": "ee4283af8d51f199e9bd2435cdc36f365e7a9d65d08c580d6b034a2945e650df"
+      },
+      {
+        "path": "src/setup/install.ts",
+        "sha256": "635c407a15a505c408fbabe28cea8f744bf995457445f4902216119e2113bb84"
+      },
+      {
+        "path": "dist/src/setup/install.js",
+        "sha256": "38b63eb9180f6b67bb93d387c634f1c77d3c8f6cd8171c3c11864e501051ffe6"
+      },
+      {
+        "path": "src/version.ts",
+        "sha256": "a84fdcc97f67f7ce5da3ba27e03ffc0ce0e1dad06081d7f5f68a51dfb8f7f07b"
+      },
+      {
+        "path": "dist/src/version.js",
+        "sha256": "a84fdcc97f67f7ce5da3ba27e03ffc0ce0e1dad06081d7f5f68a51dfb8f7f07b"
+      }
+    ],
+    "base_plugin_sha256": "c27820b627fd1ea2612ef3ee55321f7e7fd387da3ca10c6bd3913969b40cc8f3",
+    "runtime": {
+      "node": "v22.22.0",
+      "harness_entry_sha256": "1a03dee18683483ff6a1b27b2a1e650230da6bcca9a0f55f7d81b3308c3f307f"
+    },
+    "preparation_sha256": "dcdff6060b72331210c27ac2529c225a94cb8f53c4c63f9488c8ff9008ef494e",
+    "max_model_calls": 12,
+    "max_run_seconds": 240,
+    "max_estimated_usd": 2,
+    "context_source_bytes": 6000,
+    "prompt_suffix": " Apply the change only in this isolated workspace. Preserve unrelated behavior and interfaces. Use supplied source when sufficient; otherwise inspect code. The same project_checks smoke is available to all variants; separate independent final checks evaluate your patch. Finish with a brief summary.",
+    "arms_config": {
+      "none": "No CM",
+      "cm_base": "Frozen CM 0.8.1 build, adaptive/exact, autoUpdate on demand",
+      "cm_next": "Current CM build, same configuration"
+    },
+    "price": {
+      "input": 0.1,
+      "cache_read": 0.01,
+      "cache_write": 0.125,
+      "output": 0.5,
+      "per": 1000000,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-luna"
+    }
+  },
+  "estimated_cost_usd": 0.00056477,
+  "results": [
+    {
+      "run_id": "run-6b3797943e2cd5df",
+      "task": "circle-contact",
+      "category": "named-with-helper",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 9866.996596,
+      "copy_ms": 24.02780400000006,
+      "independent_check_ms": 49.08905799999957,
+      "end_to_end_ms": 9960.985258,
+      "exit_code": 0,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 275,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 4,
+      "attempts": 4,
+      "usage": {
+        "uncached_input": 12,
+        "cache_read": 7407,
+        "cache_write": 2908,
+        "output": 252,
+        "total_input": 10327,
+        "total_tokens": 10579,
+        "missing_usage": 0,
+        "usd_estimate": 0.00056477
+      },
+      "accounting_complete": true,
+      "mode_verified": true,
+      "cm_active": false,
+      "provider_ms": 8498.58472,
+      "request_bytes": [
+        6346,
+        9489,
+        13839,
+        14801
+      ],
+      "tool_calls": {
+        "read": 1,
+        "edit": 1,
+        "project_checks": 1
+      },
+      "initial_retrieval": null
+    },
+    {
+      "run_id": "run-06bb22ad9a2ab207",
+      "task": "circle-contact",
+      "category": "named-with-helper",
+      "repetition": 1,
+      "arm": "cm_next",
+      "duration_ms": 1653.3711010000006,
+      "copy_ms": 17.09157899999991,
+      "independent_check_ms": 46.88310400000046,
+      "end_to_end_ms": 1734.3696070000005,
+      "exit_code": 1,
+      "task_success": false,
+      "quality": {
+        "pass": false,
+        "behavior_pass": false,
+        "error": "AssertionError [ERR_ASSERTION]: Strict tangency\n\ntrue !== false\n"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "model_calls": 0,
+      "attempts": 0,
+      "usage": {
+        "uncached_input": 0,
+        "cache_read": 0,
+        "cache_write": 0,
+        "output": 0,
+        "total_input": 0,
+        "total_tokens": 0,
+        "missing_usage": 0,
+        "usd_estimate": 0
+      },
+      "accounting_complete": false,
+      "mode_verified": false,
+      "cm_active": false,
+      "provider_ms": 0,
+      "request_bytes": [],
+      "tool_calls": {},
+      "initial_retrieval": {
+        "at_ms": 1792089812665,
+        "event": "retrieved",
+        "duration_ms": 21.52849500000002,
+        "agent": "session-1d34b57f-bdce-4c5a-b5ab-eb049464a8fb",
+        "bytes": 1834,
+        "chunking": "unit",
+        "search_mode": "exact",
+        "context_sha256": "dd53cbcedf19b7d75c268e7ab03e743453913751270f94f6476b6c367bedccb1",
+        "paths": [
+          "game/src/core/geometry.js"
+        ],
+        "omissions": 0,
+        "retrieval": {
+          "policy": "adaptive",
+          "route": "named",
+          "detail": "focused",
+          "roots": 1,
+          "graph_nodes": 0,
+          "bindings_shown": 0,
+          "bindings_omitted": 0,
+          "dense_search": false
+        }
+      }
+    }
+  ]
+}

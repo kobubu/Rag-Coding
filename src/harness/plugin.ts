@@ -3,6 +3,7 @@ import { defineTool } from "@deepseek-ai/dsh-tools";
 import { createUserMessage } from "@deepseek-ai/dsh-llm";
 import { resolve } from "node:path";
 import { writeFileSync } from "node:fs";
+import { readFile } from "node:fs/promises";
 import { performance } from "node:perf_hooks";
 import type {} from "@deepseek-ai/dsh-fs";
 import type {} from "@deepseek-ai/dsh-agent";
@@ -47,6 +48,23 @@ export interface Config {
   sourceScope?: string;
 }
 
+type Delivered = Map<string, { path: string; version: string; lines: number }>;
+
+// Whole files already placed in the conversation by CM. Every copy is re-sent with each later model call, so the first
+// re-read of the same unchanged bytes gets a pointer instead; a second re-read (or any changed file) is served normally.
+export async function rereadPointer(delivered: Delivered, root: string, tool: string, args: unknown) {
+  const file = (args as { file_path?: unknown } | null)?.file_path;
+  if (tool !== "read" || typeof file !== "string") return;
+  const hostPath = resolve(root, file), shown = delivered.get(hostPath);
+  if (!shown) return;
+  delivered.delete(hostPath);
+  let current: Buffer;
+  try { current = await readFile(hostPath); } catch { return; }
+  if ("blob:" + hash(current) !== shown.version) return;
+  return { path: shown.path, bytes: current.length,
+    text: `${shown.path} is unchanged since the CM context above, which shows it whole (lines 1-${shown.lines}). Use that text; the file is already registered as read for edit. Read again only if you need it repeated.` };
+}
+
 export function apply(ctx: Context, config: Config = {}): void {
   const root = resolve(config.projectRoot ?? process.env.CM_PROJECT_ROOT ?? process.cwd());
   const store = new CMStore(root, resolve(root, config.indexPath ?? process.env.CM_INDEX_PATH ?? ".code-memory/index.json"));
@@ -82,6 +100,19 @@ export function apply(ctx: Context, config: Config = {}): void {
         ctx.emit("fs/observed", target, { kind: "present", version: after.version }, actor);
       }
     };
+    // Whole files already placed in the conversation. Every copy is re-sent with each later model call, so the first re-read
+    // of the same unchanged bytes gets a pointer instead; a second re-read is served normally.
+    const delivered: Delivered = new Map();
+    const remember = (context: RetrievedContext) => {
+      for (const part of context.parts) if (part.whole) delivered.set(resolve(root, part.path), { path: part.path, version: part.span.file_version_id, lines: part.span.line_end });
+    };
+    ctx.on("tools/post-execute", async (exec, result, next) => {
+      if (result.isError) return next();
+      const pointer = await rereadPointer(delivered, root, exec.name, exec.arguments);
+      if (!pointer) return next();
+      record({ event: "read_deduplicated", path: pointer.path, bytes: pointer.bytes });
+      return { kind: "accept", content: [{ type: "text", text: pointer.text }] };
+    });
     const retrieve = async (query: string, budget: number | undefined, signal: AbortSignal, actor: object, detail: RetrievalDetail = "focused") => {
       if ((config.retrievalPolicy ?? "adaptive") === "adaptive" && detail === "focused") {
         const direct = await directFileContext(root, query, budget ?? config.maxContextBytes ?? 6000, signal, config.sourceScope);
@@ -97,10 +128,10 @@ export function apply(ctx: Context, config: Config = {}): void {
     ctx.tools.register(defineTool({ name: "cm_retrieve_context", description: "Get current small self-contained named files or compact compiler-bound context. Discovery uses local vector search. Version-checked and observed for edit. Partial; expand or read when needed.",
       parameters: { query: { type: "string", required: true }, max_bytes: { type: "integer" }, ...((config.retrievalPolicy ?? "adaptive") !== "hybrid" ? { detail: { type: "string" as const, enum: ["focused", "expanded"] } } : {}) },
       output: { schema: { type: "object", additionalProperties: true }, render: (_args: unknown, value: RetrievedContext) => [{ type: "text" as const, text: renderContext(value) }] },
-      async execute(args, exec) { return retrieve(args.query, args.max_bytes, exec.signal, exec, args.detail ?? "focused"); },
+      async execute(args, exec) { const context = await retrieve(args.query, args.max_bytes, exec.signal, exec, args.detail ?? "focused");remember(context);return context; },
     }));
     ctx.systemPrompt.section({ name: "cm-context-guidance", order: 1350,
-      text: "CM source context is already read through this filesystem and version-observed for guarded edit. Apply targeted edits directly when the supplied context suffices; use cm_retrieve_context or read for missing context." });
+      text: "CM source context is already read through this filesystem and version-observed for guarded edit. Files marked (whole file) are complete: do not re-read them. Listed call sites come from the compiler graph, so a call-site search is unnecessary. When the fix touches one or two places in shown code, edit directly without a separate plan; use cm_retrieve_context or read only for code that is not shown." });
     if (autoContext) {
       ctx.on("agent/pre-step", async (payload, next) => {
         const decision = await next();
@@ -110,7 +141,7 @@ export function apply(ctx: Context, config: Config = {}): void {
         if (query.trim()) {
           const started = performance.now();
           const context = await retrieve(query.slice(0, 16000), undefined, payload.signal, payload);
-          const text = renderContext(context);
+          const text = renderContext(context);remember(context);
           record({ event: "retrieved", duration_ms: performance.now() - started, agent: payload.agent.id, bytes: context.bytes_used, chunking: config.chunking ?? "unit", search_mode: config.searchMode ?? "exact", context_sha256: hash(Buffer.from(text, "utf8")), paths: [...new Set(context.parts.map((part) => part.path))], omissions: context.omissions, retrieval: context.retrieval });
           return { ...decision, messages: [...decision.messages, createUserMessage({ content: [{ type: "text", text }],
             source: { kind: "code-memory", snapshot_id: context.snapshot_id, form: "snapshot", sections: [{ name: "cm-source-context", text }] } })] };
