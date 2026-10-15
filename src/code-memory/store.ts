@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { readFile, realpath, stat } from "node:fs/promises";
+import { readFile, realpath, rename, stat, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { Ajv2020 } from "ajv/dist/2020.js";
 import { ANALYSIS_FILES, CMError, hash, inside, isSourcePath, MAX_INDEX_BYTES, snapshotId, utf8 } from "./source.js";
@@ -70,6 +70,11 @@ export function validateIndex(value: unknown): CMIndex {
   return index;
 }
 
+// Validation is a pure function of the index bytes and of this code. A marker beside the index records the digest of bytes that
+// passed it, so later processes skip re-validating identical bytes; any byte or validator change validates again.
+const VALIDATOR = hash(JSON.stringify(schema) + "\n" + validateIndex.toString());
+type Verified = { format: "cm-verified-1"; digest: string; validator: string };
+
 export class CMStore {
   readonly projectRoot: string;
   readonly indexPath: string;
@@ -92,7 +97,14 @@ export class CMStore {
     if (this.cached?.digest !== digest) {
       let parsed: unknown;
       try { parsed = JSON.parse(utf8(raw)); } catch (error) { throw new CMError("invalid_index", String(error)); }
-      const validated = validateIndex(parsed);
+      const marker = this.indexPath + ".verified.json";
+      let verified = false;
+      try { const known = JSON.parse(await readFile(marker, "utf8")) as Verified;verified = known.format === "cm-verified-1" && known.digest === digest && known.validator === VALIDATOR; } catch { /* No marker: validate. */ }
+      const validated = verified ? parsed as CMIndex : validateIndex(parsed);
+      if (!verified) {
+        const temp = marker + "." + process.pid + ".tmp";
+        try { await writeFile(temp, JSON.stringify({ format: "cm-verified-1", digest, validator: VALIDATOR } satisfies Verified));await rename(temp, marker); } catch { /* A read-only index stays usable; it is validated each time. */ }
+      }
       const pending: object[] = [validated];
       while (pending.length) {
         const current = pending.pop()!;

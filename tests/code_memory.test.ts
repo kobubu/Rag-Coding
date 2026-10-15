@@ -6,6 +6,7 @@ import test from "node:test";
 import { buildIndex } from "../src/code-memory/indexer.js";
 import { codeSearch, contextGet, graphExpand, symbolSearch } from "../src/code-memory/query.js";
 import { CMStore, validateIndex } from "../src/code-memory/store.js";
+import { utf8 } from "../src/code-memory/source.js";
 import { ROOT } from "../scripts/lib.js";
 import { mountHarnessPlugin } from "../scripts/harness_runtime.js";
 
@@ -136,6 +137,25 @@ test("cached indexes remain immutable and UTF-8 boundaries reject partial charac
   assert.throws(() => { first.units[0]!.span.start_byte = 1; }, TypeError);
   writeFileSync(path, JSON.stringify(corrupt));
   await assert.rejects(store.load(new AbortController().signal), /UTF-8 character/);
+});
+
+test("validation marker skips only re-validation of identical bytes and strict UTF-8 still applies", async () => {
+  const directory = mkdtempSync(join(tmpdir(), "cm-verified-"));
+  writeFileSync(join(directory, "source.js"), '\ufeffexport const label = "Ж😀";\n');
+  const memory = validateIndex(buildIndex(directory)), path = join(directory, "index.json"), marker = path + ".verified.json", signal = new AbortController().signal;
+  writeFileSync(path, JSON.stringify(memory));
+  await new CMStore(directory, path).load(signal);
+  const written = JSON.parse(readFileSync(marker, "utf8"));assert.equal(written.format, "cm-verified-1");
+  assert.equal((await new CMStore(directory, path).load(signal)).snapshot_id, memory.snapshot_id);
+  // A marker for other bytes must not admit a corrupt index.
+  const corrupt = structuredClone(memory);corrupt.units.find((unit) => unit.kind === "file")!.span.start_byte = 1;
+  writeFileSync(path, JSON.stringify(corrupt));
+  await assert.rejects(new CMStore(directory, path).load(signal), /UTF-8 character/);
+  writeFileSync(marker, JSON.stringify({ ...written, digest: "0".repeat(64) }));
+  await assert.rejects(new CMStore(directory, path).load(signal), /UTF-8 character/);
+  writeFileSync(path, Buffer.concat([Buffer.from(JSON.stringify(memory).slice(0, -1)), Buffer.from([0xff, 0x7d])]));
+  await assert.rejects(new CMStore(directory, path).load(signal), /invalid_index|encoding/);
+  assert.throws(() => utf8(Buffer.from([0xed, 0xa0, 0x80])), /unsupported_encoding/);assert.equal(utf8(Buffer.from([0xef, 0xbb, 0xbf, 0x41])), "\ufeffA");
 });
 
 test("store rejects changed source and a replaced snapshot", async () => {

@@ -54,8 +54,8 @@ export function byteOffset(source: string, position: number): number {
   return Buffer.byteLength(source.slice(0, position), "utf8");
 }
 
-export function utf8(raw: Buffer): string {
-  const source = raw.toString("utf8");
-  if (!Buffer.from(source, "utf8").equals(raw)) throw new CMError("unsupported_encoding", "Only exact UTF-8 is supported");
-  return source;
+// fatal rejects every byte sequence that does not round-trip; ignoreBOM keeps a leading BOM as text, as Buffer decoding does.
+const STRICT_UTF8 = new TextDecoder("utf-8", { fatal: true, ignoreBOM: true });
+export function utf8(raw: Uint8Array): string {
+  try { return STRICT_UTF8.decode(raw); } catch { throw new CMError("unsupported_encoding", "Only exact UTF-8 is supported"); }
 }
