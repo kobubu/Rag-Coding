@@ -1,0 +1,216 @@
+{
+  "source": "series3-results.json",
+  "runs": 36,
+  "estimated_cost_usd": 0.03598289,
+  "arms": {
+    "none": {
+      "runs": 12,
+      "successes": 12,
+      "total_tokens": 393954,
+      "usd_estimate": 0.01630709,
+      "model_calls": 78,
+      "read_grep_glob_calls": 37,
+      "harness_seconds": 224.88042036099995,
+      "median_session_seconds": 15.264649130000013,
+      "median_session_tokens": 23375.5,
+      "all_accounted": true
+    },
+    "cm_base": {
+      "runs": 12,
+      "successes": 11,
+      "total_tokens": 231228,
+      "usd_estimate": 0.010622469999999998,
+      "model_calls": 57,
+      "read_grep_glob_calls": 14,
+      "harness_seconds": 177.9390952179999,
+      "median_session_seconds": 15.62566302349996,
+      "median_session_tokens": 13263,
+      "all_accounted": true
+    },
+    "cm_next": {
+      "runs": 12,
+      "successes": 12,
+      "total_tokens": 153937,
+      "usd_estimate": 0.009053329999999998,
+      "model_calls": 47,
+      "read_grep_glob_calls": 0,
+      "harness_seconds": 157.83659401800006,
+      "median_session_seconds": 11.873872442000014,
+      "median_session_tokens": 10086,
+      "all_accounted": true
+    }
+  },
+  "comparisons": [
+    {
+      "candidate": "cm_base",
+      "reference": "none",
+      "tokens_pct": -41.3,
+      "price_pct": -34.9,
+      "harness_time_pct": -20.9,
+      "model_calls_pct": -26.9,
+      "pairs": 12,
+      "fewer_tokens": 9,
+      "faster": 9,
+      "cheaper": 11
+    },
+    {
+      "candidate": "cm_next",
+      "reference": "none",
+      "tokens_pct": -60.9,
+      "price_pct": -44.5,
+      "harness_time_pct": -29.8,
+      "model_calls_pct": -39.7,
+      "pairs": 12,
+      "fewer_tokens": 10,
+      "faster": 9,
+      "cheaper": 11
+    },
+    {
+      "candidate": "cm_next",
+      "reference": "cm_base",
+      "tokens_pct": -33.4,
+      "price_pct": -14.8,
+      "harness_time_pct": -11.3,
+      "model_calls_pct": -17.5,
+      "pairs": 12,
+      "fewer_tokens": 6,
+      "faster": 7,
+      "cheaper": 6
+    }
+  ],
+  "by_task": [
+    {
+      "task": "circle-contact",
+      "none": {
+        "successes": "2/2",
+        "tokens": 21051,
+        "calls": 8,
+        "seconds": 19.2
+      },
+      "cm_base": {
+        "successes": "2/2",
+        "tokens": 17036,
+        "calls": 6,
+        "seconds": 12
+      },
+      "cm_next": {
+        "successes": "2/2",
+        "tokens": 17399,
+        "calls": 6,
+        "seconds": 15.8
+      }
+    },
+    {
+      "task": "camera-time",
+      "none": {
+        "successes": "2/2",
+        "tokens": 21344,
+        "calls": 7,
+        "seconds": 15.7
+      },
+      "cm_base": {
+        "successes": "1/2",
+        "tokens": 9910,
+        "calls": 4,
+        "seconds": 8.7
+      },
+      "cm_next": {
+        "successes": "2/2",
+        "tokens": 20172,
+        "calls": 6,
+        "seconds": 14.7
+      }
+    },
+    {
+      "task": "wallet-delta",
+      "none": {
+        "successes": "2/2",
+        "tokens": 105839,
+        "calls": 19,
+        "seconds": 56.8
+      },
+      "cm_base": {
+        "successes": "2/2",
+        "tokens": 70608,
+        "calls": 18,
+        "seconds": 52.6
+      },
+      "cm_next": {
+        "successes": "2/2",
+        "tokens": 22782,
+        "calls": 8,
+        "seconds": 33.5
+      }
+    },
+    {
+      "task": "motion-envelope",
+      "none": {
+        "successes": "2/2",
+        "tokens": 116540,
+        "calls": 16,
+        "seconds": 34
+      },
+      "cm_base": {
+        "successes": "2/2",
+        "tokens": 38900,
+        "calls": 9,
+        "seconds": 28.2
+      },
+      "cm_next": {
+        "successes": "2/2",
+        "tokens": 17128,
+        "calls": 6,
+        "seconds": 23.7
+      }
+    },
+    {
+      "task": "quota-receipts",
+      "none": {
+        "successes": "2/2",
+        "tokens": 82714,
+        "calls": 15,
+        "seconds": 38.2
+      },
+      "cm_base": {
+        "successes": "2/2",
+        "tokens": 73585,
+        "calls": 14,
+        "seconds": 43.3
+      },
+      "cm_next": {
+        "successes": "2/2",
+        "tokens": 27471,
+        "calls": 9,
+        "seconds": 28.3
+      }
+    },
+    {
+      "task": "statistics-linear",
+      "none": {
+        "successes": "2/2",
+        "tokens": 46466,
+        "calls": 13,
+        "seconds": 60.9
+      },
+      "cm_base": {
+        "successes": "2/2",
+        "tokens": 21189,
+        "calls": 6,
+        "seconds": 33.1
+      },
+      "cm_next": {
+        "successes": "2/2",
+        "tokens": 48985,
+        "calls": 12,
+        "seconds": 41.8
+      }
+    }
+  ],
+  "failures": [
+    {
+      "task": "camera-time",
+      "repetition": 2,
+      "arm": "cm_base"
+    }
+  ]
+}
