@@ -16,7 +16,7 @@ DeepSeek Harness, GPT-6 Luna, шесть задач на проекте Geo Dash
 | Время сессий | — | **−18…−37%** |
 | Вызовы read / grep / glob | 34–37 на серию | **0** |
 
-В Codex и Claude Code CM подключается хуком `UserPromptSubmit`: по одной серии из 36 сессий — −42% токенов в Codex (GPT-6 Luna) и −30% в Claude Code (Sonnet 5.5) при том же качестве ([подробно](docs/NATIVE-CLIENTS.md)). Один проект и шесть задач. Подробно: [замеры в Harness](docs/EFFICIENCY-AB.md).
+В Codex и Claude Code CM подключается хуком `UserPromptSubmit`: −26…−42% токенов в Codex (GPT-6 Luna, три серии) и −30% в Claude Code (Sonnet 5.5, одна серия) при том же качестве; с прогретым демоном хука сессии Codex ещё и на ~10% быстрее ([подробно](docs/NATIVE-CLIENTS.md)). Один проект и шесть задач. Подробно: [замеры в Harness](docs/EFFICIENCY-AB.md).
 
 ## Документация
 
