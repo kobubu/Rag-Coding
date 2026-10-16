@@ -84,12 +84,13 @@ Harness по умолчанию передаёт OpenAI ID сессии как `
 
 ## Клиенты
 
-| Клиент | Как подключается CM | Автоматический контекст |
-|---|---|---|
-| DeepSeek Harness | Plugin ([plugin.ts](../src/harness/plugin.ts)) | Да, перед первым шагом |
-| Codex, Claude Code | MCP stdio ([server.ts](../src/mcp/server.ts)) | Нет: модель сама решает, вызывать ли CM |
+| Клиент | Как подключается CM | Автоматический контекст | Токены к без CM |
+|---|---|---|---:|
+| DeepSeek Harness | Plugin ([plugin.ts](../src/harness/plugin.ts)) | Перед первым шагом | −45…−66% |
+| Codex | Хук `UserPromptSubmit` ([hooks/cli.ts](../src/hooks/cli.ts)) + MCP | Перед первым вызовом | −42% |
+| Claude Code | Хук `UserPromptSubmit` + MCP | Перед первым вызовом | −30% |
 
-Измеренная экономия относится к Harness. В Codex и Claude Code CM через MCP раньше экономии не дал ([HISTORY.md](HISTORY.md#7-codex-и-claude-code-через-mcp)).
+Один MCP-сервер без хука экономии не даёт: модель его почти не вызывает. Подробно — [NATIVE-CLIENTS.md](NATIVE-CLIENTS.md).
 
 ## Компоненты кода
 
@@ -105,6 +106,7 @@ Harness по умолчанию передаёт OpenAI ID сессии как `
 | `src/code-memory/live.ts` | Автообновление индекса |
 | `src/harness/plugin.ts` | Plugin Harness: авто-контекст, инструмент, инструкция, повторное чтение |
 | `src/mcp/` | MCP-сервер для Codex и Claude Code |
+| `src/hooks/` | Хук `UserPromptSubmit`: авто-контекст в Codex и Claude Code |
 | `src/local-agent/`, `apps/local-viewer/` | Локальная служба и карта CM Atlas ([LOCAL-ATLAS.md](LOCAL-ATLAS.md)) |
 | `src/setup/` | Установщик для Harness, Codex и Claude Code ([INSTALL.md](INSTALL.md)) |
 
@@ -112,4 +114,4 @@ Harness по умолчанию передаёт OpenAI ID сессии как `
 
 - Только JavaScript и TypeScript; динамические вызовы граф не видит.
 - Индекс большой (92 МБ JSON на 3,6 МБ исходника) и загружается в каждой сессии.
-- Экономия измерена на одном проекте и шести задачах в одном клиенте (Harness).
+- Экономия измерена на одном проекте и шести задачах; в Codex и Claude Code — по одной серии.

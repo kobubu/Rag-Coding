@@ -16,7 +16,7 @@ DeepSeek Harness, GPT-6 Luna, шесть задач на проекте Geo Dash
 | Время сессий | — | **−18…−37%** |
 | Вызовы read / grep / glob | 34–37 на серию | **0** |
 
-Один проект и шесть задач; в Codex и Claude Code через MCP экономия пока не подтверждена. Подробно: [замеры](docs/EFFICIENCY-AB.md).
+В Codex и Claude Code CM подключается хуком `UserPromptSubmit`: по одной серии из 36 сессий — −42% токенов в Codex (GPT-6 Luna) и −30% в Claude Code (Sonnet 5.5) при том же качестве ([подробно](docs/NATIVE-CLIENTS.md)). Один проект и шесть задач. Подробно: [замеры в Harness](docs/EFFICIENCY-AB.md).
 
 ## Документация
 
@@ -27,7 +27,8 @@ DeepSeek Harness, GPT-6 Luna, шесть задач на проекте Geo Dash
 | [История попыток](docs/HISTORY.md) | Восемь подходов, что не сработало и почему |
 | [Установка](docs/INSTALL.md) | Windows-установщик для Harness, Codex и Claude Code |
 | [Plugin для Harness](docs/DEEPSEEK-PLUGIN.md) | Ручной запуск Harness с CM |
-| [MCP](docs/MCP-SETUP.md) | Подключение к Codex и Claude Code |
+| [Codex и Claude Code](docs/NATIVE-CLIENTS.md) | Хук авто-контекста, настройка, замеры |
+| [MCP](docs/MCP-SETUP.md) | MCP-сервер для Codex и Claude Code |
 | [CM Atlas](docs/LOCAL-ATLAS.md) | Локальная карта модулей, символов и связей |
 
 ## Быстрый старт
@@ -51,11 +52,12 @@ npm run plugin:smoke   # настоящий ToolRuntime Harness, без вызо
 |---|---|
 | `src/code-memory/` | Индекс, хранилище, векторы, поиск и сборка контекста |
 | `src/harness/` | Plugin DeepSeek Harness |
-| `src/mcp/` | MCP-сервер для Codex и Claude Code |
+| `src/mcp/`, `src/hooks/` | MCP-сервер и хук авто-контекста для Codex и Claude Code |
 | `src/setup/`, `scripts/install_cm.ps1` | Установщик |
 | `src/local-agent/`, `apps/local-viewer/` | Локальная служба и карта CM Atlas |
 | `scripts/efficiency_ab.ts` | Трёхвариантный A/B в Harness |
-| `scripts/client_ab.ts` | A/B в Codex и Claude Code |
+| `scripts/native_ab.ts` | A/B в Codex и Claude Code |
+| `evaluation/native/` | Данные серий в Codex и Claude Code |
 | `evaluation/efficiency/` | Данные всех серий текущего механизма |
 | `contracts/cm-local.schema.json` | Схема локального индекса |
 

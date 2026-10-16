@@ -52,6 +52,7 @@
     "contracts/cm-local.schema.json",
     "README.md",
     "docs/HOW-IT-WORKS.md",
+    "docs/NATIVE-CLIENTS.md",
     "docs/DEEPSEEK-PLUGIN.md",
     "docs/MCP-SETUP.md",
     "docs/LOCAL-ATLAS.md",
