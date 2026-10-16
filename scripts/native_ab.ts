@@ -6,13 +6,13 @@ import { pathToFileURL } from "node:url";
 import { hash } from "../src/code-memory/source.js";
 import { ROOT } from "./lib.js";
 
-// Three-arm A/B in a native coding client (Codex CLI): no CM, a frozen CM build connected the way its installer did
+// Three-arm A/B in a native coding client (Codex CLI or Claude Code): no CM, a frozen CM build connected the way its installer did
 // (MCP server + skill), and the current build with the UserPromptSubmit hook that adds CM context before the first call.
 // Tasks, prepared workspaces, vectors and the independent grader are the ones of the Harness efficiency series.
 export const ARMS = ["none", "cm_base", "cm_next"] as const;
 export type Arm = typeof ARMS[number];
 type Task = { id: string; prompt: string; category: string; mutations: { path: string }[]; changed_paths?: string[] };
-export type NativeOptions = { prepared: string; output: string; cases: string; codex: string; modelCache: string; baseRoot: string; arms: Arm[]; repetitions: number; budgetUsd: number; maxSeconds: number; model: string };
+export type NativeOptions = { client: "codex" | "claude"; claude?: string; claudeModel?: string; prepared: string; output: string; cases: string; codex: string; modelCache: string; baseRoot: string; arms: Arm[]; repetitions: number; budgetUsd: number; maxSeconds: number; model: string };
 const read = (path: string) => JSON.parse(readFileSync(path, "utf8"));
 const write = (path: string, value: unknown) => writeFileSync(path, JSON.stringify(value, null, 2));
 const PRICE = { input: .10, cache_read: .01, cache_write: .125, output: .50, per: 1e6, source: "https://developers.openai.com/api/docs/models/gpt-6-luna" };
@@ -33,18 +33,23 @@ export function freezeNative(options: NativeOptions) {
   if (existsSync(protocolPath)) throw Error("Protocol already frozen");
   mkdirSync(output, { recursive: true });
   const tasks = read(options.cases) as Task[];
-  const protocol = { format: "cm-native-ab-1", created_at: new Date().toISOString(), client: "codex", client_version: execFileSync(options.codex, ["--version"], { encoding: "utf8" }).trim(),
-    model: options.model, reasoning_effort: "low", arms: options.arms, repetitions: options.repetitions, cases_hash: hash(JSON.stringify(tasks)),
+  const binary = options.client === "claude" ? options.claude! : options.codex;
+  const protocol = { format: "cm-native-ab-1", created_at: new Date().toISOString(), client: options.client, client_version: execFileSync(binary, ["--version"], { encoding: "utf8" }).trim(),
+    model: options.client === "claude" ? options.claudeModel : options.model, reasoning_effort: "low", arms: options.arms, repetitions: options.repetitions, cases_hash: hash(JSON.stringify(tasks)),
     preparation_sha256: hash(readFileSync(join(options.prepared, "preparation.json"))), implementation: implementation(), base_build_sha256: tree(join(options.baseRoot, "dist/src")),
     max_run_seconds: options.maxSeconds, max_estimated_usd: options.budgetUsd, price: PRICE,
-    arms_config: { none: "Codex without CM", cm_base: "Frozen CM 0.8.1: MCP server + installer skill, model decides whether to call it", cm_next: "Current CM: UserPromptSubmit hook adds CM context before the first call, plus MCP server + skill" } };
+    arms_config: { none: "Client without CM", cm_base: "Frozen CM 0.8.1: MCP server + installer skill, model decides whether to call it", cm_next: "Current CM: UserPromptSubmit hook adds CM context before the first call, plus MCP server + skill" } };
   write(protocolPath, protocol);return protocolPath;
+}
+
+function cmArguments(options: NativeOptions, prepared: string, task: string, workspace: string, run: string) {
+  return ["--project", workspace, "--index", join(prepared, "cases", task, ".code-memory/index.json"), "--vectors", join(prepared, "projections", task), "--model-cache", options.modelCache,
+    "--retrieval-policy", "adaptive", "--auto-update", "true", "--memory-dir", join(run, "live"), "--embedding-cache", join(prepared, "embedding-cache.json")];
 }
 
 function codexHome(home: string, options: NativeOptions, arm: Arm, workspace: string, run: string, task: string) {
   const prepared = resolve(options.prepared), build = arm === "cm_base" ? resolve(options.baseRoot) : ROOT;
-  const cmArgs = ["--project", workspace, "--index", join(prepared, "cases", task, ".code-memory/index.json"), "--vectors", join(prepared, "projections", task), "--model-cache", options.modelCache,
-    "--retrieval-policy", "adaptive", "--auto-update", "true", "--memory-dir", join(run, "live"), "--embedding-cache", join(prepared, "embedding-cache.json")];
+  const cmArgs = cmArguments(options, prepared, task, workspace, run);
   let config = `model = ${JSON.stringify(options.model)}\nmodel_provider = "openai_key"\nmodel_reasoning_effort = "low"\napproval_policy = "never"\nsandbox_mode = "workspace-write"\nweb_search = "disabled"\n\n` +
     `[model_providers.openai_key]\nname = "OpenAI API key"\nbase_url = "https://api.openai.com/v1"\nenv_key = "OPENAI_API_KEY"\nwire_api = "responses"\n`;
   if (arm !== "none") {
@@ -78,6 +83,41 @@ export function codexUsage(events: { type?: string; usage?: Record<string, numbe
   return { turns: turns.length, uncached_input: uncached, cache_read: cacheRead, cache_write: cacheWrite, output, total_input: input, total_tokens: input + output, usd_estimate: usd };
 }
 
+
+// Session variables of a parent Claude Code session; without them a child run gets its own session and no parent context.
+const PARENT_SESSION = /^(CLAUDE_CODE_SESSION_ID|CLAUDE_CODE_REMOTE_SESSION_ID|CLAUDECODE|CLAUDE_CODE_CHILD_SESSION|CLAUDE_PID|CLAUDE_CODE_MESSAGING_SOCKET|CLAUDE_CODE_MESSAGING_TOKEN|CLAUDE_CODE_TEE_SDK_STDOUT|CLAUDE_CODE_ENTRYPOINT|CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD|CLAUDE_ADDITIONAL_DIRECTORIES|CLAUDE_CODE_SYNC_[A-Z_]+|CLAUDE_AFTER_LAST_COMPACT)$/;
+
+function claudeConfig(run: string, options: NativeOptions, arm: Arm, cmArgs: string[], checks: string) {
+  const build = arm === "cm_base" ? resolve(options.baseRoot) : ROOT, mcp = join(run, "mcp.json"), settings = join(run, "settings.json");
+  write(mcp, { mcpServers: arm === "none" ? {} : { cm_eval: { command: process.execPath, args: [join(build, "dist/src/mcp/cli.js"), ...cmArgs] } } });
+  write(settings, arm === "cm_next" ? { hooks: { UserPromptSubmit: [{ hooks: [{ type: "command", command: [process.execPath, join(build, "dist/src/hooks/cli.js"), ...cmArgs].map(a => JSON.stringify(a)).join(" "), timeout: 120 }] }] } } : {});
+  const tools = ["Read", "Edit", "MultiEdit", "Write", "Grep", "Glob", "Bash(" + checks + ")", ...(arm === "none" ? [] : ["mcp__cm_eval__cm_retrieve_context"])];
+  return ["--model", options.claudeModel!, "--output-format", "stream-json", "--verbose", "--setting-sources", "project", "--settings", settings, "--strict-mcp-config", "--mcp-config", mcp,
+    "--permission-mode", "acceptEdits", "--allowedTools", ...tools];
+}
+
+async function runClaude(options: NativeOptions, run: string, workspace: string, prompt: string, extra: string[]) {
+  const env = Object.fromEntries(Object.entries(process.env).filter(([key]) => !PARENT_SESSION.test(key))) as Record<string, string>;
+  env.CM_HOOK_LOG = join(run, "hook.jsonl");
+  const started = performance.now();
+  return await new Promise<{ exit: number | null; ms: number; stdout: string; stderr: string; timedOut: boolean }>((done, fail) => {
+    const child = spawn(options.claude!, ["-p", prompt, ...extra], { cwd: workspace, env, stdio: ["ignore", "pipe", "pipe"] });
+    let stdout = "", stderr = "", timedOut = false;
+    const timer = setTimeout(() => { timedOut = true;child.kill("SIGKILL"); }, options.maxSeconds * 1000);
+    child.stdout.setEncoding("utf8").on("data", (c: string) => { stdout += c; });child.stderr.setEncoding("utf8").on("data", (c: string) => { stderr += c; });
+    child.on("error", error => { clearTimeout(timer);fail(error); });
+    child.on("close", exit => { clearTimeout(timer);done({ exit, ms: performance.now() - started, stdout, stderr, timedOut }); });
+  });
+}
+
+// Claude Code reports the provider's own cost; tokens are summed from the final result event.
+export function claudeUsage(events: { type?: string; usage?: Record<string, number>; total_cost_usd?: number; num_turns?: number }[]) {
+  const result = [...events].reverse().find(e => e.type === "result");
+  if (!result?.usage) return { turns: 0, uncached_input: 0, cache_read: 0, cache_write: 0, output: 0, total_input: 0, total_tokens: 0, usd_estimate: 0 };
+  const u = result.usage, uncached = u.input_tokens ?? 0, read = u.cache_read_input_tokens ?? 0, writeTokens = u.cache_creation_input_tokens ?? 0, output = u.output_tokens ?? 0;
+  return { turns: result.num_turns ?? 0, uncached_input: uncached, cache_read: read, cache_write: writeTokens, output, total_input: uncached + read + writeTokens, total_tokens: uncached + read + writeTokens + output, usd_estimate: result.total_cost_usd ?? 0 };
+}
+
 export async function runNative(options: NativeOptions, protocolPath: string) {
   const output = resolve(options.output), prepared = resolve(options.prepared), protocol = read(protocolPath), tasks = read(options.cases) as Task[];
   const resultsPath = join(output, "results.json");if (existsSync(resultsPath)) throw Error("Preserve experiment identities");
@@ -93,20 +133,28 @@ export async function runNative(options: NativeOptions, protocolPath: string) {
       mkdirSync(run, { recursive: true });cpSync(join(prepared, "cases", task.id), workspace, { recursive: true, filter: path => !path.includes(".code-memory") });
       const checks = join(run, "project_checks");
       writeFileSync(checks, `#!/bin/sh\nexec ${JSON.stringify(process.execPath)} ${JSON.stringify(join(ROOT, "dist/scripts/speed_checks.js"))} ${JSON.stringify(workspace)} ${JSON.stringify(manifest.corpus)} ${task.id} --public\n`);chmodSync(checks, 0o755);
+      const skillDir = options.client === "claude" ? ".claude/skills/code-memory" : ".agents/skills/code-memory";
       if (arm !== "none") {
         const { skill } = await import(pathToFileURL(join(arm === "cm_base" ? resolve(options.baseRoot) : ROOT, "dist/src/setup/config.js")).href) as { skill: (name: string) => string };
-        mkdirSync(join(workspace, ".agents/skills/code-memory"), { recursive: true });writeFileSync(join(workspace, ".agents/skills/code-memory/SKILL.md"), skill("cm_eval"));
+        mkdirSync(join(workspace, skillDir), { recursive: true });writeFileSync(join(workspace, skillDir, "SKILL.md"), skill("cm_eval"));
       }
-      codexHome(join(run, "codex-home"), options, arm, workspace, run, task.id);
+      if (options.client === "codex") codexHome(join(run, "codex-home"), options, arm, workspace, run, task.id);
       const prompt = task.prompt + ` Apply the change only in this isolated workspace. Preserve unrelated behavior and interfaces. Use supplied source when sufficient; otherwise inspect code. The same public smoke check is available to all variants as the shell command ${checks}; separate independent final checks evaluate your patch. Finish with a brief summary.`;
-      const response = await runCodex(options, join(run, "codex-home"), workspace, prompt, arm === "cm_next");
+      const response = options.client === "codex" ? await runCodex(options, join(run, "codex-home"), workspace, prompt, arm === "cm_next")
+        : await runClaude(options, run, workspace, prompt, claudeConfig(run, options, arm, cmArguments(options, prepared, task.id, workspace, run), checks));
       writeFileSync(join(run, "events.jsonl"), response.stdout);writeFileSync(join(run, "stderr.txt"), response.stderr);
       const events = response.stdout.split("\n").filter(l => l.startsWith("{")).map(l => { try { return JSON.parse(l); } catch { return {}; } });
-      const items = events.filter(e => e.type === "item.completed").map(e => e.item ?? {}), kinds = items.map((i: { type?: string }) => i.type ?? "unknown");
-      const usage = codexUsage(events), quality = grade(prepared, workspace, task.id);
+      // Codex: completed items; Claude Code: tool_use blocks of assistant messages, normalized to the same kinds.
+      const items = options.client === "codex" ? events.filter(e => e.type === "item.completed").map(e => e.item ?? {})
+        : events.filter(e => e.type === "assistant").flatMap(e => (e.message?.content ?? []).filter((c: { type?: string }) => c.type === "tool_use"))
+          .map((c: { name: string; input?: { command?: string; file_path?: string; pattern?: string } }) => c.name === "Bash" ? { type: "command_execution", command: c.input?.command ?? "" }
+            : c.name.startsWith("mcp__") ? { type: "mcp_tool_call" } : ["Read", "Grep", "Glob"].includes(c.name) ? { type: "command_execution", command: c.name.toLowerCase() === "read" ? "cat " + (c.input?.file_path ?? "") : "grep " + (c.input?.pattern ?? "") }
+            : { type: ["Edit", "MultiEdit", "Write"].includes(c.name) ? "file_change" : c.name });
+      const kinds = items.map((i: { type?: string }) => i.type ?? "unknown");
+      const usage = options.client === "codex" ? codexUsage(events) : claudeUsage(events), quality = grade(prepared, workspace, task.id);
       const allowed = new Set(task.changed_paths ?? task.mutations.map(m => m.path)), originalPaths = [...manifest.files.map((f: { path: string }) => f.path), "package.json", "AGENTS.md"];
       const scope = originalPaths.filter((path: string) => !allowed.has(path) && (!existsSync(join(workspace, path)) || hash(readFileSync(join(prepared, "cases", task.id, path))) !== hash(readFileSync(join(workspace, path)))));
-      const added = walk(workspace).filter(path => !originalPaths.includes(path) && !path.startsWith(".agents/"));
+      const added = walk(workspace).filter(path => !originalPaths.includes(path) && !path.startsWith(skillDir + "/"));
       const commands = items.filter((i: { type?: string }) => i.type === "command_execution").map((i: { command?: string }) => i.command ?? "");
       const cmCalls = items.filter((i: { type?: string; server?: string }) => i.type === "mcp_tool_call").length;
       const hookLog = existsSync(join(run, "hook.jsonl")) ? readFileSync(join(run, "hook.jsonl"), "utf8").trim().split("\n").map(l => JSON.parse(l)) : [];
@@ -126,7 +174,8 @@ if (process.argv[1] && resolve(process.argv[1]) === resolve(new URL(import.meta.
   const args = new Map<string, string>();for (let i = 2; i < process.argv.length; i += 2) args.set(process.argv[i]!, process.argv[i + 1]!);
   const need = (key: string) => { const value = args.get(key);if (!value) throw Error("Missing " + key);return value; };
   const arms = (args.get("--arms") ?? ARMS.join(",")).split(",") as Arm[];if (arms.some(a => !ARMS.includes(a))) throw Error("Invalid arms");
-  const options: NativeOptions = { prepared: resolve(need("--prepared")), output: resolve(need("--out")), cases: resolve(need("--cases")), codex: resolve(need("--codex")), modelCache: resolve(need("--model-cache")),
+  const client = (args.get("--client") ?? "codex") as "codex" | "claude";if (client !== "codex" && client !== "claude") throw Error("Invalid client");
+  const options: NativeOptions = { client, ...(client === "claude" ? { claude: need("--claude"), claudeModel: args.get("--claude-model") ?? "claude-sonnet-5-5" } : {}), prepared: resolve(need("--prepared")), output: resolve(need("--out")), cases: resolve(need("--cases")), codex: client === "codex" ? resolve(need("--codex")) : "", modelCache: resolve(need("--model-cache")),
     baseRoot: resolve(need("--base-root")), arms, repetitions: Number(args.get("--repetitions") ?? 2), budgetUsd: Number(args.get("--budget") ?? 2), maxSeconds: Number(args.get("--max-seconds") ?? 300), model: "gpt-6-luna" };
   const phase = need("--phase");
   console.log(JSON.stringify(phase === "freeze" ? freezeNative(options) : await runNative(options, resolve(need("--protocol")))));
