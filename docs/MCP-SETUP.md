@@ -4,7 +4,7 @@
 
 ## Подготовка
 
-Рекомендуется [Windows-установщик CM0.8.0](INSTALL.md): он готовит совместимый Node.js, веса, индексы и настройки Codex/Claude Code. Ниже сохранён ручной вариант: Node.js 24 либо 22 от 22.19, `npm ci`, `npm run build`, source index и vectors по [VECTOR-SEARCH](VECTOR-SEARCH.md). Cloud login и лицензирование запланированы. Для первого скачивания embedding weights используется отдельная индексирующая команда с явным разрешением загрузки. MCP ищет только с уже локальными weights.
+Рекомендуется [Windows-установщик CM0.8.0](INSTALL.md): он готовит совместимый Node.js, веса, индексы и настройки Codex/Claude Code. Ниже сохранён ручной вариант: Node.js 24 либо 22 от 22.19, `npm ci`, `npm run build`, source index и vectors по [VECTOR-SEARCH](HOW-IT-WORKS.md). Cloud login и лицензирование запланированы. Для первого скачивания embedding weights используется отдельная индексирующая команда с явным разрешением загрузки. MCP ищет только с уже локальными weights.
 
 Пример настройки клиента, поддерживающего `mcpServers`. Пути следует заменить своими; разные клиенты имеют собственные формы конфигурации.
 
@@ -26,7 +26,7 @@
 }
 ```
 
-По умолчанию файлы находятся в `<project>/.code-memory/`: `index.json`, `vectors/`, `models/`. `--chunking unit|window|ast` должен совпадать с policy vector manifest. Точный dense search работает и при наличии HNSW; `--search-mode ann` требует заранее построенного [ANN index](HNSW.md). Этот пример предполагает существующие артефакты конкретного локального стенда, они не входят в Git.
+По умолчанию файлы находятся в `<project>/.code-memory/`: `index.json`, `vectors/`, `models/`. `--chunking unit|window|ast` должен совпадать с policy vector manifest. Точный dense search работает и при наличии HNSW; `--search-mode ann` требует заранее построенного [ANN index](HOW-IT-WORKS.md#exact-и-hnsw). Этот пример предполагает существующие артефакты конкретного локального стенда, они не входят в Git.
 
 ## Инструменты и ответы
 
@@ -65,12 +65,12 @@ MCP-сервер читает код и не делает patch. Правами 
 
 Здесь используются default index/vectors/model paths внутри выбранного проекта. Для внешних projections добавьте те же `--index`, `--vectors`, `--model-cache`, что в JSON-примере. Запуск: `dsh --profile web --patch ./cm-mcp.yml --no-open`. Model-facing имена: `mcp__cm__cm_retrieve_context` и `mcp__cm__cm_project_status`.
 
-Проверка 13 октября на Geo Dash охватывала официальный stdio client, installed Harness SDK v2 и полный Web profile: статус, learned CPU retrieval, native HNSW и dispatch ToolRuntime. Тогда native model sessions Codex/Claude ещё не измерялись; исходные результаты — [evidence](../research/evidence/local-cm-mcp-atlas-2026-10-13.json). Текущие [boundary tests](../tests/local_agent.test.ts) проверяют отмену, scope, UTF-8, ресурс и наличие того же исходника в text/structured результатах с общим wire cap. Отдельное [нативное модельное исследование](CLIENTS-AB.md) раскрывает фактическую доставку кода, использование CM, качество, время и токены.
+Проверка 13 октября на Geo Dash охватывала официальный stdio client, installed Harness SDK v2 и полный Web profile: статус, learned CPU retrieval, native HNSW и dispatch ToolRuntime. Тогда native model sessions Codex/Claude ещё не измерялись; исходные результаты — [evidence](https://github.com/kobubu/Rag-Coding/tree/0119b57/research/evidence). Текущие [boundary tests](../tests/local_agent.test.ts) проверяют отмену, scope, UTF-8, ресурс и наличие того же исходника в text/structured результатах с общим wire cap. Отдельное [нативное модельное исследование](HISTORY.md#7-codex-и-claude-code-через-mcp) раскрывает фактическую доставку кода, использование CM, качество, время и токены.
 
 ## Живая CM в 0.6.0
 
 Добавьте `--auto-update true --memory-dir /absolute/cm-cache/project` для saved source refresh и `--retrieval-policy adaptive` для named/discovery routing. `--embedding-cache` задаёт reusable cache; `--source-scope game` ограничивает дерево. `cm_retrieve_context` принимает optional `detail: focused | expanded`, source snapshot проверяется до выдачи.
 
-Read-only означает отсутствие правки исходников через MCP. Производные local indexes при включённом live update записывает сам локальный процесс. На копии Geo Dash официальный stdio client проверил: добавленный файл доступен по новому query, старый snapshot отклоняется, удаление публикуется. Модельный API в этой проверке не вызывался. [Алгоритм и пределы](LIVE-CM.md).
+Read-only означает отсутствие правки исходников через MCP. Производные local indexes при включённом live update записывает сам локальный процесс. На копии Geo Dash официальный stdio client проверил: добавленный файл доступен по новому query, старый snapshot отклоняется, удаление публикуется. Модельный API в этой проверке не вызывался. [Алгоритм и пределы](HOW-IT-WORKS.md#5-свежесть).
 
 Первичные инструкции: [MCP server development](https://modelcontextprotocol.io/docs/2026-07-28/develop/build-server), [официальный SDK](https://github.com/modelcontextprotocol/typescript-sdk).

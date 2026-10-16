@@ -2,12 +2,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import test from "node:test";
-import type { SchemaObject } from "ajv";
-import { validateContractExamples, validatePlan } from "../scripts/check_docs.js";
-import type { ContractExample } from "../scripts/check_docs.js";
 import { readJson, ROOT } from "../scripts/lib.js";
 import { byteOffset, focusedProbe, runFixtureChecks } from "../scripts/probe_chunking.js";
-import type { Plan } from "../scripts/render_backlog.js";
 
 const path = join(ROOT, "fixtures/batching.ts");
 const raw = readFileSync(path);
@@ -46,26 +42,4 @@ test("analysis does not execute a valid source with a throwing top-level stateme
 test("invalid UTF-8 and malformed syntax fail visibly", () => {
   assert.throws(() => focusedProbe(Buffer.from([0xff]), path), /exact UTF-8/);
   assert.throws(() => focusedProbe(Buffer.from("export function collectBatches( {"), path), /syntax diagnostics/);
-});
-
-test("contract validation rejects stale hashes, changed bytes and unsupported fields", () => {
-  const schema = readJson<SchemaObject>(join(ROOT, "contracts/core.schema.json"));
-  const example = readJson<ContractExample>(join(ROOT, "contracts/examples/code-unit.json"));
-  const stale = structuredClone(example);
-  stale.value.content_hash = "0".repeat(64);
-  assert.throws(() => validateContractExamples(schema, [stale], raw), /content hash/);
-  assert.throws(() => validateContractExamples(schema, [example], Buffer.concat([raw, Buffer.from(" ")])), /fixture span/);
-  const extra = structuredClone(example);
-  extra.value.unknown_field = true;
-  assert.throws(() => validateContractExamples(schema, [extra], raw), /additional properties/);
-});
-
-test("backlog validation rejects cycles and completed tasks with unfinished prerequisites", () => {
-  const plan = readJson<Plan>(join(ROOT, "plans/backlog.json"));
-  const cyclic = structuredClone(plan);
-  cyclic.tasks.find((task) => task.id === "RC-003")!.depends_on = ["RC-004"];
-  assert.throws(() => validatePlan(cyclic), /Dependency cycle/);
-  const premature = structuredClone(plan);
-  premature.tasks.find((task) => task.id === "RC-004")!.status = "done";
-  assert.throws(() => validatePlan(premature), /unfinished prerequisite/);
 });

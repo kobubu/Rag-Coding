@@ -1,14 +1,14 @@
 # CM Atlas: локальная карта кода
 
-В 0.6.0 работает React/TypeScript viewer с локальным Node.js сервером. Это read-only prototype без облачного аккаунта. Он читает те же source snapshot, symbols, relations и learned embeddings, что MCP и native Harness plugin. При включённом `--auto-update true` карта отслеживает опубликованные поколения и очищает старые selections; [пополнение и обновление](LIVE-CM.md).
+В 0.6.0 работает React/TypeScript viewer с локальным Node.js сервером. Это read-only prototype без облачного аккаунта. Он читает те же source snapshot, symbols, relations и learned embeddings, что MCP и native Harness plugin. При включённом `--auto-update true` карта отслеживает опубликованные поколения и очищает старые selections; [пополнение и обновление](HOW-IT-WORKS.md#5-свежесть).
 
-После `npm ci`, `npm run build` и [индексации](VECTOR-SEARCH.md):
+После `npm ci`, `npm run build` и [индексации](HOW-IT-WORKS.md):
 
 ```powershell
 npm.cmd run cm:agent -- --project 'D:/Geo Dash'
 ```
 
-Команда выводит JSON с `url` и `pid`. Откройте выданный `http://127.0.0.1:<port>`; `--port 0` выбирает свободный порт, `--port 61331` задаёт конкретный. Для данных вне проекта добавьте `--index`, `--vectors`, `--model-cache` по [MCP setup](MCP-SETUP.md). `--search-mode exact` — default; `ann` включается после [создания HNSW](HNSW.md). Остановка консольного процесса — Ctrl+C. Сервер не публикуется в интернете.
+Команда выводит JSON с `url` и `pid`. Откройте выданный `http://127.0.0.1:<port>`; `--port 0` выбирает свободный порт, `--port 61331` задаёт конкретный. Для данных вне проекта добавьте `--index`, `--vectors`, `--model-cache` по [MCP setup](MCP-SETUP.md). `--search-mode exact` — default; `ann` включается после [создания HNSW](HOW-IT-WORKS.md#exact-и-hnsw). Остановка консольного процесса — Ctrl+C. Сервер не публикуется в интернете.
 
 ## Навигация и смысл карты
 
@@ -30,4 +30,4 @@ HTTP слушает только `127.0.0.1`, проверяет Host, Origin и
 
 Watcher и saved edit/add/delete/rename/branch refresh доступны через `--auto-update true`. Карта проверяет snapshot раз в две секунды и очищает старый source; незавершённые navigation requests отменяются. При выключенном live update пересоздайте source/vector projections и перезапустите агент. Ручная редактура concepts, graph path overlay, полный unresolved UI, SQLite migration, installer/update и подписка остаются планом.
 
-На настоящем corpus Geo Dash: 224 модуля, 29186 symbols, 130775 relations, 7503 vectors. В Chrome проверены semantic search → code, glossary, compiler evidence, similarity navigation и zoom; layouts 1440×1000, 844×390, 390×844 без horizontal overflow и console errors. [Безопасные результаты](../research/evidence/local-cm-mcp-atlas-2026-10-13.json); screenshots с private source остаются локальными.
+На настоящем corpus Geo Dash: 224 модуля, 29186 symbols, 130775 relations, 7503 vectors. В Chrome проверены semantic search → code, glossary, compiler evidence, similarity navigation и zoom; layouts 1440×1000, 844×390, 390×844 без horizontal overflow и console errors. [Безопасные результаты](https://github.com/kobubu/Rag-Coding/tree/0119b57/research/evidence); screenshots с private source остаются локальными.

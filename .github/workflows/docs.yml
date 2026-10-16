@@ -35,8 +35,6 @@ jobs:
         run: npm test
       - name: Smoke portable diagnostic CLI
         run: npm run probe -- --fixture --output .artifacts/ci-fixture-ts.json
-      - name: Verify generated backlog
-        run: npm run backlog -- --check
       - name: Index checkout and dispatch CM tools through real Harness registry
         run: npm run plugin:smoke
       - name: Check installable plugin package
