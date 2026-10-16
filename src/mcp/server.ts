@@ -7,9 +7,9 @@ import { CM_VERSION } from "../version.js";
 
 export function contextReply(context: RetrievedContext) {
   const limited = { ...context, parts: [...context.parts], bytes_used: context.parts.reduce((sum, part) => sum + Buffer.byteLength(part.text, "utf8"), 0) };
-  const reply = () => ({ content: [{ type: "text" as const, text: renderContext(limited) }], structuredContent: {
+  const reply = () => ({ content: [{ type: "text" as const, text: renderContext(limited, false) }], structuredContent: {
     snapshot_id: limited.snapshot_id, channels: limited.channels, bytes_used: limited.bytes_used, omissions: limited.omissions, complete: false,
-    source_context: renderContext(limited),
+    source_context: renderContext(limited, false),
     sources: limited.parts.slice(0, 64).map(part => ({ path: part.path, span: part.span, reason: part.reason })), references_truncated: limited.parts.length > 64 } });
   let value = reply();
   while (Buffer.byteLength(JSON.stringify(value), "utf8") > 64000 && limited.parts.length) {

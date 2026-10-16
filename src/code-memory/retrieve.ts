@@ -76,9 +76,10 @@ export async function retrieveContext(index: CMIndex, vectors: LocalVectors, que
   return { snapshot_id: index.snapshot_id, channels: ["exact", "lexical-idf", "local-dense-vector", "required-symbols"], bytes_used: bytes, parts, omissions, complete: false };
 }
 
-export function renderContext(context: RetrievedContext): string {
+// observed: the host registered these files as read (Harness fs/observed); MCP and hook clients cannot.
+export function renderContext(context: RetrievedContext, observed = true): string {
   // Say exactly what is shown: a vague "partial, read if necessary" makes models re-read files they already have.
-  return "CM context (current saved source, version checked and registered as read for edit):\n" + (context.retrieval ? `Route: ${context.retrieval.policy}/${context.retrieval.route}; bindings shown ${context.retrieval.bindings_shown}, omitted ${context.retrieval.bindings_omitted}.\n` : "") +
+  return `CM context (current saved source, version checked${observed ? " and registered as read for edit" : ""}):\n` + (context.retrieval ? `Route: ${context.retrieval.policy}/${context.retrieval.route}; bindings shown ${context.retrieval.bindings_shown}, omitted ${context.retrieval.bindings_omitted}.\n` : "") +
     context.parts.map((part) => `${part.path}:${part.span.line_start}-${part.span.line_end}${part.whole ? " (whole file)" : ""}\n${part.text}`).join("\n\n") +
     (context.notes?.length ? "\n" + context.notes.join("\n") : "") +
     (context.omissions ? `\n${context.omissions} additional spans omitted. Request more context or read if necessary.` : "\nNo resolved bindings of the shown definitions were omitted; other code is not shown.");

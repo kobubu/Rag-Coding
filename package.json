@@ -24,7 +24,8 @@
     "cm:agent": "node dist/src/local-agent/cli.js",
     "cm:mcp": "node dist/src/mcp/cli.js",
     "cm:ann": "node dist/src/code-memory/ann_cli.js",
-    "cm:setup": "node dist/src/setup/cli.js"
+    "cm:setup": "node dist/src/setup/cli.js",
+    "cm:hook": "node dist/src/hooks/cli.js"
   },
   "main": "./dist/src/harness/plugin.js",
   "types": "./dist/src/harness/plugin.d.ts",
@@ -41,7 +42,8 @@
     "cm-agent": "dist/src/local-agent/cli.js",
     "cm-mcp": "dist/src/mcp/cli.js",
     "cm-ann-index": "dist/src/code-memory/ann_cli.js",
-    "cm-setup": "dist/src/setup/cli.js"
+    "cm-setup": "dist/src/setup/cli.js",
+    "cm-hook": "dist/src/hooks/cli.js"
   },
   "files": [
     "dist/src/",
