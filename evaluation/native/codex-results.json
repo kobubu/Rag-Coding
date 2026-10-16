@@ -1,0 +1,2054 @@
+{
+  "protocol": {
+    "format": "cm-native-ab-1",
+    "created_at": "2026-10-16T04:02:01.783Z",
+    "client": "codex",
+    "client_version": "codex-cli 0.163.0",
+    "model": "gpt-6-luna",
+    "reasoning_effort": "low",
+    "arms": [
+      "none",
+      "cm_base",
+      "cm_next"
+    ],
+    "repetitions": 2,
+    "cases_hash": "a0b2c864597d1d09ea20967c0e08be2bd75b643ba759bfcbddc812252dc1de3a",
+    "preparation_sha256": "dcdff6060b72331210c27ac2529c225a94cb8f53c4c63f9488c8ff9008ef494e",
+    "implementation": [
+      {
+        "path": "scripts/lib.ts",
+        "sha256": "2c08b0809a3a0e1a06b44166429b35b51fb76c135d3af982c6a2785dcf34acd9"
+      },
+      {
+        "path": "dist/scripts/lib.js",
+        "sha256": "a7be953e3b1cf6a812e3b8185813548f92877b8fadb28bdb0a04d7e2231ac4e9"
+      },
+      {
+        "path": "scripts/native_ab.ts",
+        "sha256": "5fe89c1eb3119d6e8a811155346530662910f6208b826b722107c38d1194819c"
+      },
+      {
+        "path": "dist/scripts/native_ab.js",
+        "sha256": "98f5767b1558d94dbfbf07b0f445825a789969f924687e490a9ded9339184079"
+      },
+      {
+        "path": "scripts/speed_checks.ts",
+        "sha256": "db00900dd8e53a09a345811f2e0ddf4ad581ea92682d54e6a55ab79085f15345"
+      },
+      {
+        "path": "dist/scripts/speed_checks.js",
+        "sha256": "8268f0e2e52a5ff258d0ead7a5ec9d544f24d80a414021cf1069b8b179d2e8c5"
+      },
+      {
+        "path": "src/code-memory/ann_cli.ts",
+        "sha256": "ec832ee3379eec2d3da3fe630574e4c921017e42f53f836e26ed9905ee782b11"
+      },
+      {
+        "path": "dist/src/code-memory/ann_cli.js",
+        "sha256": "8908efa202deee2339092015d4efd2d24d8ff5fabf1dfc80611eebf205fe845a"
+      },
+      {
+        "path": "src/code-memory/chunks.ts",
+        "sha256": "974174aedf7adc42ba5f5956e408d277801872e45b3990fa3a8ae79186334775"
+      },
+      {
+        "path": "dist/src/code-memory/chunks.js",
+        "sha256": "aaa93539bff2a03b22deeb6ace750b202fae4dec1022bd973055082f38f1f454"
+      },
+      {
+        "path": "src/code-memory/cli.ts",
+        "sha256": "1e21966c1127fe3bdfa47926dbad922bf3dab9d822c44ecd9772a09a040708dd"
+      },
+      {
+        "path": "dist/src/code-memory/cli.js",
+        "sha256": "41ed2c37fb738f2010be9fece7e0d987f607d177ded0fb69d513e7af6bf25ab8"
+      },
+      {
+        "path": "src/code-memory/direct.ts",
+        "sha256": "c2a0209234d3c7561aed181605b48204ea8048c5361e7e86febc76e5dda16f34"
+      },
+      {
+        "path": "dist/src/code-memory/direct.js",
+        "sha256": "1bcd396c6d47fe00eaef79dfa21322b5c6c976713c99fa810a268afa92fcf406"
+      },
+      {
+        "path": "src/code-memory/focus.ts",
+        "sha256": "d1a824ef2aa5036ccb9dc1a5b2728f3b6a55e71ecc14251f38aeadbbc596b7d0"
+      },
+      {
+        "path": "dist/src/code-memory/focus.js",
+        "sha256": "4c558978b9edd227f8f3e8e8b8b54a4e175526c32a5d7fdd91b878292a8be7a2"
+      },
+      {
+        "path": "src/code-memory/graph_retrieve.ts",
+        "sha256": "00b7a0eba33c45a325603d9dc0f378910d3284e92f775bec4137b329a64199d8"
+      },
+      {
+        "path": "dist/src/code-memory/graph_retrieve.js",
+        "sha256": "07f75183270e500eb3c1efb641530c54d5980dfb1c0e44e15ca7d01776145bad"
+      },
+      {
+        "path": "src/code-memory/indexer.ts",
+        "sha256": "c95437769d5aff254841366c55e007c43dafcf6933bca47050330e06b357f613"
+      },
+      {
+        "path": "dist/src/code-memory/indexer.js",
+        "sha256": "6bbd813f0dc898dfcd6d492e695ae1671b7eb1ad8e80be408622cb80f7112b8b"
+      },
+      {
+        "path": "src/code-memory/knowledge.ts",
+        "sha256": "88ae9543ec08c9e3ca299f09aa4e416fcb5c3f01e0878095ba20c744dbe6903c"
+      },
+      {
+        "path": "dist/src/code-memory/knowledge.js",
+        "sha256": "7fff92a925752025bcfc9e46af851c6cfe0aeadb6e3a55663ed09124bae4aee8"
+      },
+      {
+        "path": "src/code-memory/live.ts",
+        "sha256": "df19b51ede03cc723008ed1bb7767959b08720c714466a3946aaea43ac4df717"
+      },
+      {
+        "path": "dist/src/code-memory/live.js",
+        "sha256": "0a6f5142c26d8908089bca15fb253d6a73ae8e07f9490aeb23da93339daa7372"
+      },
+      {
+        "path": "src/code-memory/minilm.ts",
+        "sha256": "0fe815aadfa2ce5a1b1856ff9ce54ea374f767b332733d617955115bd2c5f050"
+      },
+      {
+        "path": "dist/src/code-memory/minilm.js",
+        "sha256": "864594193f0246fd6564712907b6c3e73f81efcb06161b3b23e2950dea0a0b9f"
+      },
+      {
+        "path": "src/code-memory/query.ts",
+        "sha256": "380478b4914fc633ee58193d428a91509d566da52e9889640d91b07662d01bc3"
+      },
+      {
+        "path": "dist/src/code-memory/query.js",
+        "sha256": "177fd3e99389992e248df7dccf44ef1b8c52538ccf918f2fb4ed0866b27c51cb"
+      },
+      {
+        "path": "src/code-memory/retrieve.ts",
+        "sha256": "f69c4f99dc65750603f794abe9ae4936a35fbf4dc9510d5d9f772d96a3d7f6e0"
+      },
+      {
+        "path": "dist/src/code-memory/retrieve.js",
+        "sha256": "f80ccc0ad4d0bb1f256f6ddf6e6aafa13cd6eb9a2678fa2dfcfd8f19ff0f47af"
+      },
+      {
+        "path": "src/code-memory/search_cli.ts",
+        "sha256": "feb51a21b7eae020f4784d3b3ab92950c619a69ec9070d38101f6aeab95ddedf"
+      },
+      {
+        "path": "dist/src/code-memory/search_cli.js",
+        "sha256": "c37522858ec00cda295127758a2a43bebfab038de7934e60f0df72787fa0981d"
+      },
+      {
+        "path": "src/code-memory/source.ts",
+        "sha256": "23b1343692dc7f1bd943cf30a763919bbd16018dcb046c8c468d7a74184e7264"
+      },
+      {
+        "path": "dist/src/code-memory/source.js",
+        "sha256": "b26f7612786b94be200404021239585e5180b71505a9ee858465c47db4eb0799"
+      },
+      {
+        "path": "src/code-memory/store.ts",
+        "sha256": "cc1dae4e0a793b13614bbde32e380e16f761aa3664a9bd99f26a5e03525d4ffd"
+      },
+      {
+        "path": "dist/src/code-memory/store.js",
+        "sha256": "4e2db3116e9efec8775ffe14fd06e167d9183df84b20fa3ead61b3a7380cd601"
+      },
+      {
+        "path": "src/code-memory/ts.ts",
+        "sha256": "76222d7d3d073bb02b074009187a4e5123d575ad0bc8787d1ae77a63f1467ef2"
+      },
+      {
+        "path": "dist/src/code-memory/ts.js",
+        "sha256": "cb373ccf462adbb056482860086ea26c977e37c28cd2c47a1a41bcbf73026fc2"
+      },
+      {
+        "path": "src/code-memory/types.ts",
+        "sha256": "ad337bc6337850714843fda6ea2044683a48feb3465e4c0bdaad08d39617bc86"
+      },
+      {
+        "path": "dist/src/code-memory/types.js",
+        "sha256": "05c41b0ce4ba21f6ec0f485502ef2cd15de86b3c992e97965ce907b453a1baa6"
+      },
+      {
+        "path": "src/code-memory/vector.ts",
+        "sha256": "b9dad116c7abb8d27cf8195aff68f6bc17c0cb41244ef141617d056e7c4b5d82"
+      },
+      {
+        "path": "dist/src/code-memory/vector.js",
+        "sha256": "b1824b10f1269bf19263ba6ad434d199067ae15c1603e3a4bada7b0477aa5e76"
+      },
+      {
+        "path": "src/code-memory/vector_cli.ts",
+        "sha256": "a9bc4345eaab4606a90c379829578ccf2ab6dc3e19ca9f346d8e29ec445a97fb"
+      },
+      {
+        "path": "dist/src/code-memory/vector_cli.js",
+        "sha256": "50fe2e32e92f528265c4997fb0692b1948165fdaee071e1483f7e8a193824c33"
+      },
+      {
+        "path": "src/harness/plugin.ts",
+        "sha256": "f197e4142b41de05f3b9ed510251ddf1c26c8272a2775271263a3ca5dbb830f0"
+      },
+      {
+        "path": "dist/src/harness/plugin.js",
+        "sha256": "8908014061d2928a607eb1ca1b3fea02946032513f30d6eb65a8c9e759bff87b"
+      },
+      {
+        "path": "src/hooks/cli.ts",
+        "sha256": "846ad711e1db827fe983c736a2c93126748c006d49112f2d33db0860cd02b3d3"
+      },
+      {
+        "path": "dist/src/hooks/cli.js",
+        "sha256": "d9847692ca10f73d29afb33c9176cb125c65ca6834d0eaa1c7b57c2c5292a7d1"
+      },
+      {
+        "path": "src/hooks/context.ts",
+        "sha256": "ca7f04df09b02ad2e6f0a2c9edf06b2d4a8af59b429a3a9edf80cf192fce3099"
+      },
+      {
+        "path": "dist/src/hooks/context.js",
+        "sha256": "3022f611592cd3f3830484cff5b135d7885dd9d06add585c8191d81b033a10ca"
+      },
+      {
+        "path": "src/local-agent/cli.ts",
+        "sha256": "d32e478b42556fdd47551579107a7a965b5419e555912acf9d396084c682267a"
+      },
+      {
+        "path": "dist/src/local-agent/cli.js",
+        "sha256": "cbe628816478a47292ccba5cc0a59cc1817135878bc18dd3fb617842cf53bfc3"
+      },
+      {
+        "path": "src/local-agent/config.ts",
+        "sha256": "1a3d5fd94f5be46280957c1dce12384442ad3df997c323f534a342560a8d3c0b"
+      },
+      {
+        "path": "dist/src/local-agent/config.js",
+        "sha256": "503f5b7b88cf844f951ef8510b0f270a1c4e1eb77425f4a4c94bb3eea248bd2c"
+      },
+      {
+        "path": "src/local-agent/http.ts",
+        "sha256": "7493fa9366c9eef60f2bb71f1181a152ad62c3a51dd5d45b666899e412f5aab5"
+      },
+      {
+        "path": "dist/src/local-agent/http.js",
+        "sha256": "d6ef6cbf2e7d7dd9216c35401e27d8400f2dc899491d7f06a7c53478519571df"
+      },
+      {
+        "path": "src/local-agent/map.ts",
+        "sha256": "82e9b7b6139e93ff3739dd97c62935ee067dfe7c3ab5c5fb510f7b61168a3d86"
+      },
+      {
+        "path": "dist/src/local-agent/map.js",
+        "sha256": "fc10d41dc66d1ea94f15f3fe74a354c3d75e77882e1b487f9aa671492b3fcb2b"
+      },
+      {
+        "path": "src/local-agent/models.ts",
+        "sha256": "01ad788a233ae5cdcf1b72a2ce5b70cbd39d8076818ed58e09c1aedf17a5a33f"
+      },
+      {
+        "path": "dist/src/local-agent/models.js",
+        "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      {
+        "path": "src/local-agent/service.ts",
+        "sha256": "5b4940374e90de41b09cd3680266325d3ffca980146d6c61d16a8230263ad900"
+      },
+      {
+        "path": "dist/src/local-agent/service.js",
+        "sha256": "4cfed3f33c63e776b5324e535f6ba480a404ae230858a06f8b5a53bf637fe5fa"
+      },
+      {
+        "path": "src/mcp/cli.ts",
+        "sha256": "fedb7f353ff0b1bba7e8fa3a62f69fb12f761e363de0d6452d99505ef5b9d71a"
+      },
+      {
+        "path": "dist/src/mcp/cli.js",
+        "sha256": "7ec9663e90d36962c57590fd294e45b274ecab1086d45fc54e4943b165d327c6"
+      },
+      {
+        "path": "src/mcp/server.ts",
+        "sha256": "3be79cee0ccad10494d3e79041bb1acfd9f4a461dc206c70840a9f12c9571be3"
+      },
+      {
+        "path": "dist/src/mcp/server.js",
+        "sha256": "a09f56700f108a837f0dc1be3b41e9b128762bca8e8630506603a7ae07da2e7f"
+      },
+      {
+        "path": "src/setup/claude.ts",
+        "sha256": "c0b2b832ba823290e70e17dd7f5455ffc44fe13d32975ef3b88fbe0f7aca7ecc"
+      },
+      {
+        "path": "dist/src/setup/claude.js",
+        "sha256": "297fcffbb391421557d7f1ac85caa2df28f48432acfc7cb18ad500d607ab9db0"
+      },
+      {
+        "path": "src/setup/cli.ts",
+        "sha256": "6331feb2d2ea56c58af985c4d667eb2c80a84b396cf182afaa8b06f4e73df29f"
+      },
+      {
+        "path": "dist/src/setup/cli.js",
+        "sha256": "345921d8a24cf5695ec4ec9f227d4398ded300350462d3f4f6475c7687057501"
+      },
+      {
+        "path": "src/setup/config.ts",
+        "sha256": "2f962ae025c5896235ed3ba580f524726119c5ef335e0c608155a102e4e932df"
+      },
+      {
+        "path": "dist/src/setup/config.js",
+        "sha256": "f38c59a9dedf4c2baae577181111616be5fc46a1d38d45b8b9766198e02d6a2a"
+      },
+      {
+        "path": "src/setup/files.ts",
+        "sha256": "184ced0192f36df23f15a41c7999c96ee3ce7a676ca3dff88bb56ed16033a99d"
+      },
+      {
+        "path": "dist/src/setup/files.js",
+        "sha256": "ee4283af8d51f199e9bd2435cdc36f365e7a9d65d08c580d6b034a2945e650df"
+      },
+      {
+        "path": "src/setup/install.ts",
+        "sha256": "7a116bd62637748330a5892d689637cbb09f8e5426fc57d91e9fe47ae4ec9ae7"
+      },
+      {
+        "path": "dist/src/setup/install.js",
+        "sha256": "73e565a1d45b943d87620148c6afcff7c6fa32de9c672fc025699b6f2aa41743"
+      },
+      {
+        "path": "src/version.ts",
+        "sha256": "a84fdcc97f67f7ce5da3ba27e03ffc0ce0e1dad06081d7f5f68a51dfb8f7f07b"
+      },
+      {
+        "path": "dist/src/version.js",
+        "sha256": "a84fdcc97f67f7ce5da3ba27e03ffc0ce0e1dad06081d7f5f68a51dfb8f7f07b"
+      }
+    ],
+    "base_build_sha256": "2c8e85e3bba049907c0eeef5113cf16f75632bd90371b672248849e851c34a96",
+    "max_run_seconds": 300,
+    "max_estimated_usd": 1,
+    "price": {
+      "input": 0.1,
+      "cache_read": 0.01,
+      "cache_write": 0.125,
+      "output": 0.5,
+      "per": 1000000,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-luna"
+    },
+    "arms_config": {
+      "none": "Codex without CM",
+      "cm_base": "Frozen CM 0.8.1: MCP server + installer skill, model decides whether to call it",
+      "cm_next": "Current CM: UserPromptSubmit hook adds CM context before the first call, plus MCP server + skill"
+    }
+  },
+  "estimated_cost_usd": 0.10527148999999998,
+  "results": [
+    {
+      "run_id": "run-ded8cb754986798c",
+      "task": "circle-contact",
+      "category": "named-with-helper",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 8806.141351,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 275,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 12,
+        "cache_read": 34412,
+        "cache_write": 12019,
+        "output": 466,
+        "total_input": 46443,
+        "total_tokens": 46909,
+        "usd_estimate": 0.0020806949999999996
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-df56de2016b4845a",
+      "task": "circle-contact",
+      "category": "named-with-helper",
+      "repetition": 1,
+      "arm": "cm_next",
+      "duration_ms": 6333.174584,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 275,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 800,
+        "cache_read": 10995,
+        "cache_write": 12081,
+        "output": 296,
+        "total_input": 23876,
+        "total_tokens": 24172,
+        "usd_estimate": 0.001848075
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-16T04:02:16.421Z",
+        "ms": 279,
+        "bytes": 1834,
+        "paths": [
+          "game/src/core/geometry.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      }
+    },
+    {
+      "run_id": "run-d4303a5cd4baffea",
+      "task": "circle-contact",
+      "category": "named-with-helper",
+      "repetition": 1,
+      "arm": "cm_base",
+      "duration_ms": 9373.201574,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 275,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 12,
+        "cache_read": 34882,
+        "cache_write": 12207,
+        "output": 455,
+        "total_input": 47101,
+        "total_tokens": 47556,
+        "usd_estimate": 0.002103395
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-f87e5eb724448b20",
+      "task": "camera-time",
+      "category": "named-dependency-chain",
+      "repetition": 1,
+      "arm": "cm_next",
+      "duration_ms": 5787.4514149999995,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 901,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 1272,
+        "cache_read": 10989,
+        "cache_write": 12528,
+        "output": 291,
+        "total_input": 24789,
+        "total_tokens": 25080,
+        "usd_estimate": 0.0019485899999999998
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-16T04:02:32.783Z",
+        "ms": 304,
+        "bytes": 4233,
+        "paths": [
+          "game/fil/src/cameraModel.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      }
+    },
+    {
+      "run_id": "run-3d72c2cab9925f05",
+      "task": "camera-time",
+      "category": "named-dependency-chain",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 6231.662305000002,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 901,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 9,
+        "cache_read": 23074,
+        "cache_write": 12383,
+        "output": 382,
+        "total_input": 35466,
+        "total_tokens": 35848,
+        "usd_estimate": 0.001970515
+      },
+      "items": {
+        "agent_message": 2,
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-1ed44389c4837e8b",
+      "task": "camera-time",
+      "category": "named-dependency-chain",
+      "repetition": 1,
+      "arm": "cm_base",
+      "duration_ms": 8585.350143999996,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 901,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 9,
+        "cache_read": 23211,
+        "cache_write": 12530,
+        "output": 456,
+        "total_input": 35750,
+        "total_tokens": 36206,
+        "usd_estimate": 0.00202726
+      },
+      "items": {
+        "agent_message": 2,
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-747890408861ca58",
+      "task": "wallet-delta",
+      "category": "semantic-discovery",
+      "repetition": 1,
+      "arm": "cm_next",
+      "duration_ms": 19933.284252999998,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 272,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 284,
+        "cache_read": 34480,
+        "cache_write": 12131,
+        "output": 701,
+        "total_input": 46895,
+        "total_tokens": 47596,
+        "usd_estimate": 0.002240075
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-16T04:03:02.923Z",
+        "ms": 9099,
+        "bytes": 341,
+        "paths": [
+          "game/src/core/reward-wallet.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      }
+    },
+    {
+      "run_id": "run-020647a407107f2d",
+      "task": "wallet-delta",
+      "category": "semantic-discovery",
+      "repetition": 1,
+      "arm": "cm_base",
+      "duration_ms": 28626.031544000012,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 272,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 27,
+        "cache_read": 126807,
+        "cache_write": 17696,
+        "output": 1834,
+        "total_input": 144530,
+        "total_tokens": 146364,
+        "usd_estimate": 0.004399770000000001
+      },
+      "items": {
+        "agent_message": 4,
+        "command_execution": 6,
+        "file_change": 2
+      },
+      "shell_commands": 6,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-7d5a74b730bc7fb0",
+      "task": "wallet-delta",
+      "category": "semantic-discovery",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 19748.486179000014,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 272,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 21,
+        "cache_read": 116359,
+        "cache_write": 22573,
+        "output": 1288,
+        "total_input": 138953,
+        "total_tokens": 140241,
+        "usd_estimate": 0.0046313149999999996
+      },
+      "items": {
+        "agent_message": 2,
+        "command_execution": 6,
+        "file_change": 2
+      },
+      "shell_commands": 6,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-4b9fedee5443c67a",
+      "task": "motion-envelope",
+      "category": "semantic-import-dependency",
+      "repetition": 1,
+      "arm": "cm_base",
+      "duration_ms": 19235.434542000003,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 3239,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 24,
+        "cache_read": 128284,
+        "cache_write": 20841,
+        "output": 1021,
+        "total_input": 149149,
+        "total_tokens": 150170,
+        "usd_estimate": 0.0044008649999999995
+      },
+      "items": {
+        "agent_message": 4,
+        "command_execution": 6,
+        "file_change": 1
+      },
+      "shell_commands": 6,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-a9987e8eb123c4d2",
+      "task": "motion-envelope",
+      "category": "semantic-import-dependency",
+      "repetition": 1,
+      "arm": "cm_next",
+      "duration_ms": 10297.557452999987,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 3239,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 1042,
+        "cache_read": 23398,
+        "cache_write": 12590,
+        "output": 313,
+        "total_input": 37030,
+        "total_tokens": 37343,
+        "usd_estimate": 0.0020684300000000004
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-16T04:04:25.555Z",
+        "ms": 3602,
+        "bytes": 2762,
+        "paths": [
+          "game/fil/src/geoCollisionCandidates.js",
+          "game/fil/src/checkpointModel.js",
+          "game/fil/src/renderVisibilityModel.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      }
+    },
+    {
+      "run_id": "run-ea29c230cabb3822",
+      "task": "motion-envelope",
+      "category": "semantic-import-dependency",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 13694.35229499999,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 3239,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 21,
+        "cache_read": 108836,
+        "cache_write": 20366,
+        "output": 649,
+        "total_input": 129223,
+        "total_tokens": 129872,
+        "usd_estimate": 0.00396071
+      },
+      "items": {
+        "agent_message": 2,
+        "command_execution": 5,
+        "file_change": 1
+      },
+      "shell_commands": 5,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-9a78add695b4115c",
+      "task": "quota-receipts",
+      "category": "two-module-contract",
+      "repetition": 1,
+      "arm": "cm_base",
+      "duration_ms": 17793.969872999995,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 454,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 18,
+        "cache_read": 71096,
+        "cache_write": 17745,
+        "output": 1117,
+        "total_input": 88859,
+        "total_tokens": 89976,
+        "usd_estimate": 0.0034893850000000002
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 4,
+        "file_change": 2
+      },
+      "shell_commands": 4,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-8f2d0bd4de75dbdb",
+      "task": "quota-receipts",
+      "category": "two-module-contract",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 16671.079093999986,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 454,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 21,
+        "cache_read": 86755,
+        "cache_write": 18024,
+        "output": 1059,
+        "total_input": 104800,
+        "total_tokens": 105859,
+        "usd_estimate": 0.0036521500000000003
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 5,
+        "file_change": 2
+      },
+      "shell_commands": 5,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-65509027dbce7d46",
+      "task": "quota-receipts",
+      "category": "two-module-contract",
+      "repetition": 1,
+      "arm": "cm_next",
+      "duration_ms": 12405.099737000011,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 454,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 565,
+        "cache_read": 22916,
+        "cache_write": 12255,
+        "output": 751,
+        "total_input": 35736,
+        "total_tokens": 36487,
+        "usd_estimate": 0.002193035
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-16T04:05:24.338Z",
+        "ms": 2694,
+        "bytes": 1370,
+        "paths": [
+          "game/src/core/progression.js",
+          "game/src/core/reward-policy.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      }
+    },
+    {
+      "run_id": "run-480c289ba5a95b67",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 20947.588594,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 360.4285960000002,
+          "candidate_ms": 8.733744499999375,
+          "speedup": 41.26850699605719,
+          "samples": [
+            {
+              "baseline_ms": 393.70996449999996,
+              "candidate_ms": 14.719066999999882
+            },
+            {
+              "baseline_ms": 401.28618800000027,
+              "candidate_ms": 9.272722499999873
+            },
+            {
+              "baseline_ms": 380.16196950000017,
+              "candidate_ms": 11.464763000000175
+            },
+            {
+              "baseline_ms": 360.4285960000002,
+              "candidate_ms": 7.649263500000188
+            },
+            {
+              "baseline_ms": 350.32756250000034,
+              "candidate_ms": 8.380563999999595
+            },
+            {
+              "baseline_ms": 345.25251049999997,
+              "candidate_ms": 8.733744499999375
+            },
+            {
+              "baseline_ms": 349.8243649999995,
+              "candidate_ms": 8.073078500000065
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 15,
+        "cache_read": 48590,
+        "cache_write": 13445,
+        "output": 1597,
+        "total_input": 62050,
+        "total_tokens": 63647,
+        "usd_estimate": 0.0029665250000000002
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 2,
+        "file_change": 2
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-113f1f9d63afd081",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 1,
+      "arm": "cm_base",
+      "duration_ms": 21874.076818,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 353.3358705000003,
+          "candidate_ms": 8.311385500000142,
+          "speedup": 42.51227072790623,
+          "samples": [
+            {
+              "baseline_ms": 372.15230049999997,
+              "candidate_ms": 9.459548499999869
+            },
+            {
+              "baseline_ms": 371.8760219999999,
+              "candidate_ms": 8.86965500000008
+            },
+            {
+              "baseline_ms": 381.83804899999996,
+              "candidate_ms": 8.311385500000142
+            },
+            {
+              "baseline_ms": 353.3358705000003,
+              "candidate_ms": 9.828894000000219
+            },
+            {
+              "baseline_ms": 347.07127249999985,
+              "candidate_ms": 7.115998500000387
+            },
+            {
+              "baseline_ms": 338.3169649999995,
+              "candidate_ms": 7.297405499999968
+            },
+            {
+              "baseline_ms": 342.76981600000045,
+              "candidate_ms": 7.528034499999649
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 15,
+        "cache_read": 49227,
+        "cache_write": 13539,
+        "output": 1583,
+        "total_input": 62781,
+        "total_tokens": 64364,
+        "usd_estimate": 0.002977645
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 2,
+        "file_change": 2
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-403cbc59c6247be2",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 1,
+      "arm": "cm_next",
+      "duration_ms": 22704.538765000005,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 359.5950035000001,
+          "candidate_ms": 6.73347949999993,
+          "speedup": 53.40403924895053,
+          "samples": [
+            {
+              "baseline_ms": 353.204557,
+              "candidate_ms": 8.891426000000024
+            },
+            {
+              "baseline_ms": 364.3278599999999,
+              "candidate_ms": 6.320897500000115
+            },
+            {
+              "baseline_ms": 354.41278799999986,
+              "candidate_ms": 6.73347949999993
+            },
+            {
+              "baseline_ms": 359.5950035000001,
+              "candidate_ms": 7.144403499999953
+            },
+            {
+              "baseline_ms": 361.41024449999986,
+              "candidate_ms": 7.772233999999571
+            },
+            {
+              "baseline_ms": 340.81688950000034,
+              "candidate_ms": 6.49787649999962
+            },
+            {
+              "baseline_ms": 377.8976170000001,
+              "candidate_ms": 5.970628500000203
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 955,
+        "cache_read": 37814,
+        "cache_write": 14069,
+        "output": 1129,
+        "total_input": 52838,
+        "total_tokens": 53967,
+        "usd_estimate": 0.0027967649999999997
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-16T04:06:29.766Z",
+        "ms": 343,
+        "bytes": 2887,
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      }
+    },
+    {
+      "run_id": "run-9e7fd7fb46256f57",
+      "task": "circle-contact",
+      "category": "named-with-helper",
+      "repetition": 2,
+      "arm": "cm_next",
+      "duration_ms": 8114.216247999982,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 275,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 806,
+        "cache_read": 36171,
+        "cache_write": 12804,
+        "output": 372,
+        "total_input": 49781,
+        "total_tokens": 50153,
+        "usd_estimate": 0.00222881
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 3,
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-16T04:06:58.473Z",
+        "ms": 301,
+        "bytes": 1834,
+        "paths": [
+          "game/src/core/geometry.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      }
+    },
+    {
+      "run_id": "run-558bc02c10babb11",
+      "task": "circle-contact",
+      "category": "named-with-helper",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 7495.051067999972,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 275,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 9,
+        "cache_read": 22534,
+        "cache_write": 11877,
+        "output": 350,
+        "total_input": 34420,
+        "total_tokens": 34770,
+        "usd_estimate": 0.001885865
+      },
+      "items": {
+        "agent_message": 2,
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-fa633f0e3c230f64",
+      "task": "circle-contact",
+      "category": "named-with-helper",
+      "repetition": 2,
+      "arm": "cm_base",
+      "duration_ms": 9651.697793999978,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 275,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 12,
+        "cache_read": 33919,
+        "cache_write": 12118,
+        "output": 470,
+        "total_input": 46049,
+        "total_tokens": 46519,
+        "usd_estimate": 0.00209014
+      },
+      "items": {
+        "agent_message": 2,
+        "command_execution": 3
+      },
+      "shell_commands": 3,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-0cea97df9761432d",
+      "task": "camera-time",
+      "category": "named-dependency-chain",
+      "repetition": 2,
+      "arm": "cm_next",
+      "duration_ms": 6730.328847000026,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 901,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 1275,
+        "cache_read": 23484,
+        "cache_write": 12653,
+        "output": 382,
+        "total_input": 37412,
+        "total_tokens": 37794,
+        "usd_estimate": 0.002134965
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "command_execution": 2
+      },
+      "shell_commands": 2,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-16T04:07:24.251Z",
+        "ms": 285,
+        "bytes": 4233,
+        "paths": [
+          "game/fil/src/cameraModel.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      }
+    },
+    {
+      "run_id": "run-c7dad84db6dabed4",
+      "task": "camera-time",
+      "category": "named-dependency-chain",
+      "repetition": 2,
+      "arm": "cm_base",
+      "duration_ms": 7730.7923160000355,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 901,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 9,
+        "cache_read": 23157,
+        "cache_write": 12427,
+        "output": 332,
+        "total_input": 35593,
+        "total_tokens": 35925,
+        "usd_estimate": 0.001951845
+      },
+      "items": {
+        "agent_message": 2,
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-40a1cbc81e5134e4",
+      "task": "camera-time",
+      "category": "named-dependency-chain",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 7747.477919000026,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 901,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 9,
+        "cache_read": 23058,
+        "cache_write": 12394,
+        "output": 356,
+        "total_input": 35461,
+        "total_tokens": 35817,
+        "usd_estimate": 0.00195873
+      },
+      "items": {
+        "agent_message": 2,
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-88c790d75017cdbf",
+      "task": "wallet-delta",
+      "category": "semantic-discovery",
+      "repetition": 2,
+      "arm": "cm_base",
+      "duration_ms": 16982.129832000006,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 272,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 18,
+        "cache_read": 103530,
+        "cache_write": 25434,
+        "output": 1065,
+        "total_input": 128982,
+        "total_tokens": 130047,
+        "usd_estimate": 0.004748850000000001
+      },
+      "items": {
+        "agent_message": 2,
+        "command_execution": 5
+      },
+      "shell_commands": 5,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-422780964092d75b",
+      "task": "wallet-delta",
+      "category": "semantic-discovery",
+      "repetition": 2,
+      "arm": "cm_next",
+      "duration_ms": 25766.67571500002,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 272,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 293,
+        "cache_read": 72124,
+        "cache_write": 13157,
+        "output": 1596,
+        "total_input": 85574,
+        "total_tokens": 87170,
+        "usd_estimate": 0.003193165
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "command_execution": 4,
+        "file_change": 2
+      },
+      "shell_commands": 4,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-16T04:08:07.541Z",
+        "ms": 3894,
+        "bytes": 341,
+        "paths": [
+          "game/src/core/reward-wallet.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      }
+    },
+    {
+      "run_id": "run-ad3a18f89409db30",
+      "task": "wallet-delta",
+      "category": "semantic-discovery",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 18926.401920000033,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": false,
+      "quality": {
+        "pass": false,
+        "behavior_pass": false,
+        "error": "AssertionError [ERR_ASSERTION]: Only unapplied receipts credited\n+ actual - expected\n\n  {\n    coins: 1,\n+   videoRewards: 1\n-   videoRewards: 0\n  }\n"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 21,
+        "cache_read": 107660,
+        "cache_write": 20138,
+        "output": 1406,
+        "total_input": 127819,
+        "total_tokens": 129225,
+        "usd_estimate": 0.00429895
+      },
+      "items": {
+        "agent_message": 2,
+        "command_execution": 5,
+        "file_change": 1
+      },
+      "shell_commands": 5,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-da72edc39ea03ccb",
+      "task": "motion-envelope",
+      "category": "semantic-import-dependency",
+      "repetition": 2,
+      "arm": "cm_base",
+      "duration_ms": 21917.76387799997,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 3239,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 33,
+        "cache_read": 198096,
+        "cache_write": 23098,
+        "output": 1335,
+        "total_input": 221227,
+        "total_tokens": 222562,
+        "usd_estimate": 0.0055390100000000005
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 9,
+        "file_change": 1
+      },
+      "shell_commands": 9,
+      "read_like_commands": 8,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-2a488722c79512d4",
+      "task": "motion-envelope",
+      "category": "semantic-import-dependency",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 14456.620977000042,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 3239,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 27,
+        "cache_read": 138514,
+        "cache_write": 21434,
+        "output": 779,
+        "total_input": 159975,
+        "total_tokens": 160754,
+        "usd_estimate": 0.00445659
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 5,
+        "file_change": 1
+      },
+      "shell_commands": 5,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-2a06d31929c17331",
+      "task": "motion-envelope",
+      "category": "semantic-import-dependency",
+      "repetition": 2,
+      "arm": "cm_next",
+      "duration_ms": 9722.271952999989,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 3239,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 1361,
+        "cache_read": 10997,
+        "cache_write": 12627,
+        "output": 318,
+        "total_input": 24985,
+        "total_tokens": 25303,
+        "usd_estimate": 0.001983445
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-16T04:09:29.451Z",
+        "ms": 4010,
+        "bytes": 4355,
+        "paths": [
+          "game/fil/src/kineticObstacleModel.js",
+          "game/fil/src/geoCollisionCandidates.js",
+          "game/fil/src/renderVisibilityModel.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      }
+    },
+    {
+      "run_id": "run-1aab49f0e94a480a",
+      "task": "quota-receipts",
+      "category": "two-module-contract",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 12457.953341999964,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 454,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 15,
+        "cache_read": 53781,
+        "cache_write": 15090,
+        "output": 586,
+        "total_input": 68886,
+        "total_tokens": 69472,
+        "usd_estimate": 0.00271856
+      },
+      "items": {
+        "agent_message": 2,
+        "command_execution": 4,
+        "file_change": 1
+      },
+      "shell_commands": 4,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-2329d85eebebb341",
+      "task": "quota-receipts",
+      "category": "two-module-contract",
+      "repetition": 2,
+      "arm": "cm_base",
+      "duration_ms": 17443.749532000045,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 454,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 18,
+        "cache_read": 70812,
+        "cache_write": 15896,
+        "output": 1082,
+        "total_input": 86726,
+        "total_tokens": 87808,
+        "usd_estimate": 0.00323792
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 4,
+        "file_change": 1
+      },
+      "shell_commands": 4,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-fd3175efbc683b58",
+      "task": "quota-receipts",
+      "category": "two-module-contract",
+      "repetition": 2,
+      "arm": "cm_next",
+      "duration_ms": 15984.715719000029,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 454,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 568,
+        "cache_read": 39440,
+        "cache_write": 14512,
+        "output": 616,
+        "total_input": 54520,
+        "total_tokens": 55136,
+        "usd_estimate": 0.0025732
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 4,
+        "command_execution": 2,
+        "file_change": 2
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-16T04:10:08.469Z",
+        "ms": 2884,
+        "bytes": 1370,
+        "paths": [
+          "game/src/core/progression.js",
+          "game/src/core/reward-policy.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      }
+    },
+    {
+      "run_id": "run-257c1eb85b045b22",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 28674.033590000006,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 371.1012680000001,
+          "candidate_ms": 7.092134499999929,
+          "speedup": 52.325751577328916,
+          "samples": [
+            {
+              "baseline_ms": 380.6671850000001,
+              "candidate_ms": 9.67757400000005
+            },
+            {
+              "baseline_ms": 378.24545750000004,
+              "candidate_ms": 7.850513500000034
+            },
+            {
+              "baseline_ms": 390.7073889999999,
+              "candidate_ms": 6.249744499999906
+            },
+            {
+              "baseline_ms": 371.1012680000001,
+              "candidate_ms": 7.092134499999929
+            },
+            {
+              "baseline_ms": 351.8733024999999,
+              "candidate_ms": 7.356864500000029
+            },
+            {
+              "baseline_ms": 365.9772200000002,
+              "candidate_ms": 6.315911000000142
+            },
+            {
+              "baseline_ms": 357.0962690000001,
+              "candidate_ms": 6.880318999999872
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 12,
+        "cache_read": 36068,
+        "cache_write": 13493,
+        "output": 1383,
+        "total_input": 49573,
+        "total_tokens": 50956,
+        "usd_estimate": 0.0027400050000000002
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 3,
+        "file_change": 2
+      },
+      "shell_commands": 3,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null
+    },
+    {
+      "run_id": "run-c9beca90cbc8ab80",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 2,
+      "arm": "cm_next",
+      "duration_ms": 24001.402627000003,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 367.474865,
+          "candidate_ms": 8.456608499999675,
+          "speedup": 43.45416546125011,
+          "samples": [
+            {
+              "baseline_ms": 408.22143700000004,
+              "candidate_ms": 10.327696500000002
+            },
+            {
+              "baseline_ms": 367.474865,
+              "candidate_ms": 9.330929499999911
+            },
+            {
+              "baseline_ms": 351.120365,
+              "candidate_ms": 8.474793999999974
+            },
+            {
+              "baseline_ms": 342.740908,
+              "candidate_ms": 7.103953999999931
+            },
+            {
+              "baseline_ms": 340.27205200000026,
+              "candidate_ms": 7.014666000000034
+            },
+            {
+              "baseline_ms": 377.53755900000033,
+              "candidate_ms": 8.456608499999675
+            },
+            {
+              "baseline_ms": 412.87949649999973,
+              "candidate_ms": 7.901956000000155
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 964,
+        "cache_read": 80701,
+        "cache_write": 14861,
+        "output": 1773,
+        "total_input": 96526,
+        "total_tokens": 98299,
+        "usd_estimate": 0.003647535
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 3,
+        "command_execution": 3,
+        "file_change": 3
+      },
+      "shell_commands": 3,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-16T04:10:56.760Z",
+        "ms": 306,
+        "bytes": 2887,
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      }
+    },
+    {
+      "run_id": "run-8bc3653030ba050b",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 2,
+      "arm": "cm_base",
+      "duration_ms": 20294.62351299997,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 351.31459499999994,
+          "candidate_ms": 7.679864000000066,
+          "speedup": 45.74489795652591,
+          "samples": [
+            {
+              "baseline_ms": 351.31459499999994,
+              "candidate_ms": 12.608402499999897
+            },
+            {
+              "baseline_ms": 351.7552630000001,
+              "candidate_ms": 7.679864000000066
+            },
+            {
+              "baseline_ms": 387.93036099999995,
+              "candidate_ms": 13.346842500000093
+            },
+            {
+              "baseline_ms": 342.4979329999999,
+              "candidate_ms": 7.890477499999861
+            },
+            {
+              "baseline_ms": 341.12379299999975,
+              "candidate_ms": 7.298016000000189
+            },
+            {
+              "baseline_ms": 343.34058099999993,
+              "candidate_ms": 7.126363500000025
+            },
+            {
+              "baseline_ms": 367.4283375,
+              "candidate_ms": 7.349100499999622
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 9,
+        "cache_read": 23068,
+        "cache_write": 12637,
+        "output": 635,
+        "total_input": 35714,
+        "total_tokens": 36349,
+        "usd_estimate": 0.002128705
+      },
+      "items": {
+        "agent_message": 2,
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null
+    }
+  ]
+}
