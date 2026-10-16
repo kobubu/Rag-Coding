@@ -9,7 +9,9 @@ import { ROOT } from "./lib.js";
 // Three-arm A/B in a native coding client (Codex CLI or Claude Code): no CM, a frozen CM build connected the way its installer did
 // (MCP server + skill), and the current build with the UserPromptSubmit hook that adds CM context before the first call.
 // Tasks, prepared workspaces, vectors and the independent grader are the ones of the Harness efficiency series.
-export const ARMS = ["none", "cm_base", "cm_next"] as const;
+export const ARMS = ["none", "cm_base", "cm_next", "cm_warm"] as const;
+// cm_warm: the cm_next configuration with its hook daemon already running, as in steady-state use of a project.
+const hooked = (arm: Arm) => arm === "cm_next" || arm === "cm_warm";
 export type Arm = typeof ARMS[number];
 type Task = { id: string; prompt: string; category: string; mutations: { path: string }[]; changed_paths?: string[] };
 export type NativeOptions = { warmDaemon?: boolean; client: "codex" | "claude"; claude?: string; claudeModel?: string; prepared: string; output: string; cases: string; codex: string; modelCache: string; baseRoot: string; arms: Arm[]; repetitions: number; budgetUsd: number; maxSeconds: number; model: string };
@@ -38,7 +40,7 @@ export function freezeNative(options: NativeOptions) {
     model: options.client === "claude" ? options.claudeModel : options.model, reasoning_effort: "low", arms: options.arms, repetitions: options.repetitions, cases_hash: hash(JSON.stringify(tasks)),
     preparation_sha256: hash(readFileSync(join(options.prepared, "preparation.json"))), implementation: implementation(), base_build_sha256: tree(join(options.baseRoot, "dist/src")),
     warm_daemon: Boolean(options.warmDaemon), max_run_seconds: options.maxSeconds, max_estimated_usd: options.budgetUsd, price: PRICE,
-    arms_config: { none: "Client without CM", cm_base: "Frozen CM 0.8.1: MCP server + installer skill, model decides whether to call it", cm_next: "Current CM: UserPromptSubmit hook adds CM context before the first call, plus MCP server + skill" } };
+    arms_config: { none: "Client without CM", cm_base: "Frozen CM 0.8.1: MCP server + installer skill, model decides whether to call it", cm_next: "Current CM: UserPromptSubmit hook adds CM context before the first call, plus MCP server + skill", cm_warm: "cm_next with its hook daemon started before the session (start time recorded separately)" } };
   write(protocolPath, protocol);return protocolPath;
 }
 
@@ -54,14 +56,14 @@ function codexHome(home: string, options: NativeOptions, arm: Arm, workspace: st
     `[model_providers.openai_key]\nname = "OpenAI API key"\nbase_url = "https://api.openai.com/v1"\nenv_key = "OPENAI_API_KEY"\nwire_api = "responses"\n`;
   if (arm !== "none") {
     config += `\n[mcp_servers.cm_eval]\ncommand = ${JSON.stringify(process.execPath)}\nargs = ${JSON.stringify([join(build, "dist/src/mcp/cli.js"), ...cmArgs])}\nstartup_timeout_sec = 60\ntool_timeout_sec = 180\n`;
-    if (arm === "cm_next") config += `\n[[hooks.UserPromptSubmit]]\n\n[[hooks.UserPromptSubmit.hooks]]\ntype = "command"\ncommand = ${JSON.stringify([process.execPath, join(build, "dist/src/hooks/cli.js"), ...cmArgs].map(a => JSON.stringify(a)).join(" "))}\ntimeout = 120\n`;
+    if (hooked(arm)) config += `\n[[hooks.UserPromptSubmit]]\n\n[[hooks.UserPromptSubmit.hooks]]\ntype = "command"\ncommand = ${JSON.stringify([process.execPath, join(build, "dist/src/hooks/cli.js"), ...cmArgs].map(a => JSON.stringify(a)).join(" "))}\ntimeout = 120\n`;
   }
   mkdirSync(home, { recursive: true });writeFileSync(join(home, "config.toml"), config);
 }
 
-async function runCodex(options: NativeOptions, home: string, workspace: string, prompt: string, hooks: boolean) {
+async function runCodex(options: NativeOptions, home: string, workspace: string, prompt: string, hooks: boolean, warm: boolean) {
   const args = ["exec", "--json", "--skip-git-repo-check", ...(hooks ? ["--dangerously-bypass-hook-trust"] : []), prompt];
-  const env = { ...process.env, CM_HOOK_DAEMON: options.warmDaemon ? "on" : "off", CM_HOOK_LOG: join(home, "..", "hook.jsonl"), CODEX_HOME: home, OPENAI_API_KEY: process.env.CM_AB_API_KEY ?? process.env.OPENAI_API_KEY ?? "", SSL_CERT_FILE: process.env.SSL_CERT_FILE ?? "/root/.ccr/ca-bundle.crt" };
+  const env = { ...process.env, CM_HOOK_DAEMON: warm ? "on" : "off", CM_HOOK_LOG: join(home, "..", "hook.jsonl"), CODEX_HOME: home, OPENAI_API_KEY: process.env.CM_AB_API_KEY ?? process.env.OPENAI_API_KEY ?? "", SSL_CERT_FILE: process.env.SSL_CERT_FILE ?? "/root/.ccr/ca-bundle.crt" };
   const started = performance.now();
   return await new Promise<{ exit: number | null; ms: number; stdout: string; stderr: string; timedOut: boolean }>((done, fail) => {
     const child = spawn(options.codex, args, { cwd: workspace, env, stdio: ["ignore", "pipe", "pipe"] });
@@ -90,15 +92,15 @@ const PARENT_SESSION = /^(CLAUDE_CODE_SESSION_ID|CLAUDE_CODE_REMOTE_SESSION_ID|C
 function claudeConfig(run: string, options: NativeOptions, arm: Arm, cmArgs: string[], checks: string) {
   const build = arm === "cm_base" ? resolve(options.baseRoot) : ROOT, mcp = join(run, "mcp.json"), settings = join(run, "settings.json");
   write(mcp, { mcpServers: arm === "none" ? {} : { cm_eval: { command: process.execPath, args: [join(build, "dist/src/mcp/cli.js"), ...cmArgs] } } });
-  write(settings, arm === "cm_next" ? { hooks: { UserPromptSubmit: [{ hooks: [{ type: "command", command: [process.execPath, join(build, "dist/src/hooks/cli.js"), ...cmArgs].map(a => JSON.stringify(a)).join(" "), timeout: 120 }] }] } } : {});
+  write(settings, hooked(arm) ? { hooks: { UserPromptSubmit: [{ hooks: [{ type: "command", command: [process.execPath, join(build, "dist/src/hooks/cli.js"), ...cmArgs].map(a => JSON.stringify(a)).join(" "), timeout: 120 }] }] } } : {});
   const tools = ["Read", "Edit", "MultiEdit", "Write", "Grep", "Glob", "Bash(" + checks + ")", ...(arm === "none" ? [] : ["mcp__cm_eval__cm_retrieve_context"])];
   return ["--model", options.claudeModel!, "--output-format", "stream-json", "--verbose", "--setting-sources", "project", "--settings", settings, "--strict-mcp-config", "--mcp-config", mcp,
     "--permission-mode", "acceptEdits", "--allowedTools", ...tools];
 }
 
-async function runClaude(options: NativeOptions, run: string, workspace: string, prompt: string, extra: string[]) {
+async function runClaude(options: NativeOptions, run: string, workspace: string, prompt: string, extra: string[], warm: boolean) {
   const env = Object.fromEntries(Object.entries(process.env).filter(([key]) => !PARENT_SESSION.test(key))) as Record<string, string>;
-  env.CM_HOOK_LOG = join(run, "hook.jsonl");env.CM_HOOK_DAEMON = options.warmDaemon ? "on" : "off";
+  env.CM_HOOK_LOG = join(run, "hook.jsonl");env.CM_HOOK_DAEMON = warm ? "on" : "off";
   const started = performance.now();
   return await new Promise<{ exit: number | null; ms: number; stdout: string; stderr: string; timedOut: boolean }>((done, fail) => {
     const child = spawn(options.claude!, ["-p", prompt, ...extra], { cwd: workspace, env, stdio: ["ignore", "pipe", "pipe"] });
@@ -142,14 +144,15 @@ export async function runNative(options: NativeOptions, protocolPath: string) {
       const prompt = task.prompt + ` Apply the change only in this isolated workspace. Preserve unrelated behavior and interfaces. Use supplied source when sufficient; otherwise inspect code. The same public smoke check is available to all variants as the shell command ${checks}; separate independent final checks evaluate your patch. Finish with a brief summary.`;
       // Steady-state use: the hook daemon is already warm when the prompt arrives. Its start is measured separately.
       let daemon: ReturnType<typeof spawn> | undefined, daemonStartMs: number | null = null;
-      if (arm === "cm_next" && options.warmDaemon) {
+      const warm = arm === "cm_warm" || arm === "cm_next" && Boolean(options.warmDaemon);
+      if (warm) {
         const daemonStarted = performance.now();
         daemon = spawn(process.execPath, [join(ROOT, "dist/src/hooks/daemon_cli.js"), ...cmArguments(options, prepared, task.id, workspace, run)], { stdio: ["ignore", "pipe", "ignore"] });
         await new Promise<void>((done, fail) => { daemon!.stdout!.once("data", () => done());daemon!.once("exit", code => fail(new Error("Hook daemon exited " + code))); });
         daemonStartMs = performance.now() - daemonStarted;
       }
-      const response = options.client === "codex" ? await runCodex(options, join(run, "codex-home"), workspace, prompt, arm === "cm_next")
-        : await runClaude(options, run, workspace, prompt, claudeConfig(run, options, arm, cmArguments(options, prepared, task.id, workspace, run), checks));
+      const response = options.client === "codex" ? await runCodex(options, join(run, "codex-home"), workspace, prompt, hooked(arm), warm)
+        : await runClaude(options, run, workspace, prompt, claudeConfig(run, options, arm, cmArguments(options, prepared, task.id, workspace, run), checks), warm);
       if (daemon) { daemon.kill("SIGTERM");await new Promise(done => daemon!.once("exit", done)); }
       writeFileSync(join(run, "events.jsonl"), response.stdout);writeFileSync(join(run, "stderr.txt"), response.stderr);
       const events = response.stdout.split("\n").filter(l => l.startsWith("{")).map(l => { try { return JSON.parse(l); } catch { return {}; } });
@@ -172,7 +175,7 @@ export async function runNative(options: NativeOptions, protocolPath: string) {
         shell_commands: commands.length, read_like_commands: commands.filter(c => /\b(cat|sed|head|tail|nl|rg|grep|find|ls)\b/.test(c)).length, cm_mcp_calls: cmCalls, hook: hookLog[0] ?? null, daemon_start_ms: daemonStartMs };
       results.push(record);cost += usage.usd_estimate;write(resultsPath, { protocol, estimated_cost_usd: cost, results });
       console.log(JSON.stringify({ completed: results.length, task: task.id, rep, arm, success: record.task_success, turns: usage.turns, tokens: usage.total_tokens, seconds: Math.round(response.ms) / 1000, commands: commands.length, cm_mcp: cmCalls }));
-      if (!usage.turns || /401|Unauthorized|invalid_api_key/.test(response.stderr) || arm === "cm_next" && (!hookLog.length || options.warmDaemon && hookLog[0].via !== "daemon")) throw Error("Provider/accounting/activation failure; retained " + runId);
+      if (!usage.turns || /401|Unauthorized|invalid_api_key/.test(response.stderr) || hooked(arm) && (!hookLog.length || (warm ? hookLog[0].via !== "daemon" : hookLog[0].via !== "process"))) throw Error("Provider/accounting/activation failure; retained " + runId);
     }
   }
   if (JSON.stringify(implementation()) !== JSON.stringify(protocol.implementation)) throw Error("Measured code changed during trial");
