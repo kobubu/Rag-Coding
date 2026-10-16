@@ -43,7 +43,8 @@
     "cm-mcp": "dist/src/mcp/cli.js",
     "cm-ann-index": "dist/src/code-memory/ann_cli.js",
     "cm-setup": "dist/src/setup/cli.js",
-    "cm-hook": "dist/src/hooks/cli.js"
+    "cm-hook": "dist/src/hooks/cli.js",
+    "cm-hook-daemon": "dist/src/hooks/daemon_cli.js"
   },
   "files": [
     "dist/src/",
