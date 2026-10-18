@@ -42,18 +42,6 @@ export class CMError extends Error {
   }
 }
 
-export function byteOffset(source: string, position: number): number {
-  if (!Number.isInteger(position) || position < 0 || position > source.length) {
-    throw new CMError("invalid_source_range", "Invalid UTF-16 position");
-  }
-  const left = source.charCodeAt(position - 1);
-  const right = source.charCodeAt(position);
-  if (left >= 0xd800 && left <= 0xdbff && right >= 0xdc00 && right <= 0xdfff) {
-    throw new CMError("invalid_source_range", "Position splits a surrogate pair");
-  }
-  return Buffer.byteLength(source.slice(0, position), "utf8");
-}
-
 // fatal rejects every byte sequence that does not round-trip; ignoreBOM keeps a leading BOM as text, as Buffer decoding does.
 const STRICT_UTF8 = new TextDecoder("utf-8", { fatal: true, ignoreBOM: true });
 export function utf8(raw: Uint8Array): string {
