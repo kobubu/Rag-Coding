@@ -86,4 +86,6 @@ CM is written in TypeScript/Node.js. Project code is indexed without being execu
 
 ## Try it on another repository
 
+[Show Your Plugins discussion](https://github.com/deepseek-ai/deepseek-harness/discussions/10196) · [Community catalog submission](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/pull/7989)
+
 Independent A/B results are welcome: use the same task, model, reasoning settings, checks, and starting commit with CM on and off. Include indexing/setup time separately, all failed attempts, total tokens, elapsed time, and whether the patch actually passes independent checks. Report regressions as well as wins in [Issues](https://github.com/kobubu/Rag-Coding/issues).
