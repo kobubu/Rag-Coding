@@ -1,8 +1,8 @@
 {
   "name": "dsh-plugin-code-memory",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "private": true,
-  "description": "Local Code Memory for DeepSeek Harness, Codex and Claude Code",
+  "description": "Local code memory for DeepSeek Harness: automatic source context, semantic search, and dependency graphs.",
   "type": "module",
   "engines": {
     "node": "^22.19.0 || ^24.0.0"
@@ -52,12 +52,8 @@
     "harness/",
     "contracts/cm-local.schema.json",
     "README.md",
-    "docs/HOW-IT-WORKS.md",
-    "docs/NATIVE-CLIENTS.md",
-    "docs/DEEPSEEK-PLUGIN.md",
-    "docs/MCP-SETUP.md",
-    "docs/LOCAL-ATLAS.md",
-    "docs/INSTALL.md",
+    "README.ru.md",
+    "docs/",
     "scripts/install_cm.ps1"
   ],
   "dsh": {
