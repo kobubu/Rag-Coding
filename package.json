@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-code-memory",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "private": true,
   "description": "Local code memory for DeepSeek Harness: automatic source context, semantic search, and dependency graphs.",
   "type": "module",
@@ -8,7 +8,6 @@
     "node": "^22.19.0 || ^24.0.0"
   },
   "scripts": {
-    "build": "npm run build:core && npm run viewer:check && npm run viewer:build",
     "build:core": "tsc -p tsconfig.json",
     "check": "node dist/scripts/check_docs.js",
     "test": "node --test dist/tests/*.test.js",
@@ -16,7 +15,7 @@
     "cm:index": "node dist/src/code-memory/cli.js",
     "plugin:smoke": "node dist/scripts/smoke_plugin.js",
     "harness:efficiency": "node dist/scripts/run_efficiency_ab.js",
-    "verify": "npm run build && npm run check && npm test && npm run probe",
+    "verify": "npm run compile && npm run check && npm test && npm run probe && npm run package:check",
     "cm:vectors": "node dist/src/code-memory/vector_cli.js",
     "cm:search": "node dist/src/code-memory/search_cli.js",
     "viewer:check": "tsc -p apps/local-viewer/tsconfig.json",
@@ -25,7 +24,9 @@
     "cm:mcp": "node dist/src/mcp/cli.js",
     "cm:ann": "node dist/src/code-memory/ann_cli.js",
     "cm:setup": "node dist/src/setup/cli.js",
-    "cm:hook": "node dist/src/hooks/cli.js"
+    "cm:hook": "node dist/src/hooks/cli.js",
+    "compile": "npm run build:core && npm run viewer:check && npm run viewer:build",
+    "package:check": "node dist/scripts/check_package.js"
   },
   "main": "./dist/src/harness/plugin.js",
   "types": "./dist/src/harness/plugin.d.ts",

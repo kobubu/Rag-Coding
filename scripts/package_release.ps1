@@ -21,6 +21,8 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'Cannot resolve the release commit.' }
     $cmDirty = @(& git status --porcelain).Count -gt 0
     if ($cmDirty) { throw 'Commit verified source changes before packaging a release.' }
+    & $cmNode $cmNpm run package:check
+    if ($LASTEXITCODE -ne 0) { throw 'The committed runtime is missing or stale.' }
     $cmPackText = & $cmNode $cmNpm pack --pack-destination $cmStage --json
     if ($LASTEXITCODE -ne 0) { throw 'npm pack failed.' }
     $cmPack = $cmPackText | ConvertFrom-Json
@@ -32,6 +34,7 @@ $cmGuide = Get-Content -LiteralPath (Join-Path $cmRepository 'docs/INSTALL-WINDO
 $cmGuide = $cmGuide.Replace('(NATIVE-CLIENTS.md)', '(https://github.com/kobubu/Rag-Coding/blob/v' + $cmVersion + '/docs/NATIVE-CLIENTS.md)')
 $cmGuide = $cmGuide.Replace('(../README.md)', '(https://github.com/kobubu/Rag-Coding/blob/v' + $cmVersion + '/README.md)')
 $cmGuide = $cmGuide.Replace('(INSTALL.md)', '(https://github.com/kobubu/Rag-Coding/blob/v' + $cmVersion + '/docs/INSTALL.md)')
+$cmGuide = $cmGuide.Replace('(DEEPSEEK-PLUGIN.md#github-installation)', '(https://github.com/kobubu/Rag-Coding/blob/v' + $cmVersion + '/docs/DEEPSEEK-PLUGIN.md#github-installation)')
 [IO.File]::WriteAllText((Join-Path $cmStage 'README.md'), $cmGuide, [Text.UTF8Encoding]::new($false))
 $cmRelease = [ordered]@{
     format = 'cm-windows-release-1'; version = $cmVersion; source_commit = $cmCommit; source_dirty = $false

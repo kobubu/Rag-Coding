@@ -1,18 +1,20 @@
 # Install Code Memory on Windows
 
-This guide covers the **v0.9.0 Windows release**, an unofficial community integration. It installs the native DeepSeek Harness plugin. Optional Codex/Claude connections use MCP; their automatic-context hooks are configured separately.
+This guide covers the **v0.9.1 Windows release**, an unofficial community integration. It installs the native DeepSeek Harness plugin. Optional Codex/Claude connections use MCP; their automatic-context hooks are configured separately.
 
 ## Download and verify
 
-Download `CM-0.9.0-Windows.zip` and `SHA256SUMS.txt` from [GitHub Releases](https://github.com/kobubu/Rag-Coding/releases/tag/v0.9.0). Keep both files in the same directory.
+If Harness 0.2.0-rc.2 is already installed, you can use `dsh plugin --profile web add github:kobubu/Rag-Coding#v0.9.1`, then prepare the index/model as described in the [Harness reference](DEEPSEEK-PLUGIN.md#github-installation). The Git tag includes the ready runtime. This ZIP additionally installs Harness and generates launchers.
+
+Download `CM-0.9.1-Windows.zip` and `SHA256SUMS.txt` from [GitHub Releases](https://github.com/kobubu/Rag-Coding/releases/tag/v0.9.1). Keep both files in the same directory.
 
 ```powershell
-$expected = ((Get-Content .\SHA256SUMS.txt | Where-Object { $_ -match '  CM-0\.9\.0-Windows\.zip$' }) -split '\s+')[0]
+$expected = ((Get-Content .\SHA256SUMS.txt | Where-Object { $_ -match '  CM-0\.9\.1-Windows\.zip$' }) -split '\s+')[0]
 if (-not $expected) { throw 'ZIP checksum is missing.' }
-$actual = (Get-FileHash .\CM-0.9.0-Windows.zip -Algorithm SHA256).Hash.ToLowerInvariant()
+$actual = (Get-FileHash .\CM-0.9.1-Windows.zip -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($actual -ne $expected) { throw 'ZIP checksum mismatch.' }
-Expand-Archive -LiteralPath .\CM-0.9.0-Windows.zip -DestinationPath .\CM-0.9.0
-Set-Location .\CM-0.9.0
+Expand-Archive -LiteralPath .\CM-0.9.1-Windows.zip -DestinationPath .\CM-0.9.1
+Set-Location .\CM-0.9.1
 ```
 
 The ZIP contains the PowerShell bootstrap, the built npm tarball, this guide, a release manifest, and checksums. It contains no source-project index, embedding weights, API keys, or model credits. Dependencies and pinned model weights are downloaded on first install. A compatible installed Node.js is reused; otherwise the bootstrap downloads a private Node.js runtime and checks its official archive checksum.

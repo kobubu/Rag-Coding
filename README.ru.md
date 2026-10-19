@@ -1,6 +1,6 @@
 # RAG Coding — Code Memory
 
-[English](README.md) · **Русский** · [Публичный Windows-релиз](https://github.com/kobubu/Rag-Coding/releases/tag/v0.9.0)
+[English](README.md) · **Русский** · [Публичный Windows-релиз](https://github.com/kobubu/Rag-Coding/releases/tag/v0.9.1)
 
 **Code Memory (CM)** — локальная память кода для агентов. Перед первым шагом агента она кладёт в переписку нужный исходник: найденные функции, их зависимости, короткие файлы целиком и места вызова, сверенные с текущими файлами. Агент правит сразу, не тратя вызовы модели на `glob`, `grep` и `read`.
 
@@ -36,6 +36,16 @@ DeepSeek Harness, GPT-6 Luna, шесть задач на проекте Geo Dash
 | [CM Atlas](docs/LOCAL-ATLAS.md) | Локальная карта модулей, символов и связей |
 
 ## Быстрый старт
+
+Для уже установленного DeepSeek Harness **0.2.0-rc.2**:
+
+```bash
+dsh plugin --profile web add github:kobubu/Rag-Coding#v0.9.1
+```
+
+Готовый runtime включён в Git, сборка при установке не нужна. Далее [подготовить индекс и локальную модель](docs/DEEPSEEK-PLUGIN.md#github-installation). Для установки вместе с Harness используйте [Windows ZIP](docs/INSTALL-WINDOWS.md). Git-теги до 0.9.1 требуют ручной сборки или готового tarball.
+
+Для разработки: `npm run compile` пересобирает код, `npm run package:check` проверяет соответствие исходников и отслеживаемых `dist/src/` и `dist/viewer/`. Имя compile не запускает автоматическую подготовку Git-зависимости, которую npm связывает со скриптом build.
 
 Node.js 24 LTS или 22.19+. Зависимости закреплены в `package-lock.json`.
 
