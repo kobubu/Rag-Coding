@@ -52,6 +52,8 @@ dsh plugin --profile web add https://github.com/kobubu/Rag-Coding/releases/downl
 
 Git tags before 0.9.1 require their release tarball or an explicit source build. The new runtime works with scripts disabled; native dependencies follow the host package manager's policy.
 
+If CM was installed with the Windows bootstrap, update it using the new ZIP and the same `-InstallRoot`. Harness 0.2.0-rc.2 can prefer a CM copy beside its own installation over a profile-installed copy; adding another Git dependency to that older installation does not replace its launcher or embedded copy. The bootstrap creates a new release directory and switches managed project launchers.
+
 ## Install on Windows
 
 Download **CM-0.9.1-Windows.zip** and **SHA256SUMS.txt** from the [v0.9.1 release](https://github.com/kobubu/Rag-Coding/releases/tag/v0.9.1), verify the checksum, and extract the ZIP. From the extracted folder, run:

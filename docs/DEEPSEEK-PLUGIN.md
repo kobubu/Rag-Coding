@@ -34,6 +34,8 @@ npm run plugin:smoke
 
 Начиная с **0.9.1**, готовые `dist/src/` и `dist/viewer/` включены в Git. Установка закреплённого тега не требует локальной сборки или разрешения prepare для CM:
 
+Apache Arrow для LanceDB объявлен явно: штатный профиль Harness отключает автоматическую установку peer-зависимостей. Не меняйте autoInstallPeers ради CM; необходимые обычные runtime-зависимости устанавливаются вместе с пакетом.
+
 ```bash
 dsh plugin --profile web add github:kobubu/Rag-Coding#v0.9.1
 ```
@@ -45,6 +47,8 @@ dsh plugin --profile web add https://github.com/kobubu/Rag-Coding/releases/downl
 ```
 
 Замените web именем своего профиля при необходимости. Bundle ещё не создаёт модель/индекс проекта. Подготовьте их для выбранного корня:
+
+Если CM уже установлен Windows bootstrap, обновляйтесь новым ZIP с тем же `-InstallRoot`. Harness 0.2.0-rc.2 предпочитает доступную копию bundle рядом с собственной установкой перед копией профиля: Git-add в старой bootstrap-установке может оставить старый bundle/launcher. Новый bootstrap создаёт отдельный release и переключает управляемые project launchers. Для прямого GitHub-подключения проверяйте обычный Harness без другой installation-level копии CM.
 
 ```bash
 dsh plugin --profile web exec cm-index --project /absolute/project --out /absolute/project/.code-memory/index.json

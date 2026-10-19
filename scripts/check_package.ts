@@ -10,6 +10,15 @@ assert.equal(manifest.version, CM_VERSION, "Package and compiled version must ma
 for (const name of ["build", "prepare", "prepack", "preinstall", "install", "postinstall"]) {
   assert(!manifest.scripts[name], `Use compile, not ${name}: Git installs must consume the committed runtime without a build`);
 }
+const declared = new Set([...Object.keys(manifest.dependencies), ...Object.keys(manifest.peerDependencies)]);
+for (const name of Object.keys(manifest.dependencies)) {
+  const dependency = JSON.parse(readFileSync(join(ROOT, "node_modules", name, "package.json"), "utf8"));
+  for (const peer of Object.keys(dependency.peerDependencies ?? {})) {
+    if (!dependency.peerDependenciesMeta?.[peer]?.optional) {
+      assert(declared.has(peer), `Declare required peer ${peer} of ${name}; Harness does not auto-install peers`);
+    }
+  }
+}
 for (const path of [manifest.main, manifest.types, ...Object.values(manifest.bin) as string[], "dist/viewer/index.html", "harness/bundle.yml"]) {
   assert(existsSync(join(ROOT, path)), `Missing packaged entry: ${path}`);
 }
