@@ -74,7 +74,18 @@ export function apply(ctx: Context, config: Config = {}): void {
   if (mode === "compact") {
     ctx.inject(["tools", "systemPrompt", "fs"], (ctx) => {
     const diagnostics: object[] = [];
-    const record = (value: object) => { if (config.diagnosticsPath) { diagnostics.push({ at_ms: Date.now(), ...value }); writeFileSync(config.diagnosticsPath, JSON.stringify(diagnostics)); } };
+    let diagnosticsFailed = false;
+    const record = (value: object) => {
+      if (!config.diagnosticsPath || diagnosticsFailed) return;
+      diagnostics.push({ at_ms: Date.now(), ...value });
+      if (diagnostics.length > 256) diagnostics.shift();
+      try { writeFileSync(config.diagnosticsPath, JSON.stringify(diagnostics)); }
+      catch {
+        diagnosticsFailed = true;
+        diagnostics.length = 0;
+        console.warn("CM diagnostics unavailable; context retrieval remains enabled.");
+      }
+    };
     record({ event: "compact_registered", mode, autoContext, search_mode: config.searchMode ?? "exact" });
     const vectors = new LocalVectors({ directory: resolve(root, config.vectorsPath ?? ".code-memory/vectors"),
       modelCache: resolve(root, config.modelCache ?? ".code-memory/models"), chunking: config.chunking ?? "unit", searchMode: config.searchMode ?? "exact" });
@@ -97,17 +108,25 @@ export function apply(ctx: Context, config: Config = {}): void {
         if (before.version !== after?.version || versions.size !== 1 || !versions.has("blob:" + hash(Buffer.from(actual, "utf8")))) {
           throw new CMError("index_outdated", "CM source changed during context observation");
         }
+        signal.throwIfAborted();
         ctx.emit("fs/observed", target, { kind: "present", version: after.version }, actor);
       }
     };
     // Whole files already placed in the conversation. Every copy is re-sent with each later model call, so the first re-read
     // of the same unchanged bytes gets a pointer instead; a second re-read is served normally.
-    const delivered: Delivered = new Map();
-    const remember = (context: RetrievedContext) => {
+    const deliveredByAgent = new WeakMap<object, Delivered>();
+    ctx.on("agent/created", ({ agent }) => { deliveredByAgent.delete(agent); });
+    ctx.on("agent/disposed", ({ agent }) => { deliveredByAgent.delete(agent); });
+    const remember = (context: RetrievedContext, agent: object | undefined) => {
+      if (!agent) return;
+      let delivered = deliveredByAgent.get(agent);
+      if (!delivered) { delivered = new Map(); deliveredByAgent.set(agent, delivered); }
       for (const part of context.parts) if (part.whole) delivered.set(resolve(root, part.path), { path: part.path, version: part.span.file_version_id, lines: part.span.line_end });
     };
     ctx.on("tools/post-execute", async (exec, result, next) => {
       if (result.isError) return next();
+      const delivered = exec.agent && deliveredByAgent.get(exec.agent);
+      if (!delivered) return next();
       const pointer = await rereadPointer(delivered, root, exec.name, exec.arguments);
       if (!pointer) return next();
       record({ event: "read_deduplicated", path: pointer.path, bytes: pointer.bytes });
@@ -128,10 +147,10 @@ export function apply(ctx: Context, config: Config = {}): void {
     ctx.tools.register(defineTool({ name: "cm_retrieve_context", description: "Get current small self-contained named files or compact compiler-bound context. Discovery uses local vector search. Version-checked and observed for edit. Partial; expand or read when needed.",
       parameters: { query: { type: "string", required: true }, max_bytes: { type: "integer" }, ...((config.retrievalPolicy ?? "adaptive") !== "hybrid" ? { detail: { type: "string" as const, enum: ["focused", "expanded"] } } : {}) },
       output: { schema: { type: "object", additionalProperties: true }, render: (_args: unknown, value: RetrievedContext) => [{ type: "text" as const, text: renderContext(value) }] },
-      async execute(args, exec) { const context = await retrieve(args.query, args.max_bytes, exec.signal, exec, args.detail ?? "focused");remember(context);return context; },
+      async execute(args, exec) { const context = await retrieve(args.query, args.max_bytes, exec.signal, exec, args.detail ?? "focused");remember(context, exec.agent);return context; },
     }));
     ctx.systemPrompt.section({ name: "cm-context-guidance", order: 1350,
-      text: "CM source context is already read through this filesystem and version-observed for guarded edit. Files marked (whole file) are complete: do not re-read them. Listed call sites come from the compiler graph, so a call-site search is unnecessary. When the fix touches one or two places in shown code, edit directly without a separate plan, but first reason through the behavior the shown code must keep (edge cases, ordering, ties, return shape); use cm_retrieve_context or read only for code that is not shown." });
+      text: "When CM source context is present, it is already read through this filesystem and version-observed for guarded edit. Files marked (whole file) are complete: do not re-read them. Listed call sites come from the compiler graph, so a call-site search is unnecessary. When the fix touches one or two places in shown code, edit directly without a separate plan, but first reason through the behavior the shown code must keep (edge cases, ordering, ties, return shape); use cm_retrieve_context or read for code that is not shown. If CM context is unavailable, use normal source discovery and read tools." });
     if (autoContext) {
       ctx.on("agent/pre-step", async (payload, next) => {
         const decision = await next();
@@ -140,8 +159,17 @@ export function apply(ctx: Context, config: Config = {}): void {
         const query = payload.messages.filter((message) => message.source.kind === "user").flatMap((message) => message.content.filter((part) => part.type === "text").map((part) => part.text)).join("\n");
         if (query.trim()) {
           const started = performance.now();
-          const context = await retrieve(query.slice(0, 16000), undefined, payload.signal, payload);
-          const text = renderContext(context);remember(context);
+          let context: RetrievedContext;
+          try { context = await retrieve(query.slice(0, 16000), undefined, payload.signal, payload); }
+          catch (error) {
+            payload.signal.throwIfAborted();
+            const code = error instanceof CMError ? error.code : "unavailable";
+            record({ event: "auto_context_skipped", duration_ms: performance.now() - started, agent: payload.agent.id, code });
+            console.warn(`CM automatic context skipped (${code}); continuing with normal tools.`);
+            return decision;
+          }
+          payload.signal.throwIfAborted();
+          const text = renderContext(context);remember(context, payload.agent);
           record({ event: "retrieved", duration_ms: performance.now() - started, agent: payload.agent.id, bytes: context.bytes_used, chunking: config.chunking ?? "unit", search_mode: config.searchMode ?? "exact", context_sha256: hash(Buffer.from(text, "utf8")), paths: [...new Set(context.parts.map((part) => part.path))], omissions: context.omissions, retrieval: context.retrieval });
           return { ...decision, messages: [...decision.messages, createUserMessage({ content: [{ type: "text", text }],
             source: { kind: "code-memory", snapshot_id: context.snapshot_id, form: "snapshot", sections: [{ name: "cm-source-context", text }] } })] };

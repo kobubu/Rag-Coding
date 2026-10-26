@@ -1,5 +1,9 @@
 import assert from "node:assert/strict";
 import { join } from "node:path";
+import { mkdtemp, writeFile, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { createUserMessage } from "@deepseek-ai/dsh-llm";
+import type { Agent } from "@deepseek-ai/dsh-agent";
 import { buildIndex } from "../src/code-memory/indexer.js";
 import { validateIndex } from "../src/code-memory/store.js";
 import { mountHarnessPlugin } from "./harness_runtime.js";
@@ -34,3 +38,28 @@ try {
   writeJson(join(ROOT, ".artifacts/plugin-smoke.json"), proof);
   console.log(JSON.stringify(proof));
 } finally { await runtime.close(); }
+
+const compactRoot = await mkdtemp(join(tmpdir(), "cm-compact-smoke-"));
+const compact = await mountHarnessPlugin({ projectRoot: compactRoot, autoUpdate: true });
+try {
+  const source = 'export const greeting = "Привет 😀";\r\n';
+  await writeFile(join(compactRoot, "greeting.ts"), source);
+  assert.deepEqual(compact.ctx.tools.schemas().map(tool => tool.name), ["cm_retrieve_context"]);
+  let observed = 0;
+  compact.ctx.on("fs/observed", () => { observed++; });
+  const result = await compact.call("cm_retrieve_context", { query: "Change greeting.ts" });
+  assert.equal(result.isError, false);
+  assert(result.content.some(part => part.type === "text" && part.text.includes(source)));
+  const messages = [createUserMessage({ source: { kind: "user" }, content: [{ type: "text", text: "Change greeting.ts" }] })];
+  const decision = await compact.step({ id: "compact-smoke" } as Agent, messages);
+  assert.equal(decision.kind, "enter");
+  if (decision.kind === "enter") assert.equal(decision.messages.at(-1)?.source.kind, "code-memory");
+  assert.equal(observed, 2);
+  assert((await compact.call("cm_retrieve_context", { query: "Change greeting.ts", max_bytes: 0 })).isError);
+  await compact.pluginFiber.dispose();
+  assert.equal(compact.ctx.tools.schemas().length, 0);
+  const proof = { status: "PASS", mode: "compact", runtime: process.version, filesystem: "Harness LocalFileSystem",
+    tool_dispatch: "PASS", automatic_context: "PASS", observed_files: observed, invalid_budget: "PASS", unload: "PASS", llm_calls: false };
+  writeJson(join(ROOT, ".artifacts/plugin-compact-smoke.json"), proof);
+  console.log(JSON.stringify(proof));
+} finally { await compact.close(); await rm(compactRoot, { recursive: true, force: true }); }

@@ -1,0 +1,47 @@
+{
+  "accounting": "Provider-reported disjoint token usage; no heuristic estimates",
+  "attempts": 2,
+  "calls": [
+    {
+      "call": 1,
+      "model": "gpt-6-luna",
+      "started_at_ms": 1793035964664,
+      "duration_ms": 2830.1216999999997,
+      "usage": {
+        "inputTokens": 3,
+        "outputTokens": 83,
+        "totalTokens": 1995,
+        "cacheWriteTokens": 1909
+      },
+      "finish": "tool-calls",
+      "cm_tools": [
+        "cm_retrieve_context"
+      ],
+      "cm_context_present": true,
+      "request_bytes": 7031,
+      "schema_bytes": 6252,
+      "cm_context_occurrences": 2
+    },
+    {
+      "call": 2,
+      "model": "gpt-6-luna",
+      "started_at_ms": 1793035967605,
+      "duration_ms": 1905.6710999999996,
+      "usage": {
+        "inputTokens": 3,
+        "outputTokens": 40,
+        "totalTokens": 2077,
+        "cacheReadTokens": 1909,
+        "cacheWriteTokens": 125
+      },
+      "finish": "stop",
+      "cm_tools": [
+        "cm_retrieve_context"
+      ],
+      "cm_context_present": true,
+      "request_bytes": 8363,
+      "schema_bytes": 6252,
+      "cm_context_occurrences": 2
+    }
+  ]
+}

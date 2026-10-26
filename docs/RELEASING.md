@@ -7,10 +7,10 @@ The public release is built from a committed, verified checkout. It contains no 
 3. Commit the verified files. With that supported Node.js on `PATH`, run:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\package_release.ps1 -OutputDirectory 'D:\release-output\CM-0.9.1'
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\package_release.ps1 -OutputDirectory 'D:\release-output\CM-0.9.2'
 ```
 
-The output directory must be new. The packager refuses uncommitted files and stale compiled versions. It records the exact commit, creates `CM-0.9.1-Windows.zip`, and emits the npm tarball, `release-manifest.json`, and `SHA256SUMS.txt`. ZIP contents have a separate internal checksum list. The external list covers the ZIP, tarball, and manifest.
+The output directory must be new. The packager refuses uncommitted files and stale compiled versions. It records the exact commit, creates `CM-0.9.2-Windows.zip`, and emits the npm tarball, `release-manifest.json`, and `SHA256SUMS.txt`. ZIP contents have a separate internal checksum list. The external list covers the ZIP, tarball, and manifest.
 
 4. Extract the ZIP outside the checkout and run its bootstrap on a disposable JavaScript/TypeScript project. Verify version, generated Harness profile, MCP doctor, retrieval, and unchanged project source. Also install the exact Git commit in a clean directory with scripts disabled; check runtime import, CLI, and bundled Atlas. Test `dsh plugin ... add github:kobubu/Rag-Coding#COMMIT` in an isolated Harness profile. Do not use a cached package as proof of the new ZIP.
 5. Push the exact tested commit. Check its Windows/Linux, Node 22/24 CI jobs. Create a draft release for that commit, upload the four output files, and compare downloaded asset hashes before publishing the release.

@@ -37,13 +37,13 @@ npm run plugin:smoke
 Apache Arrow для LanceDB объявлен явно: штатный профиль Harness отключает автоматическую установку peer-зависимостей. Не меняйте autoInstallPeers ради CM; необходимые обычные runtime-зависимости устанавливаются вместе с пакетом.
 
 ```bash
-dsh plugin --profile web add github:kobubu/Rag-Coding#v0.9.1
+dsh plugin --profile web add github:kobubu/Rag-Coding#v0.9.2
 ```
 
 Вариант с готовым архивом:
 
 ```bash
-dsh plugin --profile web add https://github.com/kobubu/Rag-Coding/releases/download/v0.9.1/dsh-plugin-code-memory-0.9.1.tgz
+dsh plugin --profile web add https://github.com/kobubu/Rag-Coding/releases/download/v0.9.2/dsh-plugin-code-memory-0.9.2.tgz
 ```
 
 Замените web именем своего профиля при необходимости. Bundle ещё не создаёт модель/индекс проекта. Подготовьте их для выбранного корня:

@@ -1,0 +1,30 @@
+{
+  "baseline": "e6300cd",
+  "initial_tests": {
+    "pass": 57,
+    "fail": 0,
+    "runtime": "v22.17.0",
+    "supported_runtime": false
+  },
+  "new_regressions_on_baseline": {
+    "pass": 0,
+    "fail": 3,
+    "failures": [
+      "index_not_ready aborts pre-step",
+      "diagnostic failure prevents tool registration",
+      "another agent receives a reread pointer"
+    ]
+  },
+  "candidate": {
+    "runtime": "v24.21.0",
+    "tests": 61,
+    "pass": 61,
+    "fail": 0,
+    "smoke": [
+      "legacy",
+      "compact"
+    ],
+    "fresh_npm_ci": true
+  },
+  "limits": "Four synthetic live runs; error and cancellation branches tested deterministically through real Harness registry and filesystem, not by paid model calls."
+}

@@ -1,6 +1,6 @@
 # RAG Coding — Code Memory
 
-[English](README.md) · **Русский** · [Публичный Windows-релиз](https://github.com/kobubu/Rag-Coding/releases/tag/v0.9.1)
+[English](README.md) · **Русский** · [Публичный Windows-релиз](https://github.com/kobubu/Rag-Coding/releases/tag/v0.9.2)
 
 **Code Memory (CM)** — локальная память кода для агентов. Перед первым шагом агента она кладёт в переписку нужный исходник: найденные функции, их зависимости, короткие файлы целиком и места вызова, сверенные с текущими файлами. Агент правит сразу, не тратя вызовы модели на `glob`, `grep` и `read`.
 
@@ -40,7 +40,7 @@ DeepSeek Harness, GPT-6 Luna, шесть задач на проекте Geo Dash
 Для уже установленного DeepSeek Harness **0.2.0-rc.2**:
 
 ```bash
-dsh plugin --profile web add github:kobubu/Rag-Coding#v0.9.1
+dsh plugin --profile web add github:kobubu/Rag-Coding#v0.9.2
 ```
 
 Готовый runtime включён в Git, сборка при установке не нужна. Далее [подготовить индекс и локальную модель](docs/DEEPSEEK-PLUGIN.md#github-installation). Для установки вместе с Harness используйте [Windows ZIP](docs/INSTALL-WINDOWS.md). Git-теги до 0.9.1 требуют ручной сборки или готового tarball.
@@ -58,7 +58,7 @@ npm run cm:search -- --query "how are embeddings reused between snapshots"
 npm run plugin:smoke   # настоящий ToolRuntime Harness, без вызовов модели
 ```
 
-В PowerShell для команд с флагами используйте `npm.cmd`. `.artifacts/`, `.code-memory/` и `dist/` игнорируются Git.
+В PowerShell для команд с флагами используйте `npm.cmd`. `.artifacts/` и `.code-memory/` игнорируются Git; готовые `dist/src/` и `dist/viewer/` отслеживаются для установки без сборки.
 
 ## Структура
 
