@@ -50,6 +50,15 @@ test("retrieval ignores generic agent instructions and shows small files whole",
   assert(large.parts.every(part => !part.whole));assert(!large.parts.some(part => part.text.includes("x".repeat(100))));
 });
 
+test("an English word that equals a minified function name does not anchor the named route", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cm-graph-"));
+  writeFileSync(join(root, "pace.js"), "export function simulationPace(level){const p=level.pace;return p>0?p:1;}\n");
+  writeFileSync(join(root, "three.min.js"), "export function A(t,e){return t+e}export function Find(t){return t}\n");
+  const index = buildIndex(root), vectors = new LocalVectors({ directory: root, modelCache: root }, async () => { throw Error("Unexpected embedding call"); });
+  const context = await retrieveContext(index, vectors, "A level with zero pace must fall back in `simulationPace`. Find the helper.", 3000, undefined, { policy: "adaptive" });
+  assert.deepEqual([...new Set(context.parts.map(part => part.path))], ["pace.js"]);
+});
+
 test("callers come from the compiler graph and an unchanged whole file is not re-sent on its first re-read", async () => {
   const root = mkdtempSync(join(tmpdir(), "cm-graph-"));
   writeFileSync(join(root, "wallet.js"), "export function sync(w){return w+1;}\n");
