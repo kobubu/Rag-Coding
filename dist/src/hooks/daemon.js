@@ -8,9 +8,17 @@ export { daemonAddress, ask, ping } from "./client.js";
 // pay the cold start (index parse, validation, model and LanceDB load) on every prompt. One daemon serves one CM configuration.
 export const IDLE_MS = 30 * 60 * 1000;
 const MAX_REQUEST_BYTES = 64 * 1024;
-export async function answer(service, prompt) {
-    const started = performance.now(), context = await service.retrieve(prompt.slice(0, 16000), 6000, AbortSignal.timeout(60000));
-    return { text: renderContext(context, false), bytes: context.bytes_used, paths: [...new Set(context.parts.map(part => part.path))],
+// maxChars: Claude Code moves additionalContext over 10,000 characters into a file the model must read first, which costs a turn,
+// so a client limit shrinks the source budget until the rendered context fits.
+export async function answer(service, prompt, maxChars = Infinity) {
+    const started = performance.now(), signal = AbortSignal.timeout(60000);
+    let budget = 6000, context = await service.retrieve(prompt.slice(0, 16000), budget, signal), text = renderContext(context, false);
+    for (let attempt = 0; attempt < 4 && text.length > maxChars && budget > 1000; attempt++) {
+        budget = Math.max(1000, Math.floor(budget * maxChars / text.length * 0.9));
+        context = await service.retrieve(prompt.slice(0, 16000), budget, signal);
+        text = renderContext(context, false);
+    }
+    return { text, bytes: context.bytes_used, paths: [...new Set(context.parts.map(part => part.path))],
         route: context.retrieval?.route ?? "current-file", omissions: context.omissions, ms: Math.round(performance.now() - started),
         whole: context.parts.filter(part => part.whole).map(part => ({ path: part.path, version: part.span.file_version_id, lines: part.span.line_end })) };
 }
@@ -27,7 +35,8 @@ export async function serve(config, idleMs = IDLE_MS) {
             queue = queue.then(async () => {
                 try {
                     const message = JSON.parse(line);
-                    socket.end(JSON.stringify(message.ping ? { ok: true, pid: process.pid } : await answer(service, String(message.prompt ?? ""))) + "\n");
+                    const limit = Number.isFinite(message.maxChars) && message.maxChars > 0 ? message.maxChars : Infinity;
+                    socket.end(JSON.stringify(message.ping ? { ok: true, pid: process.pid } : await answer(service, String(message.prompt ?? ""), limit)) + "\n");
                 }
                 catch (error) {
                     socket.end(JSON.stringify({ error: error instanceof Error ? error.message : String(error) }) + "\n");

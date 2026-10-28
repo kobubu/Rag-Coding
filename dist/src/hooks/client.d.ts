@@ -17,5 +17,5 @@ export declare function hookDirectory(): string;
 export declare function daemonAddress(config: AgentConfig): string;
 export declare function readLine(socket: Socket, limit: number): Promise<string>;
 /** Sends one prompt to a running daemon; rejects quickly when none is listening. */
-export declare function ask(address: string, prompt: string, timeoutMs?: number): Promise<HookReply>;
+export declare function ask(address: string, prompt: string, timeoutMs?: number, maxChars?: number): Promise<HookReply>;
 export declare const ping: (address: string) => Promise<unknown>;

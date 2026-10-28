@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { hookOutput, GUIDANCE, CLAUDE_GUIDANCE } from "../src/hooks/context.js";
+import { contextLimit, hookOutput, GUIDANCE, CLAUDE_GUIDANCE } from "../src/hooks/context.js";
 import { renderContext } from "../src/code-memory/retrieve.js";
 import { codexUsage } from "../scripts/native_ab.js";
 import { ask, daemonAddress, ping } from "../src/hooks/client.js";
@@ -22,6 +22,8 @@ test("hook output is a UserPromptSubmit additionalContext and does not claim a r
   assert(parsed.hookSpecificOutput.additionalContext.startsWith(GUIDANCE));
   assert(CLAUDE_GUIDANCE !== GUIDANCE && CLAUDE_GUIDANCE.includes("Edit tool"));
   assert(JSON.parse(hookOutput("x", "claude")).hookSpecificOutput.additionalContext.startsWith(CLAUDE_GUIDANCE));
+  assert.equal(contextLimit("codex"), undefined);
+  assert(JSON.parse(hookOutput("x".repeat(contextLimit("claude")!), "claude")).hookSpecificOutput.additionalContext.length < 10000, "Claude Code keeps it inline");
   assert(parsed.hookSpecificOutput.additionalContext.includes("a.js:1-1 (whole file)"));
   assert(!renderContext(context, false).includes("registered as read"));assert(renderContext(context).includes("registered as read"));
 });

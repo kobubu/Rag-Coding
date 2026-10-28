@@ -38,7 +38,7 @@ export function readLine(socket, limit) {
     });
 }
 /** Sends one prompt to a running daemon; rejects quickly when none is listening. */
-export function ask(address, prompt, timeoutMs = 65000) { return send(address, { prompt }, timeoutMs); }
+export function ask(address, prompt, timeoutMs = 65000, maxChars) { return send(address, { prompt, ...(maxChars ? { maxChars } : {}) }, timeoutMs); }
 export const ping = (address) => send(address, { ping: true }, 2000);
 function send(address, message, timeoutMs) {
     return new Promise((done, fail) => {

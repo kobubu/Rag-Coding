@@ -39,7 +39,7 @@ export function readLine(socket: Socket, limit: number): Promise<string> {
 }
 
 /** Sends one prompt to a running daemon; rejects quickly when none is listening. */
-export function ask(address: string, prompt: string, timeoutMs = 65000): Promise<HookReply> { return send(address, { prompt }, timeoutMs) as Promise<HookReply>; }
+export function ask(address: string, prompt: string, timeoutMs = 65000, maxChars?: number): Promise<HookReply> { return send(address, { prompt, ...(maxChars ? { maxChars } : {}) }, timeoutMs) as Promise<HookReply>; }
 export const ping = (address: string) => send(address, { ping: true }, 2000);
 
 function send(address: string, message: object, timeoutMs: number): Promise<unknown> {

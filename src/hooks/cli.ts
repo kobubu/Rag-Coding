@@ -7,7 +7,7 @@ import { spawn } from "node:child_process";
 import { appendFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { agentOptions } from "../local-agent/config.js";
-import { hookOutput } from "./context.js";
+import { contextLimit, hookOutput } from "./context.js";
 import type { HookClient } from "./context.js";
 import { ask, daemonAddress } from "./client.js";
 import type { HookReply } from "./client.js";
@@ -40,12 +40,12 @@ async function main() {
     const address = daemonAddress(config);
     try {
       if (!daemon) throw new Error("daemon disabled");
-      reply = await ask(address, prompt);
+      reply = await ask(address, prompt, 65000, contextLimit(client));
     } catch {
       via = "process";
       const [{ LocalCM }, { answer }] = await Promise.all([import("../local-agent/service.js"), import("./daemon.js")]);
       const service = new LocalCM({ ...config, backgroundUpdate: false });
-      try { reply = await answer(service, prompt); } finally { service.close(); }
+      try { reply = await answer(service, prompt, contextLimit(client)); } finally { service.close(); }
       if (daemon) spawn(process.execPath, [fileURLToPath(new URL("./daemon_cli.js", import.meta.url)), ...args], { detached: true, stdio: "ignore" }).unref();
     }
     process.stdout.write(hookOutput(reply.text, client));
