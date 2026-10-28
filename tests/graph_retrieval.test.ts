@@ -36,6 +36,8 @@ test("graph budgets disclose large omitted declarations and expanded retrieval p
 
 test("retrieval ignores generic agent instructions and shows small files whole", async () => {
   assert.equal(focusQuery("Fix `quota` in rules.js. Apply the change only in this isolated workspace. Finish with a brief summary."), "Fix `quota` in rules.js.");
+  assert.equal(focusQuery("Fix `quota`. The public smoke check is the shell command /tmp/runs/run-9f8e7d6c/project_checks; finish."), "Fix `quota`.");
+  assert.equal(focusQuery("Repair the parser in /home/me/app/src/parse.ts so it accepts tabs."), "Repair the parser in parse.ts so it accepts tabs.");
   assert.equal(focusQuery("Preserve unrelated behavior and interfaces."), "Preserve unrelated behavior and interfaces.");
   const root = mkdtempSync(join(tmpdir(), "cm-graph-"));
   writeFileSync(join(root, "rules.js"), "const LIMIT=3;\nexport const NAME='rules';\nexport function quota(n){return Math.max(0,LIMIT-n);}\n");
