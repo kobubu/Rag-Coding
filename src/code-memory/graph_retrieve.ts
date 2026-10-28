@@ -9,7 +9,8 @@ import type { RetrievedContext } from "./retrieve.js";
 export type RetrievalPolicy = "hybrid" | "graph" | "adaptive";
 export type RetrievalDetail = "focused" | "expanded";
 const STOP = new Set(words("the and for from with that this code function project preserve unrelated behavior interfaces repair apply restore correctly existing when into must return locate supplied source available checks results"));
-const WHOLE_FILE_BYTES = 3000, MAX_CALLERS = 6;
+const WHOLE_FILE_BYTES = 3000, MAX_CALLERS = 6, MAX_USERS = 3, USER_MIN_SCORE = 0.35;
+const BREADTH = /\b(?:everywhere|wherever|throughout|across|every (?:import|call|caller|use|usage|place)s?|all (?:callers|uses|usages|importers|call sites|places)|both\b[^.]{0,80}\band)\b/i;
 const escaped =(text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 export async function retrieveGraph(index: CMIndex, vectors: LocalVectors, query: string, maxBytes = 6000, signal?: AbortSignal,
@@ -96,6 +97,22 @@ export async function retrieveGraph(index: CMIndex, vectors: LocalVectors, query
     for (const part of current.slice(1)) parts.splice(parts.indexOf(part), 1);
     bytes += raw.length - shownBytes;
     for (const id of [...missing]) if (kb.symbols.get(id)!.path === path) { missing.delete(id);shown.add(id);omissions--; }
+  }
+  // A change to a module's contract usually continues in the modules that use it. When the matched modules are shown whole,
+  // the remaining budget goes to their users elsewhere that the query's words also point to, best lexical match first.
+  const lexicalScore = new Map(lexical.map(item => [item.unit.id, item.score])), topLexical = lexical[0]?.score ?? 0;
+  const matchedFiles = new Set(selected.map(unit => unit.path).filter(path => parts.some(part => part.path === path && part.whole)));
+  // Only for requests that ask for the change across uses; a fix in one place would just pay for extra context in every call.
+  if (matchedFiles.size && topLexical > 0 && BREADTH.test(query)) {
+    const exported = new Set(index.symbols.filter(symbol => matchedFiles.has(symbol.path)).map(symbol => symbol.id));
+    const users = new Set<string>();
+    for (const relation of index.relations) {
+      if ((relation.predicate !== "references" && relation.predicate !== "calls") || !exported.has(relation.to_id)) continue;
+      const user = kb.owner(relation.from_id);if (user && !matchedFiles.has(user.path)) users.add(user.id);
+    }
+    const ranked = [...users].map(id => ({ unit: kb.units.get(id)!, score: lexicalScore.get(id) ?? 0 })).filter(item => item.score >= topLexical * USER_MIN_SCORE)
+      .sort((a, b) => b.score - a.score).slice(0, MAX_USERS);
+    for (const { unit } of ranked) if (!parts.some(part => part.path === unit.path && part.span.start_byte <= unit.span.start_byte && part.span.end_byte >= unit.span.end_byte)) add(unit.path, unit.span, "dependency");
   }
   for (const path of [...new Set(parts.map(part => part.path))]) promote(path);
   // Agents grep for call sites right after reading a definition; the compiler graph already knows them.

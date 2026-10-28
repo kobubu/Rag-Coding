@@ -71,6 +71,18 @@ test("a short file with a match is shown whole before dependencies take the budg
   assert(context.bytes_used <= 6000);
 });
 
+test("a request across uses adds the matched module's users that the query points to", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cm-graph-"));
+  writeFileSync(join(root, "policy.js"), "export const DAILY_LIMIT = 3;\nexport function quotaStatus(save){return {limit: DAILY_LIMIT, used: save.used};}\n");
+  writeFileSync(join(root, "progress.js"), "import {DAILY_LIMIT} from './policy.js';\nexport function readProgress(saved){return {count: Math.min(DAILY_LIMIT, saved.count)};}\n");
+  writeFileSync(join(root, "other.js"), "export function unrelated(v){return v;}\n");
+  const index = buildIndex(root), vectors = new LocalVectors({ directory: root, modelCache: root }, async () => { throw Error("Unexpected embedding call"); });
+  const across = await retrieveContext(index, vectors, "Make `quotaStatus` take a per-save limit wherever the daily limit applies, also when reading progress counts.", 6000, undefined, { policy: "adaptive" });
+  assert.deepEqual([...new Set(across.parts.map(part => part.path))].sort(), ["policy.js", "progress.js"]);
+  const single = await retrieveContext(index, vectors, "Fix `quotaStatus` so the reported progress counts use the daily limit.", 6000, undefined, { policy: "adaptive" });
+  assert.deepEqual([...new Set(single.parts.map(part => part.path))], ["policy.js"]);
+});
+
 test("callers come from the compiler graph and an unchanged whole file is not re-sent on its first re-read", async () => {
   const root = mkdtempSync(join(tmpdir(), "cm-graph-"));
   writeFileSync(join(root, "wallet.js"), "export function sync(w){return w+1;}\n");
