@@ -8,6 +8,7 @@ import { appendFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { agentOptions } from "../local-agent/config.js";
 import { hookOutput } from "./context.js";
+import type { HookClient } from "./context.js";
 import { ask, daemonAddress } from "./client.js";
 import type { HookReply } from "./client.js";
 import { preToolOutput, rememberDelivered, rereadPointer } from "./reread.js";
@@ -29,7 +30,11 @@ async function main() {
   }
   const prompt = typeof event.prompt === "string" ? event.prompt.slice(0, 16000) : "";
   if (!prompt.trim()) return;
-  const args = process.argv.slice(2), config = agentOptions(args), started = performance.now(), daemon = process.env.CM_HOOK_DAEMON !== "off";
+  // --client selects the client-specific wording; it is not a CM option, so the daemon and its address never see it.
+  const argv = process.argv.slice(2), at = argv.indexOf("--client"), client = (at >= 0 ? argv[at + 1] : "codex") as HookClient;
+  if (client !== "codex" && client !== "claude") throw new Error("--client must be codex or claude");
+  const args = at >= 0 ? [...argv.slice(0, at), ...argv.slice(at + 2)] : argv;
+  const config = agentOptions(args), started = performance.now(), daemon = process.env.CM_HOOK_DAEMON !== "off";
   let reply: HookReply, via = "daemon";
   try {
     const address = daemonAddress(config);
@@ -43,7 +48,7 @@ async function main() {
       try { reply = await answer(service, prompt); } finally { service.close(); }
       if (daemon) spawn(process.execPath, [fileURLToPath(new URL("./daemon_cli.js", import.meta.url)), ...args], { detached: true, stdio: "ignore" }).unref();
     }
-    process.stdout.write(hookOutput(reply.text));
+    process.stdout.write(hookOutput(reply.text, client));
     rememberDelivered(session, config.projectRoot, reply.whole ?? []);
     // Optional diagnostics without source text, so an evaluation can prove the context was delivered.
     if (process.env.CM_HOOK_LOG) appendFileSync(process.env.CM_HOOK_LOG, JSON.stringify({ at: new Date().toISOString(), via, ms: Math.round(performance.now() - started), retrieve_ms: reply.ms,

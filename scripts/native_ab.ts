@@ -95,7 +95,7 @@ const PARENT_SESSION = /^(CLAUDE_CODE_SESSION_ID|CLAUDE_CODE_REMOTE_SESSION_ID|C
 function claudeConfig(run: string, options: NativeOptions, arm: Arm, cmArgs: string[], checks: string) {
   const build = arm === "cm_base" ? resolve(options.baseRoot) : ROOT, mcp = join(run, "mcp.json"), settings = join(run, "settings.json");
   write(mcp, { mcpServers: arm === "none" ? {} : { cm_eval: { command: process.execPath, args: [join(build, "dist/src/mcp/cli.js"), ...cmArgs] } } });
-  const hookCommand = [process.execPath, join(build, "dist/src/hooks/cli.js"), ...cmArgs].map(a => JSON.stringify(a)).join(" ");
+  const hookCommand = [process.execPath, join(build, "dist/src/hooks/cli.js"), ...cmArgs, "--client", "claude"].map(a => JSON.stringify(a)).join(" ");
   write(settings, hooked(arm) ? { hooks: { UserPromptSubmit: [{ hooks: [{ type: "command", command: hookCommand, timeout: 120 }] }],
     ...(guarded(arm) ? { PreToolUse: [{ matcher: "Read|Bash", hooks: [{ type: "command", command: hookCommand, timeout: 30 }] }] } : {}) } } : {});
   const tools = ["Read", "Edit", "MultiEdit", "Write", "Grep", "Glob", "Bash(" + checks + ")", ...(arm === "none" ? [] : ["mcp__cm_eval__cm_retrieve_context"])];

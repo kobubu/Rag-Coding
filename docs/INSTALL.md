@@ -37,6 +37,17 @@ powershell -NoProfile -ExecutionPolicy Bypass -File 'D:\Rag Coding\scripts\insta
 
 `cm-setup remove --root ... --project ...` отключает project MCP connections, хуки CM и созданные неизменённые skills. Пакеты, модели и знания сохраняются; исходники проекта не удаляются. Конфликт с чужой/изменённой настройкой даёт ошибку, транзакция возвращает уже записанные config files. Это Windows installer; Node CLI и config generators переносимы, а bootstrap/launch scripts предназначены для Windows.
 
+Проверка установки хука на Linux (28 октября, маленький Git-проект из двух модулей, `cm-setup install --clients codex,claude`):
+
+| Проверка | Результат |
+|---|---|
+| Команда хука из `.codex/config.toml` и `.claude/settings.json`, запущенная через `sh -c` | отдаёт `additionalContext` с обоими модулями; первый запуск сам поднимает демон |
+| Codex 0.163.0, `codex exec` в проекте с доверием к нему | хук ответил через демон за 15 мс, контекст CM в переписке модели, правка верная |
+| Claude Code, `claude -p` с настройками проекта | хук через демон за 9 мс, правка за 2 хода без Read |
+| Повторная установка | `.codex/config.toml` и `.claude/settings.json` побайтно не меняются |
+| `remove` | блок CM и хук убраны, `.claude/settings.json` без других настроек удалён |
+| `-ClaudeScope local` | хук в `.claude/settings.local.json`, MCP через `claude mcp add-json --scope local`; `remove` убирает оба |
+
 В0.8.1 `structuredContent.source_context` сохраняет исходник для клиента, выбирающего структурированный MCP-ответ. Реальный random-marker test подтвердил исправление native Claude; в контрольном запросе Codex маркер передан модели один раз и до, и после изменения. Отдельный [96-session A/B](HISTORY.md#7-codex-и-claude-code-через-mcp) измеряет полезность: исправленная доставка не означает автоматически меньше токенов, быстрее решение или более высокое качество. Открытые клиенты после обновления надо перезапустить.
 
 Повтор той же команды переиспользует установленный release и данные. Новый package hash создаёт соседний release и переключает только управляемые настройки. Полный менеджер обновлений, автоматический rollback release и macOS/Linux bootstrap ещё не реализованы. Для переключения Claude с local на project сначала отключить существующее подключение. Генерируемые `.ps1` сохраняются с UTF-8 BOM для кириллицы в Windows PowerShell 5.1.

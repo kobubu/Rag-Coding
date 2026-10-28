@@ -12,9 +12,9 @@ export function clients(value: string): Client[] {
 function object(value: unknown): value is Record<string, unknown> { return !!value && typeof value === "object" && !Array.isArray(value); }
 // The UserPromptSubmit hook gives the measured savings; the MCP server alone is rarely called (docs/NATIVE-CLIENTS.md).
 // It takes the server's arguments, so both read the same index, vectors and live memory.
-export function hookCommand(server: StdioConfig): string {
+export function hookCommand(server: StdioConfig, client: "codex" | "claude" = "codex"): string {
   const args = server.args.map(arg => arg.replace(/([\\/])dist[\\/]src[\\/]mcp[\\/]cli\.js$/, (_, sep: string) => [sep + "dist", "src", "hooks", "cli.js"].join(sep)));
-  return [server.command, ...args].map(arg => JSON.stringify(arg)).join(" ");
+  return [server.command, ...args, ...(client === "claude" ? ["--client", "claude"] : [])].map(arg => JSON.stringify(arg)).join(" ");
 }
 export function codexConfig(before: string, name: string, server: StdioConfig, remove = false, previous = server) {
   if (!/^[a-z][a-z0-9_]{1,63}$/.test(name)) throw new CMError("invalid_argument", "Invalid managed MCP name");
@@ -46,13 +46,13 @@ export function claudeConfig(before: string | undefined, name: string, server: S
   return JSON.stringify(document, null, 2) + "\n";
 }
 /** Adds or removes the CM UserPromptSubmit hook in a Claude Code settings document, keeping every other setting. */
-export function claudeHooks(before: string | undefined, command: string, remove = false, previous = command) {
+export function claudeHooks(before: string | undefined, command: string, remove = false, previous: string[] = []) {
   const document: unknown = before ? JSON.parse(before.replace(/^\uFEFF/, "")) : {};
   if (!object(document)) throw new CMError("config_conflict", "Claude settings must contain an object");
   if (document.hooks !== undefined && !object(document.hooks)) throw new CMError("config_conflict", "Claude settings hooks must contain an object");
   const hooks = (document.hooks ?? {}) as Record<string, unknown>, groups = hooks.UserPromptSubmit ?? [];
   if (!Array.isArray(groups)) throw new CMError("config_conflict", "UserPromptSubmit hooks must be a list");
-  const ours = (group: unknown) => object(group) && Array.isArray(group.hooks) && group.hooks.some(h => object(h) && (h.command === previous || h.command === command));
+  const ours = (group: unknown) => object(group) && Array.isArray(group.hooks) && group.hooks.some(h => object(h) && [command, ...previous].includes(h.command as string));
   const kept = groups.filter(group => !ours(group));
   if (!remove) kept.push({ hooks: [{ type: "command", command, timeout: 120 }] });
   if (kept.length) hooks.UserPromptSubmit = kept; else delete hooks.UserPromptSubmit;

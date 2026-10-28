@@ -1,0 +1,2255 @@
+{
+  "protocol": {
+    "format": "cm-native-ab-1",
+    "created_at": "2026-10-28T14:41:23.339Z",
+    "client": "codex",
+    "client_version": "codex-cli 0.163.0",
+    "model": "gpt-6-luna",
+    "reasoning_effort": "low",
+    "arms": [
+      "none",
+      "cm_warm"
+    ],
+    "repetitions": 3,
+    "cases_hash": "a0b2c864597d1d09ea20967c0e08be2bd75b643ba759bfcbddc812252dc1de3a",
+    "preparation_sha256": "dcdff6060b72331210c27ac2529c225a94cb8f53c4c63f9488c8ff9008ef494e",
+    "implementation": [
+      {
+        "path": "scripts/holdout_checks.ts",
+        "sha256": "e3ca0d4d52842264ac8408befe807dc360ae1ec7ec716962e86de5818982e9a8"
+      },
+      {
+        "path": "dist/scripts/holdout_checks.js",
+        "sha256": "606876235e13e62cb75cabc9a297e7e359d0969d3c914b887820a16071cdd68c"
+      },
+      {
+        "path": "scripts/lib.ts",
+        "sha256": "2c08b0809a3a0e1a06b44166429b35b51fb76c135d3af982c6a2785dcf34acd9"
+      },
+      {
+        "path": "dist/scripts/lib.js",
+        "sha256": "a7be953e3b1cf6a812e3b8185813548f92877b8fadb28bdb0a04d7e2231ac4e9"
+      },
+      {
+        "path": "scripts/native_ab.ts",
+        "sha256": "4745e967161b378359f122ad09eb3e5a2976562c10e24a3515deb90538ba147b"
+      },
+      {
+        "path": "dist/scripts/native_ab.js",
+        "sha256": "5412cd71e5546d3c2e2d8ee864877d13d260524829fa0972764f2939957a4a11"
+      },
+      {
+        "path": "scripts/speed_checks.ts",
+        "sha256": "1a06aa0bebebbfc9cce066ca4355f8b9c776943a2b35383f892ca83f84d96629"
+      },
+      {
+        "path": "dist/scripts/speed_checks.js",
+        "sha256": "083e120bd82e6cba2c127c9339d7801e583e81eb6cf3a14e6c658e11170318e6"
+      },
+      {
+        "path": "src/code-memory/ann_cli.ts",
+        "sha256": "ec832ee3379eec2d3da3fe630574e4c921017e42f53f836e26ed9905ee782b11"
+      },
+      {
+        "path": "dist/src/code-memory/ann_cli.js",
+        "sha256": "8908efa202deee2339092015d4efd2d24d8ff5fabf1dfc80611eebf205fe845a"
+      },
+      {
+        "path": "src/code-memory/chunks.ts",
+        "sha256": "974174aedf7adc42ba5f5956e408d277801872e45b3990fa3a8ae79186334775"
+      },
+      {
+        "path": "dist/src/code-memory/chunks.js",
+        "sha256": "aaa93539bff2a03b22deeb6ace750b202fae4dec1022bd973055082f38f1f454"
+      },
+      {
+        "path": "src/code-memory/cli.ts",
+        "sha256": "1e21966c1127fe3bdfa47926dbad922bf3dab9d822c44ecd9772a09a040708dd"
+      },
+      {
+        "path": "dist/src/code-memory/cli.js",
+        "sha256": "41ed2c37fb738f2010be9fece7e0d987f607d177ded0fb69d513e7af6bf25ab8"
+      },
+      {
+        "path": "src/code-memory/direct.ts",
+        "sha256": "c2a0209234d3c7561aed181605b48204ea8048c5361e7e86febc76e5dda16f34"
+      },
+      {
+        "path": "dist/src/code-memory/direct.js",
+        "sha256": "1bcd396c6d47fe00eaef79dfa21322b5c6c976713c99fa810a268afa92fcf406"
+      },
+      {
+        "path": "src/code-memory/focus.ts",
+        "sha256": "f550fe7423cf6e04f35cb1e6d559ad9a58d93acb6f23a02699071f5b5386a9e6"
+      },
+      {
+        "path": "dist/src/code-memory/focus.js",
+        "sha256": "8b7aa93ffb6c9eb7b4e1b96b893b6c644dd3af6fd14bdaaaeb2db1dbb33520cb"
+      },
+      {
+        "path": "src/code-memory/graph_retrieve.ts",
+        "sha256": "6392b935bf65041ec401b8ec3e37b517b121dcb3ad2faa2bfdbd9abbc7a39da0"
+      },
+      {
+        "path": "dist/src/code-memory/graph_retrieve.js",
+        "sha256": "d28cf74efb2939054fcb6789fbf2efc65c9cc4af8b7400626aebb41697c0ad52"
+      },
+      {
+        "path": "src/code-memory/indexer.ts",
+        "sha256": "c95437769d5aff254841366c55e007c43dafcf6933bca47050330e06b357f613"
+      },
+      {
+        "path": "dist/src/code-memory/indexer.js",
+        "sha256": "6bbd813f0dc898dfcd6d492e695ae1671b7eb1ad8e80be408622cb80f7112b8b"
+      },
+      {
+        "path": "src/code-memory/knowledge.ts",
+        "sha256": "88ae9543ec08c9e3ca299f09aa4e416fcb5c3f01e0878095ba20c744dbe6903c"
+      },
+      {
+        "path": "dist/src/code-memory/knowledge.js",
+        "sha256": "7fff92a925752025bcfc9e46af851c6cfe0aeadb6e3a55663ed09124bae4aee8"
+      },
+      {
+        "path": "src/code-memory/live.ts",
+        "sha256": "df19b51ede03cc723008ed1bb7767959b08720c714466a3946aaea43ac4df717"
+      },
+      {
+        "path": "dist/src/code-memory/live.js",
+        "sha256": "0a6f5142c26d8908089bca15fb253d6a73ae8e07f9490aeb23da93339daa7372"
+      },
+      {
+        "path": "src/code-memory/minilm.ts",
+        "sha256": "0fe815aadfa2ce5a1b1856ff9ce54ea374f767b332733d617955115bd2c5f050"
+      },
+      {
+        "path": "dist/src/code-memory/minilm.js",
+        "sha256": "864594193f0246fd6564712907b6c3e73f81efcb06161b3b23e2950dea0a0b9f"
+      },
+      {
+        "path": "src/code-memory/query.ts",
+        "sha256": "380478b4914fc633ee58193d428a91509d566da52e9889640d91b07662d01bc3"
+      },
+      {
+        "path": "dist/src/code-memory/query.js",
+        "sha256": "177fd3e99389992e248df7dccf44ef1b8c52538ccf918f2fb4ed0866b27c51cb"
+      },
+      {
+        "path": "src/code-memory/retrieve.ts",
+        "sha256": "f69c4f99dc65750603f794abe9ae4936a35fbf4dc9510d5d9f772d96a3d7f6e0"
+      },
+      {
+        "path": "dist/src/code-memory/retrieve.js",
+        "sha256": "f80ccc0ad4d0bb1f256f6ddf6e6aafa13cd6eb9a2678fa2dfcfd8f19ff0f47af"
+      },
+      {
+        "path": "src/code-memory/search_cli.ts",
+        "sha256": "feb51a21b7eae020f4784d3b3ab92950c619a69ec9070d38101f6aeab95ddedf"
+      },
+      {
+        "path": "dist/src/code-memory/search_cli.js",
+        "sha256": "c37522858ec00cda295127758a2a43bebfab038de7934e60f0df72787fa0981d"
+      },
+      {
+        "path": "src/code-memory/source.ts",
+        "sha256": "23b1343692dc7f1bd943cf30a763919bbd16018dcb046c8c468d7a74184e7264"
+      },
+      {
+        "path": "dist/src/code-memory/source.js",
+        "sha256": "b26f7612786b94be200404021239585e5180b71505a9ee858465c47db4eb0799"
+      },
+      {
+        "path": "src/code-memory/store.ts",
+        "sha256": "cc1dae4e0a793b13614bbde32e380e16f761aa3664a9bd99f26a5e03525d4ffd"
+      },
+      {
+        "path": "dist/src/code-memory/store.js",
+        "sha256": "4e2db3116e9efec8775ffe14fd06e167d9183df84b20fa3ead61b3a7380cd601"
+      },
+      {
+        "path": "src/code-memory/ts.ts",
+        "sha256": "76222d7d3d073bb02b074009187a4e5123d575ad0bc8787d1ae77a63f1467ef2"
+      },
+      {
+        "path": "dist/src/code-memory/ts.js",
+        "sha256": "cb373ccf462adbb056482860086ea26c977e37c28cd2c47a1a41bcbf73026fc2"
+      },
+      {
+        "path": "src/code-memory/types.ts",
+        "sha256": "ad337bc6337850714843fda6ea2044683a48feb3465e4c0bdaad08d39617bc86"
+      },
+      {
+        "path": "dist/src/code-memory/types.js",
+        "sha256": "05c41b0ce4ba21f6ec0f485502ef2cd15de86b3c992e97965ce907b453a1baa6"
+      },
+      {
+        "path": "src/code-memory/vector.ts",
+        "sha256": "b9dad116c7abb8d27cf8195aff68f6bc17c0cb41244ef141617d056e7c4b5d82"
+      },
+      {
+        "path": "dist/src/code-memory/vector.js",
+        "sha256": "b1824b10f1269bf19263ba6ad434d199067ae15c1603e3a4bada7b0477aa5e76"
+      },
+      {
+        "path": "src/code-memory/vector_cli.ts",
+        "sha256": "a9bc4345eaab4606a90c379829578ccf2ab6dc3e19ca9f346d8e29ec445a97fb"
+      },
+      {
+        "path": "dist/src/code-memory/vector_cli.js",
+        "sha256": "50fe2e32e92f528265c4997fb0692b1948165fdaee071e1483f7e8a193824c33"
+      },
+      {
+        "path": "src/harness/plugin.ts",
+        "sha256": "f197e4142b41de05f3b9ed510251ddf1c26c8272a2775271263a3ca5dbb830f0"
+      },
+      {
+        "path": "dist/src/harness/plugin.js",
+        "sha256": "8908014061d2928a607eb1ca1b3fea02946032513f30d6eb65a8c9e759bff87b"
+      },
+      {
+        "path": "src/hooks/cli.ts",
+        "sha256": "991822a64a22625479663919574f012d3610f0493668d11a39b3982d0447cc25"
+      },
+      {
+        "path": "dist/src/hooks/cli.js",
+        "sha256": "ad5750d603b5f55a08f6a0e675852dd19c660433ef846acc2b5ba647a9ff6501"
+      },
+      {
+        "path": "src/hooks/client.ts",
+        "sha256": "5f2f0f872f9558ba6e6bcc9f2b54de3d25b8c0c08e786d59974b861a4edcd798"
+      },
+      {
+        "path": "dist/src/hooks/client.js",
+        "sha256": "31c1030a55661f8feb08e81426e88fbf34ed5b4a250b2706bcc6ac2ba2cbd744"
+      },
+      {
+        "path": "src/hooks/context.ts",
+        "sha256": "63c8e4dd077aa14b42d81846c0a3ffb7509f64d800b34ca8a00b37e99fa2df8f"
+      },
+      {
+        "path": "dist/src/hooks/context.js",
+        "sha256": "4a1cf96bc93c67bb4287c7e35d9a48670fa68ba1eb51a34405ccffeb746c97fd"
+      },
+      {
+        "path": "src/hooks/daemon.ts",
+        "sha256": "0ee2cf7986f26b809ea7a4d8a04d26e07e5a46eceadb6c2dedb84c11cc2539ed"
+      },
+      {
+        "path": "dist/src/hooks/daemon.js",
+        "sha256": "5601dd54ae711e61f7e423084d9c28f8cfbb17952c372e5e7f78c12e900fbcb5"
+      },
+      {
+        "path": "src/hooks/daemon_cli.ts",
+        "sha256": "66119a98623afb7b9293e9f09ac73f94d1758a87139989303378eee3cc6f0233"
+      },
+      {
+        "path": "dist/src/hooks/daemon_cli.js",
+        "sha256": "66119a98623afb7b9293e9f09ac73f94d1758a87139989303378eee3cc6f0233"
+      },
+      {
+        "path": "src/hooks/reread.ts",
+        "sha256": "05efab4e77453ec3f9cd5e678834e997874220078fa0c08b658c9ffac9fe69ad"
+      },
+      {
+        "path": "dist/src/hooks/reread.js",
+        "sha256": "8cb9246f1129125dec25caa608c29e53747221dc8f5349fb6159aa8cb7321452"
+      },
+      {
+        "path": "src/local-agent/cli.ts",
+        "sha256": "d32e478b42556fdd47551579107a7a965b5419e555912acf9d396084c682267a"
+      },
+      {
+        "path": "dist/src/local-agent/cli.js",
+        "sha256": "cbe628816478a47292ccba5cc0a59cc1817135878bc18dd3fb617842cf53bfc3"
+      },
+      {
+        "path": "src/local-agent/config.ts",
+        "sha256": "1a3d5fd94f5be46280957c1dce12384442ad3df997c323f534a342560a8d3c0b"
+      },
+      {
+        "path": "dist/src/local-agent/config.js",
+        "sha256": "503f5b7b88cf844f951ef8510b0f270a1c4e1eb77425f4a4c94bb3eea248bd2c"
+      },
+      {
+        "path": "src/local-agent/http.ts",
+        "sha256": "7493fa9366c9eef60f2bb71f1181a152ad62c3a51dd5d45b666899e412f5aab5"
+      },
+      {
+        "path": "dist/src/local-agent/http.js",
+        "sha256": "d6ef6cbf2e7d7dd9216c35401e27d8400f2dc899491d7f06a7c53478519571df"
+      },
+      {
+        "path": "src/local-agent/map.ts",
+        "sha256": "82e9b7b6139e93ff3739dd97c62935ee067dfe7c3ab5c5fb510f7b61168a3d86"
+      },
+      {
+        "path": "dist/src/local-agent/map.js",
+        "sha256": "fc10d41dc66d1ea94f15f3fe74a354c3d75e77882e1b487f9aa671492b3fcb2b"
+      },
+      {
+        "path": "src/local-agent/models.ts",
+        "sha256": "01ad788a233ae5cdcf1b72a2ce5b70cbd39d8076818ed58e09c1aedf17a5a33f"
+      },
+      {
+        "path": "dist/src/local-agent/models.js",
+        "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      {
+        "path": "src/local-agent/service.ts",
+        "sha256": "5b4940374e90de41b09cd3680266325d3ffca980146d6c61d16a8230263ad900"
+      },
+      {
+        "path": "dist/src/local-agent/service.js",
+        "sha256": "4cfed3f33c63e776b5324e535f6ba480a404ae230858a06f8b5a53bf637fe5fa"
+      },
+      {
+        "path": "src/mcp/cli.ts",
+        "sha256": "fedb7f353ff0b1bba7e8fa3a62f69fb12f761e363de0d6452d99505ef5b9d71a"
+      },
+      {
+        "path": "dist/src/mcp/cli.js",
+        "sha256": "7ec9663e90d36962c57590fd294e45b274ecab1086d45fc54e4943b165d327c6"
+      },
+      {
+        "path": "src/mcp/server.ts",
+        "sha256": "3be79cee0ccad10494d3e79041bb1acfd9f4a461dc206c70840a9f12c9571be3"
+      },
+      {
+        "path": "dist/src/mcp/server.js",
+        "sha256": "a09f56700f108a837f0dc1be3b41e9b128762bca8e8630506603a7ae07da2e7f"
+      },
+      {
+        "path": "src/setup/claude.ts",
+        "sha256": "c0b2b832ba823290e70e17dd7f5455ffc44fe13d32975ef3b88fbe0f7aca7ecc"
+      },
+      {
+        "path": "dist/src/setup/claude.js",
+        "sha256": "297fcffbb391421557d7f1ac85caa2df28f48432acfc7cb18ad500d607ab9db0"
+      },
+      {
+        "path": "src/setup/cli.ts",
+        "sha256": "6331feb2d2ea56c58af985c4d667eb2c80a84b396cf182afaa8b06f4e73df29f"
+      },
+      {
+        "path": "dist/src/setup/cli.js",
+        "sha256": "345921d8a24cf5695ec4ec9f227d4398ded300350462d3f4f6475c7687057501"
+      },
+      {
+        "path": "src/setup/config.ts",
+        "sha256": "1a1b8e65c4f66c1d94a94b4363b3cbe28a6d48fde08a1a8564b66bbff7dd0269"
+      },
+      {
+        "path": "dist/src/setup/config.js",
+        "sha256": "3d85e1f8dab380581fb7a32b6ef7c1cee2d577e448eb1627fbdd04f25e58951e"
+      },
+      {
+        "path": "src/setup/files.ts",
+        "sha256": "184ced0192f36df23f15a41c7999c96ee3ce7a676ca3dff88bb56ed16033a99d"
+      },
+      {
+        "path": "dist/src/setup/files.js",
+        "sha256": "ee4283af8d51f199e9bd2435cdc36f365e7a9d65d08c580d6b034a2945e650df"
+      },
+      {
+        "path": "src/setup/install.ts",
+        "sha256": "6c787efd177843dccce546e5e94cf82a8739f709f0ef60019c556cf0802aa419"
+      },
+      {
+        "path": "dist/src/setup/install.js",
+        "sha256": "ddd417f75d98afac422634dadb617b69ffccaab70e5733d87d742c485d966791"
+      },
+      {
+        "path": "src/version.ts",
+        "sha256": "a84fdcc97f67f7ce5da3ba27e03ffc0ce0e1dad06081d7f5f68a51dfb8f7f07b"
+      },
+      {
+        "path": "dist/src/version.js",
+        "sha256": "a84fdcc97f67f7ce5da3ba27e03ffc0ce0e1dad06081d7f5f68a51dfb8f7f07b"
+      }
+    ],
+    "base_build_sha256": "2c8e85e3bba049907c0eeef5113cf16f75632bd90371b672248849e851c34a96",
+    "warm_daemon": false,
+    "max_run_seconds": 300,
+    "max_estimated_usd": 1,
+    "price": {
+      "input": 0.1,
+      "cache_read": 0.01,
+      "cache_write": 0.125,
+      "output": 0.5,
+      "per": 1000000,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-luna"
+    },
+    "arms_config": {
+      "none": "Client without CM",
+      "cm_base": "Frozen CM 0.8.1: MCP server + installer skill, model decides whether to call it",
+      "cm_next": "Current CM: UserPromptSubmit hook adds CM context before the first call, plus MCP server + skill",
+      "cm_warm": "cm_next with its hook daemon started before the session (start time recorded separately)",
+      "cm_guard": "cm_warm plus a PreToolUse hook answering the first re-read of a file shown whole"
+    }
+  },
+  "estimated_cost_usd": 0.09814696,
+  "results": [
+    {
+      "run_id": "run-eb02827357ebbc35",
+      "task": "circle-contact",
+      "category": "named-with-helper",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 20244.731082,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 275,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 9,
+        "cache_read": 22494,
+        "cache_write": 11852,
+        "output": 346,
+        "total_input": 34355,
+        "total_tokens": 34701,
+        "usd_estimate": 0.0018803399999999999
+      },
+      "items": {
+        "agent_message": 2,
+        "command_execution": 1,
+        "file_change": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-e8b6d760973095c0",
+      "task": "circle-contact",
+      "category": "named-with-helper",
+      "repetition": 1,
+      "arm": "cm_warm",
+      "duration_ms": 6768.677187000001,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 275,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 833,
+        "cache_read": 10995,
+        "cache_write": 12116,
+        "output": 292,
+        "total_input": 23944,
+        "total_tokens": 24236,
+        "usd_estimate": 0.00185375
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:41:48.757Z",
+        "via": "daemon",
+        "ms": 211,
+        "retrieve_ms": 205,
+        "bytes": 1834,
+        "paths": [
+          "game/src/core/geometry.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 3536.119149000002
+    },
+    {
+      "run_id": "run-d649251009078840",
+      "task": "camera-time",
+      "category": "named-dependency-chain",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 8345.925997999999,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 901,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 9,
+        "cache_read": 23027,
+        "cache_write": 12426,
+        "output": 447,
+        "total_input": 35462,
+        "total_tokens": 35909,
+        "usd_estimate": 0.0020079200000000003
+      },
+      "items": {
+        "agent_message": 2,
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-3865a9fc2d392fcf",
+      "task": "camera-time",
+      "category": "named-dependency-chain",
+      "repetition": 1,
+      "arm": "cm_warm",
+      "duration_ms": 4935.663026999995,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 901,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 1305,
+        "cache_read": 11013,
+        "cache_write": 12609,
+        "output": 303,
+        "total_input": 24927,
+        "total_tokens": 25230,
+        "usd_estimate": 0.001968255
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:42:08.804Z",
+        "via": "daemon",
+        "ms": 202,
+        "retrieve_ms": 196,
+        "bytes": 4233,
+        "paths": [
+          "game/fil/src/cameraModel.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 3498.182568999997
+    },
+    {
+      "run_id": "run-46dfef9156fc9be9",
+      "task": "wallet-delta",
+      "category": "semantic-discovery",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 60796.644105,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": false,
+      "quality": {
+        "pass": false,
+        "behavior_pass": false,
+        "error": "AssertionError [ERR_ASSERTION]: Only unapplied receipts credited\n+ actual - expected\n\n  {\n    coins: 1,\n+   videoRewards: 1\n-   videoRewards: 0\n  }\n"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 24,
+        "cache_read": 124458,
+        "cache_write": 19765,
+        "output": 1827,
+        "total_input": 144247,
+        "total_tokens": 146074,
+        "usd_estimate": 0.004631105
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 6,
+        "file_change": 1
+      },
+      "shell_commands": 6,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-9c6e7e525ad9a1b3",
+      "task": "wallet-delta",
+      "category": "semantic-discovery",
+      "repetition": 1,
+      "arm": "cm_warm",
+      "duration_ms": 16545.188963000008,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 272,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 314,
+        "cache_read": 22962,
+        "cache_write": 12569,
+        "output": 1154,
+        "total_input": 35845,
+        "total_tokens": 36999,
+        "usd_estimate": 0.002409145
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 3,
+        "file_change": 2,
+        "command_execution": 2
+      },
+      "shell_commands": 2,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:43:19.209Z",
+        "via": "daemon",
+        "ms": 180,
+        "retrieve_ms": 173,
+        "bytes": 341,
+        "paths": [
+          "game/src/core/reward-wallet.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2343.1782280000043
+    },
+    {
+      "run_id": "run-5c9608c3465da199",
+      "task": "motion-envelope",
+      "category": "semantic-import-dependency",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 13902.277004999982,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 3239,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 18,
+        "cache_read": 93171,
+        "cache_write": 23965,
+        "output": 653,
+        "total_input": 117154,
+        "total_tokens": 117807,
+        "usd_estimate": 0.004255635
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 5,
+        "file_change": 1
+      },
+      "shell_commands": 5,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-631ca05861577750",
+      "task": "motion-envelope",
+      "category": "semantic-import-dependency",
+      "repetition": 1,
+      "arm": "cm_warm",
+      "duration_ms": 5286.543864000007,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 3239,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 732,
+        "cache_read": 10961,
+        "cache_write": 12016,
+        "output": 340,
+        "total_input": 23709,
+        "total_tokens": 24049,
+        "usd_estimate": 0.00185481
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:43:53.848Z",
+        "via": "daemon",
+        "ms": 183,
+        "retrieve_ms": 176,
+        "bytes": 1920,
+        "paths": [
+          "game/fil/src/geoCollisionCandidates.js",
+          "game/fil/src/renderVisibilityModel.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2501.801669999986
+    },
+    {
+      "run_id": "run-b0d140329d2533ff",
+      "task": "quota-receipts",
+      "category": "two-module-contract",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 11669.24198000002,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 454,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 12,
+        "cache_read": 39130,
+        "cache_write": 15371,
+        "output": 629,
+        "total_input": 54513,
+        "total_tokens": 55142,
+        "usd_estimate": 0.002628375
+      },
+      "items": {
+        "agent_message": 2,
+        "command_execution": 3,
+        "file_change": 1
+      },
+      "shell_commands": 3,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-38809294fed3ab99",
+      "task": "quota-receipts",
+      "category": "two-module-contract",
+      "repetition": 1,
+      "arm": "cm_warm",
+      "duration_ms": 9949.307352000003,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 454,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 598,
+        "cache_read": 22856,
+        "cache_write": 14353,
+        "output": 482,
+        "total_input": 37807,
+        "total_tokens": 38289,
+        "usd_estimate": 0.002323485
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "command_execution": 2
+      },
+      "shell_commands": 2,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:44:15.573Z",
+        "via": "daemon",
+        "ms": 158,
+        "retrieve_ms": 152,
+        "bytes": 1370,
+        "paths": [
+          "game/src/core/progression.js",
+          "game/src/core/reward-policy.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 3450.2910559999873
+    },
+    {
+      "run_id": "run-42b0a98d8a3368c4",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 25249.49330599999,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 198.77930850000007,
+          "candidate_ms": 6.418222000000014,
+          "speedup": 30.971086462886394,
+          "samples": [
+            {
+              "baseline_ms": 195.94503850000007,
+              "candidate_ms": 8.079741000000013
+            },
+            {
+              "baseline_ms": 192.30841449999997,
+              "candidate_ms": 6.5739619999999945
+            },
+            {
+              "baseline_ms": 198.77930850000007,
+              "candidate_ms": 6.256426000000033
+            },
+            {
+              "baseline_ms": 271.7635885000001,
+              "candidate_ms": 7.379792000000066
+            },
+            {
+              "baseline_ms": 218.17611799999986,
+              "candidate_ms": 6.418222000000014
+            },
+            {
+              "baseline_ms": 202.49056500000006,
+              "candidate_ms": 6.314027500000066
+            },
+            {
+              "baseline_ms": 194.25345599999991,
+              "candidate_ms": 6.305421000000024
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 9,
+        "cache_read": 23052,
+        "cache_write": 13047,
+        "output": 1071,
+        "total_input": 36108,
+        "total_tokens": 37179,
+        "usd_estimate": 0.002397795
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-5b023e21069f175d",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 1,
+      "arm": "cm_warm",
+      "duration_ms": 22713.806425000017,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 257.2384669999999,
+          "candidate_ms": 6.507044000000178,
+          "speedup": 39.532307911240935,
+          "samples": [
+            {
+              "baseline_ms": 261.652006,
+              "candidate_ms": 9.246644000000003
+            },
+            {
+              "baseline_ms": 257.2384669999999,
+              "candidate_ms": 7.686880500000029
+            },
+            {
+              "baseline_ms": 258.77781200000004,
+              "candidate_ms": 6.507044000000178
+            },
+            {
+              "baseline_ms": 252.45297000000005,
+              "candidate_ms": 6.177672999999913
+            },
+            {
+              "baseline_ms": 212.6890619999997,
+              "candidate_ms": 5.693525500000078
+            },
+            {
+              "baseline_ms": 213.17472850000013,
+              "candidate_ms": 6.784143999999969
+            },
+            {
+              "baseline_ms": 275.7492629999999,
+              "candidate_ms": 6.037670999999818
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 988,
+        "cache_read": 37805,
+        "cache_write": 14222,
+        "output": 1748,
+        "total_input": 53015,
+        "total_tokens": 54763,
+        "usd_estimate": 0.0031286
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "command_execution": 3
+      },
+      "shell_commands": 3,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:45:00.033Z",
+        "via": "daemon",
+        "ms": 204,
+        "retrieve_ms": 198,
+        "bytes": 2887,
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 3816.6888969999854
+    },
+    {
+      "run_id": "run-9fcc1739cc525145",
+      "task": "circle-contact",
+      "category": "named-with-helper",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 11151.107604000019,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 275,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 12,
+        "cache_read": 34340,
+        "cache_write": 12009,
+        "output": 478,
+        "total_input": 46361,
+        "total_tokens": 46839,
+        "usd_estimate": 0.002084725
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-dab9f981754f7984",
+      "task": "circle-contact",
+      "category": "named-with-helper",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 7717.016479000013,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 275,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 836,
+        "cache_read": 23081,
+        "cache_write": 13156,
+        "output": 407,
+        "total_input": 37073,
+        "total_tokens": 37480,
+        "usd_estimate": 0.00216241
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "command_execution": 2
+      },
+      "shell_commands": 2,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:45:42.306Z",
+        "via": "daemon",
+        "ms": 364,
+        "retrieve_ms": 355,
+        "bytes": 1834,
+        "paths": [
+          "game/src/core/geometry.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2353.419901999994
+    },
+    {
+      "run_id": "run-dbb72719ab017227",
+      "task": "camera-time",
+      "category": "named-dependency-chain",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 5893.566400000011,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": false,
+      "quality": {
+        "pass": false,
+        "behavior_pass": false,
+        "error": "AssertionError [ERR_ASSERTION]: Negative dt and safety envelope\n+ actual - expected\n... Skipped lines\n\n  {\n    bounds: {\n      max: 1751.4041821882129,\n      min: -269.3121359627694\n    },\n...\n    insideDeadzone: false,\n+   screenRatio: 0.5000093933288617,\n-   screenRatio: 0.58,\n    targetY: 1027.1848999196663,\n+   y: 1027.1800350399365\n-   y: 985.7522636177018\n  }\n"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 6,
+        "cache_read": 10898,
+        "cache_write": 12265,
+        "output": 186,
+        "total_input": 23169,
+        "total_tokens": 23355,
+        "usd_estimate": 0.001735705
+      },
+      "items": {
+        "agent_message": 2,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-5573f0ecd216d4a8",
+      "task": "camera-time",
+      "category": "named-dependency-chain",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 7177.621679000033,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 901,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 1305,
+        "cache_read": 11013,
+        "cache_write": 12570,
+        "output": 255,
+        "total_input": 24888,
+        "total_tokens": 25143,
+        "usd_estimate": 0.00193938
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:45:59.828Z",
+        "via": "daemon",
+        "ms": 251,
+        "retrieve_ms": 245,
+        "bytes": 4233,
+        "paths": [
+          "game/fil/src/cameraModel.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2457.0870710000163
+    },
+    {
+      "run_id": "run-b427734fbbb7485b",
+      "task": "wallet-delta",
+      "category": "semantic-discovery",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 18316.011921000027,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 272,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 21,
+        "cache_read": 110128,
+        "cache_write": 22954,
+        "output": 1302,
+        "total_input": 133103,
+        "total_tokens": 134405,
+        "usd_estimate": 0.00462363
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 6,
+        "file_change": 2
+      },
+      "shell_commands": 6,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-c337100118aa687e",
+      "task": "wallet-delta",
+      "category": "semantic-discovery",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 41259.03713000001,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": false,
+      "quality": {
+        "pass": false,
+        "behavior_pass": false,
+        "error": "AssertionError [ERR_ASSERTION]: Only unapplied receipts credited\n+ actual - expected\n\n  {\n    coins: 0,\n+   videoRewards: 0\n-   videoRewards: 1\n  }\n"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 338,
+        "cache_read": 143814,
+        "cache_write": 17582,
+        "output": 3467,
+        "total_input": 161734,
+        "total_tokens": 165201,
+        "usd_estimate": 0.00540319
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 3,
+        "file_change": 5,
+        "command_execution": 10
+      },
+      "shell_commands": 10,
+      "read_like_commands": 5,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:46:29.781Z",
+        "via": "daemon",
+        "ms": 194,
+        "retrieve_ms": 187,
+        "bytes": 341,
+        "paths": [
+          "game/src/core/reward-wallet.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2544.236822000006
+    },
+    {
+      "run_id": "run-54459b112231cad9",
+      "task": "motion-envelope",
+      "category": "semantic-import-dependency",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 14595.980955000035,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 3239,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 15,
+        "cache_read": 64182,
+        "cache_write": 19971,
+        "output": 653,
+        "total_input": 84168,
+        "total_tokens": 84821,
+        "usd_estimate": 0.003466195
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 3,
+        "file_change": 1
+      },
+      "shell_commands": 3,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-770a504a0e96365d",
+      "task": "motion-envelope",
+      "category": "semantic-import-dependency",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 6765.882173999969,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 3239,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 732,
+        "cache_read": 10997,
+        "cache_write": 12111,
+        "output": 389,
+        "total_input": 23840,
+        "total_tokens": 24229,
+        "usd_estimate": 0.0018915450000000001
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:47:29.205Z",
+        "via": "daemon",
+        "ms": 181,
+        "retrieve_ms": 175,
+        "bytes": 1920,
+        "paths": [
+          "game/fil/src/geoCollisionCandidates.js",
+          "game/fil/src/renderVisibilityModel.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2231.3860969999805
+    },
+    {
+      "run_id": "run-f42954a7dc5d594c",
+      "task": "quota-receipts",
+      "category": "two-module-contract",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 9593.889280000003,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 454,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 12,
+        "cache_read": 39451,
+        "cache_write": 15292,
+        "output": 588,
+        "total_input": 54755,
+        "total_tokens": 55343,
+        "usd_estimate": 0.00260121
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 3,
+        "file_change": 1
+      },
+      "shell_commands": 3,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-0213419554ea4e72",
+      "task": "quota-receipts",
+      "category": "two-module-contract",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 8512.850043000013,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 454,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 595,
+        "cache_read": 11000,
+        "cache_write": 12174,
+        "output": 671,
+        "total_input": 23769,
+        "total_tokens": 24440,
+        "usd_estimate": 0.00202675
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:47:49.665Z",
+        "via": "daemon",
+        "ms": 164,
+        "retrieve_ms": 158,
+        "bytes": 1370,
+        "paths": [
+          "game/src/core/progression.js",
+          "game/src/core/reward-policy.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2464.4837169999955
+    },
+    {
+      "run_id": "run-2936ebd95ffc6af1",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 12202.477383999969,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 201.39943749999975,
+          "candidate_ms": 6.65418649999998,
+          "speedup": 30.266575410833518,
+          "samples": [
+            {
+              "baseline_ms": 200.24889449999995,
+              "candidate_ms": 8.23337250000003
+            },
+            {
+              "baseline_ms": 229.8885944999999,
+              "candidate_ms": 6.65418649999998
+            },
+            {
+              "baseline_ms": 210.2359275,
+              "candidate_ms": 6.966497000000004
+            },
+            {
+              "baseline_ms": 197.13259099999982,
+              "candidate_ms": 6.805152000000021
+            },
+            {
+              "baseline_ms": 201.39943749999975,
+              "candidate_ms": 5.564853999999968
+            },
+            {
+              "baseline_ms": 224.040438,
+              "candidate_ms": 5.675906999999825
+            },
+            {
+              "baseline_ms": 200.182816,
+              "candidate_ms": 5.696899499999972
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 12,
+        "cache_read": 35224,
+        "cache_write": 12671,
+        "output": 843,
+        "total_input": 47907,
+        "total_tokens": 48750,
+        "usd_estimate": 0.0023588150000000002
+      },
+      "items": {
+        "agent_message": 2,
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-42c41eb7a023072a",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 22910.642897000012,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 236.78495899999984,
+          "candidate_ms": 6.71066200000007,
+          "speedup": 35.28488828672899,
+          "samples": [
+            {
+              "baseline_ms": 221.92540299999996,
+              "candidate_ms": 6.936860499999966
+            },
+            {
+              "baseline_ms": 223.68199249999998,
+              "candidate_ms": 6.71066200000007
+            },
+            {
+              "baseline_ms": 258.98265549999996,
+              "candidate_ms": 7.189797500000054
+            },
+            {
+              "baseline_ms": 226.35329649999994,
+              "candidate_ms": 4.855052999999884
+            },
+            {
+              "baseline_ms": 236.78495899999984,
+              "candidate_ms": 6.2323349999996935
+            },
+            {
+              "baseline_ms": 280.8832685,
+              "candidate_ms": 5.364978499999779
+            },
+            {
+              "baseline_ms": 286.4487080000001,
+              "candidate_ms": 7.441798500000232
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 988,
+        "cache_read": 37189,
+        "cache_write": 13741,
+        "output": 1380,
+        "total_input": 51918,
+        "total_tokens": 53298,
+        "usd_estimate": 0.002878315
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 3,
+        "file_change": 3,
+        "command_execution": 3
+      },
+      "shell_commands": 3,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:48:17.993Z",
+        "via": "daemon",
+        "ms": 240,
+        "retrieve_ms": 233,
+        "bytes": 2887,
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2301.1239010000136
+    },
+    {
+      "run_id": "run-18b20d5ca011a116",
+      "task": "circle-contact",
+      "category": "named-with-helper",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 8275.293466000003,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 275,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 9,
+        "cache_read": 22559,
+        "cache_write": 11872,
+        "output": 349,
+        "total_input": 34440,
+        "total_tokens": 34789,
+        "usd_estimate": 0.00188499
+      },
+      "items": {
+        "agent_message": 2,
+        "command_execution": 2
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-986ad1fffe19a636",
+      "task": "circle-contact",
+      "category": "named-with-helper",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 5571.515100999968,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 275,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 833,
+        "cache_read": 10983,
+        "cache_write": 12102,
+        "output": 288,
+        "total_input": 23918,
+        "total_tokens": 24206,
+        "usd_estimate": 0.0018498800000000001
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:48:56.987Z",
+        "via": "daemon",
+        "ms": 196,
+        "retrieve_ms": 190,
+        "bytes": 1834,
+        "paths": [
+          "game/src/core/geometry.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2444.5628520000027
+    },
+    {
+      "run_id": "run-58c27309fad62b3f",
+      "task": "camera-time",
+      "category": "named-dependency-chain",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 11979.932680000027,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 901,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 12,
+        "cache_read": 35380,
+        "cache_write": 13566,
+        "output": 514,
+        "total_input": 48958,
+        "total_tokens": 49472,
+        "usd_estimate": 0.00230775
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 3,
+        "file_change": 1
+      },
+      "shell_commands": 3,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-fa929aa92eb33ffc",
+      "task": "camera-time",
+      "category": "named-dependency-chain",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 6325.550279999967,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 901,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 1305,
+        "cache_read": 10965,
+        "cache_write": 12569,
+        "output": 317,
+        "total_input": 24839,
+        "total_tokens": 25156,
+        "usd_estimate": 0.001969775
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:49:18.262Z",
+        "via": "daemon",
+        "ms": 190,
+        "retrieve_ms": 184,
+        "bytes": 4233,
+        "paths": [
+          "game/fil/src/cameraModel.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2328.0957070000004
+    },
+    {
+      "run_id": "run-2a612e71fa4d6ec5",
+      "task": "wallet-delta",
+      "category": "semantic-discovery",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 33138.199817000015,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 272,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 27,
+        "cache_read": 159765,
+        "cache_write": 25579,
+        "output": 1830,
+        "total_input": 185371,
+        "total_tokens": 187201,
+        "usd_estimate": 0.005712725
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 6,
+        "file_change": 2
+      },
+      "shell_commands": 6,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-843ec8b4f5b085b3",
+      "task": "wallet-delta",
+      "category": "semantic-discovery",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 23195.292420999962,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 272,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 317,
+        "cache_read": 35775,
+        "cache_write": 13340,
+        "output": 1743,
+        "total_input": 49432,
+        "total_tokens": 51175,
+        "usd_estimate": 0.00292845
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 3,
+        "file_change": 2,
+        "command_execution": 3
+      },
+      "shell_commands": 3,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:50:01.512Z",
+        "via": "daemon",
+        "ms": 182,
+        "retrieve_ms": 176,
+        "bytes": 341,
+        "paths": [
+          "game/src/core/reward-wallet.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2359.5630640000454
+    },
+    {
+      "run_id": "run-1c4473298ced8aeb",
+      "task": "motion-envelope",
+      "category": "semantic-import-dependency",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 16315.672299999977,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 3239,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 21,
+        "cache_read": 103655,
+        "cache_write": 19505,
+        "output": 731,
+        "total_input": 123181,
+        "total_tokens": 123912,
+        "usd_estimate": 0.0038422749999999996
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 5,
+        "file_change": 1
+      },
+      "shell_commands": 5,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-b41469df0bd37aff",
+      "task": "motion-envelope",
+      "category": "semantic-import-dependency",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 8595.02290099999,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 3239,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 732,
+        "cache_read": 10973,
+        "cache_write": 11972,
+        "output": 320,
+        "total_input": 23677,
+        "total_tokens": 23997,
+        "usd_estimate": 0.00183943
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:50:44.933Z",
+        "via": "daemon",
+        "ms": 165,
+        "retrieve_ms": 158,
+        "bytes": 1920,
+        "paths": [
+          "game/fil/src/geoCollisionCandidates.js",
+          "game/fil/src/renderVisibilityModel.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2435.5333960000426
+    },
+    {
+      "run_id": "run-2a386f65979eb495",
+      "task": "quota-receipts",
+      "category": "two-module-contract",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 22275.02458299999,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 454,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 15,
+        "cache_read": 55722,
+        "cache_write": 16061,
+        "output": 1048,
+        "total_input": 71798,
+        "total_tokens": 72846,
+        "usd_estimate": 0.0030903450000000004
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 3,
+        "file_change": 1
+      },
+      "shell_commands": 3,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-afd9d629a8857869",
+      "task": "quota-receipts",
+      "category": "two-module-contract",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 8809.350131000043,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 454,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 595,
+        "cache_read": 11000,
+        "cache_write": 12198,
+        "output": 672,
+        "total_input": 23793,
+        "total_tokens": 24465,
+        "usd_estimate": 0.00203025
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 2,
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:51:20.621Z",
+        "via": "daemon",
+        "ms": 179,
+        "retrieve_ms": 172,
+        "bytes": 1370,
+        "paths": [
+          "game/src/core/progression.js",
+          "game/src/core/reward-policy.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2558.0502199999755
+    },
+    {
+      "run_id": "run-640bf0757b414c61",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 22557.34635499993,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 202.45480199999997,
+          "candidate_ms": 8.116562999999985,
+          "speedup": 24.943415334791382,
+          "samples": [
+            {
+              "baseline_ms": 206.98413550000004,
+              "candidate_ms": 8.41414450000002
+            },
+            {
+              "baseline_ms": 258.485822,
+              "candidate_ms": 8.116562999999985
+            },
+            {
+              "baseline_ms": 194.1248915000001,
+              "candidate_ms": 7.744003000000021
+            },
+            {
+              "baseline_ms": 194.605007,
+              "candidate_ms": 6.0447520000001305
+            },
+            {
+              "baseline_ms": 196.2790480000001,
+              "candidate_ms": 6.496630999999979
+            },
+            {
+              "baseline_ms": 202.45480199999997,
+              "candidate_ms": 8.796747000000096
+            },
+            {
+              "baseline_ms": 250.88993849999974,
+              "candidate_ms": 10.946365999999898
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 15,
+        "cache_read": 48254,
+        "cache_write": 13169,
+        "output": 1318,
+        "total_input": 61438,
+        "total_tokens": 62756,
+        "usd_estimate": 0.002789165
+      },
+      "items": {
+        "agent_message": 3,
+        "command_execution": 2,
+        "file_change": 2
+      },
+      "shell_commands": 2,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-1394330df54d862f",
+      "task": "statistics-linear",
+      "category": "real-cpu-optimization",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 24987.91886600002,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 774,
+        "mode": "independent-final",
+        "cpu": {
+          "baseline_ms": 211.31444399999998,
+          "candidate_ms": 6.7148359999998775,
+          "speedup": 31.469784816785374,
+          "samples": [
+            {
+              "baseline_ms": 216.50199049999998,
+              "candidate_ms": 9.718623000000036
+            },
+            {
+              "baseline_ms": 249.20119050000005,
+              "candidate_ms": 7.937577000000147
+            },
+            {
+              "baseline_ms": 211.31444399999998,
+              "candidate_ms": 5.91122699999994
+            },
+            {
+              "baseline_ms": 202.31807700000002,
+              "candidate_ms": 6.7148359999998775
+            },
+            {
+              "baseline_ms": 212.85445800000002,
+              "candidate_ms": 6.829106000000138
+            },
+            {
+              "baseline_ms": 200.6224605,
+              "candidate_ms": 6.3327620000000024
+            },
+            {
+              "baseline_ms": 201.44154950000006,
+              "candidate_ms": 5.81775400000015
+            }
+          ]
+        },
+        "required_speedup": 1.25
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 1,
+        "uncached_input": 991,
+        "cache_read": 51399,
+        "cache_write": 14654,
+        "output": 1892,
+        "total_input": 67044,
+        "total_tokens": 68936,
+        "usd_estimate": 0.00339084
+      },
+      "items": {
+        "error": 2,
+        "agent_message": 3,
+        "command_execution": 4
+      },
+      "shell_commands": 4,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:52:00.450Z",
+        "via": "daemon",
+        "ms": 200,
+        "retrieve_ms": 194,
+        "bytes": 2887,
+        "paths": [
+          "game/src/metrics/statistics.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2638.0487829999765
+    }
+  ]
+}

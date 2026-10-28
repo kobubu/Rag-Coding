@@ -43,6 +43,9 @@ test("install adds the auto-context hook next to the MCP server and upgrades a s
   assert.deepEqual({ ...codex.hooks.UserPromptSubmit[0]!.hooks[0] }, { type: "command", command, timeout: 120 });
   const legacy = "# BEGIN Code Memory cm_123\n[mcp_servers.cm_123]\ncommand = " + JSON.stringify(real.command) + "\nargs = " + JSON.stringify(real.args) + "\nstartup_timeout_sec = 60\ntool_timeout_sec = 180\n# END Code Memory cm_123\n";
   assert.equal(codexConfig(legacy, "cm_123", real), codexConfig("", "cm_123", real));
+  assert.equal(hookCommand(real, "claude"), command + ' "--client" "claude"');
+  const legacyClaude = claudeHooks(undefined, command)!;
+  assert.equal(JSON.parse(claudeHooks(legacyClaude, hookCommand(real, "claude"), false, [command])!).hooks.UserPromptSubmit.length, 1);
   const other = { hooks: { UserPromptSubmit: [{ hooks: [{ type: "command", command: "mine" }] }], Stop: [] }, model: "x" };
   const claude = claudeHooks(JSON.stringify(other), command)!;
   assert.equal(claudeHooks(claude, command), claude);

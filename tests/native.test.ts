@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { hookOutput, GUIDANCE } from "../src/hooks/context.js";
+import { hookOutput, GUIDANCE, CLAUDE_GUIDANCE } from "../src/hooks/context.js";
 import { renderContext } from "../src/code-memory/retrieve.js";
 import { codexUsage } from "../scripts/native_ab.js";
 import { ask, daemonAddress, ping } from "../src/hooks/client.js";
@@ -20,6 +20,8 @@ test("hook output is a UserPromptSubmit additionalContext and does not claim a r
   const parsed = JSON.parse(hookOutput(renderContext(context, false)));
   assert.equal(parsed.hookSpecificOutput.hookEventName, "UserPromptSubmit");
   assert(parsed.hookSpecificOutput.additionalContext.startsWith(GUIDANCE));
+  assert(CLAUDE_GUIDANCE !== GUIDANCE && CLAUDE_GUIDANCE.includes("Edit tool"));
+  assert(JSON.parse(hookOutput("x", "claude")).hookSpecificOutput.additionalContext.startsWith(CLAUDE_GUIDANCE));
   assert(parsed.hookSpecificOutput.additionalContext.includes("a.js:1-1 (whole file)"));
   assert(!renderContext(context, false).includes("registered as read"));assert(renderContext(context).includes("registered as read"));
 });

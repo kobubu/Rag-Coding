@@ -92,7 +92,7 @@ export async function install(options: SetupOptions) {
     await edit(project, pathSkill, skill(name));
     // A local install keeps the hook out of the shared settings, like the local MCP registration.
     const pathHooks = join(project, claudeScope === "local" ? ".claude/settings.local.json" : ".claude/settings.json"); await safeTarget(project, pathHooks);
-    await edit(project, pathHooks, claudeHooks(await text(pathHooks), hookCommand(server), false, old ? hookCommand(old.server) : undefined));
+    await edit(project, pathHooks, claudeHooks(await text(pathHooks), hookCommand(server, "claude"), false, old ? [hookCommand(old.server, "claude"), hookCommand(old.server)] : [hookCommand(server)]));
   }
   const harnessHome = join(directory, "harness"), profile = join(harnessHome, "profiles/cm");
   let harnessBin: string | undefined;
@@ -173,7 +173,7 @@ export async function remove(root: string, project: string) {
   }
   if (state.clients.includes("claude")) {
     const path = join(state.project, state.claudeScope === "local" ? ".claude/settings.local.json" : ".claude/settings.json"), before = await text(path);
-    if (before !== undefined) await edit(path, claudeHooks(before, hookCommand(state.server), true));
+    if (before !== undefined) await edit(path, claudeHooks(before, hookCommand(state.server, "claude"), true, [hookCommand(state.server)]));
   }
   for (const relative of [...(state.clients.includes("codex") ? [".agents/skills/code-memory/SKILL.md"] : []), ...(state.clients.includes("claude") ? [".claude/skills/code-memory/SKILL.md"] : [])]) {
     const path = join(state.project, relative), before = await text(path);
