@@ -180,6 +180,8 @@ export async function runNative(options: NativeOptions, protocolPath: string) {
         shell_commands: commands.length, read_like_commands: commands.filter(c => /\b(cat|sed|head|tail|nl|rg|grep|find|ls)\b/.test(c)).length, cm_mcp_calls: cmCalls, hook: hookLog[0] ?? null, reread_pointers: hookLog.filter((l: { event?: string }) => l.event === "reread_pointer").length, daemon_start_ms: daemonStartMs };
       // Graded and logged: drop the workspace copy and the run's live index generations (about 92 MB each on Geo Dash).
       rmSync(workspace, { recursive: true, force: true });rmSync(join(run, "live"), { recursive: true, force: true });
+      // Codex clones its plugin marketplace (about 100 MB) into each home; the same for every arm, not needed afterwards.
+      rmSync(join(run, "codex-home", ".tmp"), { recursive: true, force: true });
       results.push(record);cost += usage.usd_estimate;write(resultsPath, { protocol, estimated_cost_usd: cost, results });
       console.log(JSON.stringify({ completed: results.length, task: task.id, rep, arm, success: record.task_success, turns: usage.turns, tokens: usage.total_tokens, seconds: Math.round(response.ms) / 1000, commands: commands.length, cm_mcp: cmCalls }));
       if (!usage.turns || /401|Unauthorized|invalid_api_key/.test(response.stderr) || hooked(arm) && (!hookLog.length || (warm ? hookLog[0].via !== "daemon" : hookLog[0].via !== "process"))) throw Error("Provider/accounting/activation failure; retained " + runId);
