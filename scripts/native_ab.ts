@@ -186,7 +186,8 @@ export async function runNative(options: NativeOptions, protocolPath: string) {
       }
       results.push(record);cost += usage.usd_estimate;write(resultsPath, { protocol, estimated_cost_usd: cost, results });
       console.log(JSON.stringify({ completed: results.length, task: task.id, rep, arm, success: record.task_success, turns: usage.turns, tokens: usage.total_tokens, seconds: Math.round(response.ms) / 1000, commands: commands.length, cm_mcp: cmCalls }));
-      if (!usage.turns || /401|Unauthorized|invalid_api_key/.test(response.stderr) || hooked(arm) && (!hookLog.length || (warm ? hookLog[0].via !== "daemon" : hookLog[0].via !== "process"))) throw Error("Provider/accounting/activation failure; retained " + runId);
+      // A spent subscription or provider quota ends sessions at once with no tokens; such a run is not a measurement.
+      if (!usage.turns || !usage.total_tokens || /401|Unauthorized|invalid_api_key|usage limit|rate limit/i.test(response.stderr) || hooked(arm) && (!hookLog.length || (warm ? hookLog[0].via !== "daemon" : hookLog[0].via !== "process"))) throw Error("Provider/accounting/activation failure; retained " + runId);
     }
   }
   if (JSON.stringify(implementation()) !== JSON.stringify(protocol.implementation)) throw Error("Measured code changed during trial");

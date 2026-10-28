@@ -4,7 +4,7 @@
 
 ## Как подключается
 
-`cm-hook` ([src/hooks/cli.ts](../src/hooks/cli.ts)) получает от клиента событие с текстом задачи, выбирает контекст тем же сервисом, что и MCP-сервер, и возвращает `hookSpecificOutput.additionalContext`: инструкцию и блок `CM context`. Формат общий для Codex и Claude Code. Заголовок не утверждает, что файл «засчитан как прочитанный»: эти клиенты не регистрируют чтение по внешнему контексту. При ошибке хук ничего не добавляет и не мешает запросу.
+`cm-hook` ([src/hooks/cli.ts](../src/hooks/cli.ts)) получает от клиента событие с текстом задачи, выбирает контекст тем же сервисом, что и MCP-сервер, и возвращает `hookSpecificOutput.additionalContext`: инструкцию и блок `CM context`. Формат общий для Codex и Claude Code; для Claude Code в команду добавляется `--client claude`, и инструкция просит править инструментом Edit, а не скриптом в Bash. Установщик ([INSTALL.md](INSTALL.md)) прописывает хук в оба клиента сам. Заголовок не утверждает, что файл «засчитан как прочитанный»: эти клиенты не регистрируют чтение по внешнему контексту. При ошибке хук ничего не добавляет и не мешает запросу.
 
 Codex, `~/.codex/config.toml` или `<repo>/.codex/config.toml`:
 
@@ -21,7 +21,7 @@ Claude Code, `.claude/settings.json`:
 
 ```json
 { "hooks": { "UserPromptSubmit": [ { "hooks": [ { "type": "command",
-  "command": "node /path/to/dist/src/hooks/cli.js --project /path/to/project --retrieval-policy adaptive --auto-update true", "timeout": 120 } ] } ] } }
+  "command": "node /path/to/dist/src/hooks/cli.js --project /path/to/project --retrieval-policy adaptive --auto-update true --client claude", "timeout": 120 } ] } ] } }
 ```
 
 Аргументы те же, что у MCP-сервера ([MCP-SETUP.md](MCP-SETUP.md)): `--index`, `--vectors`, `--model-cache`, `--memory-dir`, `--embedding-cache`, `--source-scope`. Оба клиента требуют доверить хук: Codex — через `/hooks` (в автоматических прогонах `--dangerously-bypass-hook-trust`), Claude Code — как обычные настройки проекта. Переменная `CM_HOOK_LOG` пишет диагностику без исходного кода: маршрут, файлы, размер, время.
