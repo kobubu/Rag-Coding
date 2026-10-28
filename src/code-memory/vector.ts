@@ -60,8 +60,6 @@ function records(index: CMIndex, chunks: CMChunk[]): RecordUnit[] {
       return { id: unit.id, path: unit.path, text, fingerprint: hash(JSON.stringify([EMBEDDING, text])) };
     });
 }
-export function embeddingFingerprints(index: CMIndex, chunking: ChunkingStrategy = "unit") { return records(index, projectChunks(index, chunking)).map(entry => entry.fingerprint); }
-
 function checkVector(vector: number[]): void {
   if (vector.length !== EMBEDDING.dimensions || vector.some((value) => !Number.isFinite(value))) throw new CMError("invalid_vectors", "Embedding shape or values are invalid");
 }

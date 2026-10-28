@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import test from "node:test";
-import { readJson, ROOT } from "../scripts/lib.js";
+import { ROOT } from "../scripts/lib.js";
 import { byteOffset, focusedProbe, runFixtureChecks } from "../scripts/probe_chunking.js";
 
 const path = join(ROOT, "fixtures/batching.ts");

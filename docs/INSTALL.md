@@ -1,8 +1,10 @@
 # Установщик CM для Harness, Codex и Claude Code
 
-CM 0.8.1 устанавливается без прав администратора в выбранный каталог. Windows PowerShell 5.1 bootstrap получает совместимый private Node.js при необходимости, проверяет SHA-256 официального архива, собирает локальный пакет и устанавливает runtime dependencies через npm. Нативные зависимости устанавливаются обычно, без junction к checkout. Код проекта не исполняется.
+CM 0.9.2 устанавливается без прав администратора в выбранный каталог. Готовый ZIP доступен в [публичном релизе](https://github.com/kobubu/Rag-Coding/releases/tag/v0.9.2), установка без checkout описана в [английской инструкции](INSTALL-WINDOWS.md). Windows PowerShell 5.1 bootstrap получает совместимый private Node.js при необходимости, проверяет SHA-256 официального архива, использует готовый пакет из ZIP или собирает локальный пакет из checkout и устанавливает runtime dependencies через npm. Нативные зависимости устанавливаются обычно, без junction к checkout. Код проекта не исполняется.
 
 ## Одна команда из checkout
+
+Для существующего Harness 0.2.0-rc.2 доступна [установка из GitHub-тега](DEEPSEEK-PLUGIN.md#github-installation). Начиная с 0.9.2 готовый runtime включён в Git, сборка при установке не нужна. Ниже — полный Windows bootstrap с установкой Harness и настройками проекта.
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File 'D:\Rag Coding\scripts\install_cm.ps1' -ProjectRoot 'D:\Geo Dash' -SourceScope game -InstallRoot 'D:\CodeMemory' -HarnessModel gpt-6-luna

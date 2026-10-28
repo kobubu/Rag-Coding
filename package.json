@@ -1,14 +1,13 @@
 {
   "name": "dsh-plugin-code-memory",
-  "version": "0.8.1",
+  "version": "0.9.2",
   "private": true,
-  "description": "Local Code Memory for DeepSeek Harness, Codex and Claude Code",
+  "description": "Local code memory for DeepSeek Harness: automatic source context, semantic search, and dependency graphs.",
   "type": "module",
   "engines": {
     "node": "^22.19.0 || ^24.0.0"
   },
   "scripts": {
-    "build": "npm run build:core && npm run viewer:check && npm run viewer:build",
     "build:core": "tsc -p tsconfig.json",
     "check": "node dist/scripts/check_docs.js",
     "test": "node --test dist/tests/*.test.js",
@@ -16,7 +15,7 @@
     "cm:index": "node dist/src/code-memory/cli.js",
     "plugin:smoke": "node dist/scripts/smoke_plugin.js",
     "harness:efficiency": "node dist/scripts/run_efficiency_ab.js",
-    "verify": "npm run build && npm run check && npm test && npm run probe",
+    "verify": "npm run compile && npm run check && npm test && npm run probe && npm run package:check",
     "cm:vectors": "node dist/src/code-memory/vector_cli.js",
     "cm:search": "node dist/src/code-memory/search_cli.js",
     "viewer:check": "tsc -p apps/local-viewer/tsconfig.json",
@@ -25,7 +24,9 @@
     "cm:mcp": "node dist/src/mcp/cli.js",
     "cm:ann": "node dist/src/code-memory/ann_cli.js",
     "cm:setup": "node dist/src/setup/cli.js",
-    "cm:hook": "node dist/src/hooks/cli.js"
+    "cm:hook": "node dist/src/hooks/cli.js",
+    "compile": "npm run build:core && npm run viewer:check && npm run viewer:build",
+    "package:check": "node dist/scripts/check_package.js"
   },
   "main": "./dist/src/harness/plugin.js",
   "types": "./dist/src/harness/plugin.d.ts",
@@ -52,12 +53,8 @@
     "harness/",
     "contracts/cm-local.schema.json",
     "README.md",
-    "docs/HOW-IT-WORKS.md",
-    "docs/NATIVE-CLIENTS.md",
-    "docs/DEEPSEEK-PLUGIN.md",
-    "docs/MCP-SETUP.md",
-    "docs/LOCAL-ATLAS.md",
-    "docs/INSTALL.md",
+    "README.ru.md",
+    "docs/",
     "scripts/install_cm.ps1"
   ],
   "dsh": {
@@ -67,6 +64,7 @@
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": "~4.0.4",
+    "@deepseek-ai/dsh-llm": "0.2.0-rc.2",
     "@deepseek-ai/dsh-tools": "0.2.0-rc.2"
   },
   "dependencies": {
@@ -75,9 +73,8 @@
     "@lancedb/lancedb": "0.40.0",
     "@modelcontextprotocol/sdk": "1.32.1",
     "ajv": "8.20.0",
+    "apache-arrow": "18.1.0",
     "onnxruntime-node": "1.30.0",
-    "react": "19.3.0",
-    "react-dom": "19.3.0",
     "smol-toml": "1.9.1",
     "typescript": "6.0.3",
     "zod": "4.6.7"
@@ -88,12 +85,18 @@
     "@deepseek-ai/dsh-agent": "0.2.0-rc.2",
     "@deepseek-ai/dsh-app-boot": "0.2.0-rc.2",
     "@deepseek-ai/dsh-fs": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-fs-local": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-llm": "0.2.0-rc.2",
     "@deepseek-ai/dsh-system-prompt": "0.2.0-rc.2",
     "@deepseek-ai/dsh-tools": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-util-values": "0.2.0-rc.2",
     "@types/js-yaml": "4.0.9",
     "@types/node": "24.19.2",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
+    "js-yaml": "4.3.2",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
     "vite": "8.3.4"
   },
   "overrides": {

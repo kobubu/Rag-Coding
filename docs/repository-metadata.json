@@ -1,0 +1,13 @@
+{
+  "description": "Local code memory for DeepSeek Harness: automatic source context, semantic search, and dependency graphs.",
+  "topics": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "code-memory",
+    "rag",
+    "mcp",
+    "typescript",
+    "semantic-search",
+    "developer-tools"
+  ]
+}

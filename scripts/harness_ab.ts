@@ -1,10 +1,10 @@
 import { execFileSync, spawn } from "node:child_process";
-import { copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { performance } from "node:perf_hooks";
 import { buildIndex } from "../src/code-memory/indexer.js";
-import { hash, inside, MAX_INDEX_BYTES } from "../src/code-memory/source.js";
+import { hash, inside } from "../src/code-memory/source.js";
 import { validateIndex } from "../src/code-memory/store.js";
 import { ROOT } from "./lib.js";
 import type { ChunkingStrategy } from "../src/code-memory/chunks.js";
@@ -12,84 +12,6 @@ import type { RetrievalPolicy } from "../src/code-memory/graph_retrieve.js";
 
 export type ABOptions = { project: string; output: string; node: string; harness: string; apiKey: string; model: string; environment?: Record<string, string>; cmMode?: "legacy" | "compact"; retrievalPolicy?: RetrievalPolicy; searchMode?: "exact" | "ann"; contextBytes?: number; autoUpdate?: boolean; backgroundUpdate?: boolean; cmPluginPath?: string; embeddingCache?: string; modelCache?: string; repetitions?: number; chunking?: ChunkingStrategy; maxCalls?: number; maxSeconds?: number; cmIndexPath?: string; cmVectorsPath?: string; projectCheck?: { plugin: string; script: string; task: string; baseline: string } };
 export type ABCase = { id: string; prompt: string; mutations: { path: string; before: string; after: string }[] };
-type ABManifest = ReturnType<typeof createCorpus>;
-
-function writeIndex(project: string, paths: string[]): string {
-  const memory = validateIndex(buildIndex(project, paths));
-  const serialized = JSON.stringify(memory);
-  if (Buffer.byteLength(serialized) > MAX_INDEX_BYTES) throw new Error("AB corpus index exceeds the local index limit");
-  mkdirSync(join(project, ".code-memory"), { recursive: true });
-  writeFileSync(join(project, ".code-memory/index.json"), serialized);
-  return memory.snapshot_id;
-}
-
-function copySources(manifest: ABManifest, from: string, to: string): void {
-  mkdirSync(to, { recursive: true });
-  for (const path of [...manifest.files.map((file) => file.path), "package.json", "AGENTS.md"]) {
-    const destination = resolve(to, path);
-    if (!inside(to, destination)) throw new Error("Unsafe corpus path");
-    mkdirSync(dirname(destination), { recursive: true });
-    copyFileSync(join(from, path), destination);
-  }
-}
-
-export function prepareCases(options: Omit<ABOptions, "apiKey" | "model">, cases: ABCase[], oracle: string) {
-  const output = resolve(options.output);
-  const manifest: ABManifest = JSON.parse(readFileSync(join(output, "corpus-manifest.json"), "utf8"));
-  const checks: object[] = [];
-  const casesHash = hash(JSON.stringify(cases));
-  writeFileSync(join(output, "frozen-protocol.json"), JSON.stringify({ cases_hash: casesHash, oracle_sha256: hash(readFileSync(oracle)),
-    primary_metric: "All independent behavioral checks pass after patch", secondary_metrics: ["Provider billed input+output tokens", "Cache-aware USD estimate", "Latency", "CM tool use"],
-    repetitions: options.repetitions ?? 2, order: "AB/BA counterbalanced by case and repetition", model: "gpt-6-luna", reasoning_effort: "low", max_model_calls: 12,
-    max_output_tokens: 8192, max_run_seconds: 180, corpus_manifest: manifest.manifest_hash, seed_regressions: true,
-    cm_mode: options.cmMode ?? "legacy", auto_context: options.cmMode === "compact" }, null, 2));
-  const clean = execFileSync(options.node, [oracle, manifest.corpus], { encoding: "utf8" });
-  checks.push({ stage: "original", exit_code: 0, result: JSON.parse(clean) });
-  for (const task of cases) {
-    if (!/^[a-z0-9-]+$/.test(task.id)) throw new Error("Invalid task identity");
-    const workspace = join(output, "prepared", task.id);
-    if (existsSync(workspace)) throw new Error("Prepared case already exists");
-    copySources(manifest, manifest.corpus, workspace);
-    for (const mutation of task.mutations) {
-      const path = resolve(workspace, mutation.path);
-      if (!inside(workspace, path)) throw new Error("Unsafe mutation path");
-      const source = readFileSync(path, "utf8");
-      if (source.split(mutation.before).length !== 2) throw new Error("Mutation must match exactly once");
-      writeFileSync(path, source.replace(mutation.before, mutation.after));
-    }
-    let result: unknown;
-    try { execFileSync(options.node, [oracle, workspace], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }); throw new Error("Mutation did not fail independent checks"); }
-    catch (error) {
-      if (error === null || typeof error !== "object" || !("status" in error) || error.status !== 1 || !("stdout" in error)) throw error;
-      result = JSON.parse(String(error.stdout));
-    }
-    const snapshot = writeIndex(workspace, manifest.files.map((file) => file.path));
-    checks.push({ stage: "seeded-regression", task: task.id, exit_code: 1, result, snapshot_id: snapshot });
-    writeFileSync(join(output, "preparation-checks.json"), JSON.stringify(checks, null, 2));
-  }
-  return { tasks: cases.length, clean_pass: true, regressions_fail: true, cases_hash: casesHash };
-}
-
-export function createRunWorkspace(options: Omit<ABOptions, "apiKey" | "model">, task: ABCase, runId: string): string {
-  const manifest: ABManifest = JSON.parse(readFileSync(join(options.output, "corpus-manifest.json"), "utf8"));
-  const from = join(options.output, "prepared", task.id);
-  const workspace = resolve(options.output, "workspaces", runId);
-  if (existsSync(workspace)) throw new Error("Workspace identity already exists");
-  copySources(manifest, from, workspace);
-  mkdirSync(join(workspace, ".code-memory"));
-  copyFileSync(join(from, ".code-memory/index.json"), join(workspace, ".code-memory/index.json"));
-  if (options.cmMode === "compact") cpSync(join(from, ".code-memory/vectors"), join(workspace, ".code-memory/vectors"), { recursive: true });
-  return workspace;
-}
-
-export function verifyWorkspace(options: Omit<ABOptions, "apiKey" | "model">, workspace: string, oracle: string) {
-  try { return { pass: true, result: JSON.parse(execFileSync(options.node, [oracle, workspace], { encoding: "utf8" })) as unknown }; }
-  catch (error) {
-    if (error === null || typeof error !== "object" || !("stdout" in error)) throw error;
-    try { return { pass: false, result: JSON.parse(String(error.stdout)) as unknown }; }
-    catch { return { pass: false, result: { oracle_error: "Candidate code prevented independent tests from running" } }; }
-  }
-}
 
 export type ProviderUsage = { inputTokens: number; outputTokens: number; cacheReadTokens?: number; cacheWriteTokens?: number; totalTokens?: number };
 
@@ -111,51 +33,6 @@ export function sumUsage(calls: { usage: ProviderUsage | null }[]) {
     totals.total_tokens += total;
   }
   return { ...totals, usd_estimate: (totals.uncached_input * 0.10 + totals.cache_read * 0.01 + totals.cache_write * 0.125 + totals.output * 0.50) / 1e6 };
-}
-
-export async function runBenchmark(options: ABOptions, cases: ABCase[], oracle: string, repetitions = 2) {
-  const output = resolve(options.output);
-  const protocol = JSON.parse(readFileSync(join(output, "frozen-protocol.json"), "utf8"));
-  if (protocol.cases_hash !== hash(JSON.stringify(cases)) || protocol.oracle_sha256 !== hash(readFileSync(oracle))) throw new Error("Frozen experiment inputs changed");
-  if (options.model !== protocol.model || repetitions !== protocol.repetitions || (options.cmMode ?? "legacy") !== (protocol.cm_mode ?? "legacy")) throw new Error("Frozen model, repetitions or retrieval mode changed");
-  const files = ["src/code-memory/indexer.ts", "src/code-memory/source.ts", "src/code-memory/store.ts", "src/code-memory/query.ts", "src/code-memory/vector.ts", "src/code-memory/retrieve.ts", "src/harness/plugin.ts", "scripts/harness_ab.ts", "scripts/harness_meter.ts"];
-  const implementation = files.map((path) => ({ path, sha256: hash(readFileSync(join(ROOT, path))) }));
-  writeFileSync(join(output, "implementation-manifest.json"), JSON.stringify(implementation, null, 2));
-  const results: object[] = [];
-  let estimatedCost = 0;
-  let authenticationFailures = 0;
-  for (let repetition = 1; repetition <= repetitions; repetition++) {
-    for (const [caseIndex, task] of cases.entries()) {
-      const arms = (caseIndex + repetition) % 2 === 0 ? ["A", "B"] : ["B", "A"];
-      for (const arm of arms) {
-        if (estimatedCost >= 5) throw new Error("AB pilot reached its USD 5 estimate limit");
-        const runId = `${task.id}-r${repetition}-${arm}`;
-        writeFileSync(join(output, "progress.json"), JSON.stringify({ state: "running", current: runId, completed: results.length, planned: cases.length * repetitions * 2 }));
-        const workspace = createRunWorkspace(options, task, runId);
-        const response = await bootProfile(options, workspace, runId, task.prompt, arm === "B");
-        const meterPath = join(response.directory, "meter.json");
-        const meter = existsSync(meterPath) ? JSON.parse(readFileSync(meterPath, "utf8")) as { attempts: number; calls: { usage: ProviderUsage | null }[] } : { attempts: 0, calls: [] };
-        const usage = sumUsage(meter.calls);
-        const quality = verifyWorkspace(options, workspace, oracle);
-        const events = response.events as { type?: string; tool?: string; phase?: string; reason?: unknown }[];
-        const tools = events.filter((event) => event.type === "tool_call").map((event) => event.tool ?? "unknown");
-        const callsByTool: Record<string, number> = {};
-        for (const tool of tools) callsByTool[tool] = (callsByTool[tool] ?? 0) + 1;
-        const record = { run_id: runId, case_id: task.id, repetition, arm, exit_code: response.exit_code,
-          duration_ms: response.duration_ms, task_success: quality.pass, quality: quality.result, model_calls: meter.calls.length,
-          attempts: meter.attempts, usage, tool_calls: callsByTool, cm_tool_calls: tools.filter((tool) => tool.startsWith("cm_")).length,
-          turn_end: [...events].reverse().find((event) => event.type === "status" && event.phase === "turn_end")?.reason ?? null };
-        results.push(record);
-        estimatedCost += usage.usd_estimate;
-        const stderr = readFileSync(join(response.directory, "stderr.txt"), "utf8");
-        if (/INVALID_CREDENTIAL|MISSING_CREDENTIAL|insufficient_quota|AUTH:/.test(stderr)) authenticationFailures++;
-        writeFileSync(join(output, "results.json"), JSON.stringify({ model: options.model, reasoning_effort: "low", protocol, estimated_cost_usd: estimatedCost, results }, null, 2));
-        if (authenticationFailures >= 2) throw new Error("Repeated provider access failure; experiment stopped");
-      }
-    }
-  }
-  writeFileSync(join(output, "progress.json"), JSON.stringify({ state: "complete", completed: results.length, planned: results.length, estimated_cost_usd: estimatedCost }));
-  return { completed: results.length, estimated_cost_usd: estimatedCost };
 }
 
 export function createCorpus(options: Omit<ABOptions, "apiKey" | "model">) {

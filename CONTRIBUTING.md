@@ -6,3 +6,4 @@
 4. Перед commit: `npm ci` (в облаке `ONNXRUNTIME_NODE_INSTALL=skip npm ci`) и `npm run verify` — сборка, проверка документации, тесты и проба разбора.
 5. Не включать в публикацию локальные артефакты, исходники частных проектов и секреты.
 6. Код — TypeScript strict, ESM. Внешние JSON-данные проверять схемой во время выполнения.
+7. `npm run compile` пересобирает runtime. Перед commit добавить актуальные `dist/src/` и `dist/viewer/` в Git; `npm run package:check` сверяет сборку с ними. Остальные `dist/`, модели и локальные индексы не публиковать. Скрипты `build`/`prepare`/`prepack`/install lifecycle намеренно отсутствуют: GitHub-установка использует готовый runtime без сборки и загрузки devDependencies.

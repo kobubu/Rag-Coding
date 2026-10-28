@@ -21,13 +21,3 @@ export function writeJson(path: string, value: unknown): void {
 export function isMain(url: string): boolean {
   return process.argv[1] !== undefined && resolve(process.argv[1]) === fileURLToPath(url);
 }
-
-export function* walkObjects(value: unknown): Generator<Record<string, unknown>> {
-  if (Array.isArray(value)) {
-    for (const item of value) yield* walkObjects(item);
-  } else if (value !== null && typeof value === "object") {
-    const object = value as Record<string, unknown>;
-    yield object;
-    for (const item of Object.values(object)) yield* walkObjects(item);
-  }
-}
