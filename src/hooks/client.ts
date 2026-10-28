@@ -3,6 +3,7 @@ import type { Socket } from "node:net";
 import { mkdirSync, statSync } from "node:fs";
 import { tmpdir, userInfo } from "node:os";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { hash } from "../code-memory/source.js";
 import type { AgentConfig } from "../local-agent/service.js";
 
@@ -18,8 +19,11 @@ export function hookDirectory(): string {
   if (stat.uid !== userInfo().uid || (stat.mode & 0o077) !== 0) throw new Error("Unsafe CM hook directory " + directory);
   return directory;
 }
+// A rebuild or package update rewrites this file, so a daemon left running from the previous build gets a different address
+// and is not asked again; it exits after its idle timeout.
+const BUILD = (() => { try { return String(statSync(fileURLToPath(import.meta.url)).mtimeMs); } catch { return ""; } })();
 export function daemonAddress(config: AgentConfig): string {
-  const identity = hash(JSON.stringify({ ...config, backgroundUpdate: false })).slice(0, 24);
+  const identity = hash(JSON.stringify({ ...config, backgroundUpdate: false, build: BUILD })).slice(0, 24);
   if (process.platform === "win32") return `\\\\.\\pipe\\cm-hook-${identity}`;
   // Short path keeps the socket under the Unix socket length limit.
   return join(hookDirectory(), identity + ".sock");
