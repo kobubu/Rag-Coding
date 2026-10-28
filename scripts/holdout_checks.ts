@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { SEMVER } from "./semver_checks.js";
 
 // Holdout tasks: a second set of seeded bugs in other Geo Dash modules, written after CM was tuned on the six speed tasks.
 // Each check compares the repaired module with the original one on fixed and seeded random inputs (differential testing).
@@ -7,6 +8,7 @@ type Same = (actual: unknown, expected: unknown, name: string) => void;
 type Load = (path: string) => Promise<Module>;
 // feature: the original code lacks the requested behavior, so a baseline self-check verifies only that the grader runs.
 // surface: false when the task changes the export surface itself (a rename).
+export type HoldoutCheck = Check;
 type Check = { path: string; feature?: true; surface?: false; run: (actual: Module, original: Module, same: Same, rnd: () => number, count: number, load: Load, loadActual: Load, workspace: string) => Promise<void> | void };
 const storage = (value: unknown) => ({ getItem: () => JSON.stringify(value), setItem() {} });
 const validLimit = (value: unknown) => Number.isInteger(value) && (value as number) >= 1 && (value as number) <= 10;
@@ -165,7 +167,7 @@ export const HOLDOUT: Record<string, Check> = {
 };
 
 export async function checkHoldoutTask(load: (root: string, path: string) => Promise<Module>, workspace: string, baseline: string, task: string, smoke: boolean) {
-  const check = HOLDOUT[task];if (!check) throw Error("Unknown speed task");
+  const check = HOLDOUT[task] ?? SEMVER[task];if (!check) throw Error("Unknown speed task");
   let checks = 0, seed = smoke ? 239 : 99173;
   const same: Same = (actual, expected, name) => { checks++;assert.deepEqual(actual, expected, name); };
   const rnd = () => ((seed = Math.imul(seed, 1664525) + 1013904223 >>> 0) / 4294967296);

@@ -10,7 +10,7 @@ import { ROOT } from "./lib.js";
 import type { ChunkingStrategy } from "../src/code-memory/chunks.js";
 import type { RetrievalPolicy } from "../src/code-memory/graph_retrieve.js";
 
-export type ABOptions = { project: string; output: string; node: string; harness: string; apiKey: string; model: string; environment?: Record<string, string>; cmMode?: "legacy" | "compact"; retrievalPolicy?: RetrievalPolicy; searchMode?: "exact" | "ann"; contextBytes?: number; autoUpdate?: boolean; backgroundUpdate?: boolean; cmPluginPath?: string; embeddingCache?: string; modelCache?: string; repetitions?: number; chunking?: ChunkingStrategy; maxCalls?: number; maxSeconds?: number; cmIndexPath?: string; cmVectorsPath?: string; projectCheck?: { plugin: string; script: string; task: string; baseline: string } };
+export type ABOptions = { project: string; output: string; node: string; harness: string; apiKey: string; model: string; environment?: Record<string, string>; cmMode?: "legacy" | "compact"; retrievalPolicy?: RetrievalPolicy; searchMode?: "exact" | "ann"; contextBytes?: number; autoUpdate?: boolean; backgroundUpdate?: boolean; cmPluginPath?: string; embeddingCache?: string; modelCache?: string; repetitions?: number; chunking?: ChunkingStrategy; maxCalls?: number; maxSeconds?: number; cmIndexPath?: string; cmVectorsPath?: string; projectCheck?: { plugin: string; script: string; task: string; baseline: string }; corpusGlob?: string };
 export type ABCase = { id: string; prompt: string; mutations: { path: string; before: string; after: string }[] };
 
 export type ProviderUsage = { inputTokens: number; outputTokens: number; cacheReadTokens?: number; cacheWriteTokens?: number; totalTokens?: number };
@@ -43,7 +43,9 @@ export function createCorpus(options: Omit<ABOptions, "apiKey" | "model">) {
   mkdirSync(corpus, { recursive: true });
   const revision = execFileSync("git", ["-C", project, "rev-parse", "HEAD"], { encoding: "utf8" }).trim();
   const status = execFileSync("git", ["-C", project, "status", "--porcelain"], { encoding: "utf8" });
-  const paths = execFileSync("git", ["-C", project, "ls-files", "-z", "game/**/*.js"], { encoding: "utf8" }).split("\0").filter(Boolean);
+  // Geo Dash by default; another project names its source files with --corpus-glob (comma-separated git pathspecs).
+  const globs = (options.corpusGlob ?? "game/**/*.js").split(",").map(glob => glob.trim()).filter(Boolean);
+  const paths = execFileSync("git", ["-C", project, "ls-files", "-z", ...globs], { encoding: "utf8" }).split("\0").filter(Boolean);
   const files = paths.map((path) => {
     const target = resolve(corpus, path);
     if (!inside(corpus, target)) throw new Error("Unsafe manifest path");
@@ -53,7 +55,7 @@ export function createCorpus(options: Omit<ABOptions, "apiKey" | "model">) {
     return { path, sha256: hash(bytes), bytes: bytes.length };
   });
   copyFileSync(join(project, "package.json"), join(corpus, "package.json"));
-  const instructions = readFileSync(join(project, "AGENTS.md"), "utf8") + "\n\n# Isolated benchmark workspace\nWork only inside this workspace. Do not publish, commit, deploy, or access other projects. Apply the requested code fix; an external evaluator checks the result.\n";
+  const instructions = (existsSync(join(project, "AGENTS.md")) ? readFileSync(join(project, "AGENTS.md"), "utf8") + "\n\n" : "") + "# Isolated benchmark workspace\nWork only inside this workspace. Do not publish, commit, deploy, or access other projects. Apply the requested code fix; an external evaluator checks the result.\n";
   writeFileSync(join(corpus, "AGENTS.md"), instructions);
   const indexStart = performance.now();
   const index = validateIndex(buildIndex(corpus, paths));

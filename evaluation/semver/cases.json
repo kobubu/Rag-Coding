@@ -1,0 +1,75 @@
+[
+ {
+  "id": "ident-numeric",
+  "category": "discovery-small",
+  "prompt": "Prerelease ordering is wrong when a numeric identifier is compared with an alphanumeric one: SemVer requires numeric identifiers to have lower precedence than alphanumeric ones, so 1.0.0-alpha.1 must sort before 1.0.0-alpha.beta. Find where prerelease identifiers are compared and fix it, keeping numeric comparison of numeric identifiers.",
+  "mutations": [
+   {
+    "path": "internal/identifiers.js",
+    "before": "    : (anum && !bnum) ? -1\n    : (bnum && !anum) ? 1\n",
+    "after": "    : (anum && !bnum) ? 1\n    : (bnum && !anum) ? -1\n"
+   }
+  ]
+ },
+ {
+  "id": "diff-prerelease",
+  "category": "named-small",
+  "prompt": "In `functions/diff.js`, `diff` reports 'major' for a prerelease-to-release step such as 1.1.0-1 to 1.1.0, which is a minor change. Only a low version with neither a minor nor a patch part is always a major step. Keep the other diff results unchanged.",
+  "mutations": [
+   {
+    "path": "functions/diff.js",
+    "before": "if (!lowVersion.patch && !lowVersion.minor) {",
+    "after": "if (!lowVersion.patch) {"
+   }
+  ]
+ },
+ {
+  "id": "caret-zero",
+  "category": "discovery-large",
+  "prompt": "Caret ranges on 0.x versions with a patch, such as ^0.2.3, accept 0.3.0 and later minors; for a zero major the caret must stay within the same minor. Find the caret range expansion and fix it, keeping the prerelease, x-range and 0.0.x cases.",
+  "mutations": [
+   {
+    "path": "classes/range.js",
+    "before": "          }${z} <${M}.${+m + 1}.0-0`",
+    "after": "          }${z} <${+M + 1}.0.0-0`"
+   }
+  ]
+ },
+ {
+  "id": "inc-prerelease",
+  "category": "named-symbol-large",
+  "prompt": "`inc` with the 'prerelease' release type bumps the minor of a release version (1.2.3 becomes 1.3.0-0) instead of its patch (1.2.4-0). Fix the increment, keeping identifiers, identifier bases and the other release types unchanged.",
+  "mutations": [
+   {
+    "path": "classes/semver.js",
+    "before": "      case 'prerelease':\n        if (this.prerelease.length === 0) {\n          this.inc('patch', identifier, identifierBase)",
+    "after": "      case 'prerelease':\n        if (this.prerelease.length === 0) {\n          this.inc('minor', identifier, identifierBase)"
+   }
+  ]
+ },
+ {
+  "id": "coerce-default",
+  "category": "named-small",
+  "prompt": "In `functions/coerce.js`, coercing a version with a missing patch part, such as 'v2.5', produces 2.5.5 instead of 2.5.0; missing minor and patch parts must default to 0. Keep the right-to-left and prerelease coercion modes unchanged.",
+  "mutations": [
+   {
+    "path": "functions/coerce.js",
+    "before": "const patch = match[4] || '0'",
+    "after": "const patch = match[4] || match[3] || '0'"
+   }
+  ]
+ },
+ {
+  "id": "rename-options",
+  "category": "rename-across-modules",
+  "prompt": "Rename the internal options normalizer `parseOptions` to `normalizeOptions` everywhere in the package sources: its definition and every require and call. Do not leave a `parseOptions` alias or reference outside the tests. Behavior must stay identical.",
+  "mutations": [],
+  "changed_paths": [
+   "internal/parse-options.js",
+   "classes/range.js",
+   "classes/semver.js",
+   "classes/comparator.js",
+   "bin/semver.js"
+  ]
+ }
+]

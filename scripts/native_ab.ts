@@ -21,7 +21,7 @@ const read = (path: string) => JSON.parse(readFileSync(path, "utf8"));
 const write = (path: string, value: unknown) => writeFileSync(path, JSON.stringify(value, null, 2));
 const PRICE = { input: .10, cache_read: .01, cache_write: .125, output: .50, per: 1e6, source: "https://developers.openai.com/api/docs/models/gpt-6-luna" };
 const sources = (directory: string): string[] => readdirSync(join(ROOT, directory), { withFileTypes: true }).flatMap(entry => entry.isDirectory() ? sources(directory + "/" + entry.name) : entry.name.endsWith(".ts") ? [directory + "/" + entry.name] : []);
-const implementation = () => [...sources("src"), "scripts/native_ab.ts", "scripts/speed_checks.ts", "scripts/holdout_checks.ts", "scripts/lib.ts"].sort()
+const implementation = () => [...sources("src"), "scripts/native_ab.ts", "scripts/speed_checks.ts", "scripts/holdout_checks.ts", "scripts/semver_checks.ts", "scripts/lib.ts"].sort()
   .flatMap(path => [path, "dist/" + path.replace(/\.ts$/, ".js")]).map(path => ({ path, sha256: hash(readFileSync(join(ROOT, path))) }));
 const tree = (root: string): string => hash(readdirSync(root, { recursive: true, withFileTypes: true }).filter(e => e.isFile()).map(e => join(e.parentPath, e.name)).sort().map(p => p.slice(root.length) + ":" + hash(readFileSync(p))).join("\n"));
 const walk = (directory: string, prefix = ""): string[] => readdirSync(directory, { withFileTypes: true }).flatMap(e => e.isDirectory() ? walk(join(directory, e.name), prefix + e.name + "/") : [prefix + e.name]);
