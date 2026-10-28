@@ -16,7 +16,8 @@ const MAX_REQUEST_BYTES = 64 * 1024;
 export async function answer(service: LocalCM, prompt: string): Promise<HookReply> {
   const started = performance.now(), context = await service.retrieve(prompt.slice(0, 16000), 6000, AbortSignal.timeout(60000));
   return { text: renderContext(context, false), bytes: context.bytes_used, paths: [...new Set(context.parts.map(part => part.path))],
-    route: context.retrieval?.route ?? "current-file", omissions: context.omissions, ms: Math.round(performance.now() - started) };
+    route: context.retrieval?.route ?? "current-file", omissions: context.omissions, ms: Math.round(performance.now() - started),
+    whole: context.parts.filter(part => part.whole).map(part => ({ path: part.path, version: part.span.file_version_id, lines: part.span.line_end })) };
 }
 
 export async function serve(config: AgentConfig, idleMs = IDLE_MS) {

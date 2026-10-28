@@ -9,9 +9,11 @@ import { ROOT } from "./lib.js";
 // Three-arm A/B in a native coding client (Codex CLI or Claude Code): no CM, a frozen CM build connected the way its installer did
 // (MCP server + skill), and the current build with the UserPromptSubmit hook that adds CM context before the first call.
 // Tasks, prepared workspaces, vectors and the independent grader are the ones of the Harness efficiency series.
-export const ARMS = ["none", "cm_base", "cm_next", "cm_warm"] as const;
+export const ARMS = ["none", "cm_base", "cm_next", "cm_warm", "cm_guard"] as const;
 // cm_warm: the cm_next configuration with its hook daemon already running, as in steady-state use of a project.
-const hooked = (arm: Arm) => arm === "cm_next" || arm === "cm_warm";
+const hooked = (arm: Arm) => arm === "cm_next" || arm === "cm_warm" || arm === "cm_guard";
+// cm_guard: cm_warm plus the PreToolUse hook that answers the first re-read of a file the context showed whole.
+const guarded = (arm: Arm) => arm === "cm_guard";
 export type Arm = typeof ARMS[number];
 type Task = { id: string; prompt: string; category: string; mutations: { path: string }[]; changed_paths?: string[] };
 export type NativeOptions = { warmDaemon?: boolean; client: "codex" | "claude"; claude?: string; claudeModel?: string; prepared: string; output: string; cases: string; codex: string; modelCache: string; baseRoot: string; arms: Arm[]; repetitions: number; budgetUsd: number; maxSeconds: number; model: string };
@@ -40,7 +42,7 @@ export function freezeNative(options: NativeOptions) {
     model: options.client === "claude" ? options.claudeModel : options.model, reasoning_effort: "low", arms: options.arms, repetitions: options.repetitions, cases_hash: hash(JSON.stringify(tasks)),
     preparation_sha256: hash(readFileSync(join(options.prepared, "preparation.json"))), implementation: implementation(), base_build_sha256: tree(join(options.baseRoot, "dist/src")),
     warm_daemon: Boolean(options.warmDaemon), max_run_seconds: options.maxSeconds, max_estimated_usd: options.budgetUsd, price: PRICE,
-    arms_config: { none: "Client without CM", cm_base: "Frozen CM 0.8.1: MCP server + installer skill, model decides whether to call it", cm_next: "Current CM: UserPromptSubmit hook adds CM context before the first call, plus MCP server + skill", cm_warm: "cm_next with its hook daemon started before the session (start time recorded separately)" } };
+    arms_config: { none: "Client without CM", cm_base: "Frozen CM 0.8.1: MCP server + installer skill, model decides whether to call it", cm_next: "Current CM: UserPromptSubmit hook adds CM context before the first call, plus MCP server + skill", cm_warm: "cm_next with its hook daemon started before the session (start time recorded separately)", cm_guard: "cm_warm plus a PreToolUse hook answering the first re-read of a file shown whole" } };
   write(protocolPath, protocol);return protocolPath;
 }
 
@@ -57,6 +59,7 @@ function codexHome(home: string, options: NativeOptions, arm: Arm, workspace: st
   if (arm !== "none") {
     config += `\n[mcp_servers.cm_eval]\ncommand = ${JSON.stringify(process.execPath)}\nargs = ${JSON.stringify([join(build, "dist/src/mcp/cli.js"), ...cmArgs])}\nstartup_timeout_sec = 60\ntool_timeout_sec = 180\n`;
     if (hooked(arm)) config += `\n[[hooks.UserPromptSubmit]]\n\n[[hooks.UserPromptSubmit.hooks]]\ntype = "command"\ncommand = ${JSON.stringify([process.execPath, join(build, "dist/src/hooks/cli.js"), ...cmArgs].map(a => JSON.stringify(a)).join(" "))}\ntimeout = 120\n`;
+    if (guarded(arm)) config += `\n[[hooks.PreToolUse]]\nmatcher = "^Bash$"\n\n[[hooks.PreToolUse.hooks]]\ntype = "command"\ncommand = ${JSON.stringify([process.execPath, join(build, "dist/src/hooks/cli.js"), ...cmArgs].map(a => JSON.stringify(a)).join(" "))}\ntimeout = 30\n`;
   }
   mkdirSync(home, { recursive: true });writeFileSync(join(home, "config.toml"), config);
 }
@@ -92,7 +95,9 @@ const PARENT_SESSION = /^(CLAUDE_CODE_SESSION_ID|CLAUDE_CODE_REMOTE_SESSION_ID|C
 function claudeConfig(run: string, options: NativeOptions, arm: Arm, cmArgs: string[], checks: string) {
   const build = arm === "cm_base" ? resolve(options.baseRoot) : ROOT, mcp = join(run, "mcp.json"), settings = join(run, "settings.json");
   write(mcp, { mcpServers: arm === "none" ? {} : { cm_eval: { command: process.execPath, args: [join(build, "dist/src/mcp/cli.js"), ...cmArgs] } } });
-  write(settings, hooked(arm) ? { hooks: { UserPromptSubmit: [{ hooks: [{ type: "command", command: [process.execPath, join(build, "dist/src/hooks/cli.js"), ...cmArgs].map(a => JSON.stringify(a)).join(" "), timeout: 120 }] }] } } : {});
+  const hookCommand = [process.execPath, join(build, "dist/src/hooks/cli.js"), ...cmArgs].map(a => JSON.stringify(a)).join(" ");
+  write(settings, hooked(arm) ? { hooks: { UserPromptSubmit: [{ hooks: [{ type: "command", command: hookCommand, timeout: 120 }] }],
+    ...(guarded(arm) ? { PreToolUse: [{ matcher: "Read|Bash", hooks: [{ type: "command", command: hookCommand, timeout: 30 }] }] } : {}) } } : {});
   const tools = ["Read", "Edit", "MultiEdit", "Write", "Grep", "Glob", "Bash(" + checks + ")", ...(arm === "none" ? [] : ["mcp__cm_eval__cm_retrieve_context"])];
   return ["--model", options.claudeModel!, "--output-format", "stream-json", "--verbose", "--setting-sources", "project", "--settings", settings, "--strict-mcp-config", "--mcp-config", mcp,
     "--permission-mode", "acceptEdits", "--allowedTools", ...tools];
@@ -144,7 +149,7 @@ export async function runNative(options: NativeOptions, protocolPath: string) {
       const prompt = task.prompt + ` Apply the change only in this isolated workspace. Preserve unrelated behavior and interfaces. Use supplied source when sufficient; otherwise inspect code. The same public smoke check is available to all variants as the shell command ${checks}; separate independent final checks evaluate your patch. Finish with a brief summary.`;
       // Steady-state use: the hook daemon is already warm when the prompt arrives. Its start is measured separately.
       let daemon: ReturnType<typeof spawn> | undefined, daemonStartMs: number | null = null;
-      const warm = arm === "cm_warm" || arm === "cm_next" && Boolean(options.warmDaemon);
+      const warm = arm === "cm_warm" || arm === "cm_guard" || arm === "cm_next" && Boolean(options.warmDaemon);
       if (warm) {
         const daemonStarted = performance.now();
         daemon = spawn(process.execPath, [join(ROOT, "dist/src/hooks/daemon_cli.js"), ...cmArguments(options, prepared, task.id, workspace, run)], { stdio: ["ignore", "pipe", "ignore"] });
@@ -172,7 +177,7 @@ export async function runNative(options: NativeOptions, protocolPath: string) {
       const hookLog = existsSync(join(run, "hook.jsonl")) ? readFileSync(join(run, "hook.jsonl"), "utf8").trim().split("\n").map(l => JSON.parse(l)) : [];
       const record = { run_id: runId, task: task.id, category: task.category, repetition: rep, arm, duration_ms: response.ms, exit_code: response.exit, timed_out: response.timedOut,
         task_success: Boolean(quality.pass && !scope.length && !added.length), quality, scope_changes: scope, added_files: added, usage, items: Object.fromEntries([...new Set(kinds)].map(k => [k, kinds.filter(v => v === k).length])),
-        shell_commands: commands.length, read_like_commands: commands.filter(c => /\b(cat|sed|head|tail|nl|rg|grep|find|ls)\b/.test(c)).length, cm_mcp_calls: cmCalls, hook: hookLog[0] ?? null, daemon_start_ms: daemonStartMs };
+        shell_commands: commands.length, read_like_commands: commands.filter(c => /\b(cat|sed|head|tail|nl|rg|grep|find|ls)\b/.test(c)).length, cm_mcp_calls: cmCalls, hook: hookLog[0] ?? null, reread_pointers: hookLog.filter((l: { event?: string }) => l.event === "reread_pointer").length, daemon_start_ms: daemonStartMs };
       results.push(record);cost += usage.usd_estimate;write(resultsPath, { protocol, estimated_cost_usd: cost, results });
       console.log(JSON.stringify({ completed: results.length, task: task.id, rep, arm, success: record.task_success, turns: usage.turns, tokens: usage.total_tokens, seconds: Math.round(response.ms) / 1000, commands: commands.length, cm_mcp: cmCalls }));
       if (!usage.turns || /401|Unauthorized|invalid_api_key/.test(response.stderr) || hooked(arm) && (!hookLog.length || (warm ? hookLog[0].via !== "daemon" : hookLog[0].via !== "process"))) throw Error("Provider/accounting/activation failure; retained " + runId);

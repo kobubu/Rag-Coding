@@ -8,16 +8,21 @@ import type { AgentConfig } from "../local-agent/service.js";
 
 // Client side of the CM hook daemon. Kept free of index, vector and compiler imports so a hook answered by a warm
 // daemon starts in a fraction of the full CM load.
-export type HookReply = { text: string; bytes: number; paths: string[]; route: string; omissions: number; ms: number };
-export function daemonAddress(config: AgentConfig): string {
-  const identity = hash(JSON.stringify({ ...config, backgroundUpdate: false })).slice(0, 24);
-  if (process.platform === "win32") return `\\\\.\\pipe\\cm-hook-${identity}`;
-  // Owner-only directory: other local users cannot reach the socket. Short path keeps it under the Unix socket length limit.
+export type HookReply = { text: string; bytes: number; paths: string[]; route: string; omissions: number; ms: number; whole: { path: string; version: string; lines: number }[] };
+
+// Owner-only directory for daemon sockets and per-session hook state; other local users cannot read or reach it.
+export function hookDirectory(): string {
   const directory = join(tmpdir(), "cm-hook-" + userInfo().uid);
   mkdirSync(directory, { recursive: true, mode: 0o700 });
   const stat = statSync(directory);
-  if (stat.uid !== userInfo().uid || (stat.mode & 0o077) !== 0) throw new Error("Unsafe CM hook socket directory " + directory);
-  return join(directory, identity + ".sock");
+  if (stat.uid !== userInfo().uid || (stat.mode & 0o077) !== 0) throw new Error("Unsafe CM hook directory " + directory);
+  return directory;
+}
+export function daemonAddress(config: AgentConfig): string {
+  const identity = hash(JSON.stringify({ ...config, backgroundUpdate: false })).slice(0, 24);
+  if (process.platform === "win32") return `\\\\.\\pipe\\cm-hook-${identity}`;
+  // Short path keeps the socket under the Unix socket length limit.
+  return join(hookDirectory(), identity + ".sock");
 }
 
 export function readLine(socket: Socket, limit: number): Promise<string> {
