@@ -6,7 +6,7 @@ import { CMError, hash, inside } from "../code-memory/source.js";
 import { EMBEDDING, localEmbedder } from "../code-memory/vector.js";
 import { LocalCM } from "../local-agent/service.js";
 import { CM_VERSION } from "../version.js";
-import { claudeConfig, claudeHooks, codexConfig, hookCommand, skill } from "./config.js";
+import { claudeConfig, claudeHooks, codexConfig, hookCommand, previousHookCommands, skill } from "./config.js";
 import { safeTarget, text, transaction } from "./files.js";
 import { checkClaudeRoot, withClaude } from "./claude.js";
 export const PACKAGE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
@@ -111,7 +111,7 @@ export async function install(options) {
         // A local install keeps the hook out of the shared settings, like the local MCP registration.
         const pathHooks = join(project, claudeScope === "local" ? ".claude/settings.local.json" : ".claude/settings.json");
         await safeTarget(project, pathHooks);
-        await edit(project, pathHooks, claudeHooks(await text(pathHooks), hookCommand(server, "claude"), false, old ? [hookCommand(old.server, "claude"), hookCommand(old.server)] : [hookCommand(server)]));
+        await edit(project, pathHooks, claudeHooks(await text(pathHooks), hookCommand(server, "claude"), false, [...(old ? [hookCommand(old.server, "claude"), ...previousHookCommands(old.server, "claude")] : []), ...previousHookCommands(server, "claude")]));
     }
     const harnessHome = join(directory, "harness"), profile = join(harnessHome, "profiles/cm");
     let harnessBin;
@@ -209,7 +209,7 @@ export async function remove(root, project) {
     if (state.clients.includes("claude")) {
         const path = join(state.project, state.claudeScope === "local" ? ".claude/settings.local.json" : ".claude/settings.json"), before = await text(path);
         if (before !== undefined)
-            await edit(path, claudeHooks(before, hookCommand(state.server, "claude"), true, [hookCommand(state.server)]));
+            await edit(path, claudeHooks(before, hookCommand(state.server, "claude"), true, previousHookCommands(state.server, "claude")));
     }
     for (const relative of [...(state.clients.includes("codex") ? [".agents/skills/code-memory/SKILL.md"] : []), ...(state.clients.includes("claude") ? [".claude/skills/code-memory/SKILL.md"] : [])]) {
         const path = join(state.project, relative), before = await text(path);

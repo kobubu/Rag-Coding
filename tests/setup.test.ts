@@ -7,7 +7,7 @@ import { parse } from "smol-toml";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { CallToolResultSchema } from "@modelcontextprotocol/sdk/types.js";
-import { codexConfig, claudeConfig, claudeHooks, clients, hookCommand } from "../src/setup/config.js";
+import { codexConfig, claudeConfig, claudeHooks, clients, hookCommand, previousHookCommands } from "../src/setup/config.js";
 import { safeTarget, text, transaction } from "../src/setup/files.js";
 import { LocalCM } from "../src/local-agent/service.js";
 import { createMcpServer } from "../src/mcp/server.js";
@@ -37,7 +37,11 @@ test("Claude install preserves other servers and rejects an unmanaged collision"
 });
 test("install adds the auto-context hook next to the MCP server and upgrades a server-only Codex block", () => {
   const real = { command: "C:/Program Files/nodejs/node.exe", args: ["C:/CM/dist/src/mcp/cli.js", "--project", "D:/Игра"] };
-  const command = hookCommand(real);
+  const windows = { command: "C:\\Program Files\\nodejs\\node.exe", args: ["D:\\Code Memory\\dist\\src\\mcp\\cli.js", "--project", "D:\\Игра"] };
+  assert.equal(hookCommand(windows, "claude", "win32"), 'cd . && "C:/Program Files/nodejs/node.exe" "D:/Code Memory/dist/src/hooks/cli.js" "--project" "D:/Игра" "--client" "claude"');
+  assert(!hookCommand(windows, "codex", "win32").startsWith('"'), "cmd /C would strip the outer quotes");
+  assert.deepEqual(previousHookCommands(real, "claude"), [hookCommand(real, "codex", "linux")]);
+  const command = hookCommand(real, "codex", "linux");
   assert.equal(command, '"C:/Program Files/nodejs/node.exe" "C:/CM/dist/src/hooks/cli.js" "--project" "D:/Игра"');
   const codex = parse(codexConfig("", "cm_123", real)) as { hooks: { UserPromptSubmit: { hooks: { command: string; timeout: number }[] }[] } };
   assert.deepEqual({ ...codex.hooks.UserPromptSubmit[0]!.hooks[0] }, { type: "command", command, timeout: 120 });

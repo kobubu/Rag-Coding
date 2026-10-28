@@ -10,9 +10,20 @@ export function clients(value) {
 function object(value) { return !!value && typeof value === "object" && !Array.isArray(value); }
 // The UserPromptSubmit hook gives the measured savings; the MCP server alone is rarely called (docs/NATIVE-CLIENTS.md).
 // It takes the server's arguments, so both read the same index, vectors and live memory.
-export function hookCommand(server, client = "codex") {
+// Windows runs hook commands through cmd.exe /C (Codex) or Git Bash, cmd.exe as fallback (Claude Code). cmd strips the first and
+// last quote of a line that starts with a quote, which breaks "C:/Program Files/nodejs/node.exe" "...": a leading `cd . &&`
+// keeps the line from starting with one, and forward slashes read the same in cmd, bash and Node.
+export function hookCommand(server, client = "codex", platform = process.platform) {
     const args = server.args.map(arg => arg.replace(/([\\/])dist[\\/]src[\\/]mcp[\\/]cli\.js$/, (_, sep) => [sep + "dist", "src", "hooks", "cli.js"].join(sep)));
-    return [server.command, ...args, ...(client === "claude" ? ["--client", "claude"] : [])].map(arg => JSON.stringify(arg)).join(" ");
+    const parts = [server.command, ...args, ...(client === "claude" ? ["--client", "claude"] : [])];
+    if (platform !== "win32")
+        return parts.map(arg => JSON.stringify(arg)).join(" ");
+    return "cd . && " + parts.map(arg => JSON.stringify(/^[A-Za-z]:[\\/]/.test(arg) ? arg.replaceAll("\\", "/") : arg)).join(" ");
+}
+/** Hook commands written by earlier installers, recognized so a reinstall upgrades them instead of adding a second hook. */
+export function previousHookCommands(server, client) {
+    const posix = (c) => hookCommand(server, c, "linux");
+    return [...new Set([posix(client), posix("codex")])].filter(command => command !== hookCommand(server, client));
 }
 export function codexConfig(before, name, server, remove = false, previous = server) {
     if (!/^[a-z][a-z0-9_]{1,63}$/.test(name))
@@ -24,11 +35,11 @@ export function codexConfig(before, name, server, remove = false, previous = ser
     if (configured && !existing)
         throw new CMError("config_conflict", "An unmanaged Codex server already has the CM name; existing settings were preserved");
     const server_ = (entry) => "[mcp_servers." + name + "]\ncommand = " + JSON.stringify(entry.command) + "\nargs = " + JSON.stringify(entry.args) + "\nstartup_timeout_sec = 60\ntool_timeout_sec = 180\n";
-    const hook = (entry) => "\n[[hooks.UserPromptSubmit]]\n\n[[hooks.UserPromptSubmit.hooks]]\ntype = \"command\"\ncommand = " + JSON.stringify(hookCommand(entry)) + "\ntimeout = 120\n";
-    const render = (entry) => begin + "\n" + server_(entry) + hook(entry) + end + "\n";
-    // Installations before the hook wrote the server block alone; they are upgraded in place.
-    const legacy = (entry) => begin + "\n" + server_(entry) + end + "\n";
-    if (existing && ![render(previous), legacy(previous)].includes(existing[0].replaceAll("\r\n", "\n")))
+    const hook = (command) => "\n[[hooks.UserPromptSubmit]]\n\n[[hooks.UserPromptSubmit.hooks]]\ntype = \"command\"\ncommand = " + JSON.stringify(command) + "\ntimeout = 120\n";
+    const render = (entry, command = hookCommand(entry)) => begin + "\n" + server_(entry) + hook(command) + end + "\n";
+    // Installations before the hook wrote the server block alone, and earlier hooks used another command form; both are upgraded in place.
+    const known = [render(previous), begin + "\n" + server_(previous) + end + "\n", ...previousHookCommands(previous, "codex").map(command => render(previous, command))];
+    if (existing && !known.includes(existing[0].replaceAll("\r\n", "\n")))
         throw new CMError("config_conflict", "Managed Codex settings were edited; preserve them before changing CM");
     if (remove)
         return existing ? before.replace(pattern, "") : before;
