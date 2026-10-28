@@ -20,7 +20,9 @@ export async function retrieveGraph(index: CMIndex, vectors: LocalVectors, query
   const pathHints = [...query.matchAll(/[\w./-]+\.(?:[cm]?[jt]sx?)/g)].map(match => match[0]);
   const matchesPath = (unit: CMUnit) => pathHints.some(path => unit.path === path || unit.path.endsWith("/" + path));
   const names = new Set([...query.matchAll(/`([\w$]+)`/g)].map(match => match[1]!));
-  for (const unit of kb.roots) if ((matchesPath(unit) || /[A-Z_$]/.test(unit.name)) && new RegExp("(?:^|[^\\w$])" + escaped(unit.name) + "(?:$|[^\\w$])").test(query)) names.add(unit.name);
+  // Outside a named file only identifier-shaped names count: a minified `A` or a plain `Find` also reads as an English word.
+  const identifier = (name: string) => name.length >= 3 && /[a-z][A-Z]|[A-Z]{2}|[_$]/.test(name);
+  for (const unit of kb.roots) if ((matchesPath(unit) || identifier(unit.name)) && new RegExp("(?:^|[^\\w$])" + escaped(unit.name) + "(?:$|[^\\w$])").test(query)) names.add(unit.name);
   if (/^[\w$]+$/.test(query.trim())) names.add(query.trim());
   const named = kb.roots.filter(unit => names.has(unit.name) && (!pathHints.length || matchesPath(unit)));
   const terms = [...new Set(words(query).filter(term => term.length > 2 && !STOP.has(term)))];
