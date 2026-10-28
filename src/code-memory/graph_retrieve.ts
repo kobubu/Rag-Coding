@@ -69,6 +69,9 @@ export async function retrieveGraph(index: CMIndex, vectors: LocalVectors, query
     return { ...span, end_byte: end };
   };
   for (const unit of selected) if (!add(unit.path, unit.span, "match")) { omissions++;add(unit.path, prefix(unit.path, unit.span), "signature"); }
+  // Files of the matches first: the dependency closure must not spend the budget a short matched module needs,
+  // and a second place to change often sits next to the first.
+  for (const path of [...new Set(selected.map(unit => unit.path))]) promote(path);
   const queue = selected.map(unit => ({ unit, depth: 0 })), visited = new Set<string>();
   for (let cursor = 0; cursor < queue.length && visited.size < (detail === "expanded" ? 24 : 12); cursor++) {
     const { unit, depth } = queue[cursor]!;if (visited.has(unit.id)) continue;visited.add(unit.id);
@@ -83,10 +86,10 @@ export async function retrieveGraph(index: CMIndex, vectors: LocalVectors, query
     }
   }
   // A fragment of a short module invites a confirming read of the whole file; show such files whole while the budget allows.
-  for (const path of [...new Set(parts.map(part => part.path))]) {
+  function promote(path: string) {
     const raw = Buffer.from(index.files.find(file => file.path === path)!.source, "utf8"), current = parts.filter(part => part.path === path);
     const shownBytes = current.reduce((sum, part) => sum + part.span.end_byte - part.span.start_byte, 0);
-    if (raw.length > WHOLE_FILE_BYTES || shownBytes === raw.length || bytes - shownBytes + raw.length > budget) continue;
+    if (raw.length > WHOLE_FILE_BYTES || shownBytes === raw.length || bytes - shownBytes + raw.length > budget) return;
     const whole = { path, whole: true as const, reason: current.some(part => part.reason === "match") ? "match" as const : "dependency" as const, text: raw.toString("utf8"),
       span: { ...current[0]!.span, start_byte: 0, end_byte: raw.length, line_start: 1, line_end: raw.subarray(0, Math.max(0, raw.length - 1)).toString("utf8").split("\n").length } };
     parts.splice(parts.indexOf(current[0]!), 1, whole);
@@ -94,6 +97,7 @@ export async function retrieveGraph(index: CMIndex, vectors: LocalVectors, query
     bytes += raw.length - shownBytes;
     for (const id of [...missing]) if (kb.symbols.get(id)!.path === path) { missing.delete(id);shown.add(id);omissions--; }
   }
+  for (const path of [...new Set(parts.map(part => part.path))]) promote(path);
   // Agents grep for call sites right after reading a definition; the compiler graph already knows them.
   // Raw call relations keep module-level call sites that the function-level graph drops.
   const callers = selected.filter(unit => !unit.name.startsWith("anonymous@")).map(unit => {

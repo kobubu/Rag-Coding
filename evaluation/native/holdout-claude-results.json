@@ -1,0 +1,2548 @@
+{
+  "protocol": {
+    "format": "cm-native-ab-1",
+    "created_at": "2026-10-28T14:26:52.449Z",
+    "client": "claude",
+    "client_version": "2.1.312 (Claude Code)",
+    "model": "claude-sonnet-5-5",
+    "reasoning_effort": "low",
+    "arms": [
+      "none",
+      "cm_warm"
+    ],
+    "repetitions": 3,
+    "cases_hash": "b06c003be30a76d245ed83f207e3afdfcee7c973d7a6012d6792927933d56c07",
+    "preparation_sha256": "ceca6947871be9e0217218f635f95b0402c9fa2ac87147eb0b71cac71c71f087",
+    "implementation": [
+      {
+        "path": "scripts/holdout_checks.ts",
+        "sha256": "e3ca0d4d52842264ac8408befe807dc360ae1ec7ec716962e86de5818982e9a8"
+      },
+      {
+        "path": "dist/scripts/holdout_checks.js",
+        "sha256": "606876235e13e62cb75cabc9a297e7e359d0969d3c914b887820a16071cdd68c"
+      },
+      {
+        "path": "scripts/lib.ts",
+        "sha256": "2c08b0809a3a0e1a06b44166429b35b51fb76c135d3af982c6a2785dcf34acd9"
+      },
+      {
+        "path": "dist/scripts/lib.js",
+        "sha256": "a7be953e3b1cf6a812e3b8185813548f92877b8fadb28bdb0a04d7e2231ac4e9"
+      },
+      {
+        "path": "scripts/native_ab.ts",
+        "sha256": "4745e967161b378359f122ad09eb3e5a2976562c10e24a3515deb90538ba147b"
+      },
+      {
+        "path": "dist/scripts/native_ab.js",
+        "sha256": "5412cd71e5546d3c2e2d8ee864877d13d260524829fa0972764f2939957a4a11"
+      },
+      {
+        "path": "scripts/speed_checks.ts",
+        "sha256": "1a06aa0bebebbfc9cce066ca4355f8b9c776943a2b35383f892ca83f84d96629"
+      },
+      {
+        "path": "dist/scripts/speed_checks.js",
+        "sha256": "083e120bd82e6cba2c127c9339d7801e583e81eb6cf3a14e6c658e11170318e6"
+      },
+      {
+        "path": "src/code-memory/ann_cli.ts",
+        "sha256": "ec832ee3379eec2d3da3fe630574e4c921017e42f53f836e26ed9905ee782b11"
+      },
+      {
+        "path": "dist/src/code-memory/ann_cli.js",
+        "sha256": "8908efa202deee2339092015d4efd2d24d8ff5fabf1dfc80611eebf205fe845a"
+      },
+      {
+        "path": "src/code-memory/chunks.ts",
+        "sha256": "974174aedf7adc42ba5f5956e408d277801872e45b3990fa3a8ae79186334775"
+      },
+      {
+        "path": "dist/src/code-memory/chunks.js",
+        "sha256": "aaa93539bff2a03b22deeb6ace750b202fae4dec1022bd973055082f38f1f454"
+      },
+      {
+        "path": "src/code-memory/cli.ts",
+        "sha256": "1e21966c1127fe3bdfa47926dbad922bf3dab9d822c44ecd9772a09a040708dd"
+      },
+      {
+        "path": "dist/src/code-memory/cli.js",
+        "sha256": "41ed2c37fb738f2010be9fece7e0d987f607d177ded0fb69d513e7af6bf25ab8"
+      },
+      {
+        "path": "src/code-memory/direct.ts",
+        "sha256": "c2a0209234d3c7561aed181605b48204ea8048c5361e7e86febc76e5dda16f34"
+      },
+      {
+        "path": "dist/src/code-memory/direct.js",
+        "sha256": "1bcd396c6d47fe00eaef79dfa21322b5c6c976713c99fa810a268afa92fcf406"
+      },
+      {
+        "path": "src/code-memory/focus.ts",
+        "sha256": "f550fe7423cf6e04f35cb1e6d559ad9a58d93acb6f23a02699071f5b5386a9e6"
+      },
+      {
+        "path": "dist/src/code-memory/focus.js",
+        "sha256": "8b7aa93ffb6c9eb7b4e1b96b893b6c644dd3af6fd14bdaaaeb2db1dbb33520cb"
+      },
+      {
+        "path": "src/code-memory/graph_retrieve.ts",
+        "sha256": "f13f799d827598089ad39d2a9c76ae64f4df8e4b10d7f1e189ac4005e386d35b"
+      },
+      {
+        "path": "dist/src/code-memory/graph_retrieve.js",
+        "sha256": "f0eb71ab1f778046e25be17aba08a7f400dae0a5d9d390d1b62941f30edbd52e"
+      },
+      {
+        "path": "src/code-memory/indexer.ts",
+        "sha256": "c95437769d5aff254841366c55e007c43dafcf6933bca47050330e06b357f613"
+      },
+      {
+        "path": "dist/src/code-memory/indexer.js",
+        "sha256": "6bbd813f0dc898dfcd6d492e695ae1671b7eb1ad8e80be408622cb80f7112b8b"
+      },
+      {
+        "path": "src/code-memory/knowledge.ts",
+        "sha256": "88ae9543ec08c9e3ca299f09aa4e416fcb5c3f01e0878095ba20c744dbe6903c"
+      },
+      {
+        "path": "dist/src/code-memory/knowledge.js",
+        "sha256": "7fff92a925752025bcfc9e46af851c6cfe0aeadb6e3a55663ed09124bae4aee8"
+      },
+      {
+        "path": "src/code-memory/live.ts",
+        "sha256": "df19b51ede03cc723008ed1bb7767959b08720c714466a3946aaea43ac4df717"
+      },
+      {
+        "path": "dist/src/code-memory/live.js",
+        "sha256": "0a6f5142c26d8908089bca15fb253d6a73ae8e07f9490aeb23da93339daa7372"
+      },
+      {
+        "path": "src/code-memory/minilm.ts",
+        "sha256": "0fe815aadfa2ce5a1b1856ff9ce54ea374f767b332733d617955115bd2c5f050"
+      },
+      {
+        "path": "dist/src/code-memory/minilm.js",
+        "sha256": "864594193f0246fd6564712907b6c3e73f81efcb06161b3b23e2950dea0a0b9f"
+      },
+      {
+        "path": "src/code-memory/query.ts",
+        "sha256": "380478b4914fc633ee58193d428a91509d566da52e9889640d91b07662d01bc3"
+      },
+      {
+        "path": "dist/src/code-memory/query.js",
+        "sha256": "177fd3e99389992e248df7dccf44ef1b8c52538ccf918f2fb4ed0866b27c51cb"
+      },
+      {
+        "path": "src/code-memory/retrieve.ts",
+        "sha256": "f69c4f99dc65750603f794abe9ae4936a35fbf4dc9510d5d9f772d96a3d7f6e0"
+      },
+      {
+        "path": "dist/src/code-memory/retrieve.js",
+        "sha256": "f80ccc0ad4d0bb1f256f6ddf6e6aafa13cd6eb9a2678fa2dfcfd8f19ff0f47af"
+      },
+      {
+        "path": "src/code-memory/search_cli.ts",
+        "sha256": "feb51a21b7eae020f4784d3b3ab92950c619a69ec9070d38101f6aeab95ddedf"
+      },
+      {
+        "path": "dist/src/code-memory/search_cli.js",
+        "sha256": "c37522858ec00cda295127758a2a43bebfab038de7934e60f0df72787fa0981d"
+      },
+      {
+        "path": "src/code-memory/source.ts",
+        "sha256": "23b1343692dc7f1bd943cf30a763919bbd16018dcb046c8c468d7a74184e7264"
+      },
+      {
+        "path": "dist/src/code-memory/source.js",
+        "sha256": "b26f7612786b94be200404021239585e5180b71505a9ee858465c47db4eb0799"
+      },
+      {
+        "path": "src/code-memory/store.ts",
+        "sha256": "cc1dae4e0a793b13614bbde32e380e16f761aa3664a9bd99f26a5e03525d4ffd"
+      },
+      {
+        "path": "dist/src/code-memory/store.js",
+        "sha256": "4e2db3116e9efec8775ffe14fd06e167d9183df84b20fa3ead61b3a7380cd601"
+      },
+      {
+        "path": "src/code-memory/ts.ts",
+        "sha256": "76222d7d3d073bb02b074009187a4e5123d575ad0bc8787d1ae77a63f1467ef2"
+      },
+      {
+        "path": "dist/src/code-memory/ts.js",
+        "sha256": "cb373ccf462adbb056482860086ea26c977e37c28cd2c47a1a41bcbf73026fc2"
+      },
+      {
+        "path": "src/code-memory/types.ts",
+        "sha256": "ad337bc6337850714843fda6ea2044683a48feb3465e4c0bdaad08d39617bc86"
+      },
+      {
+        "path": "dist/src/code-memory/types.js",
+        "sha256": "05c41b0ce4ba21f6ec0f485502ef2cd15de86b3c992e97965ce907b453a1baa6"
+      },
+      {
+        "path": "src/code-memory/vector.ts",
+        "sha256": "b9dad116c7abb8d27cf8195aff68f6bc17c0cb41244ef141617d056e7c4b5d82"
+      },
+      {
+        "path": "dist/src/code-memory/vector.js",
+        "sha256": "b1824b10f1269bf19263ba6ad434d199067ae15c1603e3a4bada7b0477aa5e76"
+      },
+      {
+        "path": "src/code-memory/vector_cli.ts",
+        "sha256": "a9bc4345eaab4606a90c379829578ccf2ab6dc3e19ca9f346d8e29ec445a97fb"
+      },
+      {
+        "path": "dist/src/code-memory/vector_cli.js",
+        "sha256": "50fe2e32e92f528265c4997fb0692b1948165fdaee071e1483f7e8a193824c33"
+      },
+      {
+        "path": "src/harness/plugin.ts",
+        "sha256": "f197e4142b41de05f3b9ed510251ddf1c26c8272a2775271263a3ca5dbb830f0"
+      },
+      {
+        "path": "dist/src/harness/plugin.js",
+        "sha256": "8908014061d2928a607eb1ca1b3fea02946032513f30d6eb65a8c9e759bff87b"
+      },
+      {
+        "path": "src/hooks/cli.ts",
+        "sha256": "991822a64a22625479663919574f012d3610f0493668d11a39b3982d0447cc25"
+      },
+      {
+        "path": "dist/src/hooks/cli.js",
+        "sha256": "ad5750d603b5f55a08f6a0e675852dd19c660433ef846acc2b5ba647a9ff6501"
+      },
+      {
+        "path": "src/hooks/client.ts",
+        "sha256": "5f2f0f872f9558ba6e6bcc9f2b54de3d25b8c0c08e786d59974b861a4edcd798"
+      },
+      {
+        "path": "dist/src/hooks/client.js",
+        "sha256": "31c1030a55661f8feb08e81426e88fbf34ed5b4a250b2706bcc6ac2ba2cbd744"
+      },
+      {
+        "path": "src/hooks/context.ts",
+        "sha256": "63c8e4dd077aa14b42d81846c0a3ffb7509f64d800b34ca8a00b37e99fa2df8f"
+      },
+      {
+        "path": "dist/src/hooks/context.js",
+        "sha256": "4a1cf96bc93c67bb4287c7e35d9a48670fa68ba1eb51a34405ccffeb746c97fd"
+      },
+      {
+        "path": "src/hooks/daemon.ts",
+        "sha256": "0ee2cf7986f26b809ea7a4d8a04d26e07e5a46eceadb6c2dedb84c11cc2539ed"
+      },
+      {
+        "path": "dist/src/hooks/daemon.js",
+        "sha256": "5601dd54ae711e61f7e423084d9c28f8cfbb17952c372e5e7f78c12e900fbcb5"
+      },
+      {
+        "path": "src/hooks/daemon_cli.ts",
+        "sha256": "66119a98623afb7b9293e9f09ac73f94d1758a87139989303378eee3cc6f0233"
+      },
+      {
+        "path": "dist/src/hooks/daemon_cli.js",
+        "sha256": "66119a98623afb7b9293e9f09ac73f94d1758a87139989303378eee3cc6f0233"
+      },
+      {
+        "path": "src/hooks/reread.ts",
+        "sha256": "05efab4e77453ec3f9cd5e678834e997874220078fa0c08b658c9ffac9fe69ad"
+      },
+      {
+        "path": "dist/src/hooks/reread.js",
+        "sha256": "8cb9246f1129125dec25caa608c29e53747221dc8f5349fb6159aa8cb7321452"
+      },
+      {
+        "path": "src/local-agent/cli.ts",
+        "sha256": "d32e478b42556fdd47551579107a7a965b5419e555912acf9d396084c682267a"
+      },
+      {
+        "path": "dist/src/local-agent/cli.js",
+        "sha256": "cbe628816478a47292ccba5cc0a59cc1817135878bc18dd3fb617842cf53bfc3"
+      },
+      {
+        "path": "src/local-agent/config.ts",
+        "sha256": "1a3d5fd94f5be46280957c1dce12384442ad3df997c323f534a342560a8d3c0b"
+      },
+      {
+        "path": "dist/src/local-agent/config.js",
+        "sha256": "503f5b7b88cf844f951ef8510b0f270a1c4e1eb77425f4a4c94bb3eea248bd2c"
+      },
+      {
+        "path": "src/local-agent/http.ts",
+        "sha256": "7493fa9366c9eef60f2bb71f1181a152ad62c3a51dd5d45b666899e412f5aab5"
+      },
+      {
+        "path": "dist/src/local-agent/http.js",
+        "sha256": "d6ef6cbf2e7d7dd9216c35401e27d8400f2dc899491d7f06a7c53478519571df"
+      },
+      {
+        "path": "src/local-agent/map.ts",
+        "sha256": "82e9b7b6139e93ff3739dd97c62935ee067dfe7c3ab5c5fb510f7b61168a3d86"
+      },
+      {
+        "path": "dist/src/local-agent/map.js",
+        "sha256": "fc10d41dc66d1ea94f15f3fe74a354c3d75e77882e1b487f9aa671492b3fcb2b"
+      },
+      {
+        "path": "src/local-agent/models.ts",
+        "sha256": "01ad788a233ae5cdcf1b72a2ce5b70cbd39d8076818ed58e09c1aedf17a5a33f"
+      },
+      {
+        "path": "dist/src/local-agent/models.js",
+        "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      {
+        "path": "src/local-agent/service.ts",
+        "sha256": "5b4940374e90de41b09cd3680266325d3ffca980146d6c61d16a8230263ad900"
+      },
+      {
+        "path": "dist/src/local-agent/service.js",
+        "sha256": "4cfed3f33c63e776b5324e535f6ba480a404ae230858a06f8b5a53bf637fe5fa"
+      },
+      {
+        "path": "src/mcp/cli.ts",
+        "sha256": "fedb7f353ff0b1bba7e8fa3a62f69fb12f761e363de0d6452d99505ef5b9d71a"
+      },
+      {
+        "path": "dist/src/mcp/cli.js",
+        "sha256": "7ec9663e90d36962c57590fd294e45b274ecab1086d45fc54e4943b165d327c6"
+      },
+      {
+        "path": "src/mcp/server.ts",
+        "sha256": "3be79cee0ccad10494d3e79041bb1acfd9f4a461dc206c70840a9f12c9571be3"
+      },
+      {
+        "path": "dist/src/mcp/server.js",
+        "sha256": "a09f56700f108a837f0dc1be3b41e9b128762bca8e8630506603a7ae07da2e7f"
+      },
+      {
+        "path": "src/setup/claude.ts",
+        "sha256": "c0b2b832ba823290e70e17dd7f5455ffc44fe13d32975ef3b88fbe0f7aca7ecc"
+      },
+      {
+        "path": "dist/src/setup/claude.js",
+        "sha256": "297fcffbb391421557d7f1ac85caa2df28f48432acfc7cb18ad500d607ab9db0"
+      },
+      {
+        "path": "src/setup/cli.ts",
+        "sha256": "6331feb2d2ea56c58af985c4d667eb2c80a84b396cf182afaa8b06f4e73df29f"
+      },
+      {
+        "path": "dist/src/setup/cli.js",
+        "sha256": "345921d8a24cf5695ec4ec9f227d4398ded300350462d3f4f6475c7687057501"
+      },
+      {
+        "path": "src/setup/config.ts",
+        "sha256": "1a1b8e65c4f66c1d94a94b4363b3cbe28a6d48fde08a1a8564b66bbff7dd0269"
+      },
+      {
+        "path": "dist/src/setup/config.js",
+        "sha256": "3d85e1f8dab380581fb7a32b6ef7c1cee2d577e448eb1627fbdd04f25e58951e"
+      },
+      {
+        "path": "src/setup/files.ts",
+        "sha256": "184ced0192f36df23f15a41c7999c96ee3ce7a676ca3dff88bb56ed16033a99d"
+      },
+      {
+        "path": "dist/src/setup/files.js",
+        "sha256": "ee4283af8d51f199e9bd2435cdc36f365e7a9d65d08c580d6b034a2945e650df"
+      },
+      {
+        "path": "src/setup/install.ts",
+        "sha256": "6c787efd177843dccce546e5e94cf82a8739f709f0ef60019c556cf0802aa419"
+      },
+      {
+        "path": "dist/src/setup/install.js",
+        "sha256": "ddd417f75d98afac422634dadb617b69ffccaab70e5733d87d742c485d966791"
+      },
+      {
+        "path": "src/version.ts",
+        "sha256": "a84fdcc97f67f7ce5da3ba27e03ffc0ce0e1dad06081d7f5f68a51dfb8f7f07b"
+      },
+      {
+        "path": "dist/src/version.js",
+        "sha256": "a84fdcc97f67f7ce5da3ba27e03ffc0ce0e1dad06081d7f5f68a51dfb8f7f07b"
+      }
+    ],
+    "base_build_sha256": "2c8e85e3bba049907c0eeef5113cf16f75632bd90371b672248849e851c34a96",
+    "warm_daemon": false,
+    "max_run_seconds": 300,
+    "max_estimated_usd": 5,
+    "price": {
+      "input": 0.1,
+      "cache_read": 0.01,
+      "cache_write": 0.125,
+      "output": 0.5,
+      "per": 1000000,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-luna"
+    },
+    "arms_config": {
+      "none": "Client without CM",
+      "cm_base": "Frozen CM 0.8.1: MCP server + installer skill, model decides whether to call it",
+      "cm_next": "Current CM: UserPromptSubmit hook adds CM context before the first call, plus MCP server + skill",
+      "cm_warm": "cm_next with its hook daemon started before the session (start time recorded separately)",
+      "cm_guard": "cm_warm plus a PreToolUse hook answering the first re-read of a file shown whole"
+    }
+  },
+  "estimated_cost_usd": 2.0976173,
+  "results": [
+    {
+      "run_id": "run-553cf45216276382",
+      "task": "viewport-flip",
+      "category": "named-small",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 18367.415564,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 542,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 5,
+        "uncached_input": 8,
+        "cache_read": 79496,
+        "cache_write": 6237,
+        "output": 673,
+        "total_input": 85741,
+        "total_tokens": 86414,
+        "usd_estimate": 0.0396436
+      },
+      "items": {
+        "command_execution": 3,
+        "file_change": 1
+      },
+      "shell_commands": 3,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-edc9df9264a821f3",
+      "task": "viewport-flip",
+      "category": "named-small",
+      "repetition": 1,
+      "arm": "cm_warm",
+      "duration_ms": 11753.895332,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 542,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 4,
+        "cache_read": 37929,
+        "cache_write": 6459,
+        "output": 413,
+        "total_input": 44392,
+        "total_tokens": 44805,
+        "usd_estimate": 0.0337669
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:27:19.552Z",
+        "via": "daemon",
+        "ms": 228,
+        "retrieve_ms": 221,
+        "bytes": 1270,
+        "paths": [
+          "game/fil/src/renderViewportModel.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2485.641467999998
+    },
+    {
+      "run_id": "run-874a3ad97600f2dd",
+      "task": "pace-zero",
+      "category": "discovery-small",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 17469.168938000003,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 221,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 5,
+        "uncached_input": 10,
+        "cache_read": 103819,
+        "cache_write": 7264,
+        "output": 764,
+        "total_input": 111093,
+        "total_tokens": 111857,
+        "usd_estimate": 0.0470979
+      },
+      "items": {
+        "command_execution": 3,
+        "file_change": 1
+      },
+      "shell_commands": 3,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-4d06572f126bda3a",
+      "task": "pace-zero",
+      "category": "discovery-small",
+      "repetition": 1,
+      "arm": "cm_warm",
+      "duration_ms": 8020.572132000001,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 221,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 2,
+        "uncached_input": 4,
+        "cache_read": 38638,
+        "cache_write": 6996,
+        "output": 308,
+        "total_input": 45638,
+        "total_tokens": 45946,
+        "usd_estimate": 0.0349358
+      },
+      "items": {
+        "file_change": 1
+      },
+      "shell_commands": 0,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:27:52.456Z",
+        "via": "daemon",
+        "ms": 306,
+        "retrieve_ms": 298,
+        "bytes": 2272,
+        "paths": [
+          "game/fil/src/geoPaceModel.js",
+          "game/src/content/fil-cities.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2487.9822090000016
+    },
+    {
+      "run_id": "run-3ca89faf412de79b",
+      "task": "ledger-day",
+      "category": "named-small",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 22193.797336999996,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 369,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 4,
+        "uncached_input": 8,
+        "cache_read": 79882,
+        "cache_write": 5935,
+        "output": 645,
+        "total_input": 85825,
+        "total_tokens": 86470,
+        "usd_estimate": 0.0381942
+      },
+      "items": {
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-586b7f0e00bd332e",
+      "task": "ledger-day",
+      "category": "named-small",
+      "repetition": 1,
+      "arm": "cm_warm",
+      "duration_ms": 16524.467765999987,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 369,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 6,
+        "cache_read": 61426,
+        "cache_write": 7135,
+        "output": 502,
+        "total_input": 68567,
+        "total_tokens": 69069,
+        "usd_estimate": 0.0397146
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:28:25.951Z",
+        "via": "daemon",
+        "ms": 380,
+        "retrieve_ms": 371,
+        "bytes": 2251,
+        "paths": [
+          "game/src/core/economy-ledger.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2945.091902
+    },
+    {
+      "run_id": "run-fadf6efc2d1d0995",
+      "task": "depth-swept",
+      "category": "discovery-medium",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 18827.850302000006,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 1081,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 6,
+        "uncached_input": 10,
+        "cache_read": 108018,
+        "cache_write": 9419,
+        "output": 1000,
+        "total_input": 117447,
+        "total_tokens": 118447,
+        "usd_estimate": 0.0584978
+      },
+      "items": {
+        "command_execution": 4,
+        "file_change": 1
+      },
+      "shell_commands": 4,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-2b38f85c8f7db32c",
+      "task": "depth-swept",
+      "category": "discovery-medium",
+      "repetition": 1,
+      "arm": "cm_warm",
+      "duration_ms": 15741.265872999997,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 1081,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 6,
+        "cache_read": 60373,
+        "cache_write": 6574,
+        "output": 549,
+        "total_input": 66953,
+        "total_tokens": 67502,
+        "usd_estimate": 0.037835299999999995
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:29:04.004Z",
+        "via": "daemon",
+        "ms": 197,
+        "retrieve_ms": 191,
+        "bytes": 1012,
+        "paths": [
+          "game/fil/src/geoDepthModel.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2324.1857949999976
+    },
+    {
+      "run_id": "run-3706afcc0962267f",
+      "task": "cube-angle",
+      "category": "named-symbol-large",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 12919.815276000008,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 542,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 4,
+        "uncached_input": 8,
+        "cache_read": 79618,
+        "cache_write": 6241,
+        "output": 685,
+        "total_input": 85867,
+        "total_tokens": 86552,
+        "usd_estimate": 0.0397918
+      },
+      "items": {
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-9df656568479a1ec",
+      "task": "cube-angle",
+      "category": "named-symbol-large",
+      "repetition": 1,
+      "arm": "cm_warm",
+      "duration_ms": 9821.339779000002,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 542,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 6,
+        "cache_read": 59888,
+        "cache_write": 6351,
+        "output": 525,
+        "total_input": 66245,
+        "total_tokens": 66770,
+        "usd_estimate": 0.0366548
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:29:35.365Z",
+        "via": "daemon",
+        "ms": 155,
+        "retrieve_ms": 149,
+        "bytes": 698,
+        "paths": [
+          "game/fil/src/player3dModel.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2593.9034959999844
+    },
+    {
+      "run_id": "run-545ba0293933107c",
+      "task": "platform-collapse",
+      "category": "named-medium",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 9566.619994000008,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 542,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 4,
+        "uncached_input": 6,
+        "cache_read": 60030,
+        "cache_write": 7786,
+        "output": 660,
+        "total_input": 67822,
+        "total_tokens": 68482,
+        "usd_estimate": 0.043759
+      },
+      "items": {
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-0ad2ff51472a3bfe",
+      "task": "platform-collapse",
+      "category": "named-medium",
+      "repetition": 1,
+      "arm": "cm_warm",
+      "duration_ms": 8338.919886999996,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 542,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 4,
+        "cache_read": 38763,
+        "cache_write": 7303,
+        "output": 479,
+        "total_input": 46070,
+        "total_tokens": 46549,
+        "usd_estimate": 0.0378863
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:29:57.938Z",
+        "via": "daemon",
+        "ms": 191,
+        "retrieve_ms": 185,
+        "bytes": 2642,
+        "paths": [
+          "game/src/core/runtime.js",
+          "game/src/core/geometry.js"
+        ],
+        "route": "named",
+        "omissions": 1
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2460.5959180000063
+    },
+    {
+      "run_id": "run-d650d9314e060667",
+      "task": "coin-action",
+      "category": "discovery-large",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 15648.116020000016,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 362,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 6,
+        "uncached_input": 10,
+        "cache_read": 104420,
+        "cache_write": 8794,
+        "output": 906,
+        "total_input": 113224,
+        "total_tokens": 114130,
+        "usd_estimate": 0.054698000000000004
+      },
+      "items": {
+        "command_execution": 4,
+        "file_change": 1
+      },
+      "shell_commands": 4,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-45fbda7fca9baaa3",
+      "task": "coin-action",
+      "category": "discovery-large",
+      "repetition": 1,
+      "arm": "cm_warm",
+      "duration_ms": 8079.2453730000125,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 362,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 4,
+        "cache_read": 37950,
+        "cache_write": 6493,
+        "output": 449,
+        "total_input": 44447,
+        "total_tokens": 44896,
+        "usd_estimate": 0.034265000000000004
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:30:25.622Z",
+        "via": "daemon",
+        "ms": 184,
+        "retrieve_ms": 178,
+        "bytes": 896,
+        "paths": [
+          "game/fil/src/coinChallengeModel.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 3115.803086
+    },
+    {
+      "run_id": "run-58112b347a42538b",
+      "task": "bonus-even",
+      "category": "discovery-two-places",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 18721.004143,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 361,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 8,
+        "uncached_input": 10,
+        "cache_read": 105557,
+        "cache_write": 8945,
+        "output": 1497,
+        "total_input": 114512,
+        "total_tokens": 116009,
+        "usd_estimate": 0.0613257
+      },
+      "items": {
+        "command_execution": 4,
+        "file_change": 3
+      },
+      "shell_commands": 4,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-55dc2a1e09632954",
+      "task": "bonus-even",
+      "category": "discovery-two-places",
+      "repetition": 1,
+      "arm": "cm_warm",
+      "duration_ms": 29022.636485000025,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 361,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 5,
+        "uncached_input": 8,
+        "cache_read": 92017,
+        "cache_write": 10605,
+        "output": 898,
+        "total_input": 102630,
+        "total_tokens": 103528,
+        "usd_estimate": 0.06061770000000001
+      },
+      "items": {
+        "command_execution": 2,
+        "file_change": 2
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:30:55.204Z",
+        "via": "daemon",
+        "ms": 291,
+        "retrieve_ms": 286,
+        "bytes": 5996,
+        "paths": [
+          "game/src/core/economy-ledger.js",
+          "game/fil/src/game.js",
+          "game/src/core/reward-policy.js",
+          "game/src/content/cities.js",
+          "game/src/core/economy.js",
+          "game/src/core/progression.js"
+        ],
+        "route": "discovery",
+        "omissions": 21
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2486.551822999987
+    },
+    {
+      "run_id": "run-307d8c6f359948d3",
+      "task": "viewport-flip",
+      "category": "named-small",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 6613.572283999994,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 542,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 4,
+        "uncached_input": 6,
+        "cache_read": 58307,
+        "cache_write": 6048,
+        "output": 583,
+        "total_input": 64361,
+        "total_tokens": 64944,
+        "usd_estimate": 0.0358647
+      },
+      "items": {
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-8b1b049f85e2b05c",
+      "task": "viewport-flip",
+      "category": "named-small",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 17922.91409199999,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 542,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 4,
+        "cache_read": 37935,
+        "cache_write": 6471,
+        "output": 416,
+        "total_input": 44410,
+        "total_tokens": 44826,
+        "usd_estimate": 0.0338455
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:31:33.498Z",
+        "via": "daemon",
+        "ms": 207,
+        "retrieve_ms": 200,
+        "bytes": 1270,
+        "paths": [
+          "game/fil/src/renderViewportModel.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2348.0672139999806
+    },
+    {
+      "run_id": "run-c22c207dc887cbe6",
+      "task": "pace-zero",
+      "category": "discovery-small",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 12994.918743999966,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 221,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 5,
+        "uncached_input": 8,
+        "cache_read": 81403,
+        "cache_write": 7429,
+        "output": 692,
+        "total_input": 88840,
+        "total_tokens": 89532,
+        "usd_estimate": 0.04479229999999999
+      },
+      "items": {
+        "command_execution": 3,
+        "file_change": 1
+      },
+      "shell_commands": 3,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-ca3894e2aa4dc04b",
+      "task": "pace-zero",
+      "category": "discovery-small",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 9761.385251,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 221,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 4,
+        "cache_read": 38647,
+        "cache_write": 7191,
+        "output": 393,
+        "total_input": 45842,
+        "total_tokens": 46235,
+        "usd_estimate": 0.0365667
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:32:06.965Z",
+        "via": "daemon",
+        "ms": 218,
+        "retrieve_ms": 210,
+        "bytes": 2272,
+        "paths": [
+          "game/fil/src/geoPaceModel.js",
+          "game/src/content/fil-cities.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2380.1208719999995
+    },
+    {
+      "run_id": "run-bcfa479780d283d0",
+      "task": "ledger-day",
+      "category": "named-small",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 10437.554368999961,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 369,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 4,
+        "uncached_input": 8,
+        "cache_read": 79882,
+        "cache_write": 5937,
+        "output": 693,
+        "total_input": 85827,
+        "total_tokens": 86520,
+        "usd_estimate": 0.0386822
+      },
+      "items": {
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-13996a56cdb9e8a7",
+      "task": "ledger-day",
+      "category": "named-small",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 8851.351878000016,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 369,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 4,
+        "cache_read": 38554,
+        "cache_write": 7153,
+        "output": 572,
+        "total_input": 45711,
+        "total_tokens": 46283,
+        "usd_estimate": 0.038195400000000004
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:32:30.982Z",
+        "via": "daemon",
+        "ms": 353,
+        "retrieve_ms": 346,
+        "bytes": 2251,
+        "paths": [
+          "game/src/core/economy-ledger.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2383.89462799998
+    },
+    {
+      "run_id": "run-2530a1ba75ebc539",
+      "task": "depth-swept",
+      "category": "discovery-medium",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 16317.96883899998,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 1081,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 6,
+        "uncached_input": 10,
+        "cache_read": 102157,
+        "cache_write": 7100,
+        "output": 1009,
+        "total_input": 109267,
+        "total_tokens": 110276,
+        "usd_estimate": 0.04872570000000001
+      },
+      "items": {
+        "command_execution": 4,
+        "file_change": 1
+      },
+      "shell_commands": 4,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-0f8622d1f37ed69c",
+      "task": "depth-swept",
+      "category": "discovery-medium",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 9495.395722999994,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 1081,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 6,
+        "cache_read": 60373,
+        "cache_write": 6574,
+        "output": 514,
+        "total_input": 66953,
+        "total_tokens": 67467,
+        "usd_estimate": 0.0374853
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:33:00.179Z",
+        "via": "daemon",
+        "ms": 219,
+        "retrieve_ms": 213,
+        "bytes": 1012,
+        "paths": [
+          "game/fil/src/geoDepthModel.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2678.048819000018
+    },
+    {
+      "run_id": "run-d76c61b8cd5fcb30",
+      "task": "cube-angle",
+      "category": "named-symbol-large",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 13035.171350999968,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 542,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 5,
+        "uncached_input": 8,
+        "cache_read": 79658,
+        "cache_write": 6399,
+        "output": 806,
+        "total_input": 86065,
+        "total_tokens": 86871,
+        "usd_estimate": 0.0416378
+      },
+      "items": {
+        "command_execution": 3,
+        "file_change": 1
+      },
+      "shell_commands": 3,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-18d545de9cd042f8",
+      "task": "cube-angle",
+      "category": "named-symbol-large",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 8066.494468000019,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 542,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 6,
+        "cache_read": 59896,
+        "cache_write": 6354,
+        "output": 451,
+        "total_input": 66256,
+        "total_tokens": 66707,
+        "usd_estimate": 0.035927600000000004
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:33:26.364Z",
+        "via": "daemon",
+        "ms": 163,
+        "retrieve_ms": 154,
+        "bytes": 698,
+        "paths": [
+          "game/fil/src/player3dModel.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2447.0031489999965
+    },
+    {
+      "run_id": "run-0236fa171f5bebac",
+      "task": "platform-collapse",
+      "category": "named-medium",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 7747.680572000041,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 542,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 4,
+        "uncached_input": 6,
+        "cache_read": 58476,
+        "cache_write": 6245,
+        "output": 612,
+        "total_input": 64727,
+        "total_tokens": 65339,
+        "usd_estimate": 0.0369596
+      },
+      "items": {
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-342b0cbe50fa0760",
+      "task": "platform-collapse",
+      "category": "named-medium",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 6236.5439490000135,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 542,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 4,
+        "cache_read": 38757,
+        "cache_write": 7283,
+        "output": 390,
+        "total_input": 46044,
+        "total_tokens": 46434,
+        "usd_estimate": 0.0369157
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:33:44.955Z",
+        "via": "daemon",
+        "ms": 246,
+        "retrieve_ms": 239,
+        "bytes": 2642,
+        "paths": [
+          "game/src/core/runtime.js",
+          "game/src/core/geometry.js"
+        ],
+        "route": "named",
+        "omissions": 1
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2431.7407620000304
+    },
+    {
+      "run_id": "run-16fc76703885bbd9",
+      "task": "coin-action",
+      "category": "discovery-large",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 18997.693932000024,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 362,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 5,
+        "uncached_input": 8,
+        "cache_read": 81974,
+        "cache_write": 7758,
+        "output": 820,
+        "total_input": 89740,
+        "total_tokens": 90560,
+        "usd_estimate": 0.047445400000000006
+      },
+      "items": {
+        "command_execution": 3,
+        "file_change": 1
+      },
+      "shell_commands": 3,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-3b82ab3fd634e767",
+      "task": "coin-action",
+      "category": "discovery-large",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 10484.012427999987,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 362,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 4,
+        "cache_read": 37947,
+        "cache_write": 6520,
+        "output": 462,
+        "total_input": 44471,
+        "total_tokens": 44933,
+        "usd_estimate": 0.0345027
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:34:12.944Z",
+        "via": "daemon",
+        "ms": 214,
+        "retrieve_ms": 209,
+        "bytes": 896,
+        "paths": [
+          "game/fil/src/coinChallengeModel.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2412.7850900000194
+    },
+    {
+      "run_id": "run-b2feaf1a9d6aed30",
+      "task": "bonus-even",
+      "category": "discovery-two-places",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 12725.149609000015,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 361,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 8,
+        "uncached_input": 12,
+        "cache_read": 133665,
+        "cache_write": 9899,
+        "output": 1268,
+        "total_input": 143576,
+        "total_tokens": 144844,
+        "usd_estimate": 0.0656665
+      },
+      "items": {
+        "command_execution": 5,
+        "file_change": 2
+      },
+      "shell_commands": 5,
+      "read_like_commands": 5,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-5de5e14bf33e7237",
+      "task": "bonus-even",
+      "category": "discovery-two-places",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 17466.723819000006,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 361,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 8,
+        "uncached_input": 14,
+        "cache_read": 173259,
+        "cache_write": 11888,
+        "output": 1472,
+        "total_input": 185161,
+        "total_tokens": 186633,
+        "usd_estimate": 0.0796259
+      },
+      "items": {
+        "command_execution": 5,
+        "file_change": 2
+      },
+      "shell_commands": 5,
+      "read_like_commands": 5,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:34:39.648Z",
+        "via": "daemon",
+        "ms": 271,
+        "retrieve_ms": 264,
+        "bytes": 5996,
+        "paths": [
+          "game/src/core/economy-ledger.js",
+          "game/fil/src/game.js",
+          "game/src/core/reward-policy.js",
+          "game/src/content/cities.js",
+          "game/src/core/economy.js",
+          "game/src/core/progression.js"
+        ],
+        "route": "discovery",
+        "omissions": 21
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2294.356235000014
+    },
+    {
+      "run_id": "run-667513ff213bf80a",
+      "task": "viewport-flip",
+      "category": "named-small",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 8025.3601810000255,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 542,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 4,
+        "uncached_input": 6,
+        "cache_read": 58300,
+        "cache_write": 6041,
+        "output": 572,
+        "total_input": 64347,
+        "total_tokens": 64919,
+        "usd_estimate": 0.035726
+      },
+      "items": {
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-2fd25ffd45dddaba",
+      "task": "viewport-flip",
+      "category": "named-small",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 6241.375363000028,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 542,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 4,
+        "cache_read": 37935,
+        "cache_write": 6460,
+        "output": 438,
+        "total_input": 44399,
+        "total_tokens": 44837,
+        "usd_estimate": 0.034021499999999996
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:35:07.734Z",
+        "via": "daemon",
+        "ms": 194,
+        "retrieve_ms": 188,
+        "bytes": 1270,
+        "paths": [
+          "game/fil/src/renderViewportModel.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2226.338399
+    },
+    {
+      "run_id": "run-19f5253843824690",
+      "task": "pace-zero",
+      "category": "discovery-small",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 16138.648999999976,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 221,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 4,
+        "uncached_input": 8,
+        "cache_read": 80877,
+        "cache_write": 6984,
+        "output": 565,
+        "total_input": 87869,
+        "total_tokens": 88434,
+        "usd_estimate": 0.041689699999999996
+      },
+      "items": {
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-e535efcebcab41d5",
+      "task": "pace-zero",
+      "category": "discovery-small",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 8251.425197999983,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 221,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 2,
+        "uncached_input": 4,
+        "cache_read": 38638,
+        "cache_write": 6996,
+        "output": 301,
+        "total_input": 45638,
+        "total_tokens": 45939,
+        "usd_estimate": 0.0348658
+      },
+      "items": {
+        "file_change": 1
+      },
+      "shell_commands": 0,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:35:32.934Z",
+        "via": "daemon",
+        "ms": 198,
+        "retrieve_ms": 191,
+        "bytes": 2272,
+        "paths": [
+          "game/fil/src/geoPaceModel.js",
+          "game/src/content/fil-cities.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2452.143952000013
+    },
+    {
+      "run_id": "run-c6924d6bc681e687",
+      "task": "ledger-day",
+      "category": "named-small",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 18918.91702599998,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 369,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 4,
+        "uncached_input": 8,
+        "cache_read": 79882,
+        "cache_write": 5958,
+        "output": 720,
+        "total_input": 85848,
+        "total_tokens": 86568,
+        "usd_estimate": 0.0390362
+      },
+      "items": {
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-5cfa96a40a2f9c6a",
+      "task": "ledger-day",
+      "category": "named-small",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 16931.24419499992,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 369,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 6,
+        "cache_read": 61450,
+        "cache_write": 7136,
+        "output": 526,
+        "total_input": 68592,
+        "total_tokens": 69118,
+        "usd_estimate": 0.039960999999999997
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:36:03.436Z",
+        "via": "daemon",
+        "ms": 454,
+        "retrieve_ms": 447,
+        "bytes": 2251,
+        "paths": [
+          "game/src/core/economy-ledger.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2532.5816840000916
+    },
+    {
+      "run_id": "run-abee621840844b4c",
+      "task": "depth-swept",
+      "category": "discovery-medium",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 14603.19514700002,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 1081,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 7,
+        "uncached_input": 10,
+        "cache_read": 108353,
+        "cache_write": 11008,
+        "output": 1254,
+        "total_input": 119371,
+        "total_tokens": 120625,
+        "usd_estimate": 0.0674273
+      },
+      "items": {
+        "command_execution": 5,
+        "file_change": 1
+      },
+      "shell_commands": 5,
+      "read_like_commands": 5,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-ff477383d8a5e879",
+      "task": "depth-swept",
+      "category": "discovery-medium",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 8672.301092999987,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 1081,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 4,
+        "cache_read": 38001,
+        "cache_write": 6581,
+        "output": 603,
+        "total_input": 44586,
+        "total_tokens": 45189,
+        "usd_estimate": 0.0361621
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:36:37.418Z",
+        "via": "daemon",
+        "ms": 269,
+        "retrieve_ms": 264,
+        "bytes": 1012,
+        "paths": [
+          "game/fil/src/geoDepthModel.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2378.312068999978
+    },
+    {
+      "run_id": "run-dd7a6becbf49fa75",
+      "task": "cube-angle",
+      "category": "named-symbol-large",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 9340.28586199996,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 542,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 5,
+        "uncached_input": 10,
+        "cache_read": 101717,
+        "cache_write": 6374,
+        "output": 833,
+        "total_input": 108101,
+        "total_tokens": 108934,
+        "usd_estimate": 0.0440177
+      },
+      "items": {
+        "command_execution": 3,
+        "file_change": 1
+      },
+      "shell_commands": 3,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-ac7602eac287719b",
+      "task": "cube-angle",
+      "category": "named-symbol-large",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 19375.728147000074,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 542,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 6,
+        "cache_read": 59888,
+        "cache_write": 6360,
+        "output": 474,
+        "total_input": 66254,
+        "total_tokens": 66728,
+        "usd_estimate": 0.0361808
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:36:58.330Z",
+        "via": "daemon",
+        "ms": 139,
+        "retrieve_ms": 133,
+        "bytes": 698,
+        "paths": [
+          "game/fil/src/player3dModel.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2605.947895999998
+    },
+    {
+      "run_id": "run-a66d7416add2699a",
+      "task": "platform-collapse",
+      "category": "named-medium",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 10451.120982000022,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 542,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 4,
+        "uncached_input": 6,
+        "cache_read": 60037,
+        "cache_write": 7793,
+        "output": 613,
+        "total_input": 67836,
+        "total_tokens": 68449,
+        "usd_estimate": 0.0433177
+      },
+      "items": {
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-7720e46fe013b2a5",
+      "task": "platform-collapse",
+      "category": "named-medium",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 11512.282257999992,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 542,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 4,
+        "cache_read": 38757,
+        "cache_write": 7283,
+        "output": 393,
+        "total_input": 46044,
+        "total_tokens": 46437,
+        "usd_estimate": 0.0369457
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:37:31.075Z",
+        "via": "daemon",
+        "ms": 173,
+        "retrieve_ms": 166,
+        "bytes": 2642,
+        "paths": [
+          "game/src/core/runtime.js",
+          "game/src/core/geometry.js"
+        ],
+        "route": "named",
+        "omissions": 1
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2575.3597760000266
+    },
+    {
+      "run_id": "run-33a272172f0b51f8",
+      "task": "coin-action",
+      "category": "discovery-large",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 12441.981108000036,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 362,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 6,
+        "uncached_input": 10,
+        "cache_read": 103756,
+        "cache_write": 7732,
+        "output": 979,
+        "total_input": 111498,
+        "total_tokens": 112477,
+        "usd_estimate": 0.0511136
+      },
+      "items": {
+        "command_execution": 4,
+        "file_change": 1
+      },
+      "shell_commands": 4,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-63f69c6b47d8102e",
+      "task": "coin-action",
+      "category": "discovery-large",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 6388.407554000034,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 362,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 4,
+        "cache_read": 37947,
+        "cache_write": 6520,
+        "output": 452,
+        "total_input": 44471,
+        "total_tokens": 44923,
+        "usd_estimate": 0.0344027
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:37:57.911Z",
+        "via": "daemon",
+        "ms": 192,
+        "retrieve_ms": 187,
+        "bytes": 896,
+        "paths": [
+          "game/fil/src/coinChallengeModel.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2492.3368890000274
+    },
+    {
+      "run_id": "run-3453cc75b72caddb",
+      "task": "bonus-even",
+      "category": "discovery-two-places",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 14411.372548999963,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 361,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 7,
+        "uncached_input": 12,
+        "cache_read": 128458,
+        "cache_write": 8116,
+        "output": 1248,
+        "total_input": 136586,
+        "total_tokens": 137834,
+        "usd_estimate": 0.0578138
+      },
+      "items": {
+        "command_execution": 4,
+        "file_change": 2
+      },
+      "shell_commands": 4,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-1709e161b51e8009",
+      "task": "bonus-even",
+      "category": "discovery-two-places",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 35715.836765999906,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 361,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 7,
+        "uncached_input": 12,
+        "cache_read": 147043,
+        "cache_write": 11741,
+        "output": 1172,
+        "total_input": 158796,
+        "total_tokens": 159968,
+        "usd_estimate": 0.0734123
+      },
+      "items": {
+        "command_execution": 4,
+        "file_change": 2
+      },
+      "shell_commands": 4,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T14:38:21.680Z",
+        "via": "daemon",
+        "ms": 301,
+        "retrieve_ms": 294,
+        "bytes": 5996,
+        "paths": [
+          "game/src/core/economy-ledger.js",
+          "game/fil/src/game.js",
+          "game/src/core/reward-policy.js",
+          "game/src/content/cities.js",
+          "game/src/core/economy.js",
+          "game/src/core/progression.js"
+        ],
+        "route": "discovery",
+        "omissions": 21
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 2395.2354530000594
+    }
+  ]
+}

@@ -59,6 +59,18 @@ test("an English word that equals a minified function name does not anchor the n
   assert.deepEqual([...new Set(context.parts.map(part => part.path))], ["pace.js"]);
 });
 
+test("a short file with a match is shown whole before dependencies take the budget", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cm-graph-"));
+  const helpers = Array.from({ length: 5 }, (_, n) => `export function help${n}(v){return v+${n}; /* ${"x".repeat(1050)} */}\n`).join("");
+  writeFileSync(join(root, "helpers.js"), helpers);
+  writeFileSync(join(root, "ledger.js"), "import {help0,help1,help2,help3,help4} from './helpers.js';\n" +
+    "export function claim(v){return help0(v)+help1(v)+help2(v)+help3(v)+help4(v);}\n" + "export function normalize(v){return v%2===0?v:0;" + " ".repeat(600) + "}\n");
+  const index = buildIndex(root), vectors = new LocalVectors({ directory: root, modelCache: root }, async () => { throw Error("Unexpected embedding call"); });
+  const context = await retrieveContext(index, vectors, "Fix `claim` in `ledger.js`", 6000, undefined, { policy: "adaptive" });
+  assert(context.parts.some(part => part.path === "ledger.js" && part.whole), "matched short file shown whole");
+  assert(context.bytes_used <= 6000);
+});
+
 test("callers come from the compiler graph and an unchanged whole file is not re-sent on its first re-read", async () => {
   const root = mkdtempSync(join(tmpdir(), "cm-graph-"));
   writeFileSync(join(root, "wallet.js"), "export function sync(w){return w+1;}\n");
