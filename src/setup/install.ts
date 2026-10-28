@@ -7,7 +7,7 @@ import { EMBEDDING, localEmbedder } from "../code-memory/vector.js";
 import { LocalCM } from "../local-agent/service.js";
 import type { AgentConfig } from "../local-agent/service.js";
 import { CM_VERSION } from "../version.js";
-import { claudeConfig, codexConfig, skill } from "./config.js";
+import { claudeConfig, claudeHooks, codexConfig, hookCommand, skill } from "./config.js";
 import type { Client, StdioConfig } from "./config.js";
 import { safeTarget, text, transaction } from "./files.js";
 import { checkClaudeRoot, withClaude } from "./claude.js";
@@ -64,7 +64,7 @@ export async function install(options: SetupOptions) {
   await safeTarget(root, join(directory, "installation.json"));
   await mkdir(directory, { recursive: true });
   const edits: Edit[] = [];
-  async function edit(owner: string, path: string, after: string) { await safeTarget(owner, path); edits.push({ root: owner, path, before: await text(path), after }); }
+  async function edit(owner: string, path: string, after: string | undefined) { await safeTarget(owner, path); edits.push({ root: owner, path, before: await text(path), after }); }
   const server: StdioConfig = { command: process.execPath, args: [join(PACKAGE_ROOT, "dist/src/mcp/cli.js"), "--project", project,
     "--index", config.indexPath!, "--vectors", config.vectorsPath!, "--model-cache", modelCache, "--memory-dir", memory,
     "--retrieval-policy", "adaptive", "--auto-update", "true", "--background-update", "false", ...(options.sourceScope ? ["--source-scope", options.sourceScope] : [])] };
@@ -90,6 +90,9 @@ export async function install(options: SetupOptions) {
     const pathSkill = join(project, ".claude/skills/code-memory/SKILL.md"); await safeTarget(project, pathSkill); const beforeSkill = await text(pathSkill);
     if (beforeSkill && beforeSkill !== skill(name)) throw new CMError("config_conflict", "Existing Claude Code Memory skill was edited; preserve it before reinstalling");
     await edit(project, pathSkill, skill(name));
+    // A local install keeps the hook out of the shared settings, like the local MCP registration.
+    const pathHooks = join(project, claudeScope === "local" ? ".claude/settings.local.json" : ".claude/settings.json"); await safeTarget(project, pathHooks);
+    await edit(project, pathHooks, claudeHooks(await text(pathHooks), hookCommand(server), false, old ? hookCommand(old.server) : undefined));
   }
   const harnessHome = join(directory, "harness"), profile = join(harnessHome, "profiles/cm");
   let harnessBin: string | undefined;
@@ -167,6 +170,10 @@ export async function remove(root: string, project: string) {
   if (state.clients.includes("claude") && state.claudeScope !== "local") {
     const path = join(state.project, ".mcp.json"), before = await text(path);
     if (before !== undefined) await edit(path, claudeConfig(before, state.name, state.server, true));
+  }
+  if (state.clients.includes("claude")) {
+    const path = join(state.project, state.claudeScope === "local" ? ".claude/settings.local.json" : ".claude/settings.json"), before = await text(path);
+    if (before !== undefined) await edit(path, claudeHooks(before, hookCommand(state.server), true));
   }
   for (const relative of [...(state.clients.includes("codex") ? [".agents/skills/code-memory/SKILL.md"] : []), ...(state.clients.includes("claude") ? [".claude/skills/code-memory/SKILL.md"] : [])]) {
     const path = join(state.project, relative), before = await text(path);

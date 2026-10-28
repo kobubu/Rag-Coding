@@ -7,7 +7,7 @@ import { parse } from "smol-toml";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { CallToolResultSchema } from "@modelcontextprotocol/sdk/types.js";
-import { codexConfig, claudeConfig, clients } from "../src/setup/config.js";
+import { codexConfig, claudeConfig, claudeHooks, clients, hookCommand } from "../src/setup/config.js";
 import { safeTarget, text, transaction } from "../src/setup/files.js";
 import { LocalCM } from "../src/local-agent/service.js";
 import { createMcpServer } from "../src/mcp/server.js";
@@ -34,6 +34,21 @@ test("Claude install preserves other servers and rejects an unmanaged collision"
   assert(removed.custom); assert.deepEqual(removed.mcpServers, { other: unrelated });
   assert.throws(() => claudeConfig('{"mcpServers":{"cm_123":{"command":"mine"}}}', "cm_123", server), /config_conflict/);
   assert.throws(() => clients("codex,unexpected"), /invalid_argument/);
+});
+test("install adds the auto-context hook next to the MCP server and upgrades a server-only Codex block", () => {
+  const real = { command: "C:/Program Files/nodejs/node.exe", args: ["C:/CM/dist/src/mcp/cli.js", "--project", "D:/Игра"] };
+  const command = hookCommand(real);
+  assert.equal(command, '"C:/Program Files/nodejs/node.exe" "C:/CM/dist/src/hooks/cli.js" "--project" "D:/Игра"');
+  const codex = parse(codexConfig("", "cm_123", real)) as { hooks: { UserPromptSubmit: { hooks: { command: string; timeout: number }[] }[] } };
+  assert.deepEqual({ ...codex.hooks.UserPromptSubmit[0]!.hooks[0] }, { type: "command", command, timeout: 120 });
+  const legacy = "# BEGIN Code Memory cm_123\n[mcp_servers.cm_123]\ncommand = " + JSON.stringify(real.command) + "\nargs = " + JSON.stringify(real.args) + "\nstartup_timeout_sec = 60\ntool_timeout_sec = 180\n# END Code Memory cm_123\n";
+  assert.equal(codexConfig(legacy, "cm_123", real), codexConfig("", "cm_123", real));
+  const other = { hooks: { UserPromptSubmit: [{ hooks: [{ type: "command", command: "mine" }] }], Stop: [] }, model: "x" };
+  const claude = claudeHooks(JSON.stringify(other), command)!;
+  assert.equal(claudeHooks(claude, command), claude);
+  assert.equal(JSON.parse(claude).hooks.UserPromptSubmit.length, 2);
+  assert.deepEqual(JSON.parse(claudeHooks(claude, command, true)!), other);
+  assert.equal(claudeHooks(claudeHooks(undefined, command), command, true), undefined);
 });
 test("configuration transaction restores earlier files when a later file changes concurrently", async () => {
   const root = await mkdtemp(join(tmpdir(), "cm-install-")), first = join(root, "a"), later = join(root, "b");
