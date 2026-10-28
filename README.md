@@ -46,7 +46,7 @@ In Codex and Claude Code, CM adds its context through a `UserPromptSubmit` hook 
 | Total session time | 35.9% lower | 35.1% lower |
 | Median session | 7.3 s vs 12.2 s | 12.4 s vs 18.7 s |
 
-In both clients the paired 95% bootstrap intervals for tokens and time exclude zero. This is still one project and small seeded fixes, not a guarantee for other workloads. The MCP server alone, without the hook, showed no savings.
+In both clients the paired 95% bootstrap intervals for tokens and time exclude zero. Three larger tasks — a feature across three modules, a rename across imports, a new parameter in several places — also gain: Codex 60.1% fewer tokens and 39.2% less time, Claude Code 35.0% and 16.4%. One weak spot is documented: on a rewrite of a counting function, agents with CM more often lose a key-coercion detail and need a second edit. This is still one project, not a guarantee for other workloads. The MCP server alone, without the hook, showed no savings.
 
 [Method, raw results, and reproduction](docs/EFFICIENCY-AB.md) · [Codex and Claude Code experiments](docs/NATIVE-CLIENTS.md) · [What did not work](docs/HISTORY.md)
 

@@ -1,0 +1,1209 @@
+{
+  "protocol": {
+    "format": "cm-native-ab-1",
+    "created_at": "2026-10-28T21:49:27.158Z",
+    "client": "claude",
+    "client_version": "2.1.312 (Claude Code)",
+    "model": "claude-sonnet-5-5",
+    "reasoning_effort": "low",
+    "arms": [
+      "none",
+      "cm_warm"
+    ],
+    "repetitions": 3,
+    "cases_hash": "119c5c84fe875ccab380f5a9a1d3b7a826b4946b849903e129a0c61dcc2b75bf",
+    "preparation_sha256": "f77507b66ae2c8b628e7740c12150caec44b855c542e8964f8ed97eca8859c61",
+    "implementation": [
+      {
+        "path": "scripts/holdout_checks.ts",
+        "sha256": "789cb2f0eb552f59a49905a68b71dc96ca005df39d73869be0d6ebab9a2c8cca"
+      },
+      {
+        "path": "dist/scripts/holdout_checks.js",
+        "sha256": "5283a519db2b40531c9c9beb999c9c7c51a3d43de9c6c6858213807352cf1e12"
+      },
+      {
+        "path": "scripts/lib.ts",
+        "sha256": "31adbe4e0262c074315abfd23089b386b13d729e0d7e1106ff9b109fb3640a5f"
+      },
+      {
+        "path": "dist/scripts/lib.js",
+        "sha256": "7793ab163c77a79891b60ac22bcfe479460c5aa9ca2973a7354a9dab06e181b7"
+      },
+      {
+        "path": "scripts/native_ab.ts",
+        "sha256": "28079d9213262a7a599fa9697ebf3c4e4b6424a84bf187d0ccdfde11a5e38d36"
+      },
+      {
+        "path": "dist/scripts/native_ab.js",
+        "sha256": "8eaeb3be82447f55791657d4a3fed1518cb81dcd6014cdb6f51dc50481dff1ca"
+      },
+      {
+        "path": "scripts/speed_checks.ts",
+        "sha256": "1a06aa0bebebbfc9cce066ca4355f8b9c776943a2b35383f892ca83f84d96629"
+      },
+      {
+        "path": "dist/scripts/speed_checks.js",
+        "sha256": "083e120bd82e6cba2c127c9339d7801e583e81eb6cf3a14e6c658e11170318e6"
+      },
+      {
+        "path": "src/code-memory/ann_cli.ts",
+        "sha256": "ec832ee3379eec2d3da3fe630574e4c921017e42f53f836e26ed9905ee782b11"
+      },
+      {
+        "path": "dist/src/code-memory/ann_cli.js",
+        "sha256": "8908efa202deee2339092015d4efd2d24d8ff5fabf1dfc80611eebf205fe845a"
+      },
+      {
+        "path": "src/code-memory/chunks.ts",
+        "sha256": "974174aedf7adc42ba5f5956e408d277801872e45b3990fa3a8ae79186334775"
+      },
+      {
+        "path": "dist/src/code-memory/chunks.js",
+        "sha256": "aaa93539bff2a03b22deeb6ace750b202fae4dec1022bd973055082f38f1f454"
+      },
+      {
+        "path": "src/code-memory/cli.ts",
+        "sha256": "1e21966c1127fe3bdfa47926dbad922bf3dab9d822c44ecd9772a09a040708dd"
+      },
+      {
+        "path": "dist/src/code-memory/cli.js",
+        "sha256": "41ed2c37fb738f2010be9fece7e0d987f607d177ded0fb69d513e7af6bf25ab8"
+      },
+      {
+        "path": "src/code-memory/direct.ts",
+        "sha256": "c2a0209234d3c7561aed181605b48204ea8048c5361e7e86febc76e5dda16f34"
+      },
+      {
+        "path": "dist/src/code-memory/direct.js",
+        "sha256": "1bcd396c6d47fe00eaef79dfa21322b5c6c976713c99fa810a268afa92fcf406"
+      },
+      {
+        "path": "src/code-memory/focus.ts",
+        "sha256": "f550fe7423cf6e04f35cb1e6d559ad9a58d93acb6f23a02699071f5b5386a9e6"
+      },
+      {
+        "path": "dist/src/code-memory/focus.js",
+        "sha256": "8b7aa93ffb6c9eb7b4e1b96b893b6c644dd3af6fd14bdaaaeb2db1dbb33520cb"
+      },
+      {
+        "path": "src/code-memory/graph_retrieve.ts",
+        "sha256": "a7c6f2ac9a75ba17c6663495b176474222240a1e17545d579fccd532d5a0e56f"
+      },
+      {
+        "path": "dist/src/code-memory/graph_retrieve.js",
+        "sha256": "8bbdbe4939bf5d25ce1f11c7c12952f59139e77d54072d5271d7ce7addae3b2a"
+      },
+      {
+        "path": "src/code-memory/indexer.ts",
+        "sha256": "c95437769d5aff254841366c55e007c43dafcf6933bca47050330e06b357f613"
+      },
+      {
+        "path": "dist/src/code-memory/indexer.js",
+        "sha256": "6bbd813f0dc898dfcd6d492e695ae1671b7eb1ad8e80be408622cb80f7112b8b"
+      },
+      {
+        "path": "src/code-memory/knowledge.ts",
+        "sha256": "88ae9543ec08c9e3ca299f09aa4e416fcb5c3f01e0878095ba20c744dbe6903c"
+      },
+      {
+        "path": "dist/src/code-memory/knowledge.js",
+        "sha256": "7fff92a925752025bcfc9e46af851c6cfe0aeadb6e3a55663ed09124bae4aee8"
+      },
+      {
+        "path": "src/code-memory/live.ts",
+        "sha256": "df19b51ede03cc723008ed1bb7767959b08720c714466a3946aaea43ac4df717"
+      },
+      {
+        "path": "dist/src/code-memory/live.js",
+        "sha256": "0a6f5142c26d8908089bca15fb253d6a73ae8e07f9490aeb23da93339daa7372"
+      },
+      {
+        "path": "src/code-memory/minilm.ts",
+        "sha256": "0fe815aadfa2ce5a1b1856ff9ce54ea374f767b332733d617955115bd2c5f050"
+      },
+      {
+        "path": "dist/src/code-memory/minilm.js",
+        "sha256": "864594193f0246fd6564712907b6c3e73f81efcb06161b3b23e2950dea0a0b9f"
+      },
+      {
+        "path": "src/code-memory/query.ts",
+        "sha256": "380478b4914fc633ee58193d428a91509d566da52e9889640d91b07662d01bc3"
+      },
+      {
+        "path": "dist/src/code-memory/query.js",
+        "sha256": "177fd3e99389992e248df7dccf44ef1b8c52538ccf918f2fb4ed0866b27c51cb"
+      },
+      {
+        "path": "src/code-memory/retrieve.ts",
+        "sha256": "f69c4f99dc65750603f794abe9ae4936a35fbf4dc9510d5d9f772d96a3d7f6e0"
+      },
+      {
+        "path": "dist/src/code-memory/retrieve.js",
+        "sha256": "f80ccc0ad4d0bb1f256f6ddf6e6aafa13cd6eb9a2678fa2dfcfd8f19ff0f47af"
+      },
+      {
+        "path": "src/code-memory/search_cli.ts",
+        "sha256": "feb51a21b7eae020f4784d3b3ab92950c619a69ec9070d38101f6aeab95ddedf"
+      },
+      {
+        "path": "dist/src/code-memory/search_cli.js",
+        "sha256": "c37522858ec00cda295127758a2a43bebfab038de7934e60f0df72787fa0981d"
+      },
+      {
+        "path": "src/code-memory/source.ts",
+        "sha256": "15fa8ea516aeb89c20da77a1e62ccbaba7fde0d13458f817ff634f99c2f01419"
+      },
+      {
+        "path": "dist/src/code-memory/source.js",
+        "sha256": "25bdc5e93beac9fb76bb45e3ca0393dcbe25940daf4db6b8931fc7a71e7013a1"
+      },
+      {
+        "path": "src/code-memory/store.ts",
+        "sha256": "cc1dae4e0a793b13614bbde32e380e16f761aa3664a9bd99f26a5e03525d4ffd"
+      },
+      {
+        "path": "dist/src/code-memory/store.js",
+        "sha256": "4e2db3116e9efec8775ffe14fd06e167d9183df84b20fa3ead61b3a7380cd601"
+      },
+      {
+        "path": "src/code-memory/ts.ts",
+        "sha256": "76222d7d3d073bb02b074009187a4e5123d575ad0bc8787d1ae77a63f1467ef2"
+      },
+      {
+        "path": "dist/src/code-memory/ts.js",
+        "sha256": "cb373ccf462adbb056482860086ea26c977e37c28cd2c47a1a41bcbf73026fc2"
+      },
+      {
+        "path": "src/code-memory/types.ts",
+        "sha256": "ad337bc6337850714843fda6ea2044683a48feb3465e4c0bdaad08d39617bc86"
+      },
+      {
+        "path": "dist/src/code-memory/types.js",
+        "sha256": "05c41b0ce4ba21f6ec0f485502ef2cd15de86b3c992e97965ce907b453a1baa6"
+      },
+      {
+        "path": "src/code-memory/vector.ts",
+        "sha256": "46ef3ed445bd220e59e49b17f81b129270493e65caed4b01b65ac5aa26bdc872"
+      },
+      {
+        "path": "dist/src/code-memory/vector.js",
+        "sha256": "f13db251216234f2d506f6ddcd9cd87ccbc213eb61144fa9ffeaaf1c012c54f0"
+      },
+      {
+        "path": "src/code-memory/vector_cli.ts",
+        "sha256": "a9bc4345eaab4606a90c379829578ccf2ab6dc3e19ca9f346d8e29ec445a97fb"
+      },
+      {
+        "path": "dist/src/code-memory/vector_cli.js",
+        "sha256": "50fe2e32e92f528265c4997fb0692b1948165fdaee071e1483f7e8a193824c33"
+      },
+      {
+        "path": "src/harness/plugin.ts",
+        "sha256": "31e538e60cd5a3d3a29b91c1e9583fad465862fa93aed4a7a6bcbc12029f84e8"
+      },
+      {
+        "path": "dist/src/harness/plugin.js",
+        "sha256": "d10325aa871a872c55c2814c051a1d522c5f2dd67dcea30e205e2d8c0b14c854"
+      },
+      {
+        "path": "src/hooks/cli.ts",
+        "sha256": "19e66281b274d7fdf2609aad985ba38a52e4333300de4bed1ccaa6fb9898e449"
+      },
+      {
+        "path": "dist/src/hooks/cli.js",
+        "sha256": "b354edd70642fbd2b1009e4e68a340a5ecd3a70adfcf8f5b252bbc725621c9a5"
+      },
+      {
+        "path": "src/hooks/client.ts",
+        "sha256": "7681bb15141191bed0b2c5e5e98fef3997e96670eb93c21a8603dd02d2ed6e7c"
+      },
+      {
+        "path": "dist/src/hooks/client.js",
+        "sha256": "7d1664884fd88c670757dba6697254636fc3fd72ecfab2081a63112bcd56508f"
+      },
+      {
+        "path": "src/hooks/context.ts",
+        "sha256": "ed969c372c232329ee6f796e1e94a1c9b0033c79eac6ba29d1d44d33a305e9d9"
+      },
+      {
+        "path": "dist/src/hooks/context.js",
+        "sha256": "e0243e83874ca087c568bb65f2c859746897164aaceacdfa07000f6b23f85c06"
+      },
+      {
+        "path": "src/hooks/daemon.ts",
+        "sha256": "194fe6d122b3e77d357acaa3369d699346e0a69ca9588fd8b0c03d39c079b538"
+      },
+      {
+        "path": "dist/src/hooks/daemon.js",
+        "sha256": "f76db92227906279561ba6ee09fa23ebb91662cdd98a2512ae087fdf71ba4b76"
+      },
+      {
+        "path": "src/hooks/daemon_cli.ts",
+        "sha256": "66119a98623afb7b9293e9f09ac73f94d1758a87139989303378eee3cc6f0233"
+      },
+      {
+        "path": "dist/src/hooks/daemon_cli.js",
+        "sha256": "66119a98623afb7b9293e9f09ac73f94d1758a87139989303378eee3cc6f0233"
+      },
+      {
+        "path": "src/hooks/reread.ts",
+        "sha256": "05efab4e77453ec3f9cd5e678834e997874220078fa0c08b658c9ffac9fe69ad"
+      },
+      {
+        "path": "dist/src/hooks/reread.js",
+        "sha256": "8cb9246f1129125dec25caa608c29e53747221dc8f5349fb6159aa8cb7321452"
+      },
+      {
+        "path": "src/local-agent/cli.ts",
+        "sha256": "d32e478b42556fdd47551579107a7a965b5419e555912acf9d396084c682267a"
+      },
+      {
+        "path": "dist/src/local-agent/cli.js",
+        "sha256": "cbe628816478a47292ccba5cc0a59cc1817135878bc18dd3fb617842cf53bfc3"
+      },
+      {
+        "path": "src/local-agent/config.ts",
+        "sha256": "1a3d5fd94f5be46280957c1dce12384442ad3df997c323f534a342560a8d3c0b"
+      },
+      {
+        "path": "dist/src/local-agent/config.js",
+        "sha256": "503f5b7b88cf844f951ef8510b0f270a1c4e1eb77425f4a4c94bb3eea248bd2c"
+      },
+      {
+        "path": "src/local-agent/http.ts",
+        "sha256": "7493fa9366c9eef60f2bb71f1181a152ad62c3a51dd5d45b666899e412f5aab5"
+      },
+      {
+        "path": "dist/src/local-agent/http.js",
+        "sha256": "d6ef6cbf2e7d7dd9216c35401e27d8400f2dc899491d7f06a7c53478519571df"
+      },
+      {
+        "path": "src/local-agent/map.ts",
+        "sha256": "82e9b7b6139e93ff3739dd97c62935ee067dfe7c3ab5c5fb510f7b61168a3d86"
+      },
+      {
+        "path": "dist/src/local-agent/map.js",
+        "sha256": "fc10d41dc66d1ea94f15f3fe74a354c3d75e77882e1b487f9aa671492b3fcb2b"
+      },
+      {
+        "path": "src/local-agent/models.ts",
+        "sha256": "01ad788a233ae5cdcf1b72a2ce5b70cbd39d8076818ed58e09c1aedf17a5a33f"
+      },
+      {
+        "path": "dist/src/local-agent/models.js",
+        "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      {
+        "path": "src/local-agent/service.ts",
+        "sha256": "5b4940374e90de41b09cd3680266325d3ffca980146d6c61d16a8230263ad900"
+      },
+      {
+        "path": "dist/src/local-agent/service.js",
+        "sha256": "4cfed3f33c63e776b5324e535f6ba480a404ae230858a06f8b5a53bf637fe5fa"
+      },
+      {
+        "path": "src/mcp/cli.ts",
+        "sha256": "fedb7f353ff0b1bba7e8fa3a62f69fb12f761e363de0d6452d99505ef5b9d71a"
+      },
+      {
+        "path": "dist/src/mcp/cli.js",
+        "sha256": "7ec9663e90d36962c57590fd294e45b274ecab1086d45fc54e4943b165d327c6"
+      },
+      {
+        "path": "src/mcp/server.ts",
+        "sha256": "3be79cee0ccad10494d3e79041bb1acfd9f4a461dc206c70840a9f12c9571be3"
+      },
+      {
+        "path": "dist/src/mcp/server.js",
+        "sha256": "a09f56700f108a837f0dc1be3b41e9b128762bca8e8630506603a7ae07da2e7f"
+      },
+      {
+        "path": "src/setup/claude.ts",
+        "sha256": "c0b2b832ba823290e70e17dd7f5455ffc44fe13d32975ef3b88fbe0f7aca7ecc"
+      },
+      {
+        "path": "dist/src/setup/claude.js",
+        "sha256": "297fcffbb391421557d7f1ac85caa2df28f48432acfc7cb18ad500d607ab9db0"
+      },
+      {
+        "path": "src/setup/cli.ts",
+        "sha256": "6331feb2d2ea56c58af985c4d667eb2c80a84b396cf182afaa8b06f4e73df29f"
+      },
+      {
+        "path": "dist/src/setup/cli.js",
+        "sha256": "345921d8a24cf5695ec4ec9f227d4398ded300350462d3f4f6475c7687057501"
+      },
+      {
+        "path": "src/setup/config.ts",
+        "sha256": "362ad8f46a1bb2f1724e6ad52126dd139cf8e6d3c3bfafeb7167741d09f16307"
+      },
+      {
+        "path": "dist/src/setup/config.js",
+        "sha256": "cfe60f88ffef9628baeafb1ca34fc0234c9afffa485189540e6a7cec6cd314d5"
+      },
+      {
+        "path": "src/setup/files.ts",
+        "sha256": "184ced0192f36df23f15a41c7999c96ee3ce7a676ca3dff88bb56ed16033a99d"
+      },
+      {
+        "path": "dist/src/setup/files.js",
+        "sha256": "ee4283af8d51f199e9bd2435cdc36f365e7a9d65d08c580d6b034a2945e650df"
+      },
+      {
+        "path": "src/setup/install.ts",
+        "sha256": "df24dd7adaf25b01f5e653daea03ab5807ba80f55d23e8e9cc2cccaa00fac950"
+      },
+      {
+        "path": "dist/src/setup/install.js",
+        "sha256": "d21e82fde88028d42a686f4723a5983380061f74d8ee65f9fba3a1475807939c"
+      },
+      {
+        "path": "src/version.ts",
+        "sha256": "30249cf188a022ab3ddf2bf933d5c29e9778a0c12a6cfdf45989a3f8203eb024"
+      },
+      {
+        "path": "dist/src/version.js",
+        "sha256": "30249cf188a022ab3ddf2bf933d5c29e9778a0c12a6cfdf45989a3f8203eb024"
+      }
+    ],
+    "base_build_sha256": "2c8e85e3bba049907c0eeef5113cf16f75632bd90371b672248849e851c34a96",
+    "warm_daemon": false,
+    "max_run_seconds": 300,
+    "max_estimated_usd": 4,
+    "price": {
+      "input": 0.1,
+      "cache_read": 0.01,
+      "cache_write": 0.125,
+      "output": 0.5,
+      "per": 1000000,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-luna"
+    },
+    "arms_config": {
+      "none": "Client without CM",
+      "cm_base": "Frozen CM 0.8.1: MCP server + installer skill, model decides whether to call it",
+      "cm_next": "Current CM: UserPromptSubmit hook adds CM context before the first call, plus MCP server + skill",
+      "cm_warm": "cm_next with its hook daemon started before the session (start time recorded separately)",
+      "cm_guard": "cm_warm plus a PreToolUse hook answering the first re-read of a file shown whole"
+    }
+  },
+  "estimated_cost_usd": 1.3184330000000002,
+  "results": [
+    {
+      "run_id": "run-ae31b097330e3f9d",
+      "task": "reward-limit",
+      "category": "feature-three-modules",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 33867.299533000005,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 543,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 14,
+        "uncached_input": 14,
+        "cache_read": 175929,
+        "cache_write": 16179,
+        "output": 3838,
+        "total_input": 192122,
+        "total_tokens": 195960,
+        "usd_estimate": 0.1207169
+      },
+      "items": {
+        "command_execution": 7,
+        "file_change": 6
+      },
+      "shell_commands": 7,
+      "read_like_commands": 7,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-843fdeae152b5a08",
+      "task": "reward-limit",
+      "category": "feature-three-modules",
+      "repetition": 1,
+      "arm": "cm_warm",
+      "duration_ms": 26797.316735,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 543,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 10,
+        "uncached_input": 8,
+        "cache_read": 96073,
+        "cache_write": 12950,
+        "output": 2745,
+        "total_input": 109031,
+        "total_tokens": 111776,
+        "usd_estimate": 0.08887330000000002
+      },
+      "items": {
+        "command_execution": 3,
+        "file_change": 6
+      },
+      "shell_commands": 3,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T21:50:07.665Z",
+        "via": "daemon",
+        "ms": 806,
+        "retrieve_ms": 797,
+        "bytes": 7066,
+        "paths": [
+          "game/src/core/reward-policy.js",
+          "game/src/core/progression.js",
+          "game/src/core/economy-ledger.js",
+          "game/src/platform/rewarded-flow.js",
+          "game/src/core/economy.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 3758.099037
+    },
+    {
+      "run_id": "run-0850efecd3d5fa6a",
+      "task": "rename-day",
+      "category": "rename-across-modules",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 15434.054111000005,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 95,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 10,
+        "uncached_input": 10,
+        "cache_read": 102135,
+        "cache_write": 7127,
+        "output": 1461,
+        "total_input": 109272,
+        "total_tokens": 110733,
+        "usd_estimate": 0.053351499999999996
+      },
+      "items": {
+        "command_execution": 4,
+        "file_change": 5
+      },
+      "shell_commands": 4,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-0a5d5c72a7d470ec",
+      "task": "rename-day",
+      "category": "rename-across-modules",
+      "repetition": 1,
+      "arm": "cm_warm",
+      "duration_ms": 14181.402201999997,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 95,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 8,
+        "uncached_input": 6,
+        "cache_read": 65363,
+        "cache_write": 10409,
+        "output": 1269,
+        "total_input": 75778,
+        "total_tokens": 77047,
+        "usd_estimate": 0.060874300000000006
+      },
+      "items": {
+        "command_execution": 2,
+        "file_change": 5
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T21:50:54.222Z",
+        "via": "daemon",
+        "ms": 290,
+        "retrieve_ms": 279,
+        "bytes": 6304,
+        "paths": [
+          "game/src/core/economy-ledger.js",
+          "game/src/core/progression.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 4093.051728999999
+    },
+    {
+      "run_id": "run-7d0442e2d35374d8",
+      "task": "depth-body",
+      "category": "parameter-several-places",
+      "repetition": 1,
+      "arm": "none",
+      "duration_ms": 17829.931559000004,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 812,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 7,
+        "uncached_input": 10,
+        "cache_read": 106707,
+        "cache_write": 9150,
+        "output": 1547,
+        "total_input": 115867,
+        "total_tokens": 117414,
+        "usd_estimate": 0.0627607
+      },
+      "items": {
+        "command_execution": 3,
+        "file_change": 3
+      },
+      "shell_commands": 3,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-f42a749f12329520",
+      "task": "depth-body",
+      "category": "parameter-several-places",
+      "repetition": 1,
+      "arm": "cm_warm",
+      "duration_ms": 12571.438433000018,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 812,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 4,
+        "uncached_input": 4,
+        "cache_read": 38031,
+        "cache_write": 7361,
+        "output": 1099,
+        "total_input": 45396,
+        "total_tokens": 46495,
+        "usd_estimate": 0.044245099999999996
+      },
+      "items": {
+        "file_change": 2,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T21:51:31.705Z",
+        "via": "daemon",
+        "ms": 358,
+        "retrieve_ms": 350,
+        "bytes": 1052,
+        "paths": [
+          "game/fil/src/geoDepthModel.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 4574.268563999998
+    },
+    {
+      "run_id": "run-42123626242b76c9",
+      "task": "reward-limit",
+      "category": "feature-three-modules",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 32310.63568800001,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 543,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 16,
+        "uncached_input": 16,
+        "cache_read": 193947,
+        "cache_write": 15811,
+        "output": 3777,
+        "total_input": 209774,
+        "total_tokens": 213551,
+        "usd_estimate": 0.12044070000000001
+      },
+      "items": {
+        "command_execution": 9,
+        "file_change": 6
+      },
+      "shell_commands": 9,
+      "read_like_commands": 9,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-3c81a3b3c76cedd8",
+      "task": "reward-limit",
+      "category": "feature-three-modules",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 28536.323337999987,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 543,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 11,
+        "uncached_input": 12,
+        "cache_read": 151028,
+        "cache_write": 14327,
+        "output": 3131,
+        "total_input": 165367,
+        "total_tokens": 168498,
+        "usd_estimate": 0.1037448
+      },
+      "items": {
+        "command_execution": 5,
+        "file_change": 5
+      },
+      "shell_commands": 5,
+      "read_like_commands": 5,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T21:52:20.570Z",
+        "via": "daemon",
+        "ms": 448,
+        "retrieve_ms": 439,
+        "bytes": 7066,
+        "paths": [
+          "game/src/core/reward-policy.js",
+          "game/src/core/progression.js",
+          "game/src/core/economy-ledger.js",
+          "game/src/platform/rewarded-flow.js",
+          "game/src/core/economy.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 3406.663666999986
+    },
+    {
+      "run_id": "run-73c0b2b41f552982",
+      "task": "rename-day",
+      "category": "rename-across-modules",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 13569.009419999988,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 95,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 9,
+        "uncached_input": 8,
+        "cache_read": 79287,
+        "cache_write": 6918,
+        "output": 1371,
+        "total_input": 86213,
+        "total_tokens": 87584,
+        "usd_estimate": 0.0493267
+      },
+      "items": {
+        "command_execution": 3,
+        "file_change": 5
+      },
+      "shell_commands": 3,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-11c317971c017065",
+      "task": "rename-day",
+      "category": "rename-across-modules",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 13977.508487999992,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 95,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 8,
+        "uncached_input": 6,
+        "cache_read": 65324,
+        "cache_write": 10316,
+        "output": 1194,
+        "total_input": 75646,
+        "total_tokens": 76840,
+        "usd_estimate": 0.05974840000000001
+      },
+      "items": {
+        "command_execution": 2,
+        "file_change": 5
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T21:53:06.541Z",
+        "via": "daemon",
+        "ms": 266,
+        "retrieve_ms": 259,
+        "bytes": 6304,
+        "paths": [
+          "game/src/core/economy-ledger.js",
+          "game/src/core/progression.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 3583.7360899999912
+    },
+    {
+      "run_id": "run-e1123aec5b4a4333",
+      "task": "depth-body",
+      "category": "parameter-several-places",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 19205.45013099999,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 812,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 8,
+        "uncached_input": 12,
+        "cache_read": 131142,
+        "cache_write": 9494,
+        "output": 1803,
+        "total_input": 140648,
+        "total_tokens": 142451,
+        "usd_estimate": 0.0691442
+      },
+      "items": {
+        "command_execution": 4,
+        "file_change": 3
+      },
+      "shell_commands": 4,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-6f3e13964c1542ab",
+      "task": "depth-body",
+      "category": "parameter-several-places",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 13706.158425000001,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 812,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 5,
+        "uncached_input": 6,
+        "cache_read": 61252,
+        "cache_write": 7437,
+        "output": 1198,
+        "total_input": 68695,
+        "total_tokens": 69893,
+        "usd_estimate": 0.047865200000000004
+      },
+      "items": {
+        "file_change": 2,
+        "command_execution": 2
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T21:53:43.700Z",
+        "via": "daemon",
+        "ms": 326,
+        "retrieve_ms": 319,
+        "bytes": 1052,
+        "paths": [
+          "game/fil/src/geoDepthModel.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 3516.942744
+    },
+    {
+      "run_id": "run-2deed0bcdb46c246",
+      "task": "reward-limit",
+      "category": "feature-three-modules",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 28950.658674000006,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 543,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 12,
+        "uncached_input": 14,
+        "cache_read": 176284,
+        "cache_write": 15677,
+        "output": 3310,
+        "total_input": 191975,
+        "total_tokens": 195285,
+        "usd_estimate": 0.1134644
+      },
+      "items": {
+        "command_execution": 6,
+        "file_change": 5
+      },
+      "shell_commands": 6,
+      "read_like_commands": 6,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-6a60a9a9ffdb002d",
+      "task": "reward-limit",
+      "category": "feature-three-modules",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 26515.124094000028,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 543,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 12,
+        "uncached_input": 12,
+        "cache_read": 149582,
+        "cache_write": 13633,
+        "output": 3132,
+        "total_input": 163227,
+        "total_tokens": 166359,
+        "usd_estimate": 0.10083420000000001
+      },
+      "items": {
+        "command_execution": 5,
+        "file_change": 6
+      },
+      "shell_commands": 5,
+      "read_like_commands": 5,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T21:54:30.856Z",
+        "via": "daemon",
+        "ms": 445,
+        "retrieve_ms": 437,
+        "bytes": 7066,
+        "paths": [
+          "game/src/core/reward-policy.js",
+          "game/src/core/progression.js",
+          "game/src/core/economy-ledger.js",
+          "game/src/platform/rewarded-flow.js",
+          "game/src/core/economy.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 3906.7702469999786
+    },
+    {
+      "run_id": "run-f15c5d47a2a2aa88",
+      "task": "rename-day",
+      "category": "rename-across-modules",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 16451.087982000026,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 95,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 10,
+        "uncached_input": 10,
+        "cache_read": 102211,
+        "cache_write": 7182,
+        "output": 1463,
+        "total_input": 109403,
+        "total_tokens": 110866,
+        "usd_estimate": 0.0535991
+      },
+      "items": {
+        "command_execution": 4,
+        "file_change": 5
+      },
+      "shell_commands": 4,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-c3bb90e8e62b4d28",
+      "task": "rename-day",
+      "category": "rename-across-modules",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 15318.15512499999,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 95,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 7,
+        "uncached_input": 6,
+        "cache_read": 65310,
+        "cache_write": 10252,
+        "output": 1158,
+        "total_input": 75568,
+        "total_tokens": 76726,
+        "usd_estimate": 0.059131
+      },
+      "items": {
+        "command_execution": 2,
+        "file_change": 4
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T21:55:17.637Z",
+        "via": "daemon",
+        "ms": 249,
+        "retrieve_ms": 241,
+        "bytes": 6304,
+        "paths": [
+          "game/src/core/economy-ledger.js",
+          "game/src/core/progression.js"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 3559.852616999997
+    },
+    {
+      "run_id": "run-e0f98b2f1e314583",
+      "task": "depth-body",
+      "category": "parameter-several-places",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 16974.773126000015,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 812,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 8,
+        "uncached_input": 10,
+        "cache_read": 106908,
+        "cache_write": 9806,
+        "output": 1783,
+        "total_input": 116724,
+        "total_tokens": 118507,
+        "usd_estimate": 0.0677648
+      },
+      "items": {
+        "command_execution": 4,
+        "file_change": 3
+      },
+      "shell_commands": 4,
+      "read_like_commands": 4,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-c26c896738c5cfef",
+      "task": "depth-body",
+      "category": "parameter-several-places",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 11046.411890000047,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 812,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 4,
+        "uncached_input": 4,
+        "cache_read": 38037,
+        "cache_write": 7164,
+        "output": 1008,
+        "total_input": 45205,
+        "total_tokens": 46213,
+        "usd_estimate": 0.0425477
+      },
+      "items": {
+        "file_change": 2,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-28T21:55:54.490Z",
+        "via": "daemon",
+        "ms": 320,
+        "retrieve_ms": 311,
+        "bytes": 1052,
+        "paths": [
+          "game/fil/src/geoDepthModel.js"
+        ],
+        "route": "discovery",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 3670.5075519999955
+    }
+  ]
+}

@@ -20,6 +20,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File 'D:\Rag Coding\scripts\insta
 - `InstallRoot/models/`: pinned MiniLM q8/384d. Поиск работает локально.
 - `InstallRoot/projects/<root-id>/`: настройки проекта, source/vector cache, отдельный Harness profile и `start-harness.ps1`, `start-codex.ps1`, `start-claude.ps1`.
 - В проекте `.codex/config.toml`: внутри markers Code Memory именованная MCP section и хук `UserPromptSubmit`, который подаёт контекст CM до первого вызова модели; остальные настройки сохраняются. Установка прежней версии (только MCP) обновляется на месте. Codex попросит доверить хук через `/hooks`.
+- На Windows команда хука начинается с `cd . &&` и пишет пути через `/`: Codex запускает хуки через `cmd.exe /C`, а cmd срезает внешние кавычки у строки, которая начинается с кавычки (`"C:\Program Files\nodejs\node.exe" …`). Git Bash такую команду тоже понимает. Хуки, записанные прежней установкой, распознаются и обновляются.
 - Для Claude Code тот же хук записывается в `.claude/settings.local.json` (при `-ClaudeScope project` — в `.claude/settings.json`); чужие хуки и настройки сохраняются.
 - Для Claude Code официальный `claude mcp add-json --scope local` регистрирует CM в личных настройках только этого проекта. Другие записи сохраняются. `-ClaudeScope project` вместо этого создаёт `.mcp.json` для совместной конфигурации; такой сервер требует стандартного подтверждения в Claude Code.
 - В проекте `.agents/skills/code-memory/SKILL.md` и `.claude/skills/code-memory/SKILL.md`: инструкции по короткому контексту, расширению и свежести.
