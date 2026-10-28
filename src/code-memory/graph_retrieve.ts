@@ -10,14 +10,15 @@ export type RetrievalPolicy = "hybrid" | "graph" | "adaptive";
 export type RetrievalDetail = "focused" | "expanded";
 const STOP = new Set(words("the and for from with that this code function project preserve unrelated behavior interfaces repair apply restore correctly existing when into must return locate supplied source available checks results"));
 const WHOLE_FILE_BYTES = 3000, MAX_CALLERS = 6, MAX_USERS = 3, USER_MIN_SCORE = 0.35;
-const BREADTH = /\b(?:everywhere|wherever|throughout|across|every (?:import|call|caller|use|usage|place)s?|all (?:callers|uses|usages|importers|call sites|places)|both\b[^.]{0,80}\band)\b/i;
+const BREADTH = /\b(?:everywhere|wherever|throughout|across|every (?:import|call|caller|use|usage|place)s?|all (?:callers|uses|usages|importers|call sites|places))\b/i;
 const escaped =(text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 export async function retrieveGraph(index: CMIndex, vectors: LocalVectors, query: string, maxBytes = 6000, signal?: AbortSignal,
   policy: "graph" | "adaptive" = "adaptive", detail: RetrievalDetail = "focused"): Promise<RetrievedContext> {
   if (!query.trim() || query.length > 16000) throw new CMError("invalid_argument", "query must contain 1..16000 characters");
   query = focusQuery(query);
-  const budget = bounded(maxBytes, 6000, 32000, "max_bytes"), kb = knowledge(index);
+  // A change across uses needs the users and what they call; such requests get half again the budget.
+  const breadth = BREADTH.test(query), budget = Math.min(32000, Math.round(bounded(maxBytes, 6000, 32000, "max_bytes") * (breadth ? 1.5 : 1))), kb = knowledge(index);
   const pathHints = [...query.matchAll(/[\w./-]+\.(?:[cm]?[jt]sx?)/g)].map(match => match[0]);
   const matchesPath = (unit: CMUnit) => pathHints.some(path => unit.path === path || unit.path.endsWith("/" + path));
   const names = new Set([...query.matchAll(/`([\w$]+)`/g)].map(match => match[1]!));
@@ -103,7 +104,7 @@ export async function retrieveGraph(index: CMIndex, vectors: LocalVectors, query
   const lexicalScore = new Map(lexical.map(item => [item.unit.id, item.score])), topLexical = lexical[0]?.score ?? 0;
   const matchedFiles = new Set(selected.map(unit => unit.path).filter(path => parts.some(part => part.path === path && part.whole)));
   // Only for requests that ask for the change across uses; a fix in one place would just pay for extra context in every call.
-  if (matchedFiles.size && topLexical > 0 && BREADTH.test(query)) {
+  if (matchedFiles.size && topLexical > 0 && breadth) {
     const exported = new Set(index.symbols.filter(symbol => matchedFiles.has(symbol.path)).map(symbol => symbol.id));
     const users = new Set<string>();
     for (const relation of index.relations) {
@@ -112,7 +113,15 @@ export async function retrieveGraph(index: CMIndex, vectors: LocalVectors, query
     }
     const ranked = [...users].map(id => ({ unit: kb.units.get(id)!, score: lexicalScore.get(id) ?? 0 })).filter(item => item.score >= topLexical * USER_MIN_SCORE)
       .sort((a, b) => b.score - a.score).slice(0, MAX_USERS);
-    for (const { unit } of ranked) if (!parts.some(part => part.path === unit.path && part.span.start_byte <= unit.span.start_byte && part.span.end_byte >= unit.span.end_byte)) add(unit.path, unit.span, "dependency");
+    for (const { unit } of ranked) {
+      if (parts.some(part => part.path === unit.path && part.span.start_byte <= unit.span.start_byte && part.span.end_byte >= unit.span.end_byte) || !add(unit.path, unit.span, "dependency")) continue;
+      // What a user calls is where its part of the change continues (a normalizer, a validator).
+      for (const id of unit.required_symbol_ids) {
+        const symbol = kb.symbols.get(id);if (!symbol || shown.has(id) || symbol.declaration_span.end_byte - symbol.declaration_span.start_byte > 1200) continue;
+        const target = kb.owner(id);if (!target || matchedFiles.has(target.path)) continue;
+        if (parts.some(part => part.path === symbol.path && part.span.start_byte <= symbol.declaration_span.start_byte && part.span.end_byte >= symbol.declaration_span.end_byte) || add(symbol.path, symbol.declaration_span, "dependency")) shown.add(id);
+      }
+    }
   }
   for (const path of [...new Set(parts.map(part => part.path))]) promote(path);
   // Agents grep for call sites right after reading a definition; the compiler graph already knows them.
