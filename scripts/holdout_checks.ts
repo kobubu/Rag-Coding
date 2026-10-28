@@ -4,7 +4,12 @@ import assert from "node:assert/strict";
 // Each check compares the repaired module with the original one on fixed and seeded random inputs (differential testing).
 type Module = Record<string, any>;
 type Same = (actual: unknown, expected: unknown, name: string) => void;
-type Check = { path: string; run: (actual: Module, original: Module, same: Same, rnd: () => number, count: number, load: (path: string) => Promise<Module>) => Promise<void> | void };
+type Load = (path: string) => Promise<Module>;
+// feature: the original code lacks the requested behavior, so a baseline self-check verifies only that the grader runs.
+// surface: false when the task changes the export surface itself (a rename).
+type Check = { path: string; feature?: true; surface?: false; run: (actual: Module, original: Module, same: Same, rnd: () => number, count: number, load: Load, loadActual: Load, workspace: string) => Promise<void> | void };
+const storage = (value: unknown) => ({ getItem: () => JSON.stringify(value), setItem() {} });
+const validLimit = (value: unknown) => Number.isInteger(value) && (value as number) >= 1 && (value as number) <= 10;
 
 const pick = <T>(rnd: () => number, items: T[]) => items[Math.floor(rnd() * items.length)]!;
 export const HOLDOUT: Record<string, Check> = {
@@ -105,6 +110,58 @@ export const HOLDOUT: Record<string, Check> = {
       const grants = { "2026-10-14/login": 20, [`finish/${city}/${run}`]: 20 };same(actual.normalizeGrants(grants), original.normalizeGrants(grants), "Unrelated grants");
     }
   } },
+  // Larger tasks: a feature across three modules, a rename across modules and a parameter in several places of one function.
+  "reward-limit": { path: "game/src/core/reward-policy.js", feature: true, async run(actual, original, same, rnd, count, _load, loadActual) {
+    const progression = await loadActual("game/src/core/progression.js"), ledger = await loadActual("game/src/core/economy-ledger.js");
+    const now = Date.UTC(2026, 9, 14, 12), day = "2026-10-14";
+    same(actual.DAILY_REWARDED_LIMIT, 3, "Default limit kept");
+    for (let i = 0; i < count; i++) {
+      const rewardLimit = pick(rnd, [undefined, 1, 2, 3, 5, 7, 10, 0, 11, 2.5, "4", -1]), limit = validLimit(rewardLimit) ? rewardLimit as number : 3;
+      const used = Math.floor(rnd() * 11), save = { rewardLimit, rewardDay: { day, count: used }, grants: {} };
+      const plain = { rewardDay: save.rewardDay, grants: {} };
+      same(actual.dailyRewardStatus(save, now), { ...original.dailyRewardStatus(plain, now), remaining: Math.max(0, limit - used), limit }, "Quota uses the save limit");
+      const fresh = { ...progression.freshProgress(), ...(rewardLimit === undefined ? {} : { rewardLimit }) };
+      const credited = Array.from({ length: 12 }, (_, n) => progression.creditAdReward(fresh, "receipt-" + i + "-" + n, 20, now)).filter(Boolean).length;
+      same(credited, limit, "Crediting stops at the save limit");
+      same(Object.keys(fresh.grants).sort(), Array.from({ length: limit }, (_, n) => `${day}/ad/${n}`).sort(), "One grant per credited ad");
+      const read = progression.readProgress(storage({ version: 1, ...(rewardLimit === undefined ? {} : { rewardLimit }), rewardDay: { day, count: 99 }, grants: fresh.grants }));
+      same(read.rewardLimit, validLimit(rewardLimit) ? rewardLimit : undefined, "Valid limit kept, invalid dropped");
+      same(read.rewardDay, { day, count: limit }, "Saved count clamped to the save limit");
+      same(read.grants, fresh.grants, "Ad grants up to index 9 survive reading");
+    }
+    same(ledger.normalizeGrants({ "2026-10-14/ad/10": 20, "2026-10-14/ad/x": 20, "2026-10-14/ad/9": 20 }), { "2026-10-14/ad/9": 20 }, "Ad indices 0-9 only");
+  } },
+  "rename-day": { path: "game/src/core/economy-ledger.js", feature: true, surface: false, async run(actual, original, same, rnd, count, load, loadActual, workspace) {
+    same(Object.keys(actual).sort(), Object.keys(original).map(name => name === "validDay" ? "isCalendarDay" : name).sort(), "Renamed export, no alias");
+    for (let i = 0; i < count; i++) {
+      const day = `20${20 + Math.floor(rnd() * 10)}-${String(1 + Math.floor(rnd() * 13)).padStart(2, "0")}-${String(1 + Math.floor(rnd() * 31)).padStart(2, "0")}`;
+      same(actual.isCalendarDay(day), original.validDay(day), "Same calendar rule");
+    }
+    const progression = await loadActual("game/src/core/progression.js"), before = await load("game/src/core/progression.js");
+    for (const saved of [{ version: 1, rewardDay: { day: "2026-10-14", count: 2 } }, { version: 1, rewardDay: { day: "2026-02-30", count: 2 } }, { version: 1, grants: { "2026-10-14/login": 20 } }])
+      same(progression.readProgress(storage(saved)), before.readProgress(storage(saved)), "Importer still reads progress");
+    const { readdirSync, readFileSync, statSync } = await import("node:fs"), { join } = await import("node:path");
+    const walk = (dir: string): string[] => readdirSync(dir).flatMap(name => { const path = join(dir, name);return statSync(path).isDirectory() ? walk(path) : /\.m?js$/.test(name) ? [path] : []; });
+    const left = ["game/src", "game/fil/src"].flatMap(dir => walk(join(workspace, dir))).filter(path => /\bvalidDay\b/.test(readFileSync(path, "utf8")));
+    same(left.map(path => path.slice(workspace.length + 1)), [], "No validDay left in game sources");
+  } },
+  "depth-body": { path: "game/fil/src/geoDepthModel.js", feature: true, run(actual, original, same, rnd, count) {
+    for (let i = 0; i < count * 4; i++) {
+      const half = pick(rnd, [undefined, 0.05, 0.12, 0.3, 0, -1, NaN, "0.4"]), own = Number.isFinite(half) && (half as number) > 0 ? half as number : 0.12;
+      const z = pick(rnd, [0, 1, rnd()]), previous = pick(rnd, [0, 1, rnd(), undefined]);
+      const transfer = i % 4 === 0 ? { from: 0, to: 1, duration: 0.44, elapsed: 0.1 } : null;
+      const player = { geoDepth: z, previousGeoDepth: previous, geoDepthTransfer: transfer, ...(half === undefined ? {} : { depthBodyHalf: half }) };
+      const object = { geoDepth: pick(rnd, [0, 1, 0.5, rnd(), undefined]), ...(i % 7 === 0 ? { geoDepthHalf: 0.3 } : {}), ...(i % 11 === 0 ? { geoDepthSpan: "all" } : {}) };
+      for (const swept of [false, true]) {
+        const radius = own + (object.geoDepthHalf ?? 0.12), objectZ = object.geoDepth ?? 0, from = swept ? previous ?? z : z;
+        const expected = object.geoDepthSpan === "all" ? true : !swept && transfer ? objectZ >= Math.min(transfer.from, transfer.to) - radius && objectZ <= Math.max(transfer.from, transfer.to) + radius
+          : objectZ >= Math.min(z, from) - radius && objectZ <= Math.max(z, from) + radius;
+        same(actual.geoDepthContact(player, object, swept), expected, "Hero half depth in every contact test");
+        if (half === undefined) same(actual.geoDepthContact(player, object, swept), original.geoDepthContact(player, object, swept), "Default unchanged");
+      }
+    }
+    same(actual.DEPTH_BODY_HALF, original.DEPTH_BODY_HALF, "Constant kept");
+  } },
 };
 
 export async function checkHoldoutTask(load: (root: string, path: string) => Promise<Module>, workspace: string, baseline: string, task: string, smoke: boolean) {
@@ -113,7 +170,9 @@ export async function checkHoldoutTask(load: (root: string, path: string) => Pro
   const same: Same = (actual, expected, name) => { checks++;assert.deepEqual(actual, expected, name); };
   const rnd = () => ((seed = Math.imul(seed, 1664525) + 1013904223 >>> 0) / 4294967296);
   const actual = await load(workspace, check.path), original = await load(baseline, check.path);
-  same(Object.keys(actual).sort(), Object.keys(original).sort(), "Export surface");
-  await check.run(actual, original, same, rnd, smoke ? 6 : 90, path => load(baseline, path));
+  if (check.feature && workspace === baseline) return { pass: false, behavior_pass: true, checks, mode: "baseline-behavior-only" };
+  // A feature may add exports; every original export must remain.
+  if (check.surface !== false) same(check.feature ? Object.keys(original).filter(name => !(name in actual)) : Object.keys(actual).sort(), check.feature ? [] : Object.keys(original).sort(), "Export surface");
+  await check.run(actual, original, same, rnd, smoke ? 6 : 90, path => load(baseline, path), path => load(workspace, path), workspace);
   return { pass: true, behavior_pass: true, checks, mode: smoke ? "public-smoke" : "independent-final" };
 }
