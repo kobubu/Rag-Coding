@@ -42,14 +42,28 @@ jobs:
       - name: Run the written hook commands through the client shells
         run: node scripts/windows_hook_check.mjs $env:CM_PROJECT
       - name: Real Codex CLI runs the hook
-        timeout-minutes: 6
+        timeout-minutes: 10
         run: |
           npm install -g @openai/codex@0.163.0 | Out-Null
-          $home_ = "D:\a\codex-home"; New-Item -ItemType Directory -Force -Path $home_ | Out-Null
-          $trusted = $env:CM_PROJECT.Replace('\', '\\')
-          Set-Content -LiteralPath "$home_\config.toml" -Value "model = `"gpt-6-luna`"`nmodel_provider = `"openai_key`"`napproval_policy = `"never`"`n`n[model_providers.openai_key]`nname = `"key`"`nbase_url = `"https://api.openai.com/v1`"`nenv_key = `"OPENAI_API_KEY`"`nwire_api = `"responses`"`n`n[projects.`"$trusted`"]`ntrust_level = `"trusted`"`n"
-          $env:CODEX_HOME = $home_; $env:OPENAI_API_KEY = "placeholder"
-          node scripts/windows_client_check.mjs codex $env:CM_PROJECT $env:CM_LOG
+          codex --version
+          $env:OPENAI_API_KEY = "placeholder"
+          $provider = "model = `"gpt-6-luna`"`nmodel_provider = `"openai_key`"`napproval_policy = `"never`"`n`n[model_providers.openai_key]`nname = `"key`"`nbase_url = `"https://api.openai.com/v1`"`nenv_key = `"OPENAI_API_KEY`"`nwire_api = `"responses`"`n"
+          $hook = (Select-String -LiteralPath "$env:CM_PROJECT\.codex\config.toml" -Pattern '^\[\[hooks|^type = |^command = "cmd|^timeout = ' | ForEach-Object { $_.Line }) -join "`n"
+          $variants = [ordered]@{
+            "project config, trust key with backslashes" = $provider + "`n[projects.`"" + $env:CM_PROJECT.Replace('\', '\\') + "`"]`ntrust_level = `"trusted`"`n"
+            "project config, trust key with forward slashes" = $provider + "`n[projects.`"" + $env:CM_PROJECT.Replace('\', '/') + "`"]`ntrust_level = `"trusted`"`n"
+            "user config holds the hook" = $provider + "`n" + ($hook -replace '(?m)^\[\[hooks.UserPromptSubmit\]\]$', "`n[[hooks.UserPromptSubmit]]") + "`n"
+          }
+          $ran = 0
+          foreach ($name in $variants.Keys) {
+            $home_ = "D:\a\codex-home-" + $ran + (Get-Random); New-Item -ItemType Directory -Force -Path $home_ | Out-Null
+            Set-Content -LiteralPath "$home_\config.toml" -Value $variants[$name]
+            $env:CODEX_HOME = $home_
+            Write-Host "=== $name"
+            node scripts/windows_client_check.mjs codex $env:CM_PROJECT $env:CM_LOG
+            if ($LASTEXITCODE -eq 0) { $ran++ }
+          }
+          if ($ran -eq 0) { throw "Codex ran the CM hook in no variant" }
       - name: Real Claude Code runs the hook
         timeout-minutes: 6
         run: |
