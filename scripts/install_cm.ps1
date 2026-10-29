@@ -59,7 +59,7 @@ $cmSavedPath = $env:PATH
 try {
     $env:PATH = (Split-Path -Parent $cmNode) + ';' + $env:PATH
     if (-not $PackageTarball) {
-        $cmBundledPackage = Join-Path $PSScriptRoot 'dsh-plugin-code-memory-0.9.2.tgz'
+        $cmBundledPackage = Join-Path $PSScriptRoot 'dsh-plugin-code-memory-0.9.3.tgz'
         if (Test-Path -LiteralPath $cmBundledPackage -PathType Leaf) { $PackageTarball = $cmBundledPackage }
         else {
             if (-not (Test-Path -LiteralPath (Join-Path $cmRepo 'package-lock.json'))) { throw 'Provide -PackageTarball or run from a source checkout.' }
@@ -87,7 +87,7 @@ try {
         Copy-Item -LiteralPath $cmTarball -Destination $cmLocalTarball -Force
         $cmDependencies = [ordered]@{ 'dsh-plugin-code-memory' = ('file:' + $cmLocalTarball.Replace('\', '/')) }
         if ($Clients.Split(',') -contains 'harness') { $cmDependencies['@deepseek-ai/dsh'] = '0.2.0-rc.2' }
-        $cmManifest = [ordered]@{ name = 'code-memory-local-install'; version = '0.9.2'; private = $true; dependencies = $cmDependencies; overrides = @{ sharp = '0.35.5' } }
+        $cmManifest = [ordered]@{ name = 'code-memory-local-install'; version = '0.9.3'; private = $true; dependencies = $cmDependencies; overrides = @{ sharp = '0.35.5' } }
         [IO.File]::WriteAllText((Join-Path $cmRelease 'package.json'), ($cmManifest | ConvertTo-Json -Depth 6), [Text.UTF8Encoding]::new($false))
         Write-Host 'Installing CM and native dependencies into the selected directory...'
         Push-Location -LiteralPath $cmRelease
@@ -95,7 +95,7 @@ try {
             Invoke-CMNode @($cmNpm, 'install', '--omit=dev', '--no-audit', '--no-fund', '--loglevel=error', '--install-strategy=hoisted', '--prefer-offline')
         } finally { Pop-Location }
         $cmInstalled = Get-Content -LiteralPath (Join-Path $cmPackage 'package.json') -Raw | ConvertFrom-Json
-        if ($cmInstalled.name -ne 'dsh-plugin-code-memory' -or $cmInstalled.version -ne '0.9.2') { throw 'Unexpected CM package identity/version.' }
+        if ($cmInstalled.name -ne 'dsh-plugin-code-memory' -or $cmInstalled.version -ne '0.9.3') { throw 'Unexpected CM package identity/version.' }
         [IO.File]::WriteAllText($cmReady, (@{sha256=$cmHash;version=$cmInstalled.version}|ConvertTo-Json), [Text.UTF8Encoding]::new($false))
     }
     if (-not $ModelCacheSource -and (Test-Path -LiteralPath (Join-Path $cmRepo '.artifacts/cm-embedding-models'))) { $ModelCacheSource = Join-Path $cmRepo '.artifacts/cm-embedding-models' }

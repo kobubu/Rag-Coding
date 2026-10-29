@@ -4,7 +4,7 @@
 
 **Unofficial community project.** Independently developed; not affiliated with or endorsed by DeepSeek.
 
-**English** · [Русский](README.ru.md) · [Download v0.9.2](https://github.com/kobubu/Rag-Coding/releases/tag/v0.9.2) · [Windows installation](docs/INSTALL-WINDOWS.md)
+**English** · [Русский](README.ru.md) · [Download v0.9.3](https://github.com/kobubu/Rag-Coding/releases/tag/v0.9.3) · [Windows installation](docs/INSTALL-WINDOWS.md)
 
 ## What it does
 
@@ -55,13 +55,13 @@ In both clients the paired 95% bootstrap intervals for tokens and time exclude z
 Requires DeepSeek Harness **0.2.0-rc.2** and Node.js 24 or 22.19+ within 22.x:
 
 ```bash
-dsh plugin --profile web add github:kobubu/Rag-Coding#v0.9.2
+dsh plugin --profile web add github:kobubu/Rag-Coding#v0.9.3
 ```
 
 The tag contains the compiled plugin, CLI entry points, and Atlas. CM needs no installation build or Vite/React runtime modules. Then [prepare the project index and local model](docs/DEEPSEEK-PLUGIN.md#github-installation). A ready release tarball is also available:
 
 ```bash
-dsh plugin --profile web add https://github.com/kobubu/Rag-Coding/releases/download/v0.9.2/dsh-plugin-code-memory-0.9.2.tgz
+dsh plugin --profile web add https://github.com/kobubu/Rag-Coding/releases/download/v0.9.3/dsh-plugin-code-memory-0.9.3.tgz
 ```
 
 Git tags before 0.9.1 require their release tarball or an explicit source build. The new runtime works with scripts disabled; native dependencies follow the host package manager's policy.
@@ -70,7 +70,7 @@ If CM was installed with the Windows bootstrap, update it using the new ZIP and 
 
 ## Install on Windows
 
-Download **CM-0.9.2-Windows.zip** and **SHA256SUMS.txt** from the [v0.9.2 release](https://github.com/kobubu/Rag-Coding/releases/tag/v0.9.2), verify the checksum, and extract the ZIP. From the extracted folder, run:
+Download **CM-0.9.3-Windows.zip** and **SHA256SUMS.txt** from the [v0.9.3 release](https://github.com/kobubu/Rag-Coding/releases/tag/v0.9.3), verify the checksum, and extract the ZIP. From the extracted folder, run:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\install_cm.ps1 -ProjectRoot 'C:\path\to\your-project' -Clients harness
@@ -113,7 +113,7 @@ The following engineering documents are currently in Russian; the README and Win
 | [Harness integration](docs/DEEPSEEK-PLUGIN.md) | Bundle installation, configuration, and tools |
 | [MCP setup](docs/MCP-SETUP.md) | Shared local retrieval for coding clients |
 | [CM Atlas](docs/LOCAL-ATLAS.md) | Local project visualization |
-| [Release notes](docs/releases/v0.9.2.md) | What is included in the public package |
+| [Release notes](docs/releases/v0.9.3.md) | What is included in the public package |
 | [Release procedure](docs/RELEASING.md) | Rebuilding the installer and checking artifacts |
 
 CM is written in TypeScript/Node.js. Project code is indexed without being executed. Supported inputs are JavaScript/TypeScript source files; current corpus limits are 500 files and 8 MiB of source. See [contribution rules](CONTRIBUTING.md).
