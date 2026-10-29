@@ -4,7 +4,7 @@ import { LocalVectors, sourceSlice, words } from "./vector.js";
 import { knowledge } from "./knowledge.js";
 import { focusQuery } from "./focus.js";
 const STOP = new Set(words("the and for from with that this code function project preserve unrelated behavior interfaces repair apply restore correctly existing when into must return locate supplied source available checks results"));
-const WHOLE_FILE_BYTES = 3000, MAX_CALLERS = 6, MAX_USERS = 3, USER_MIN_SCORE = 0.35;
+const WHOLE_FILE_BYTES = 3000, MAX_CALLERS = 6, MAX_USERS = 3, USER_MIN_SCORE = 0.35, RARE_NAME_UNITS = 2;
 const BREADTH = /\b(?:everywhere|wherever|throughout|across|every (?:import|call|caller|use|usage|place)s?|all (?:callers|uses|usages|importers|call sites|places))\b/i;
 const escaped = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 export async function retrieveGraph(index, vectors, query, maxBytes = 6000, signal, policy = "adaptive", detail = "focused") {
@@ -52,6 +52,21 @@ export async function retrieveGraph(index, vectors, query, maxBytes = 6000, sign
     }
     const ranked = [...combined].sort((a, b) => b[1] - a[1]);
     const selected = ranked.filter(([, score]) => score >= (ranked[0]?.[1] ?? 0) * .82).slice(0, detail === "expanded" ? 4 : 2).map(([id]) => kb.units.get(id));
+    // A query word that names only one or two functions in the project ("caret" in replaceCaret) points at them more
+    // directly than shared vocabulary does; on discovery such a function in a file already found joins the roots when the
+    // ranking passed it over (the file was right, the function was not) and no chosen root is named after the request.
+    if (!exact && selected.length < (detail === "expanded" ? 4 : 3) && !selected.some(root => words(root.name).some(word => terms.includes(word)))) {
+        const naming = new Map();
+        for (const unit of kb.roots)
+            if (!unit.name.startsWith("anonymous@"))
+                for (const word of new Set(words(unit.name)))
+                    if (terms.includes(word))
+                        naming.set(word, [...naming.get(word) ?? [], unit]);
+        const named = [...naming.values()].filter(units => units.length <= RARE_NAME_UNITS).flat().filter(unit => !selected.includes(unit) && selected.some(root => root.path === unit.path) && (combined.get(unit.id) ?? 0) > 0)
+            .sort((a, b) => (combined.get(b.id) ?? 0) - (combined.get(a.id) ?? 0));
+        if (named[0])
+            selected.push(named[0]);
+    }
     const parts = [], shown = new Set(), missing = new Set();
     let bytes = 0, omissions = 0;
     const add = (path, span, reason) => {

@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { tmpdir } from "node:os";
 import test from "node:test";
 import { buildIndex } from "../src/code-memory/indexer.js";
-import { LocalVectors } from "../src/code-memory/vector.js";
+import { buildVectors, EMBEDDING, LocalVectors } from "../src/code-memory/vector.js";
 import { retrieveContext, renderContext } from "../src/code-memory/retrieve.js";
 import { focusQuery } from "../src/code-memory/focus.js";
 import { rereadPointer } from "../src/harness/plugin.js";
@@ -81,6 +81,21 @@ test("a request across uses adds the matched module's users that the query point
   assert.deepEqual([...new Set(across.parts.map(part => part.path))].sort(), ["policy.js", "progress.js"]);
   const single = await retrieveContext(index, vectors, "Fix `quotaStatus` so the reported progress counts use the daily limit.", 6000, undefined, { policy: "adaptive" });
   assert.deepEqual([...new Set(single.parts.map(part => part.path))], ["policy.js"]);
+});
+
+test("a function in the found file named by a rare query word joins a root whose name says nothing about the request", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cm-graph-"));
+  writeFileSync(join(root, "range.js"), "const replaceCaret = (comp) => comp.replace(/\\^(\\d+)\\.(\\d+)/, (_, M, m) => '>=' + M + '.' + m + ' <' + (+M + 1));" + " ".repeat(3500) + "\n" +
+    "function testSet(set, version, options) { if (version.prerelease.length && !options.includePrerelease) return set.some(c => c.semver.major === version.major && c.semver.minor === version.minor && c.semver.patch === version.patch && c.accept(version) && c.later(version) && c.zero(version) && c.ranges); return true }\n" +
+    "module.exports = { replaceCaret, testSet };\n");
+  writeFileSync(join(root, "other.js"), "export function check(version, options) { return version.prerelease && options.keep && version.major && version.minor; }\n" +
+    "export function probe(version) { return version.patch === 0 && version.ranges; }\n");
+  const embed = async (texts: string[]) => texts.map(() => { const vector = Array<number>(EMBEDDING.dimensions).fill(0);vector[0] = 1;return vector; });
+  const index = buildIndex(root), config = { directory: join(root, "vectors"), modelCache: root };
+  await buildVectors(index, config, embed);
+  const vectors = new LocalVectors(config, embed);
+  const context = await retrieveContext(index, vectors, "Caret ranges for a zero major version accept later minors and patch versions; keep prerelease options.", 6000, undefined, { policy: "adaptive" });
+  assert(context.parts.some(part => part.text.includes("comp.replace(")), "replaceCaret shown");
 });
 
 test("callers come from the compiler graph and an unchanged whole file is not re-sent on its first re-read", async () => {
