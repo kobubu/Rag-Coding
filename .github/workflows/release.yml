@@ -1,19 +1,38 @@
 name: Release
 
 # Manual release of the npm tarball from a verified commit: builds, checks and packs the package, then creates the tag and
-# the GitHub release with the tarball and its checksum. The Windows ZIP is still made with scripts/package_release.ps1.
+# the GitHub release with the tarball and its checksum. A version-free copy (dsh-plugin-code-memory.tgz) lets catalogs point at
+# releases/latest/download/ and pick up every later release. The Windows ZIP is still made with scripts/package_release.ps1.
+# add_latest_asset=true only adds that copy to an existing release of this version.
 on:
   workflow_dispatch:
     inputs:
       version:
         description: "Version without the leading v, equal to package.json"
         required: true
+      add_latest_asset:
+        description: "Only add the version-free tarball copy to the existing release"
+        required: false
+        default: "false"
 
 permissions:
   contents: write
 
 jobs:
+  latest-asset:
+    if: inputs.add_latest_asset == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Copy the versioned tarball under a version-free name
+        env:
+          VERSION: ${{ inputs.version }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download "v$VERSION" --repo "$GITHUB_REPOSITORY" --pattern "dsh-plugin-code-memory-$VERSION.tgz" --dir release
+          cp "release/dsh-plugin-code-memory-$VERSION.tgz" release/dsh-plugin-code-memory.tgz
+          gh release upload "v$VERSION" release/dsh-plugin-code-memory.tgz --repo "$GITHUB_REPOSITORY"
   release:
+    if: inputs.add_latest_asset != 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -44,7 +63,8 @@ jobs:
           mkdir -p release
           npm pack --pack-destination release
           cd release
-          sha256sum "dsh-plugin-code-memory-$VERSION.tgz" > SHA256SUMS.txt
+          cp "dsh-plugin-code-memory-$VERSION.tgz" dsh-plugin-code-memory.tgz
+          sha256sum "dsh-plugin-code-memory-$VERSION.tgz" dsh-plugin-code-memory.tgz > SHA256SUMS.txt
           cat SHA256SUMS.txt
       - name: Create tag and release
         env:
@@ -53,4 +73,4 @@ jobs:
         run: |
           gh release create "v$VERSION" --target "$GITHUB_SHA" --title "Code Memory $VERSION" \
             --notes-file "docs/releases/v$VERSION.md" \
-            "release/dsh-plugin-code-memory-$VERSION.tgz" release/SHA256SUMS.txt
+            "release/dsh-plugin-code-memory-$VERSION.tgz" release/dsh-plugin-code-memory.tgz release/SHA256SUMS.txt
