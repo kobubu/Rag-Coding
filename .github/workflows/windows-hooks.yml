@@ -42,6 +42,7 @@ jobs:
       - name: Run the written hook commands through the client shells
         run: node scripts/windows_hook_check.mjs $env:CM_PROJECT
       - name: Real Codex CLI runs the hook
+        timeout-minutes: 6
         run: |
           npm install -g @openai/codex@0.163.0 | Out-Null
           $home_ = "D:\a\codex-home"; New-Item -ItemType Directory -Force -Path $home_ | Out-Null
@@ -50,17 +51,19 @@ jobs:
           Remove-Item -ErrorAction SilentlyContinue $env:CM_LOG
           Push-Location $env:CM_PROJECT
           $env:CODEX_HOME = $home_; $env:OPENAI_API_KEY = "placeholder"; $env:CM_HOOK_LOG = $env:CM_LOG
-          codex exec --skip-git-repo-check --dangerously-bypass-hook-trust "Make cartTotal ignore items whose qty is negative." 2>&1 | Select-Object -Last 5
+          # An open stdin makes codex exec wait for more prompt input; an empty pipe closes it.
+          "" | codex exec --skip-git-repo-check --dangerously-bypass-hook-trust "Make cartTotal ignore items whose qty is negative." 2>&1 | Select-Object -Last 5
           Pop-Location
           if (!(Test-Path $env:CM_LOG)) { throw "Codex did not run the CM hook" }
           Get-Content $env:CM_LOG
       - name: Real Claude Code runs the hook
+        timeout-minutes: 6
         run: |
           npm install -g @anthropic-ai/claude-code@2.1.312 | Out-Null
           Remove-Item -ErrorAction SilentlyContinue $env:CM_LOG
           Push-Location $env:CM_PROJECT
           $env:ANTHROPIC_API_KEY = "placeholder"; $env:CM_HOOK_LOG = $env:CM_LOG
-          claude -p "Make cartTotal ignore items whose qty is negative." --setting-sources project 2>&1 | Select-Object -Last 5
+          "" | claude -p "Make cartTotal ignore items whose qty is negative." --setting-sources project 2>&1 | Select-Object -Last 5
           Pop-Location
           if (!(Test-Path $env:CM_LOG)) { throw "Claude Code did not run the CM hook" }
           Get-Content $env:CM_LOG
