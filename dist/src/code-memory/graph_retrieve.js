@@ -5,6 +5,7 @@ import { knowledge } from "./knowledge.js";
 import { focusQuery } from "./focus.js";
 const STOP = new Set(words("the and for from with that this code function project preserve unrelated behavior interfaces repair apply restore correctly existing when into must return locate supplied source available checks results"));
 const WHOLE_FILE_BYTES = 3000, MAX_CALLERS = 6, MAX_USERS = 3, USER_MIN_SCORE = 0.35, RARE_NAME_UNITS = 2;
+const RENAME = /\brenam(?:e|es|ed|ing)\b/i;
 const BREADTH = /\b(?:everywhere|wherever|throughout|across|every (?:import|call|caller|use|usage|place)s?|all (?:callers|uses|usages|importers|call sites|places))\b/i;
 const escaped = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 export async function retrieveGraph(index, vectors, query, maxBytes = 6000, signal, policy = "adaptive", detail = "focused") {
@@ -196,10 +197,27 @@ export async function retrieveGraph(index, vectors, query, maxBytes = 6000, sign
         const listed = [...sites].sort(([a], [b]) => a.localeCompare(b, "en", { numeric: true })).map(([, text]) => text);
         return `Call sites of ${unit.name}: ${listed.length ? listed.slice(0, MAX_CALLERS).join(", ") + (listed.length > MAX_CALLERS ? `, +${listed.length - MAX_CALLERS} more` : "") : "none in indexed source"}.`;
     });
+    // A rename has to touch imports as well as calls, which call sites omit; agents searched for every occurrence. The index
+    // knows each binding of the name (definition, import) and each call or reference to it.
+    const occurrences = RENAME.test(query) ? selected.filter(unit => !unit.name.startsWith("anonymous@")).map(unit => {
+        const bindings = index.symbols.filter(symbol => symbol.name === unit.name && (symbol.path === unit.path || index.relations.some(relation => relation.to_id === symbol.id) || symbol.kind === "variable"));
+        const ids = new Set([unit.id, ...bindings.map(symbol => symbol.id)]), sites = new Set();
+        for (const symbol of bindings)
+            sites.add(`${symbol.path}:${symbol.declaration_span.line_start}`);
+        for (const relation of index.relations) {
+            if ((relation.predicate !== "calls" && relation.predicate !== "references") || !ids.has(relation.to_id))
+                continue;
+            const path = kb.units.get(relation.from_id)?.path ?? kb.symbols.get(relation.from_id)?.path;
+            if (path)
+                sites.add(`${path}:${relation.evidence.line_start}`);
+        }
+        const listed = [...sites].sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
+        return `Every code occurrence of ${unit.name} in the indexed source: ${listed.join(", ")}; comments and strings are not indexed.`;
+    }) : [];
     signal?.throwIfAborted();
     const unvisited = new Set(queue.filter(item => !visited.has(item.unit.id)).map(item => item.unit.id)).size;
     omissions += unvisited;
     return { snapshot_id: index.snapshot_id, channels: ["compiler-knowledge", exact ? "named-anchor" : "lexical-idf", ...(useDense ? ["local-dense-vector"] : []), "bounded-dependency-closure"], bytes_used: bytes, parts, omissions, complete: false,
         retrieval: { policy, route: exact ? "named" : "discovery", detail, roots: selected.length, graph_nodes: visited.size, bindings_shown: shown.size, bindings_omitted: missing.size, dense_search: useDense },
-        notes: [...callers, ...(missing.size ? ["Some bindings have only source prefixes; expand context or read their declarations when their values matter."] : []), ...(unvisited ? ["Dependency traversal stopped at its node budget; transitive completeness is not established."] : [])] };
+        notes: [...callers, ...occurrences, ...(missing.size ? ["Some bindings have only source prefixes; expand context or read their declarations when their values matter."] : []), ...(unvisited ? ["Dependency traversal stopped at its node budget; transitive completeness is not established."] : [])] };
 }

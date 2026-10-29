@@ -98,6 +98,17 @@ test("a function in the found file named by a rare query word joins a root whose
   assert(context.parts.some(part => part.text.includes("comp.replace(")), "replaceCaret shown");
 });
 
+test("a rename request lists every code occurrence of the name, imports included", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cm-graph-"));
+  writeFileSync(join(root, "days.js"), "export function validDay(day){return /^\\d{4}$/.test(day);}\nexport function grants(keys){return keys.filter(validDay);}\n");
+  writeFileSync(join(root, "progress.js"), "import {validDay} from './days.js';\nexport function read(saved){return validDay(saved.day) ? saved : null;}\n");
+  const index = buildIndex(root), vectors = new LocalVectors({ directory: root, modelCache: root }, async () => { throw Error("Unexpected embedding call"); });
+  const renamed = await retrieveContext(index, vectors, "Rename `validDay` to `isCalendarDay` everywhere.", 6000, undefined, { policy: "adaptive" });
+  assert(renamed.notes!.includes("Every code occurrence of validDay in the indexed source: days.js:1, days.js:2, progress.js:1, progress.js:2; comments and strings are not indexed."), renamed.notes!.join("\n"));
+  const fixed = await retrieveContext(index, vectors, "Fix `validDay` for leap days.", 6000, undefined, { policy: "adaptive" });
+  assert(!fixed.notes!.some(note => note.startsWith("Every code occurrence")));
+});
+
 test("callers come from the compiler graph and an unchanged whole file is not re-sent on its first re-read", async () => {
   const root = mkdtempSync(join(tmpdir(), "cm-graph-"));
   writeFileSync(join(root, "wallet.js"), "export function sync(w){return w+1;}\n");
