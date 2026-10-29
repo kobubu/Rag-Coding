@@ -48,26 +48,11 @@ jobs:
           $home_ = "D:\a\codex-home"; New-Item -ItemType Directory -Force -Path $home_ | Out-Null
           $trusted = $env:CM_PROJECT.Replace('\', '\\')
           Set-Content -LiteralPath "$home_\config.toml" -Value "model = `"gpt-6-luna`"`nmodel_provider = `"openai_key`"`napproval_policy = `"never`"`n`n[model_providers.openai_key]`nname = `"key`"`nbase_url = `"https://api.openai.com/v1`"`nenv_key = `"OPENAI_API_KEY`"`nwire_api = `"responses`"`n`n[projects.`"$trusted`"]`ntrust_level = `"trusted`"`n"
-          Remove-Item -ErrorAction SilentlyContinue $env:CM_LOG
-          Push-Location $env:CM_PROJECT
-          $env:CODEX_HOME = $home_; $env:OPENAI_API_KEY = "placeholder"; $env:CM_HOOK_LOG = $env:CM_LOG
-          # With a placeholder key the client keeps retrying the model call; the hook has run by then, so stop it after a minute.
-          $p = Start-Process -FilePath (Get-Command codex).Source -ArgumentList 'exec','--skip-git-repo-check','--dangerously-bypass-hook-trust','"Make cartTotal ignore items whose qty is negative."' -RedirectStandardInput NUL -RedirectStandardOutput D:\a\codex.out -RedirectStandardError D:\a\codex.err -PassThru -NoNewWindow
-          if (!$p.WaitForExit(60000)) { taskkill /PID $p.Id /T /F | Out-Null }
-          Get-Content -Tail 5 D:\a\codex.out, D:\a\codex.err -ErrorAction SilentlyContinue
-          Pop-Location
-          if (!(Test-Path $env:CM_LOG)) { throw "Codex did not run the CM hook" }
-          Get-Content $env:CM_LOG
+          $env:CODEX_HOME = $home_; $env:OPENAI_API_KEY = "placeholder"
+          node scripts/windows_client_check.mjs codex $env:CM_PROJECT $env:CM_LOG
       - name: Real Claude Code runs the hook
         timeout-minutes: 6
         run: |
           npm install -g @anthropic-ai/claude-code@2.1.312 | Out-Null
-          Remove-Item -ErrorAction SilentlyContinue $env:CM_LOG
-          Push-Location $env:CM_PROJECT
-          $env:ANTHROPIC_API_KEY = "placeholder"; $env:CM_HOOK_LOG = $env:CM_LOG
-          $p = Start-Process -FilePath (Get-Command claude).Source -ArgumentList '-p','"Make cartTotal ignore items whose qty is negative."','--setting-sources','project' -RedirectStandardInput NUL -RedirectStandardOutput D:\a\claude.out -RedirectStandardError D:\a\claude.err -PassThru -NoNewWindow
-          if (!$p.WaitForExit(60000)) { taskkill /PID $p.Id /T /F | Out-Null }
-          Get-Content -Tail 5 D:\a\claude.out, D:\a\claude.err -ErrorAction SilentlyContinue
-          Pop-Location
-          if (!(Test-Path $env:CM_LOG)) { throw "Claude Code did not run the CM hook" }
-          Get-Content $env:CM_LOG
+          $env:ANTHROPIC_API_KEY = "placeholder"
+          node scripts/windows_client_check.mjs claude $env:CM_PROJECT $env:CM_LOG
