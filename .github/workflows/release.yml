@@ -1,0 +1,56 @@
+name: Release
+
+# Manual release of the npm tarball from a verified commit: builds, checks and packs the package, then creates the tag and
+# the GitHub release with the tarball and its checksum. The Windows ZIP is still made with scripts/package_release.ps1.
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version without the leading v, equal to package.json"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 22
+          cache: npm
+      - name: Check version and tag
+        env:
+          VERSION: ${{ inputs.version }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$(node -p 'require("./package.json").version')" = "$VERSION"
+          test -f "docs/releases/v$VERSION.md"
+          if gh release view "v$VERSION" >/dev/null 2>&1; then echo "Release v$VERSION already exists"; exit 1; fi
+      - name: Install locked dependencies
+        run: npm ci --ignore-scripts
+      - name: Build and check
+        run: |
+          npm run compile
+          npm run package:check
+          npm run check
+          npm test
+      - name: Pack
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          mkdir -p release
+          npm pack --pack-destination release
+          cd release
+          sha256sum "dsh-plugin-code-memory-$VERSION.tgz" > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+      - name: Create tag and release
+        env:
+          VERSION: ${{ inputs.version }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v$VERSION" --target "$GITHUB_SHA" --title "Code Memory $VERSION" \
+            --notes-file "docs/releases/v$VERSION.md" \
+            "release/dsh-plugin-code-memory-$VERSION.tgz" release/SHA256SUMS.txt
