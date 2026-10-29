@@ -70,7 +70,9 @@ jobs:
           $env:CODEX_HOME = $home_; $env:RUST_LOG = "codex_hooks=debug,codex_core::hooks=debug"
           node scripts/windows_client_check.mjs codex $env:CM_PROJECT $env:CM_LOG
           Write-Host "trivial hook marker exists: $(Test-Path D:\a\hook-marker.txt)"
+          Write-Host "CM context delivered in $ran of 3 CM variants"
           if ($ran -eq 0) { throw "Codex ran the CM hook in no variant" }
+          exit 0
       - name: Real Claude Code runs the hook
         timeout-minutes: 6
         run: |
