@@ -16,4 +16,8 @@ The output directory must be new. The packager refuses uncommitted files and sta
 5. Push the exact tested commit. Check its Windows/Linux, Node 22/24 CI jobs. Create a draft release for that commit, upload the four output files, and compare downloaded asset hashes before publishing the release.
 6. Verify the published tag resolves to the intended commit, the release is public, and anonymously downloaded assets match the checksums. Repository description/topics come from [repository-metadata.json](repository-metadata.json).
 
+## Release workflow
+
+The npm tarball can also be released from GitHub Actions: run **Release** (`.github/workflows/release.yml`) with the version equal to `package.json`. It refuses an existing release, then compiles, runs `package:check`, `check` and the tests, packs the tarball, and creates the tag and release with `dsh-plugin-code-memory-<version>.tgz`, a version-free copy `dsh-plugin-code-memory.tgz` and `SHA256SUMS.txt`. The version-free copy keeps `releases/latest/download/dsh-plugin-code-memory.tgz` valid for catalogs. Build and attach the Windows ZIP with the packager above. v0.9.3 was released this way.
+
 The [published Show Your Plugins post](announcements/v0.9.0-show-your-plugins.md) preserves the original 0.9.0 announcement. A new release does not automatically update that post or the catalogue's pinned tarball. Preserve old tags and announcements; future announcements must retain the unofficial-project notice and benchmark limitations.
