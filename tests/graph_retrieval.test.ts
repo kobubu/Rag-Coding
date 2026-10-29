@@ -104,7 +104,7 @@ test("a rename request lists every code occurrence of the name, imports included
   writeFileSync(join(root, "progress.js"), "import {validDay} from './days.js';\nexport function read(saved){return validDay(saved.day) ? saved : null;}\n");
   const index = buildIndex(root), vectors = new LocalVectors({ directory: root, modelCache: root }, async () => { throw Error("Unexpected embedding call"); });
   const renamed = await retrieveContext(index, vectors, "Rename `validDay` to `isCalendarDay` everywhere.", 6000, undefined, { policy: "adaptive" });
-  assert(renamed.notes!.includes("Every code occurrence of validDay in the indexed source: days.js:1, days.js:2, progress.js:1, progress.js:2; comments and strings are not indexed."), renamed.notes!.join("\n"));
+  assert(renamed.notes!.includes("Every code occurrence of validDay in the indexed source (definition, imports, calls, references): days.js:1, days.js:2, progress.js:1, progress.js:2. This is the complete list for code, so a search for it is unnecessary; only comments and strings are not covered."), renamed.notes!.join("\n"));
   const fixed = await retrieveContext(index, vectors, "Fix `validDay` for leap days.", 6000, undefined, { policy: "adaptive" });
   assert(!fixed.notes!.some(note => note.startsWith("Every code occurrence")));
 });

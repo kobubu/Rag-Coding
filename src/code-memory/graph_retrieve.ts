@@ -159,7 +159,7 @@ export async function retrieveGraph(index: CMIndex, vectors: LocalVectors, query
       const path = kb.units.get(relation.from_id)?.path ?? kb.symbols.get(relation.from_id)?.path;if (path) sites.add(`${path}:${relation.evidence.line_start}`);
     }
     const listed = [...sites].sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
-    return `Every code occurrence of ${unit.name} in the indexed source: ${listed.join(", ")}; comments and strings are not indexed.`;
+    return `Every code occurrence of ${unit.name} in the indexed source (definition, imports, calls, references): ${listed.join(", ")}. This is the complete list for code, so a search for it is unnecessary; only comments and strings are not covered.`;
   }) : [];
   signal?.throwIfAborted();
   const unvisited = new Set(queue.filter(item => !visited.has(item.unit.id)).map(item => item.unit.id)).size;
