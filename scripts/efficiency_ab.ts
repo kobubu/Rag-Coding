@@ -19,7 +19,7 @@ const PROMPT_SUFFIX = " Apply the change only in this isolated workspace. Preser
 const read = (path: string) => JSON.parse(readFileSync(path, "utf8"));
 const write = (path: string, value: unknown) => writeFileSync(path, JSON.stringify(value, null, 2));
 const sources = (directory: string): string[] => readdirSync(join(ROOT, directory), { withFileTypes: true }).flatMap(entry => entry.isDirectory() ? sources(directory + "/" + entry.name) : entry.name.endsWith(".ts") ? [directory + "/" + entry.name] : []);
-const implementation = () => [...sources("src"), "scripts/harness_ab.ts", "scripts/harness_meter.ts", "scripts/efficiency_ab.ts", "scripts/speed_checks.ts", "scripts/holdout_checks.ts", "scripts/semver_checks.ts", "scripts/project_checks_plugin.ts", "scripts/lib.ts"].sort()
+const implementation = () => [...sources("src"), "scripts/harness_ab.ts", "scripts/harness_meter.ts", "scripts/efficiency_ab.ts", "scripts/speed_checks.ts", "scripts/holdout_checks.ts", "scripts/semver_checks.ts", "scripts/superstruct_checks.ts", "scripts/project_checks_plugin.ts", "scripts/lib.ts"].sort()
   .flatMap(path => [path, "dist/" + path.replace(/\.ts$/, ".js")]).map(path => ({ path, sha256: hash(readFileSync(join(ROOT, path))) }));
 const pluginDigest = (plugin: string) => hash(readdirSync(resolve(plugin, ".."), { withFileTypes: true }).filter(e => e.isFile()).map(e => e.name + ":" + hash(readFileSync(resolve(plugin, "..", e.name)))).sort().join("\n"));
 

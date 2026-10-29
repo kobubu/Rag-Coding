@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { SEMVER } from "./semver_checks.js";
+import { SUPERSTRUCT } from "./superstruct_checks.js";
 
 // Holdout tasks: a second set of seeded bugs in other Geo Dash modules, written after CM was tuned on the six speed tasks.
 // Each check compares the repaired module with the original one on fixed and seeded random inputs (differential testing).
@@ -9,7 +10,7 @@ type Load = (path: string) => Promise<Module>;
 // feature: the original code lacks the requested behavior, so a baseline self-check verifies only that the grader runs.
 // surface: false when the task changes the export surface itself (a rename).
 export type HoldoutCheck = Check;
-type Check = { path: string; feature?: true; surface?: false; run: (actual: Module, original: Module, same: Same, rnd: () => number, count: number, load: Load, loadActual: Load, workspace: string) => Promise<void> | void };
+type Check = { path: string; feature?: true; surface?: false; run: (actual: Module, original: Module, same: Same, rnd: () => number, count: number, load: Load, loadActual: Load, workspace: string, baseline: string) => Promise<void> | void };
 const storage = (value: unknown) => ({ getItem: () => JSON.stringify(value), setItem() {} });
 const validLimit = (value: unknown) => Number.isInteger(value) && (value as number) >= 1 && (value as number) <= 10;
 
@@ -167,14 +168,15 @@ export const HOLDOUT: Record<string, Check> = {
 };
 
 export async function checkHoldoutTask(load: (root: string, path: string) => Promise<Module>, workspace: string, baseline: string, task: string, smoke: boolean) {
-  const check = HOLDOUT[task] ?? SEMVER[task];if (!check) throw Error("Unknown speed task");
+  const check = HOLDOUT[task] ?? SEMVER[task] ?? SUPERSTRUCT[task];if (!check) throw Error("Unknown speed task");
   let checks = 0, seed = smoke ? 239 : 99173;
   const same: Same = (actual, expected, name) => { checks++;assert.deepEqual(actual, expected, name); };
   const rnd = () => ((seed = Math.imul(seed, 1664525) + 1013904223 >>> 0) / 4294967296);
-  const actual = await load(workspace, check.path), original = await load(baseline, check.path);
+  // TypeScript checks transpile and load their project themselves; there is no module to import directly.
+  const typescript = check.path.endsWith(".ts"), actual = typescript ? {} : await load(workspace, check.path), original = typescript ? {} : await load(baseline, check.path);
   if (check.feature && workspace === baseline) return { pass: false, behavior_pass: true, checks, mode: "baseline-behavior-only" };
   // A feature may add exports; every original export must remain.
-  if (check.surface !== false) same(check.feature ? Object.keys(original).filter(name => !(name in actual)) : Object.keys(actual).sort(), check.feature ? [] : Object.keys(original).sort(), "Export surface");
-  await check.run(actual, original, same, rnd, smoke ? 6 : 90, path => load(baseline, path), path => load(workspace, path), workspace);
+  if (check.surface !== false && !typescript) same(check.feature ? Object.keys(original).filter(name => !(name in actual)) : Object.keys(actual).sort(), check.feature ? [] : Object.keys(original).sort(), "Export surface");
+  await check.run(actual, original, same, rnd, smoke ? 6 : 90, path => load(baseline, path), path => load(workspace, path), workspace, baseline);
   return { pass: true, behavior_pass: true, checks, mode: smoke ? "public-smoke" : "independent-final" };
 }

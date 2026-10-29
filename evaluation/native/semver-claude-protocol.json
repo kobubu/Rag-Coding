@@ -1,6 +1,6 @@
 {
   "format": "cm-native-ab-1",
-  "created_at": "2026-10-28T22:39:14.280Z",
+  "created_at": "2026-10-29T06:09:53.574Z",
   "client": "claude",
   "client_version": "2.1.312 (Claude Code)",
   "model": "claude-sonnet-5-5",
@@ -95,11 +95,11 @@
     },
     {
       "path": "src/code-memory/graph_retrieve.ts",
-      "sha256": "a7c6f2ac9a75ba17c6663495b176474222240a1e17545d579fccd532d5a0e56f"
+      "sha256": "70771e995861773e42096c21272d6353d0ca48b4753a984710390a43447f7362"
     },
     {
       "path": "dist/src/code-memory/graph_retrieve.js",
-      "sha256": "8bbdbe4939bf5d25ce1f11c7c12952f59139e77d54072d5271d7ce7addae3b2a"
+      "sha256": "db3c3bfba7c35100c461920ab3839d514ce5786dfd52c3030a4b2a4f14ad1438"
     },
     {
       "path": "src/code-memory/indexer.ts",
@@ -343,11 +343,11 @@
     },
     {
       "path": "src/setup/config.ts",
-      "sha256": "362ad8f46a1bb2f1724e6ad52126dd139cf8e6d3c3bfafeb7167741d09f16307"
+      "sha256": "3500db7cc2541f3ad9187483cfd5f17788ccfbe17de1968cc4ca494f3df4318a"
     },
     {
       "path": "dist/src/setup/config.js",
-      "sha256": "cfe60f88ffef9628baeafb1ca34fc0234c9afffa485189540e6a7cec6cd314d5"
+      "sha256": "d4a9e0c16de84607b493a6285e2ac97d78548f3d66a48a788f0a32a59ed47b89"
     },
     {
       "path": "src/setup/files.ts",

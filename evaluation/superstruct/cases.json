@@ -1,0 +1,72 @@
+[
+ {
+  "id": "size-max",
+  "category": "named-small",
+  "prompt": "In `src/structs/refinements.ts`, the `size` refinement rejects numbers and dates exactly equal to `max`, while strings, arrays, maps and sets of that size pass. Both bounds must be inclusive for every kind of value. Keep the error messages.",
+  "mutations": [
+   {
+    "path": "src/structs/refinements.ts",
+    "before": "(min <= value && value <= max)",
+    "after": "(min <= value && value < max)"
+   }
+  ]
+ },
+ {
+  "id": "plain-object",
+  "category": "discovery-small",
+  "prompt": "Objects created with Object.create(null) are not treated as plain objects, so a defaulted struct does not fill in their missing keys. Find the plain-object check and accept objects without a prototype, keeping class instances, arrays and maps excluded.",
+  "mutations": [
+   {
+    "path": "src/utils.ts",
+    "before": "return prototype === null || prototype === Object.prototype",
+    "after": "return prototype === Object.prototype"
+   }
+  ]
+ },
+ {
+  "id": "defaulted-null",
+  "category": "named-symbol",
+  "prompt": "`defaulted` replaces null with the fallback, but null is a real value: only an undefined input may be replaced by the default. Keep the strict option and the merging of plain-object defaults unchanged.",
+  "mutations": [
+   {
+    "path": "src/structs/coercions.ts",
+    "before": "    if (x === undefined) {\n      return f",
+    "after": "    if (x == null) {\n      return f"
+   }
+  ]
+ },
+ {
+  "id": "union-mask",
+  "category": "discovery-large",
+  "prompt": "Masking through a union keeps unknown properties: validating { a: 1, extra: 2 } against a union of object structs with mask enabled returns the extra key. Find where a union coerces its members and pass the masking setting through, keeping the union's validation and error reporting unchanged.",
+  "mutations": [
+   {
+    "path": "src/structs/types.ts",
+    "before": "          coerce: true,\n          mask: ctx.mask,\n",
+    "after": "          coerce: true,\n"
+   }
+  ]
+ },
+ {
+  "id": "integer-infinite",
+  "category": "discovery-large",
+  "prompt": "The integer struct accepts Infinity and -Infinity. Only finite whole numbers are integers; find the integer check and fix it, keeping NaN, fractions and non-numbers rejected and the error message unchanged.",
+  "mutations": [
+   {
+    "path": "src/structs/types.ts",
+    "before": "!isNaN(value) && Number.isInteger(value)",
+    "after": "!isNaN(value) && Math.floor(value) === value"
+   }
+  ]
+ },
+ {
+  "id": "rename-plain",
+  "category": "rename-across-modules",
+  "prompt": "Rename the internal helper `isPlainObject` to `isPlainRecord` everywhere in the sources: its export in `src/utils.ts` and every import and call. Do not leave an `isPlainObject` alias or reference. Behavior must stay identical.",
+  "mutations": [],
+  "changed_paths": [
+   "src/utils.ts",
+   "src/structs/coercions.ts"
+  ]
+ }
+]

@@ -6,6 +6,7 @@ import { performance } from "node:perf_hooks";
 import { hash } from "../src/code-memory/source.js";
 import { checkHoldoutTask, HOLDOUT } from "./holdout_checks.js";
 import { SEMVER } from "./semver_checks.js";
+import { SUPERSTRUCT } from "./superstruct_checks.js";
 
 export async function checkSpeedTask(workspace: string, baseline: string, task: string, smoke = false) {
   let checks = 0;
@@ -19,7 +20,7 @@ export async function checkSpeedTask(workspace: string, baseline: string, task: 
     "wallet-delta": "game/src/core/reward-wallet.js", "motion-envelope": "game/fil/src/geoCollisionCandidates.js",
     "quota-receipts": "game/src/core/progression.js", "statistics-linear": "game/src/metrics/statistics.js",
   };
-  if (HOLDOUT[task] || SEMVER[task]) return checkHoldoutTask(load, workspace, baseline, task, smoke);
+  if (HOLDOUT[task] || SEMVER[task] || SUPERSTRUCT[task]) return checkHoldoutTask(load, workspace, baseline, task, smoke);
   const path = targets[task];if (!path) throw Error("Unknown speed task");
   const actual = await load(workspace, path), original = await load(baseline, path);
   same(Object.keys(actual).sort(), Object.keys(original).sort(), "Export surface");
