@@ -2,7 +2,8 @@ name: Windows hooks
 
 # Installs CM with the real installer into a project whose path has a space and Cyrillic letters, runs the hook commands it
 # wrote through the shells Codex and Claude Code use on Windows, and starts the real clients once each. A placeholder API key
-# makes the model call fail, but the UserPromptSubmit hook runs before it, so the hook log shows whether the client ran it.
+# makes the model call fail, but the UserPromptSubmit hook runs before it, so the session transcripts show whether the client
+# delivered CM context; they are uploaded as the client-sessions artifact.
 on:
   workflow_dispatch:
 
@@ -79,3 +80,16 @@ jobs:
           npm install -g @anthropic-ai/claude-code@2.1.312 | Out-Null
           $env:ANTHROPIC_API_KEY = "placeholder"
           node scripts/windows_client_check.mjs claude $env:CM_PROJECT $env:CM_LOG
+      - name: Collect the client session transcripts
+        if: always()
+        run: |
+          New-Item -ItemType Directory -Force -Path D:\a\sessions\codex, D:\a\sessions\claude | Out-Null
+          Get-ChildItem D:\a -Directory -Filter "codex-home-*" | ForEach-Object { if (Test-Path "$($_.FullName)\sessions") { Copy-Item -Recurse "$($_.FullName)\sessions" "D:\a\sessions\codex\$($_.Name)" } }
+          if (Test-Path "$env:USERPROFILE\.claude\projects") { Copy-Item -Recurse "$env:USERPROFILE\.claude\projects\*" D:\a\sessions\claude }
+          if (Test-Path $env:CM_LOG) { Copy-Item $env:CM_LOG D:\a\sessions }
+          Get-ChildItem -Recurse -File D:\a\sessions | ForEach-Object { $_.FullName }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: client-sessions
+          path: D:\a\sessions
