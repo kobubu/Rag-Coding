@@ -63,6 +63,13 @@ jobs:
             node scripts/windows_client_check.mjs codex $env:CM_PROJECT $env:CM_LOG
             if ($LASTEXITCODE -eq 0) { $ran++ }
           }
+          # Does Codex run any hook here? A trivial hook only writes a marker file.
+          $home_ = "D:\a\codex-home-marker"; New-Item -ItemType Directory -Force -Path $home_ | Out-Null
+          Set-Content -LiteralPath "$home_\config.toml" -Value ($provider + "`n[[hooks.UserPromptSubmit]]`n`n[[hooks.UserPromptSubmit.hooks]]`ntype = `"command`"`ncommand = `"cmd /d /c echo ran>D:\\a\\hook-marker.txt`"`ntimeout = 30`n")
+          Get-Content "$home_\config.toml" | Select-Object -Last 6
+          $env:CODEX_HOME = $home_; $env:RUST_LOG = "codex_hooks=debug,codex_core::hooks=debug"
+          node scripts/windows_client_check.mjs codex $env:CM_PROJECT $env:CM_LOG
+          Write-Host "trivial hook marker exists: $(Test-Path D:\a\hook-marker.txt)"
           if ($ran -eq 0) { throw "Codex ran the CM hook in no variant" }
       - name: Real Claude Code runs the hook
         timeout-minutes: 6
