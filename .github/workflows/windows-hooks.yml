@@ -1,0 +1,66 @@
+name: Windows hooks
+
+# Installs CM with the real installer into a project whose path has a space and Cyrillic letters, runs the hook commands it
+# wrote through the shells Codex and Claude Code use on Windows, and starts the real clients once each. A placeholder API key
+# makes the model call fail, but the UserPromptSubmit hook runs before it, so the hook log shows whether the client ran it.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hooks:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+    env:
+      CM_PROJECT: D:\a\CM test\Игра
+      CM_LOG: D:\a\cm-hook.jsonl
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install and build CM
+        run: |
+          npm ci --ignore-scripts
+          npm run compile
+      - name: Create a sample project
+        run: |
+          New-Item -ItemType Directory -Force -Path "$env:CM_PROJECT\src" | Out-Null
+          Set-Content -LiteralPath "$env:CM_PROJECT\src\cart.js" -Value "import { roundCents } from './money.js';`nexport function cartTotal(items, discount = 0) {`n  let total = 0;`n  for (const item of items) total += item.price * item.qty;`n  return roundCents(total * (1 - discount));`n}"
+          Set-Content -LiteralPath "$env:CM_PROJECT\src\money.js" -Value "export function roundCents(value) { return Math.round(value * 100) / 100; }"
+          Set-Content -LiteralPath "$env:CM_PROJECT\package.json" -Value '{"name":"sample","type":"module"}'
+          git -C "$env:CM_PROJECT" init -q
+          git -C "$env:CM_PROJECT" add -A
+          git -C "$env:CM_PROJECT" -c user.email=ci@example.com -c user.name=ci commit -qm init
+      - name: Install CM into the project for Codex and Claude Code
+        run: node dist/src/setup/cli.js install --root (Split-Path $env:GITHUB_WORKSPACE) --project $env:CM_PROJECT --clients codex,claude --claude-scope project --download true
+      - name: Run the written hook commands through the client shells
+        run: node scripts/windows_hook_check.mjs $env:CM_PROJECT
+      - name: Real Codex CLI runs the hook
+        run: |
+          npm install -g @openai/codex@0.163.0 | Out-Null
+          $home_ = "D:\a\codex-home"; New-Item -ItemType Directory -Force -Path $home_ | Out-Null
+          $trusted = $env:CM_PROJECT.Replace('\', '\\')
+          Set-Content -LiteralPath "$home_\config.toml" -Value "model = `"gpt-6-luna`"`nmodel_provider = `"openai_key`"`napproval_policy = `"never`"`n`n[model_providers.openai_key]`nname = `"key`"`nbase_url = `"https://api.openai.com/v1`"`nenv_key = `"OPENAI_API_KEY`"`nwire_api = `"responses`"`n`n[projects.`"$trusted`"]`ntrust_level = `"trusted`"`n"
+          Remove-Item -ErrorAction SilentlyContinue $env:CM_LOG
+          Push-Location $env:CM_PROJECT
+          $env:CODEX_HOME = $home_; $env:OPENAI_API_KEY = "placeholder"; $env:CM_HOOK_LOG = $env:CM_LOG
+          codex exec --skip-git-repo-check --dangerously-bypass-hook-trust "Make cartTotal ignore items whose qty is negative." 2>&1 | Select-Object -Last 5
+          Pop-Location
+          if (!(Test-Path $env:CM_LOG)) { throw "Codex did not run the CM hook" }
+          Get-Content $env:CM_LOG
+      - name: Real Claude Code runs the hook
+        run: |
+          npm install -g @anthropic-ai/claude-code@2.1.312 | Out-Null
+          Remove-Item -ErrorAction SilentlyContinue $env:CM_LOG
+          Push-Location $env:CM_PROJECT
+          $env:ANTHROPIC_API_KEY = "placeholder"; $env:CM_HOOK_LOG = $env:CM_LOG
+          claude -p "Make cartTotal ignore items whose qty is negative." --setting-sources project 2>&1 | Select-Object -Last 5
+          Pop-Location
+          if (!(Test-Path $env:CM_LOG)) { throw "Claude Code did not run the CM hook" }
+          Get-Content $env:CM_LOG
