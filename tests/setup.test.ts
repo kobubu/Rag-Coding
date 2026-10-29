@@ -39,7 +39,7 @@ test("install adds the auto-context hook next to the MCP server and upgrades a s
   const real = { command: "C:/Program Files/nodejs/node.exe", args: ["C:/CM/dist/src/mcp/cli.js", "--project", "D:/Игра"] };
   const windows = { command: "C:\\Program Files\\nodejs\\node.exe", args: ["D:\\Code Memory\\dist\\src\\mcp\\cli.js", "--project", "D:\\Игра"] };
   assert.equal(hookCommand(windows, "claude", "win32"), 'cd . && "C:/Program Files/nodejs/node.exe" "D:/Code Memory/dist/src/hooks/cli.js" "--project" "D:/Игра" "--client" "claude"');
-  assert(!hookCommand(windows, "codex", "win32").startsWith('"'), "cmd /C would strip the outer quotes");
+  assert.equal(hookCommand(windows, "codex", "win32"), 'cmd /d /c call "C:/Program Files/nodejs/node.exe" "D:/Code Memory/dist/src/hooks/cli.js" "--project" "D:/Игра"');
   assert.deepEqual(previousHookCommands(real, "claude"), [hookCommand(real, "codex", "linux")]);
   const command = hookCommand(real, "codex", "linux");
   assert.equal(command, '"C:/Program Files/nodejs/node.exe" "C:/CM/dist/src/hooks/cli.js" "--project" "D:/Игра"');

@@ -20,7 +20,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File 'D:\Rag Coding\scripts\insta
 - `InstallRoot/models/`: pinned MiniLM q8/384d. Поиск работает локально.
 - `InstallRoot/projects/<root-id>/`: настройки проекта, source/vector cache, отдельный Harness profile и `start-harness.ps1`, `start-codex.ps1`, `start-claude.ps1`.
 - В проекте `.codex/config.toml`: внутри markers Code Memory именованная MCP section и хук `UserPromptSubmit`, который подаёт контекст CM до первого вызова модели; остальные настройки сохраняются. Установка прежней версии (только MCP) обновляется на месте. Codex попросит доверить хук через `/hooks`.
-- На Windows команда хука начинается с `cd . &&` и пишет пути через `/`: Codex запускает хуки через `cmd.exe /C`, а cmd срезает внешние кавычки у строки, которая начинается с кавычки (`"C:\Program Files\nodejs\node.exe" …`). Git Bash такую команду тоже понимает. Хуки, записанные прежней установкой, распознаются и обновляются.
+- На Windows команда хука записывается под оболочку клиента. Codex запускает хук в оболочке сессии (PowerShell: `pwsh -NoProfile -Command "<команда>"`), а без неё — через `%COMSPEC% /C`; строка, которая начинается с пути в кавычках, ломается в обоих случаях. Поэтому для Codex команда — `cmd /d /c call "C:/Program Files/nodejs/node.exe" "…/hooks/cli.js" …`. Claude Code запускает хуки через Git Bash (запасной вариант — cmd), для него команда — `cd . && "…node.exe" …`. Пути пишутся через `/`. Хуки, записанные прежней установкой, распознаются и обновляются.
 - Для Claude Code тот же хук записывается в `.claude/settings.local.json` (при `-ClaudeScope project` — в `.claude/settings.json`); чужие хуки и настройки сохраняются.
 - Для Claude Code официальный `claude mcp add-json --scope local` регистрирует CM в личных настройках только этого проекта. Другие записи сохраняются. `-ClaudeScope project` вместо этого создаёт `.mcp.json` для совместной конфигурации; такой сервер требует стандартного подтверждения в Claude Code.
 - В проекте `.agents/skills/code-memory/SKILL.md` и `.claude/skills/code-memory/SKILL.md`: инструкции по короткому контексту, расширению и свежести.
@@ -50,6 +50,16 @@ powershell -NoProfile -ExecutionPolicy Bypass -File 'D:\Rag Coding\scripts\insta
 | Повторная установка | `.codex/config.toml` и `.claude/settings.json` побайтно не меняются |
 | `remove` | блок CM и хук убраны, `.claude/settings.json` без других настроек удалён |
 | `-ClaudeScope local` | хук в `.claude/settings.local.json`, MCP через `claude mcp add-json --scope local`; `remove` убирает оба |
+
+Проверка команд для Windows (29 октября, без настоящего Windows: Node.js 22.19.0 для Windows и `cmd.exe` под Wine 9.0, PowerShell 7.4.6; хук записывает полученные аргументы и stdin):
+
+| Форма команды | `cmd /C <строка>` | `cmd /C "<строка>"` | `/d /s /c "<строка>"` | PowerShell `-Command` |
+|---|---|---|---|---|
+| Прежняя: `"C:/Program Files/…/node.exe" …` | ошибка 9009 | работает | работает | ParserError |
+| Claude Code: `cd . && "…node.exe" …` | работает | работает | работает | ParserError (не используется) |
+| Codex: `cmd /d /c call "…node.exe" …` | работает | работает | работает | работает |
+
+Аргументы с пробелами и кириллицей (`D:/Игра`) и stdin доходят до хука без изменений. PowerShell проверен сборкой для Linux, где вместо `cmd` записывались полученные аргументы; запуск в настоящем Codex и Claude Code на Windows ещё не проверен.
 
 В0.8.1 `structuredContent.source_context` сохраняет исходник для клиента, выбирающего структурированный MCP-ответ. Реальный random-marker test подтвердил исправление native Claude; в контрольном запросе Codex маркер передан модели один раз и до, и после изменения. Отдельный [96-session A/B](HISTORY.md#7-codex-и-claude-code-через-mcp) измеряет полезность: исправленная доставка не означает автоматически меньше токенов, быстрее решение или более высокое качество. Открытые клиенты после обновления надо перезапустить.
 

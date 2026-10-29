@@ -10,20 +10,25 @@ export function clients(value) {
 function object(value) { return !!value && typeof value === "object" && !Array.isArray(value); }
 // The UserPromptSubmit hook gives the measured savings; the MCP server alone is rarely called (docs/NATIVE-CLIENTS.md).
 // It takes the server's arguments, so both read the same index, vectors and live memory.
-// Windows runs hook commands through cmd.exe /C (Codex) or Git Bash, cmd.exe as fallback (Claude Code). cmd strips the first and
-// last quote of a line that starts with a quote, which breaks "C:/Program Files/nodejs/node.exe" "...": a leading `cd . &&`
-// keeps the line from starting with one, and forward slashes read the same in cmd, bash and Node.
+// On Windows, Codex runs a hook in the session shell (PowerShell: pwsh -NoProfile -Command "<command>") or, without one,
+// through %COMSPEC% /C; Claude Code runs it in Git Bash, cmd.exe as fallback. A quoted program path breaks in PowerShell
+// (a string, not a call) and in cmd /C (outer quotes stripped). Codex therefore gets `cmd /d /c call "...node.exe" ...`,
+// which parses in PowerShell and cmd alike; Claude Code gets `cd . && "...node.exe" ...`, which bash and cmd accept and
+// which keeps Git Bash from rewriting /d and /c as paths. Forward slashes read the same everywhere, Node included.
 export function hookCommand(server, client = "codex", platform = process.platform) {
     const args = server.args.map(arg => arg.replace(/([\\/])dist[\\/]src[\\/]mcp[\\/]cli\.js$/, (_, sep) => [sep + "dist", "src", "hooks", "cli.js"].join(sep)));
     const parts = [server.command, ...args, ...(client === "claude" ? ["--client", "claude"] : [])];
     if (platform !== "win32")
         return parts.map(arg => JSON.stringify(arg)).join(" ");
-    return "cd . && " + parts.map(arg => JSON.stringify(/^[A-Za-z]:[\\/]/.test(arg) ? arg.replaceAll("\\", "/") : arg)).join(" ");
+    const quoted = parts.map(arg => JSON.stringify(/^[A-Za-z]:[\\/]/.test(arg) ? arg.replaceAll("\\", "/") : arg)).join(" ");
+    return (client === "codex" ? "cmd /d /c call " : "cd . && ") + quoted;
 }
 /** Hook commands written by earlier installers, recognized so a reinstall upgrades them instead of adding a second hook. */
 export function previousHookCommands(server, client) {
     const posix = (c) => hookCommand(server, c, "linux");
-    return [...new Set([posix(client), posix("codex")])].filter(command => command !== hookCommand(server, client));
+    // The first Windows form started every hook with `cd . && `; Codex hooks written that way are upgraded too.
+    const windowsBash = process.platform === "win32" ? [hookCommand(server, "claude", "win32").replace(/ "--client" "claude"$/, "")] : [];
+    return [...new Set([posix(client), posix("codex"), ...windowsBash])].filter(command => command !== hookCommand(server, client));
 }
 export function codexConfig(before, name, server, remove = false, previous = server) {
     if (!/^[a-z][a-z0-9_]{1,63}$/.test(name))
