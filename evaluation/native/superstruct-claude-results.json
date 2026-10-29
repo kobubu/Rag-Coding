@@ -1,7 +1,7 @@
 {
   "protocol": {
     "format": "cm-native-ab-1",
-    "created_at": "2026-10-29T06:28:29.308Z",
+    "created_at": "2026-10-29T11:15:56.210Z",
     "client": "claude",
     "client_version": "2.1.312 (Claude Code)",
     "model": "claude-sonnet-5-5",
@@ -104,11 +104,11 @@
       },
       {
         "path": "src/code-memory/graph_retrieve.ts",
-        "sha256": "70771e995861773e42096c21272d6353d0ca48b4753a984710390a43447f7362"
+        "sha256": "76ea95d6690d475a82bc4572e2e6ab6e765865c7bd703960002c850ff382f4b8"
       },
       {
         "path": "dist/src/code-memory/graph_retrieve.js",
-        "sha256": "db3c3bfba7c35100c461920ab3839d514ce5786dfd52c3030a4b2a4f14ad1438"
+        "sha256": "f465830af268a1f01abdad6fc9e10d0c4f913b8b14d86e0c6178ee32dac37ade"
       },
       {
         "path": "src/code-memory/indexer.ts",
@@ -376,11 +376,11 @@
       },
       {
         "path": "src/version.ts",
-        "sha256": "30249cf188a022ab3ddf2bf933d5c29e9778a0c12a6cfdf45989a3f8203eb024"
+        "sha256": "1c292d1ed51d4a54d1d5dc4d6c78b980e4ffa4887624dc05dc96764acfb3c150"
       },
       {
         "path": "dist/src/version.js",
-        "sha256": "30249cf188a022ab3ddf2bf933d5c29e9778a0c12a6cfdf45989a3f8203eb024"
+        "sha256": "1c292d1ed51d4a54d1d5dc4d6c78b980e4ffa4887624dc05dc96764acfb3c150"
       }
     ],
     "base_build_sha256": "2c8e85e3bba049907c0eeef5113cf16f75632bd90371b672248849e851c34a96",
@@ -403,54 +403,15 @@
       "cm_guard": "cm_warm plus a PreToolUse hook answering the first re-read of a file shown whole"
     }
   },
-  "estimated_cost_usd": 1.3589866,
+  "estimated_cost_usd": 1.4117233000000005,
   "results": [
     {
-      "run_id": "run-69b649337c2ac18a",
+      "run_id": "run-b0ffdb5c87bfce29",
       "task": "size-max",
       "category": "named-small",
       "repetition": 1,
       "arm": "none",
-      "duration_ms": 10580.188458999999,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 1442,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 4,
-        "uncached_input": 8,
-        "cache_read": 81056,
-        "cache_write": 6790,
-        "output": 529,
-        "total_input": 87854,
-        "total_tokens": 88383,
-        "usd_estimate": 0.0405716
-      },
-      "items": {
-        "command_execution": 2,
-        "file_change": 1
-      },
-      "shell_commands": 2,
-      "read_like_commands": 2,
-      "cm_mcp_calls": 0,
-      "hook": null,
-      "reread_pointers": 0,
-      "daemon_start_ms": null
-    },
-    {
-      "run_id": "run-b9319ad02b209335",
-      "task": "size-max",
-      "category": "named-small",
-      "repetition": 1,
-      "arm": "cm_warm",
-      "duration_ms": 8646.216778,
+      "duration_ms": 12889.261778,
       "exit_code": 0,
       "timed_out": false,
       "task_success": true,
@@ -465,12 +426,51 @@
       "usage": {
         "turns": 3,
         "uncached_input": 6,
-        "cache_read": 62404,
-        "cache_write": 7550,
-        "output": 385,
-        "total_input": 69960,
-        "total_tokens": 70345,
-        "usd_estimate": 0.0403024
+        "cache_read": 41851,
+        "cache_write": 21914,
+        "output": 438,
+        "total_input": 63771,
+        "total_tokens": 64209,
+        "usd_estimate": 0.0962331
+      },
+      "items": {
+        "command_execution": 1,
+        "file_change": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-0140932318e7a117",
+      "task": "size-max",
+      "category": "named-small",
+      "repetition": 1,
+      "arm": "cm_warm",
+      "duration_ms": 14210.230994999998,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 1442,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 4,
+        "cache_read": 39055,
+        "cache_write": 7563,
+        "output": 368,
+        "total_input": 46622,
+        "total_tokens": 46990,
+        "usd_estimate": 0.0378455
       },
       "items": {
         "file_change": 1,
@@ -480,10 +480,10 @@
       "read_like_commands": 1,
       "cm_mcp_calls": 0,
       "hook": {
-        "at": "2026-10-29T06:28:42.586Z",
+        "at": "2026-10-29T11:16:39.800Z",
         "via": "daemon",
-        "ms": 263,
-        "retrieve_ms": 255,
+        "ms": 364,
+        "retrieve_ms": 358,
         "bytes": 5377,
         "paths": [
           "src/structs/refinements.ts",
@@ -495,15 +495,15 @@
         "omissions": 1
       },
       "reread_pointers": 0,
-      "daemon_start_ms": 545.4565419999999
+      "daemon_start_ms": 18783.184608
     },
     {
-      "run_id": "run-4d1afecf79842cf1",
+      "run_id": "run-e5c7780194e7011f",
       "task": "plain-object",
       "category": "discovery-small",
       "repetition": 1,
       "arm": "none",
-      "duration_ms": 10761.526878999997,
+      "duration_ms": 14065.719290000001,
       "exit_code": 0,
       "timed_out": false,
       "task_success": true,
@@ -518,12 +518,12 @@
       "usage": {
         "turns": 5,
         "uncached_input": 8,
-        "cache_read": 77597,
-        "cache_write": 5376,
-        "output": 778,
-        "total_input": 82981,
-        "total_tokens": 83759,
-        "usd_estimate": 0.0370597
+        "cache_read": 77492,
+        "cache_write": 5346,
+        "output": 668,
+        "total_input": 82846,
+        "total_tokens": 83514,
+        "usd_estimate": 0.0358292
       },
       "items": {
         "command_execution": 3,
@@ -537,12 +537,12 @@
       "daemon_start_ms": null
     },
     {
-      "run_id": "run-2ff80b2de6d95105",
+      "run_id": "run-a6960f48fcfd1746",
       "task": "plain-object",
       "category": "discovery-small",
       "repetition": 1,
       "arm": "cm_warm",
-      "duration_ms": 7091.658094999999,
+      "duration_ms": 7580.509960999989,
       "exit_code": 0,
       "timed_out": false,
       "task_success": true,
@@ -559,10 +559,10 @@
         "uncached_input": 4,
         "cache_read": 38794,
         "cache_write": 7135,
-        "output": 306,
+        "output": 312,
         "total_input": 45933,
-        "total_tokens": 46239,
-        "usd_estimate": 0.0354874
+        "total_tokens": 46245,
+        "usd_estimate": 0.0355474
       },
       "items": {
         "file_change": 1
@@ -571,560 +571,10 @@
       "read_like_commands": 0,
       "cm_mcp_calls": 0,
       "hook": {
-        "at": "2026-10-29T06:29:03.426Z",
-        "via": "daemon",
-        "ms": 29,
-        "retrieve_ms": 22,
-        "bytes": 4655,
-        "paths": [
-          "src/structs/types.ts",
-          "src/structs/coercions.ts",
-          "src/struct.ts",
-          "src/utils.ts",
-          "src/structs/utilities.ts"
-        ],
-        "route": "discovery",
-        "omissions": 1
-      },
-      "reread_pointers": 0,
-      "daemon_start_ms": 514.5017059999991
-    },
-    {
-      "run_id": "run-835248892cdce0d8",
-      "task": "defaulted-null",
-      "category": "named-symbol",
-      "repetition": 1,
-      "arm": "none",
-      "duration_ms": 8246.360373000003,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 91,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 5,
-        "uncached_input": 8,
-        "cache_read": 77785,
-        "cache_write": 5874,
-        "output": 541,
-        "total_input": 83667,
-        "total_tokens": 84208,
-        "usd_estimate": 0.036700500000000004
-      },
-      "items": {
-        "command_execution": 3,
-        "file_change": 1
-      },
-      "shell_commands": 3,
-      "read_like_commands": 3,
-      "cm_mcp_calls": 0,
-      "hook": null,
-      "reread_pointers": 0,
-      "daemon_start_ms": null
-    },
-    {
-      "run_id": "run-2b06857dd0abad2e",
-      "task": "defaulted-null",
-      "category": "named-symbol",
-      "repetition": 1,
-      "arm": "cm_warm",
-      "duration_ms": 7776.480085999996,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 91,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 3,
-        "uncached_input": 6,
-        "cache_read": 60195,
-        "cache_write": 6448,
-        "output": 358,
-        "total_input": 66649,
-        "total_tokens": 67007,
-        "usd_estimate": 0.0354035
-      },
-      "items": {
-        "file_change": 1,
-        "command_execution": 1
-      },
-      "shell_commands": 1,
-      "read_like_commands": 1,
-      "cm_mcp_calls": 0,
-      "hook": {
-        "at": "2026-10-29T06:29:20.513Z",
-        "via": "daemon",
-        "ms": 11,
-        "retrieve_ms": 5,
-        "bytes": 2852,
-        "paths": [
-          "src/structs/coercions.ts",
-          "src/struct.ts",
-          "src/structs/types.ts",
-          "src/utils.ts",
-          "src/structs/utilities.ts"
-        ],
-        "route": "named",
-        "omissions": 1
-      },
-      "reread_pointers": 0,
-      "daemon_start_ms": 521.4218390000024
-    },
-    {
-      "run_id": "run-129665714d998961",
-      "task": "union-mask",
-      "category": "discovery-large",
-      "repetition": 1,
-      "arm": "none",
-      "duration_ms": 13403.909839,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 270,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 6,
-        "uncached_input": 10,
-        "cache_read": 100140,
-        "cache_write": 6150,
-        "output": 894,
-        "total_input": 106300,
-        "total_tokens": 107194,
-        "usd_estimate": 0.043574
-      },
-      "items": {
-        "command_execution": 4,
-        "file_change": 1
-      },
-      "shell_commands": 4,
-      "read_like_commands": 4,
-      "cm_mcp_calls": 0,
-      "hook": null,
-      "reread_pointers": 0,
-      "daemon_start_ms": null
-    },
-    {
-      "run_id": "run-c9710159d066c6a8",
-      "task": "union-mask",
-      "category": "discovery-large",
-      "repetition": 1,
-      "arm": "cm_warm",
-      "duration_ms": 12338.416100000002,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 270,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 5,
-        "uncached_input": 10,
-        "cache_read": 105411,
-        "cache_write": 7119,
-        "output": 702,
-        "total_input": 112540,
-        "total_tokens": 113242,
-        "usd_estimate": 0.0460571
-      },
-      "items": {
-        "command_execution": 3,
-        "file_change": 1
-      },
-      "shell_commands": 3,
-      "read_like_commands": 3,
-      "cm_mcp_calls": 0,
-      "hook": {
-        "at": "2026-10-29T06:29:43.406Z",
+        "at": "2026-10-29T11:17:07.614Z",
         "via": "daemon",
         "ms": 26,
-        "retrieve_ms": 21,
-        "bytes": 2010,
-        "paths": [
-          "src/structs/types.ts",
-          "src/utils.ts",
-          "src/struct.ts",
-          "src/structs/utilities.ts"
-        ],
-        "route": "discovery",
-        "omissions": 1
-      },
-      "reread_pointers": 0,
-      "daemon_start_ms": 480.3890490000049
-    },
-    {
-      "run_id": "run-fd3577e7fa10589a",
-      "task": "integer-infinite",
-      "category": "discovery-large",
-      "repetition": 1,
-      "arm": "none",
-      "duration_ms": 9821.660665000003,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 99,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 5,
-        "uncached_input": 8,
-        "cache_read": 77369,
-        "cache_write": 5290,
-        "output": 772,
-        "total_input": 82667,
-        "total_tokens": 83439,
-        "usd_estimate": 0.036632899999999996
-      },
-      "items": {
-        "command_execution": 3,
-        "file_change": 1
-      },
-      "shell_commands": 3,
-      "read_like_commands": 3,
-      "cm_mcp_calls": 0,
-      "hook": null,
-      "reread_pointers": 0,
-      "daemon_start_ms": null
-    },
-    {
-      "run_id": "run-a499fc90d50ac60d",
-      "task": "integer-infinite",
-      "category": "discovery-large",
-      "repetition": 1,
-      "arm": "cm_warm",
-      "duration_ms": 6900.453475999995,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 99,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 2,
-        "uncached_input": 4,
-        "cache_read": 38080,
-        "cache_write": 6430,
-        "output": 354,
-        "total_input": 44514,
-        "total_tokens": 44868,
-        "usd_estimate": 0.033076
-      },
-      "items": {
-        "file_change": 1
-      },
-      "shell_commands": 0,
-      "read_like_commands": 0,
-      "cm_mcp_calls": 0,
-      "hook": {
-        "at": "2026-10-29T06:30:07.650Z",
-        "via": "daemon",
-        "ms": 25,
-        "retrieve_ms": 18,
-        "bytes": 3039,
-        "paths": [
-          "src/structs/types.ts",
-          "src/struct.ts",
-          "src/structs/utilities.ts",
-          "src/utils.ts",
-          "src/error.ts"
-        ],
-        "route": "discovery",
-        "omissions": 2
-      },
-      "reread_pointers": 0,
-      "daemon_start_ms": 489.9150859999936
-    },
-    {
-      "run_id": "run-aae250643fbdca04",
-      "task": "rename-plain",
-      "category": "rename-across-modules",
-      "repetition": 1,
-      "arm": "none",
-      "duration_ms": 6655.289579999997,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 93,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 3,
-        "uncached_input": 6,
-        "cache_read": 56497,
-        "cache_write": 4709,
-        "output": 328,
-        "total_input": 61212,
-        "total_tokens": 61540,
-        "usd_estimate": 0.027777700000000002
-      },
-      "items": {
-        "command_execution": 2
-      },
-      "shell_commands": 2,
-      "read_like_commands": 2,
-      "cm_mcp_calls": 0,
-      "hook": null,
-      "reread_pointers": 0,
-      "daemon_start_ms": null
-    },
-    {
-      "run_id": "run-0987b77420598542",
-      "task": "rename-plain",
-      "category": "rename-across-modules",
-      "repetition": 1,
-      "arm": "cm_warm",
-      "duration_ms": 11747.067719999992,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 93,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 6,
-        "uncached_input": 8,
-        "cache_read": 79759,
-        "cache_write": 6055,
-        "output": 828,
-        "total_input": 85822,
-        "total_tokens": 86650,
-        "usd_estimate": 0.0404919
-      },
-      "items": {
-        "command_execution": 2,
-        "file_change": 3
-      },
-      "shell_commands": 2,
-      "read_like_commands": 2,
-      "cm_mcp_calls": 0,
-      "hook": {
-        "at": "2026-10-29T06:30:22.863Z",
-        "via": "daemon",
-        "ms": 11,
-        "retrieve_ms": 7,
-        "bytes": 268,
-        "paths": [
-          "src/utils.ts"
-        ],
-        "route": "named",
-        "omissions": 0
-      },
-      "reread_pointers": 0,
-      "daemon_start_ms": 520.3846950000006
-    },
-    {
-      "run_id": "run-07c630c2a90be2c9",
-      "task": "size-max",
-      "category": "named-small",
-      "repetition": 2,
-      "arm": "none",
-      "duration_ms": 8055.53928099999,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 1442,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 4,
-        "uncached_input": 6,
-        "cache_read": 57789,
-        "cache_write": 6127,
-        "output": 540,
-        "total_input": 63922,
-        "total_tokens": 64462,
-        "usd_estimate": 0.0356989
-      },
-      "items": {
-        "command_execution": 2,
-        "file_change": 1
-      },
-      "shell_commands": 2,
-      "read_like_commands": 2,
-      "cm_mcp_calls": 0,
-      "hook": null,
-      "reread_pointers": 0,
-      "daemon_start_ms": null
-    },
-    {
-      "run_id": "run-ec8f78105cd7d4c4",
-      "task": "size-max",
-      "category": "named-small",
-      "repetition": 2,
-      "arm": "cm_warm",
-      "duration_ms": 7561.911525999982,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 1442,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 3,
-        "uncached_input": 4,
-        "cache_read": 39070,
-        "cache_write": 7597,
-        "output": 395,
-        "total_input": 46671,
-        "total_tokens": 47066,
-        "usd_estimate": 0.038252999999999995
-      },
-      "items": {
-        "file_change": 1,
-        "command_execution": 1
-      },
-      "shell_commands": 1,
-      "read_like_commands": 1,
-      "cm_mcp_calls": 0,
-      "hook": {
-        "at": "2026-10-29T06:30:44.863Z",
-        "via": "daemon",
-        "ms": 240,
-        "retrieve_ms": 234,
-        "bytes": 5377,
-        "paths": [
-          "src/structs/refinements.ts",
-          "src/struct.ts",
-          "src/error.ts",
-          "src/utils.ts"
-        ],
-        "route": "named",
-        "omissions": 1
-      },
-      "reread_pointers": 0,
-      "daemon_start_ms": 482.3014189999958
-    },
-    {
-      "run_id": "run-30754abc2f1fcd18",
-      "task": "plain-object",
-      "category": "discovery-small",
-      "repetition": 2,
-      "arm": "none",
-      "duration_ms": 12546.579229999974,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 630,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 5,
-        "uncached_input": 8,
-        "cache_read": 77583,
-        "cache_write": 5412,
-        "output": 743,
-        "total_input": 83003,
-        "total_tokens": 83746,
-        "usd_estimate": 0.0368523
-      },
-      "items": {
-        "command_execution": 3,
-        "file_change": 1
-      },
-      "shell_commands": 3,
-      "read_like_commands": 3,
-      "cm_mcp_calls": 0,
-      "hook": null,
-      "reread_pointers": 0,
-      "daemon_start_ms": null
-    },
-    {
-      "run_id": "run-7a3f15037bd01c98",
-      "task": "plain-object",
-      "category": "discovery-small",
-      "repetition": 2,
-      "arm": "cm_warm",
-      "duration_ms": 7664.149430999998,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 630,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 3,
-        "uncached_input": 6,
-        "cache_read": 61881,
-        "cache_write": 7293,
-        "output": 436,
-        "total_input": 69180,
-        "total_tokens": 69616,
-        "usd_estimate": 0.0397321
-      },
-      "items": {
-        "file_change": 1,
-        "command_execution": 1
-      },
-      "shell_commands": 1,
-      "read_like_commands": 1,
-      "cm_mcp_calls": 0,
-      "hook": {
-        "at": "2026-10-29T06:31:06.588Z",
-        "via": "daemon",
-        "ms": 23,
-        "retrieve_ms": 17,
+        "retrieve_ms": 19,
         "bytes": 4655,
         "paths": [
           "src/structs/types.ts",
@@ -1137,564 +587,15 @@
         "omissions": 1
       },
       "reread_pointers": 0,
-      "daemon_start_ms": 511.71204700000817
+      "daemon_start_ms": 539.6478999999963
     },
     {
-      "run_id": "run-b589af3a7f3f9c55",
+      "run_id": "run-2a66c3e9323ab5bd",
       "task": "defaulted-null",
       "category": "named-symbol",
-      "repetition": 2,
+      "repetition": 1,
       "arm": "none",
-      "duration_ms": 8275.574691999995,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 91,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 5,
-        "uncached_input": 8,
-        "cache_read": 77800,
-        "cache_write": 5903,
-        "output": 531,
-        "total_input": 83711,
-        "total_tokens": 84242,
-        "usd_estimate": 0.036718
-      },
-      "items": {
-        "command_execution": 3,
-        "file_change": 1
-      },
-      "shell_commands": 3,
-      "read_like_commands": 3,
-      "cm_mcp_calls": 0,
-      "hook": null,
-      "reread_pointers": 0,
-      "daemon_start_ms": null
-    },
-    {
-      "run_id": "run-50f24afd5ecbe558",
-      "task": "defaulted-null",
-      "category": "named-symbol",
-      "repetition": 2,
-      "arm": "cm_warm",
-      "duration_ms": 5626.929207000008,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 91,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 2,
-        "uncached_input": 4,
-        "cache_read": 37953,
-        "cache_write": 6290,
-        "output": 295,
-        "total_input": 44247,
-        "total_tokens": 44542,
-        "usd_estimate": 0.0319133
-      },
-      "items": {
-        "file_change": 1
-      },
-      "shell_commands": 0,
-      "read_like_commands": 0,
-      "cm_mcp_calls": 0,
-      "hook": {
-        "at": "2026-10-29T06:31:24.318Z",
-        "via": "daemon",
-        "ms": 13,
-        "retrieve_ms": 6,
-        "bytes": 2852,
-        "paths": [
-          "src/structs/coercions.ts",
-          "src/struct.ts",
-          "src/structs/types.ts",
-          "src/utils.ts",
-          "src/structs/utilities.ts"
-        ],
-        "route": "named",
-        "omissions": 1
-      },
-      "reread_pointers": 0,
-      "daemon_start_ms": 522.0059599999804
-    },
-    {
-      "run_id": "run-9f091ece662b8c45",
-      "task": "union-mask",
-      "category": "discovery-large",
-      "repetition": 2,
-      "arm": "none",
-      "duration_ms": 13473.803075000003,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 270,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 7,
-        "uncached_input": 12,
-        "cache_read": 125302,
-        "cache_write": 8169,
-        "output": 1027,
-        "total_input": 133483,
-        "total_tokens": 134510,
-        "usd_estimate": 0.0555002
-      },
-      "items": {
-        "command_execution": 5,
-        "file_change": 1
-      },
-      "shell_commands": 5,
-      "read_like_commands": 5,
-      "cm_mcp_calls": 0,
-      "hook": null,
-      "reread_pointers": 0,
-      "daemon_start_ms": null
-    },
-    {
-      "run_id": "run-99908d43d0bf60b6",
-      "task": "union-mask",
-      "category": "discovery-large",
-      "repetition": 2,
-      "arm": "cm_warm",
-      "duration_ms": 10295.346195999999,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 270,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 4,
-        "uncached_input": 8,
-        "cache_read": 83731,
-        "cache_write": 7396,
-        "output": 653,
-        "total_input": 91135,
-        "total_tokens": 91788,
-        "usd_estimate": 0.0445031
-      },
-      "items": {
-        "command_execution": 2,
-        "file_change": 1
-      },
-      "shell_commands": 2,
-      "read_like_commands": 2,
-      "cm_mcp_calls": 0,
-      "hook": {
-        "at": "2026-10-29T06:31:45.398Z",
-        "via": "daemon",
-        "ms": 32,
-        "retrieve_ms": 26,
-        "bytes": 2010,
-        "paths": [
-          "src/structs/types.ts",
-          "src/utils.ts",
-          "src/struct.ts",
-          "src/structs/utilities.ts"
-        ],
-        "route": "discovery",
-        "omissions": 1
-      },
-      "reread_pointers": 0,
-      "daemon_start_ms": 607.4955030000128
-    },
-    {
-      "run_id": "run-caf719ca74d2dfcb",
-      "task": "integer-infinite",
-      "category": "discovery-large",
-      "repetition": 2,
-      "arm": "none",
-      "duration_ms": 9365.16492900002,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 99,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 4,
-        "uncached_input": 8,
-        "cache_read": 77385,
-        "cache_write": 5122,
-        "output": 641,
-        "total_input": 82515,
-        "total_tokens": 83156,
-        "usd_estimate": 0.034652499999999996
-      },
-      "items": {
-        "command_execution": 2,
-        "file_change": 1
-      },
-      "shell_commands": 2,
-      "read_like_commands": 2,
-      "cm_mcp_calls": 0,
-      "hook": null,
-      "reread_pointers": 0,
-      "daemon_start_ms": null
-    },
-    {
-      "run_id": "run-f1b9ae4f51587d16",
-      "task": "integer-infinite",
-      "category": "discovery-large",
-      "repetition": 2,
-      "arm": "cm_warm",
-      "duration_ms": 8337.543919999996,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 99,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 3,
-        "uncached_input": 6,
-        "cache_read": 60497,
-        "cache_write": 6621,
-        "output": 415,
-        "total_input": 67124,
-        "total_tokens": 67539,
-        "usd_estimate": 0.036695700000000005
-      },
-      "items": {
-        "file_change": 1,
-        "command_execution": 1
-      },
-      "shell_commands": 1,
-      "read_like_commands": 1,
-      "cm_mcp_calls": 0,
-      "hook": {
-        "at": "2026-10-29T06:32:07.086Z",
-        "via": "daemon",
-        "ms": 32,
-        "retrieve_ms": 24,
-        "bytes": 3039,
-        "paths": [
-          "src/structs/types.ts",
-          "src/struct.ts",
-          "src/structs/utilities.ts",
-          "src/utils.ts",
-          "src/error.ts"
-        ],
-        "route": "discovery",
-        "omissions": 2
-      },
-      "reread_pointers": 0,
-      "daemon_start_ms": 585.765836000006
-    },
-    {
-      "run_id": "run-6ef3491bad7caf8b",
-      "task": "rename-plain",
-      "category": "rename-across-modules",
-      "repetition": 2,
-      "arm": "none",
-      "duration_ms": 8052.786061999999,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 93,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 3,
-        "uncached_input": 6,
-        "cache_read": 56515,
-        "cache_write": 4671,
-        "output": 359,
-        "total_input": 61192,
-        "total_tokens": 61551,
-        "usd_estimate": 0.027937499999999997
-      },
-      "items": {
-        "command_execution": 2
-      },
-      "shell_commands": 2,
-      "read_like_commands": 2,
-      "cm_mcp_calls": 0,
-      "hook": null,
-      "reread_pointers": 0,
-      "daemon_start_ms": null
-    },
-    {
-      "run_id": "run-e462fc19dab4acf3",
-      "task": "rename-plain",
-      "category": "rename-across-modules",
-      "repetition": 2,
-      "arm": "cm_warm",
-      "duration_ms": 11270.49994400001,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 93,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 6,
-        "uncached_input": 6,
-        "cache_read": 57957,
-        "cache_write": 6031,
-        "output": 750,
-        "total_input": 63994,
-        "total_tokens": 64744,
-        "usd_estimate": 0.037431700000000005
-      },
-      "items": {
-        "command_execution": 2,
-        "file_change": 3
-      },
-      "shell_commands": 2,
-      "read_like_commands": 2,
-      "cm_mcp_calls": 0,
-      "hook": {
-        "at": "2026-10-29T06:32:25.282Z",
-        "via": "daemon",
-        "ms": 13,
-        "retrieve_ms": 8,
-        "bytes": 268,
-        "paths": [
-          "src/utils.ts"
-        ],
-        "route": "named",
-        "omissions": 0
-      },
-      "reread_pointers": 0,
-      "daemon_start_ms": 636.3626099999819
-    },
-    {
-      "run_id": "run-39f68c6232509a74",
-      "task": "size-max",
-      "category": "named-small",
-      "repetition": 3,
-      "arm": "none",
-      "duration_ms": 8716.480666999996,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 1442,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 4,
-        "uncached_input": 6,
-        "cache_read": 58304,
-        "cache_write": 6685,
-        "output": 600,
-        "total_input": 64995,
-        "total_tokens": 65595,
-        "usd_estimate": 0.038582399999999996
-      },
-      "items": {
-        "command_execution": 2,
-        "file_change": 1
-      },
-      "shell_commands": 2,
-      "read_like_commands": 2,
-      "cm_mcp_calls": 0,
-      "hook": null,
-      "reread_pointers": 0,
-      "daemon_start_ms": null
-    },
-    {
-      "run_id": "run-b5e74aff5303e7fa",
-      "task": "size-max",
-      "category": "named-small",
-      "repetition": 3,
-      "arm": "cm_warm",
-      "duration_ms": 8341.511417000002,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 1442,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 3,
-        "uncached_input": 6,
-        "cache_read": 62428,
-        "cache_write": 7568,
-        "output": 355,
-        "total_input": 70002,
-        "total_tokens": 70357,
-        "usd_estimate": 0.0400768
-      },
-      "items": {
-        "file_change": 1,
-        "command_execution": 1
-      },
-      "shell_commands": 1,
-      "read_like_commands": 1,
-      "cm_mcp_calls": 0,
-      "hook": {
-        "at": "2026-10-29T06:32:47.815Z",
-        "via": "daemon",
-        "ms": 306,
-        "retrieve_ms": 298,
-        "bytes": 5377,
-        "paths": [
-          "src/structs/refinements.ts",
-          "src/struct.ts",
-          "src/error.ts",
-          "src/utils.ts"
-        ],
-        "route": "named",
-        "omissions": 1
-      },
-      "reread_pointers": 0,
-      "daemon_start_ms": 538.9452910000109
-    },
-    {
-      "run_id": "run-f914fb7200eefc8b",
-      "task": "plain-object",
-      "category": "discovery-small",
-      "repetition": 3,
-      "arm": "none",
-      "duration_ms": 8367.811670000025,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 630,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 4,
-        "uncached_input": 8,
-        "cache_read": 77438,
-        "cache_write": 5138,
-        "output": 578,
-        "total_input": 82584,
-        "total_tokens": 83162,
-        "usd_estimate": 0.0340918
-      },
-      "items": {
-        "command_execution": 2,
-        "file_change": 1
-      },
-      "shell_commands": 2,
-      "read_like_commands": 2,
-      "cm_mcp_calls": 0,
-      "hook": null,
-      "reread_pointers": 0,
-      "daemon_start_ms": null
-    },
-    {
-      "run_id": "run-1515fe87aa6a8be4",
-      "task": "plain-object",
-      "category": "discovery-small",
-      "repetition": 3,
-      "arm": "cm_warm",
-      "duration_ms": 6229.259040999983,
-      "exit_code": 0,
-      "timed_out": false,
-      "task_success": true,
-      "quality": {
-        "pass": true,
-        "behavior_pass": true,
-        "checks": 630,
-        "mode": "independent-final"
-      },
-      "scope_changes": [],
-      "added_files": [],
-      "usage": {
-        "turns": 2,
-        "uncached_input": 4,
-        "cache_read": 38797,
-        "cache_write": 7140,
-        "output": 318,
-        "total_input": 45941,
-        "total_tokens": 46259,
-        "usd_estimate": 0.0356277
-      },
-      "items": {
-        "file_change": 1
-      },
-      "shell_commands": 0,
-      "read_like_commands": 0,
-      "cm_mcp_calls": 0,
-      "hook": {
-        "at": "2026-10-29T06:33:05.912Z",
-        "via": "daemon",
-        "ms": 29,
-        "retrieve_ms": 22,
-        "bytes": 4655,
-        "paths": [
-          "src/structs/types.ts",
-          "src/structs/coercions.ts",
-          "src/struct.ts",
-          "src/utils.ts",
-          "src/structs/utilities.ts"
-        ],
-        "route": "discovery",
-        "omissions": 1
-      },
-      "reread_pointers": 0,
-      "daemon_start_ms": 581.0263970000087
-    },
-    {
-      "run_id": "run-cafb6c6c9388bb4a",
-      "task": "defaulted-null",
-      "category": "named-symbol",
-      "repetition": 3,
-      "arm": "none",
-      "duration_ms": 9929.219976999972,
+      "duration_ms": 12648.692857999995,
       "exit_code": 0,
       "timed_out": false,
       "task_success": true,
@@ -1711,10 +612,10 @@
         "uncached_input": 8,
         "cache_read": 77825,
         "cache_write": 5908,
-        "output": 558,
+        "output": 556,
         "total_input": 83741,
-        "total_tokens": 84299,
-        "usd_estimate": 0.037010499999999995
+        "total_tokens": 84297,
+        "usd_estimate": 0.036990499999999996
       },
       "items": {
         "command_execution": 3,
@@ -1728,12 +629,12 @@
       "daemon_start_ms": null
     },
     {
-      "run_id": "run-6cfc26fce2bd6234",
+      "run_id": "run-dda491c7b8009154",
       "task": "defaulted-null",
       "category": "named-symbol",
-      "repetition": 3,
+      "repetition": 1,
       "arm": "cm_warm",
-      "duration_ms": 5676.368643999973,
+      "duration_ms": 8169.76449300001,
       "exit_code": 0,
       "timed_out": false,
       "task_success": true,
@@ -1748,12 +649,12 @@
       "usage": {
         "turns": 2,
         "uncached_input": 4,
-        "cache_read": 37956,
-        "cache_write": 6295,
-        "output": 289,
-        "total_input": 44255,
-        "total_tokens": 44544,
-        "usd_estimate": 0.0318736
+        "cache_read": 37947,
+        "cache_write": 6280,
+        "output": 293,
+        "total_input": 44231,
+        "total_tokens": 44524,
+        "usd_estimate": 0.0318527
       },
       "items": {
         "file_change": 1
@@ -1762,10 +663,10 @@
       "read_like_commands": 0,
       "cm_mcp_calls": 0,
       "hook": {
-        "at": "2026-10-29T06:33:23.790Z",
+        "at": "2026-10-29T11:17:29.912Z",
         "via": "daemon",
-        "ms": 12,
-        "retrieve_ms": 5,
+        "ms": 11,
+        "retrieve_ms": 6,
         "bytes": 2852,
         "paths": [
           "src/structs/coercions.ts",
@@ -1778,15 +679,15 @@
         "omissions": 1
       },
       "reread_pointers": 0,
-      "daemon_start_ms": 512.5912639999879
+      "daemon_start_ms": 854.4928049999871
     },
     {
-      "run_id": "run-1b44be2b7b8c8c8d",
+      "run_id": "run-db0d22ebedbd858e",
       "task": "union-mask",
       "category": "discovery-large",
-      "repetition": 3,
+      "repetition": 1,
       "arm": "none",
-      "duration_ms": 14119.876759999956,
+      "duration_ms": 25612.28398400001,
       "exit_code": 0,
       "timed_out": false,
       "task_success": true,
@@ -1799,33 +700,33 @@
       "scope_changes": [],
       "added_files": [],
       "usage": {
-        "turns": 7,
-        "uncached_input": 14,
-        "cache_read": 141844,
-        "cache_write": 6224,
-        "output": 903,
-        "total_input": 148082,
-        "total_tokens": 148985,
-        "usd_estimate": 0.0481384
+        "turns": 8,
+        "uncached_input": 12,
+        "cache_read": 121294,
+        "cache_write": 8103,
+        "output": 1144,
+        "total_input": 129409,
+        "total_tokens": 130553,
+        "usd_estimate": 0.05600540000000001
       },
       "items": {
-        "command_execution": 5,
+        "command_execution": 6,
         "file_change": 1
       },
-      "shell_commands": 5,
-      "read_like_commands": 5,
+      "shell_commands": 6,
+      "read_like_commands": 6,
       "cm_mcp_calls": 0,
       "hook": null,
       "reread_pointers": 0,
       "daemon_start_ms": null
     },
     {
-      "run_id": "run-8295420f001e4d2d",
+      "run_id": "run-79bdad160371df96",
       "task": "union-mask",
       "category": "discovery-large",
-      "repetition": 3,
+      "repetition": 1,
       "arm": "cm_warm",
-      "duration_ms": 10240.101912999991,
+      "duration_ms": 13934.248093000002,
       "exit_code": 0,
       "timed_out": false,
       "task_success": true,
@@ -1840,12 +741,12 @@
       "usage": {
         "turns": 4,
         "uncached_input": 6,
-        "cache_read": 60167,
-        "cache_write": 6987,
-        "output": 641,
-        "total_input": 67160,
-        "total_tokens": 67801,
-        "usd_estimate": 0.0403867
+        "cache_read": 60083,
+        "cache_write": 6881,
+        "output": 615,
+        "total_input": 66970,
+        "total_tokens": 67585,
+        "usd_estimate": 0.0396943
       },
       "items": {
         "command_execution": 2,
@@ -1855,10 +756,10 @@
       "read_like_commands": 2,
       "cm_mcp_calls": 0,
       "hook": {
-        "at": "2026-10-29T06:33:45.771Z",
+        "at": "2026-10-29T11:18:05.526Z",
         "via": "daemon",
-        "ms": 27,
-        "retrieve_ms": 21,
+        "ms": 25,
+        "retrieve_ms": 20,
         "bytes": 2010,
         "paths": [
           "src/structs/types.ts",
@@ -1870,15 +771,15 @@
         "omissions": 1
       },
       "reread_pointers": 0,
-      "daemon_start_ms": 650.3261690000072
+      "daemon_start_ms": 753.4373709999927
     },
     {
-      "run_id": "run-ed577ebbcb567650",
+      "run_id": "run-b4df076cbf28175e",
       "task": "integer-infinite",
       "category": "discovery-large",
-      "repetition": 3,
+      "repetition": 1,
       "arm": "none",
-      "duration_ms": 12345.227442000003,
+      "duration_ms": 12263.071127999981,
       "exit_code": 0,
       "timed_out": false,
       "task_success": true,
@@ -1891,33 +792,33 @@
       "scope_changes": [],
       "added_files": [],
       "usage": {
-        "turns": 5,
-        "uncached_input": 10,
-        "cache_read": 98312,
-        "cache_write": 5261,
-        "output": 735,
-        "total_input": 103583,
-        "total_tokens": 104318,
-        "usd_estimate": 0.0382452
+        "turns": 4,
+        "uncached_input": 8,
+        "cache_read": 77347,
+        "cache_write": 5094,
+        "output": 612,
+        "total_input": 82449,
+        "total_tokens": 83061,
+        "usd_estimate": 0.0342467
       },
       "items": {
-        "command_execution": 3,
+        "command_execution": 2,
         "file_change": 1
       },
-      "shell_commands": 3,
-      "read_like_commands": 3,
+      "shell_commands": 2,
+      "read_like_commands": 2,
       "cm_mcp_calls": 0,
       "hook": null,
       "reread_pointers": 0,
       "daemon_start_ms": null
     },
     {
-      "run_id": "run-ea71eb7791d23885",
+      "run_id": "run-7562183281569bac",
       "task": "integer-infinite",
       "category": "discovery-large",
-      "repetition": 3,
+      "repetition": 1,
       "arm": "cm_warm",
-      "duration_ms": 11843.82239700004,
+      "duration_ms": 13590.48296600001,
       "exit_code": 0,
       "timed_out": false,
       "task_success": true,
@@ -1932,12 +833,12 @@
       "usage": {
         "turns": 3,
         "uncached_input": 6,
-        "cache_read": 60478,
-        "cache_write": 6606,
-        "output": 500,
-        "total_input": 67090,
-        "total_tokens": 67590,
-        "usd_estimate": 0.0374838
+        "cache_read": 60425,
+        "cache_write": 6559,
+        "output": 390,
+        "total_input": 66990,
+        "total_tokens": 67380,
+        "usd_estimate": 0.03619050000000001
       },
       "items": {
         "file_change": 1,
@@ -1947,10 +848,10 @@
       "read_like_commands": 1,
       "cm_mcp_calls": 0,
       "hook": {
-        "at": "2026-10-29T06:34:10.457Z",
+        "at": "2026-10-29T11:18:33.723Z",
         "via": "daemon",
-        "ms": 26,
-        "retrieve_ms": 20,
+        "ms": 30,
+        "retrieve_ms": 22,
         "bytes": 3039,
         "paths": [
           "src/structs/types.ts",
@@ -1963,15 +864,15 @@
         "omissions": 2
       },
       "reread_pointers": 0,
-      "daemon_start_ms": 551.2581740000169
+      "daemon_start_ms": 742.7884329999797
     },
     {
-      "run_id": "run-486d689d42f3eadb",
+      "run_id": "run-b1f79866b12ae376",
       "task": "rename-plain",
       "category": "rename-across-modules",
-      "repetition": 3,
+      "repetition": 1,
       "arm": "none",
-      "duration_ms": 7597.712144999998,
+      "duration_ms": 7552.195361999999,
       "exit_code": 0,
       "timed_out": false,
       "task_success": true,
@@ -1988,10 +889,10 @@
         "uncached_input": 6,
         "cache_read": 56503,
         "cache_write": 4590,
-        "output": 332,
+        "output": 331,
         "total_input": 61099,
-        "total_tokens": 61431,
-        "usd_estimate": 0.0273423
+        "total_tokens": 61430,
+        "usd_estimate": 0.027332299999999997
       },
       "items": {
         "command_execution": 2
@@ -2004,12 +905,12 @@
       "daemon_start_ms": null
     },
     {
-      "run_id": "run-3fa309d451bc8975",
+      "run_id": "run-6d496a88ced98710",
       "task": "rename-plain",
       "category": "rename-across-modules",
-      "repetition": 3,
+      "repetition": 1,
       "arm": "cm_warm",
-      "duration_ms": 12016.031597000023,
+      "duration_ms": 14836.497869999992,
       "exit_code": 0,
       "timed_out": false,
       "task_success": true,
@@ -2023,13 +924,13 @@
       "added_files": [],
       "usage": {
         "turns": 6,
-        "uncached_input": 8,
-        "cache_read": 79804,
-        "cache_write": 6122,
-        "output": 862,
-        "total_input": 85934,
-        "total_tokens": 86796,
-        "usd_estimate": 0.041104400000000006
+        "uncached_input": 6,
+        "cache_read": 58151,
+        "cache_write": 6169,
+        "output": 809,
+        "total_input": 64326,
+        "total_tokens": 65135,
+        "usd_estimate": 0.038593100000000005
       },
       "items": {
         "command_execution": 2,
@@ -2039,7 +940,1105 @@
       "read_like_commands": 2,
       "cm_mcp_calls": 0,
       "hook": {
-        "at": "2026-10-29T06:34:32.371Z",
+        "at": "2026-10-29T11:18:56.602Z",
+        "via": "daemon",
+        "ms": 20,
+        "retrieve_ms": 12,
+        "bytes": 268,
+        "paths": [
+          "src/utils.ts"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 508.90683900000295
+    },
+    {
+      "run_id": "run-3c3155aa44bffa9a",
+      "task": "size-max",
+      "category": "named-small",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 16531.865545000008,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 1442,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 4,
+        "uncached_input": 6,
+        "cache_read": 57796,
+        "cache_write": 6134,
+        "output": 515,
+        "total_input": 63936,
+        "total_tokens": 64451,
+        "usd_estimate": 0.0354776
+      },
+      "items": {
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-7a8c534cfb5d4160",
+      "task": "size-max",
+      "category": "named-small",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 10052.374741000007,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 1442,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 6,
+        "cache_read": 62432,
+        "cache_write": 7572,
+        "output": 406,
+        "total_input": 70010,
+        "total_tokens": 70416,
+        "usd_estimate": 0.0406032
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-29T11:19:29.908Z",
+        "via": "daemon",
+        "ms": 211,
+        "retrieve_ms": 206,
+        "bytes": 5377,
+        "paths": [
+          "src/structs/refinements.ts",
+          "src/struct.ts",
+          "src/error.ts",
+          "src/utils.ts"
+        ],
+        "route": "named",
+        "omissions": 1
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 567.0724069999997
+    },
+    {
+      "run_id": "run-e3cfcb56c8a29921",
+      "task": "plain-object",
+      "category": "discovery-small",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 17457.682323999994,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 630,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 5,
+        "uncached_input": 8,
+        "cache_read": 77797,
+        "cache_write": 5492,
+        "output": 701,
+        "total_input": 83297,
+        "total_tokens": 83998,
+        "usd_estimate": 0.0367737
+      },
+      "items": {
+        "command_execution": 3,
+        "file_change": 1
+      },
+      "shell_commands": 3,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-b3d1f2d66f20df32",
+      "task": "plain-object",
+      "category": "discovery-small",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 10697.066384999984,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 630,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 2,
+        "uncached_input": 4,
+        "cache_read": 38797,
+        "cache_write": 7144,
+        "output": 410,
+        "total_input": 45945,
+        "total_tokens": 46355,
+        "usd_estimate": 0.0365637
+      },
+      "items": {
+        "file_change": 1
+      },
+      "shell_commands": 0,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-29T11:19:59.993Z",
+        "via": "daemon",
+        "ms": 25,
+        "retrieve_ms": 19,
+        "bytes": 4655,
+        "paths": [
+          "src/structs/types.ts",
+          "src/structs/coercions.ts",
+          "src/struct.ts",
+          "src/utils.ts",
+          "src/structs/utilities.ts"
+        ],
+        "route": "discovery",
+        "omissions": 1
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 795.5416560000158
+    },
+    {
+      "run_id": "run-eb2cb093e4695c61",
+      "task": "defaulted-null",
+      "category": "named-symbol",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 8685.461456999998,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 91,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 5,
+        "uncached_input": 8,
+        "cache_read": 77805,
+        "cache_write": 5894,
+        "output": 568,
+        "total_input": 83707,
+        "total_tokens": 84275,
+        "usd_estimate": 0.037052499999999995
+      },
+      "items": {
+        "command_execution": 3,
+        "file_change": 1
+      },
+      "shell_commands": 3,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-8f3219dcdfa6d4e1",
+      "task": "defaulted-null",
+      "category": "named-symbol",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 6771.941580999992,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 91,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 2,
+        "uncached_input": 4,
+        "cache_read": 37962,
+        "cache_write": 6305,
+        "output": 291,
+        "total_input": 44271,
+        "total_tokens": 44562,
+        "usd_estimate": 0.031934199999999996
+      },
+      "items": {
+        "file_change": 1
+      },
+      "shell_commands": 0,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-29T11:20:21.368Z",
+        "via": "daemon",
+        "ms": 17,
+        "retrieve_ms": 7,
+        "bytes": 2852,
+        "paths": [
+          "src/structs/coercions.ts",
+          "src/struct.ts",
+          "src/structs/types.ts",
+          "src/utils.ts",
+          "src/structs/utilities.ts"
+        ],
+        "route": "named",
+        "omissions": 1
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 571.8999290000065
+    },
+    {
+      "run_id": "run-c65f303c0a4b5605",
+      "task": "union-mask",
+      "category": "discovery-large",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 17873.644513999985,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 270,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 7,
+        "uncached_input": 12,
+        "cache_read": 120745,
+        "cache_write": 6529,
+        "output": 1166,
+        "total_input": 127286,
+        "total_tokens": 128452,
+        "usd_estimate": 0.04987450000000001
+      },
+      "items": {
+        "command_execution": 5,
+        "file_change": 1
+      },
+      "shell_commands": 5,
+      "read_like_commands": 5,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-eabdc2f4590b790c",
+      "task": "union-mask",
+      "category": "discovery-large",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 19926.118103000044,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 270,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 5,
+        "uncached_input": 8,
+        "cache_read": 85473,
+        "cache_write": 8349,
+        "output": 752,
+        "total_input": 93830,
+        "total_tokens": 94582,
+        "usd_estimate": 0.04947930000000001
+      },
+      "items": {
+        "command_execution": 3,
+        "file_change": 1
+      },
+      "shell_commands": 3,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-29T11:20:47.696Z",
+        "via": "daemon",
+        "ms": 30,
+        "retrieve_ms": 22,
+        "bytes": 2010,
+        "paths": [
+          "src/structs/types.ts",
+          "src/utils.ts",
+          "src/struct.ts",
+          "src/structs/utilities.ts"
+        ],
+        "route": "discovery",
+        "omissions": 1
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 480.0724760000012
+    },
+    {
+      "run_id": "run-0817e11039809369",
+      "task": "integer-infinite",
+      "category": "discovery-large",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 8683.982189000002,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 99,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 4,
+        "uncached_input": 8,
+        "cache_read": 77263,
+        "cache_write": 5048,
+        "output": 622,
+        "total_input": 82319,
+        "total_tokens": 82941,
+        "usd_estimate": 0.034154300000000005
+      },
+      "items": {
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-8b3b5787d76b9a6b",
+      "task": "integer-infinite",
+      "category": "discovery-large",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 9488.712621999963,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 99,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 4,
+        "cache_read": 38086,
+        "cache_write": 6619,
+        "output": 442,
+        "total_input": 44709,
+        "total_tokens": 45151,
+        "usd_estimate": 0.0347126
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-29T11:21:17.995Z",
+        "via": "daemon",
+        "ms": 26,
+        "retrieve_ms": 21,
+        "bytes": 3039,
+        "paths": [
+          "src/structs/types.ts",
+          "src/struct.ts",
+          "src/structs/utilities.ts",
+          "src/utils.ts",
+          "src/error.ts"
+        ],
+        "route": "discovery",
+        "omissions": 2
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 510.87755299999844
+    },
+    {
+      "run_id": "run-a123fee0ce3b4e43",
+      "task": "rename-plain",
+      "category": "rename-across-modules",
+      "repetition": 2,
+      "arm": "none",
+      "duration_ms": 9143.60713899997,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 93,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 6,
+        "cache_read": 56515,
+        "cache_write": 4635,
+        "output": 350,
+        "total_input": 61156,
+        "total_tokens": 61506,
+        "usd_estimate": 0.0277035
+      },
+      "items": {
+        "command_execution": 2
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-dc40b0ed6d5712ff",
+      "task": "rename-plain",
+      "category": "rename-across-modules",
+      "repetition": 2,
+      "arm": "cm_warm",
+      "duration_ms": 12148.121432000014,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 93,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 7,
+        "uncached_input": 8,
+        "cache_read": 79954,
+        "cache_write": 6490,
+        "output": 1073,
+        "total_input": 86452,
+        "total_tokens": 87525,
+        "usd_estimate": 0.0447014
+      },
+      "items": {
+        "command_execution": 3,
+        "file_change": 3
+      },
+      "shell_commands": 3,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-29T11:21:39.340Z",
+        "via": "daemon",
+        "ms": 14,
+        "retrieve_ms": 9,
+        "bytes": 268,
+        "paths": [
+          "src/utils.ts"
+        ],
+        "route": "named",
+        "omissions": 0
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 511.35560599999735
+    },
+    {
+      "run_id": "run-824c0a45f7118db9",
+      "task": "size-max",
+      "category": "named-small",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 11171.089480999974,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 1442,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 4,
+        "uncached_input": 6,
+        "cache_read": 57782,
+        "cache_write": 6120,
+        "output": 532,
+        "total_input": 63908,
+        "total_tokens": 64440,
+        "usd_estimate": 0.0355902
+      },
+      "items": {
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-25057966d1ed9fe3",
+      "task": "size-max",
+      "category": "named-small",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 8699.892624999979,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 1442,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 4,
+        "cache_read": 39064,
+        "cache_write": 7585,
+        "output": 349,
+        "total_input": 46653,
+        "total_tokens": 47002,
+        "usd_estimate": 0.037744400000000004
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-29T11:22:04.767Z",
+        "via": "daemon",
+        "ms": 213,
+        "retrieve_ms": 206,
+        "bytes": 5377,
+        "paths": [
+          "src/structs/refinements.ts",
+          "src/struct.ts",
+          "src/error.ts",
+          "src/utils.ts"
+        ],
+        "route": "named",
+        "omissions": 1
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 584.7867500000284
+    },
+    {
+      "run_id": "run-33a43b138d68e5fe",
+      "task": "plain-object",
+      "category": "discovery-small",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 19252.198037999973,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 630,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 5,
+        "uncached_input": 8,
+        "cache_read": 77597,
+        "cache_write": 5376,
+        "output": 748,
+        "total_input": 82981,
+        "total_tokens": 83729,
+        "usd_estimate": 0.0367597
+      },
+      "items": {
+        "command_execution": 3,
+        "file_change": 1
+      },
+      "shell_commands": 3,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-3096bd0c8e0df75e",
+      "task": "plain-object",
+      "category": "discovery-small",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 21879.68739799998,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 630,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 6,
+        "cache_read": 61893,
+        "cache_write": 7303,
+        "output": 433,
+        "total_input": 69202,
+        "total_tokens": 69635,
+        "usd_estimate": 0.0397433
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-29T11:22:34.125Z",
+        "via": "daemon",
+        "ms": 23,
+        "retrieve_ms": 17,
+        "bytes": 4655,
+        "paths": [
+          "src/structs/types.ts",
+          "src/structs/coercions.ts",
+          "src/struct.ts",
+          "src/utils.ts",
+          "src/structs/utilities.ts"
+        ],
+        "route": "discovery",
+        "omissions": 1
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 469.55113900004653
+    },
+    {
+      "run_id": "run-12f02e519a8e1fe3",
+      "task": "defaulted-null",
+      "category": "named-symbol",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 9427.697854999977,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 91,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 5,
+        "uncached_input": 8,
+        "cache_read": 77911,
+        "cache_write": 5949,
+        "output": 616,
+        "total_input": 83868,
+        "total_tokens": 84484,
+        "usd_estimate": 0.0377631
+      },
+      "items": {
+        "command_execution": 3,
+        "file_change": 1
+      },
+      "shell_commands": 3,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-6d0f190d07dc0094",
+      "task": "defaulted-null",
+      "category": "named-symbol",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 7729.351074000006,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 91,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 2,
+        "uncached_input": 4,
+        "cache_read": 37953,
+        "cache_write": 6290,
+        "output": 265,
+        "total_input": 44247,
+        "total_tokens": 44512,
+        "usd_estimate": 0.0316133
+      },
+      "items": {
+        "file_change": 1
+      },
+      "shell_commands": 0,
+      "read_like_commands": 0,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-29T11:23:07.209Z",
+        "via": "daemon",
+        "ms": 14,
+        "retrieve_ms": 8,
+        "bytes": 2852,
+        "paths": [
+          "src/structs/coercions.ts",
+          "src/struct.ts",
+          "src/structs/types.ts",
+          "src/utils.ts",
+          "src/structs/utilities.ts"
+        ],
+        "route": "named",
+        "omissions": 1
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 511.1188400000101
+    },
+    {
+      "run_id": "run-f736c18390029a91",
+      "task": "union-mask",
+      "category": "discovery-large",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 19709.146902999957,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 270,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 8,
+        "uncached_input": 12,
+        "cache_read": 123941,
+        "cache_write": 7785,
+        "output": 1078,
+        "total_input": 131738,
+        "total_tokens": 132816,
+        "usd_estimate": 0.05433809999999999
+      },
+      "items": {
+        "command_execution": 6,
+        "file_change": 1
+      },
+      "shell_commands": 6,
+      "read_like_commands": 6,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-6abdcc68f5c50bd4",
+      "task": "union-mask",
+      "category": "discovery-large",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 20702.249884999997,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 270,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 4,
+        "uncached_input": 6,
+        "cache_read": 60147,
+        "cache_write": 6933,
+        "output": 633,
+        "total_input": 67086,
+        "total_tokens": 67719,
+        "usd_estimate": 0.040088700000000005
+      },
+      "items": {
+        "command_execution": 2,
+        "file_change": 1
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-29T11:23:36.382Z",
+        "via": "daemon",
+        "ms": 26,
+        "retrieve_ms": 22,
+        "bytes": 2010,
+        "paths": [
+          "src/structs/types.ts",
+          "src/utils.ts",
+          "src/struct.ts",
+          "src/structs/utilities.ts"
+        ],
+        "route": "discovery",
+        "omissions": 1
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 496.0893849999993
+    },
+    {
+      "run_id": "run-44d7eba4f532b36b",
+      "task": "integer-infinite",
+      "category": "discovery-large",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 12767.729550999997,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 99,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 5,
+        "uncached_input": 8,
+        "cache_read": 77373,
+        "cache_write": 5280,
+        "output": 766,
+        "total_input": 82661,
+        "total_tokens": 83427,
+        "usd_estimate": 0.0365333
+      },
+      "items": {
+        "command_execution": 3,
+        "file_change": 1
+      },
+      "shell_commands": 3,
+      "read_like_commands": 3,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-e1776b9df6a87102",
+      "task": "integer-infinite",
+      "category": "discovery-large",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 8985.146119000041,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 99,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 6,
+        "cache_read": 60449,
+        "cache_write": 6577,
+        "output": 453,
+        "total_input": 67032,
+        "total_tokens": 67485,
+        "usd_estimate": 0.0368949
+      },
+      "items": {
+        "file_change": 1,
+        "command_execution": 1
+      },
+      "shell_commands": 1,
+      "read_like_commands": 1,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-29T11:24:11.682Z",
+        "via": "daemon",
+        "ms": 28,
+        "retrieve_ms": 22,
+        "bytes": 3039,
+        "paths": [
+          "src/structs/types.ts",
+          "src/struct.ts",
+          "src/structs/utilities.ts",
+          "src/utils.ts",
+          "src/error.ts"
+        ],
+        "route": "discovery",
+        "omissions": 2
+      },
+      "reread_pointers": 0,
+      "daemon_start_ms": 469.51181900000665
+    },
+    {
+      "run_id": "run-d782e3fd47008a39",
+      "task": "rename-plain",
+      "category": "rename-across-modules",
+      "repetition": 3,
+      "arm": "none",
+      "duration_ms": 14302.186212999979,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 93,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 6,
+        "cache_read": 56503,
+        "cache_write": 4590,
+        "output": 367,
+        "total_input": 61099,
+        "total_tokens": 61466,
+        "usd_estimate": 0.0276923
+      },
+      "items": {
+        "command_execution": 2
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": null,
+      "reread_pointers": 0,
+      "daemon_start_ms": null
+    },
+    {
+      "run_id": "run-5cde7254d85f55b5",
+      "task": "rename-plain",
+      "category": "rename-across-modules",
+      "repetition": 3,
+      "arm": "cm_warm",
+      "duration_ms": 10754.234610000043,
+      "exit_code": 0,
+      "timed_out": false,
+      "task_success": true,
+      "quality": {
+        "pass": true,
+        "behavior_pass": true,
+        "checks": 93,
+        "mode": "independent-final"
+      },
+      "scope_changes": [],
+      "added_files": [],
+      "usage": {
+        "turns": 3,
+        "uncached_input": 6,
+        "cache_read": 58168,
+        "cache_write": 5543,
+        "output": 357,
+        "total_input": 63717,
+        "total_tokens": 64074,
+        "usd_estimate": 0.0315708
+      },
+      "items": {
+        "command_execution": 2
+      },
+      "shell_commands": 2,
+      "read_like_commands": 2,
+      "cm_mcp_calls": 0,
+      "hook": {
+        "at": "2026-10-29T11:24:37.095Z",
         "via": "daemon",
         "ms": 11,
         "retrieve_ms": 6,
@@ -2051,7 +2050,7 @@
         "omissions": 0
       },
       "reread_pointers": 0,
-      "daemon_start_ms": 625.1938019999652
+      "daemon_start_ms": 473.64399399998365
     }
   ]
 }
